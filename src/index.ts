@@ -5,11 +5,10 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-  ToolSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import fs from "fs/promises";
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
+import { createOpportunity } from "./opportunity.js"
 
 // Schema definitions
 const CreateOpportunityArgsSchema = z.object({
@@ -50,15 +49,32 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
     switch (name) {
       case "create_opportunity": {
-        return {
-          content: [{ type: "text", text: "Sent to squADS" }],
-        };
+        try {
+            // Parse and validate args using the schema
+            const validArgs = CreateOpportunityArgsSchema.parse(args);
+
+            const res = await createOpportunity({
+                title: validArgs.title,
+                description: validArgs.description,
+            })
+
+            return {
+              content: [{ type: "text", text: `Title: ${res.title}\n${res.description}` }],
+            };
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to add this opportunity. Please check back later"}
+                ]
+            }
+        }
       }
       default:
         throw new Error(`Unknown tool: ${name}`);
     }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
+    console.log("error", error)
     return {
       content: [{ type: "text", text: `Error: ${errorMessage}` }],
       isError: true,
