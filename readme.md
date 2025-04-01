@@ -1,0 +1,1 @@
+(base) ➜  squad-mcp docker build -t mcp/meet-squad -f Dockerfile .

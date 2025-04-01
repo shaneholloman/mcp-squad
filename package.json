@@ -1,0 +1,25 @@
+{
+  "name": "squad-mcp",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "meet-squad": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "openapi:squad": "openapi-generator-cli generate -g typescript-fetch --generate-alias-as-model -i ./openapi/squad.json -o src/clients/openapi/squad"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.8.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.14",
+    "typescript": "^5.8.2"
+  }
+}
