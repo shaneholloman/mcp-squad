@@ -1,5 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
+export * from './CreateOpportunityPayload.js';
+export * from './ManageOpportunityRelationshipsRequest.js';
 export * from './OnboardPost200Response.js';
 export * from './OnboardPost200ResponseOrganisation.js';
 export * from './OnboardPost200ResponseOutcomesInner.js';
@@ -25,11 +27,8 @@ export * from './OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest.
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet200ResponseInner.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete200Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequest.js';
-export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPutRequest.js';
-export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdRelationshipsActionPostRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost429Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost429ResponseError.js';
-export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPostRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseInner.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet401Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet401ResponseError.js';
@@ -40,7 +39,6 @@ export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet404ResponseEr
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet500Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet500ResponseError.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200Response.js';
-export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdRelationshipsActionPostRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost400Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost400ResponseError.js';
@@ -51,12 +49,10 @@ export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Respon
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete200Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest.js';
-export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdRelationshipsActionPostRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseInner.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDelete200Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest.js';
-export * from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdRelationshipsActionPostRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200ResponseData.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest.js';
@@ -66,6 +62,11 @@ export * from './OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdDelete200Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest.js';
 export * from './OrganisationsPostRequest.js';
+export * from './OutcomeRelationshipsPayload.js';
+export * from './RelationshipAction.js';
+export * from './RequirementRelationshipsPayload.js';
+export * from './SolutionRelationshipsPayload.js';
+export * from './UpdateOpportunityPayload.js';
 export * from './V1DataIngressPost201Response.js';
 export * from './V1DataIngressPost201ResponseData.js';
 export * from './V1WhoamiGet200Response.js';

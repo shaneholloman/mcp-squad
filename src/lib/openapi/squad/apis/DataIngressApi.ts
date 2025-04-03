@@ -45,88 +45,9 @@ export interface V1DataIngressPostRequest {
 }
 
 /**
- * DataIngressApi - interface
- * 
- * @export
- * @interface DataIngressApiInterface
- */
-export interface DataIngressApiInterface {
-    /**
-     * Receives feedback data and processes it for a specific workspace and organization
-     * @summary Process feedback for a workspace
-     * @param {string} orgId Organization ID
-     * @param {string} workspaceId Workspace ID
-     * @param {string} feedbackSource The source of the feedback
-     * @param {string} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DataIngressApiInterface
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<V1DataIngressPost201Response>>;
-
-    /**
-     * Receives feedback data and processes it for a specific workspace and organization
-     * Process feedback for a workspace
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<V1DataIngressPost201Response>;
-
-    /**
-     * Receives feedback data and processes it for a specific workspace and organization
-     * @summary Process feedback for a workspace
-     * @param {string} orgId Organization ID
-     * @param {string} workspaceId Workspace ID
-     * @param {string} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DataIngressApiInterface
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdDataIngressPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdDataIngressPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<V1DataIngressPost201Response>>;
-
-    /**
-     * Receives feedback data and processes it for a specific workspace and organization
-     * Process feedback for a workspace
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdDataIngressPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdDataIngressPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<V1DataIngressPost201Response>;
-
-    /**
-     * Receives feedback data and processes it for a specific workspace and organization
-     * @summary Process feedback for a workspace
-     * @param {string} feedbackSource The source of the feedback
-     * @param {string} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DataIngressApiInterface
-     */
-    v1DataIngressFeedbackSourcePostRaw(requestParameters: V1DataIngressFeedbackSourcePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<V1DataIngressPost201Response>>;
-
-    /**
-     * Receives feedback data and processes it for a specific workspace and organization
-     * Process feedback for a workspace
-     */
-    v1DataIngressFeedbackSourcePost(requestParameters: V1DataIngressFeedbackSourcePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<V1DataIngressPost201Response>;
-
-    /**
-     * Receives feedback data and processes it for a specific workspace and organization
-     * @summary Process feedback for a workspace
-     * @param {string} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DataIngressApiInterface
-     */
-    v1DataIngressPostRaw(requestParameters: V1DataIngressPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<V1DataIngressPost201Response>>;
-
-    /**
-     * Receives feedback data and processes it for a specific workspace and organization
-     * Process feedback for a workspace
-     */
-    v1DataIngressPost(requestParameters: V1DataIngressPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<V1DataIngressPost201Response>;
-
-}
-
-/**
  * 
  */
-export class DataIngressApi extends runtime.BaseAPI implements DataIngressApiInterface {
+export class DataIngressApi extends runtime.BaseAPI {
 
     /**
      * Receives feedback data and processes it for a specific workspace and organization

@@ -1,20 +1,12 @@
-#!/usr/bin/env node
-
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
-import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
-import { createOpportunity } from "./opportunity.js"
-
-// Schema definitions
-const CreateOpportunityArgsSchema = z.object({
-  title: z.string().describe("A short title"),
-  description: z.string().describe("A short description of the opportunity, detailing the problem statement and opportunity for the business"),
-});
+import { createOpportunity, CreateOpportunityArgsSchema } from "./opportunity.js"
+import { getUserContext } from "./helpers/getUser.js";
 
 // Server setup
 const server = new Server(
@@ -42,10 +34,10 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
   };
 });
 
-
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   try {
     const { name, arguments: args } = request.params;
+    const userContext = await getUserContext();
 
     switch (name) {
       case "create_opportunity": {
@@ -53,7 +45,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             // Parse and validate args using the schema
             const validArgs = CreateOpportunityArgsSchema.parse(args);
 
-            const res = await createOpportunity({
+            const res = await createOpportunity(userContext)({
                 title: validArgs.title,
                 description: validArgs.description,
             })

@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "openapi:squad": "openapi-generator-cli generate -g typescript-fetch --generate-alias-as-model --additional-properties=supportsES6=true,npmVersion=8.11.0,withInterfaces=true,useSingleRequestParameter=true -i ./openapi/squad.json -o src/lib/openapi/squad && tsx ./scripts/openapi-client-esm-fix.ts"
+    "openapi:squad": "openapi-generator-cli generate -g typescript-fetch -c ./openapi-generator-config.json -i ./openapi/squad.json -o src/lib/openapi/squad && tsx ./scripts/openapi-client-esm-fix.ts"
   },
   "files": [
     "dist"

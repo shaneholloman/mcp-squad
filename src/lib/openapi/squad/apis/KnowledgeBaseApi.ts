@@ -58,89 +58,9 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostOperationRe
 }
 
 /**
- * KnowledgeBaseApi - interface
- * 
- * @export
- * @interface KnowledgeBaseApiInterface
- */
-export interface KnowledgeBaseApiInterface {
-    /**
-     * Deletes a document from the knowledge base
-     * @summary Delete knowledge base document
-     * @param {string} orgId Organization ID
-     * @param {string} workspaceId Workspace ID
-     * @param {string} fileName Name of the document file
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KnowledgeBaseApiInterface
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDeleteRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>>;
-
-    /**
-     * Deletes a document from the knowledge base
-     * Delete knowledge base document
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDelete(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void>;
-
-    /**
-     * Retrieves a list of all knowledge base documents in the workspace
-     * @summary List knowledge base documents
-     * @param {string} orgId Organization ID
-     * @param {string} workspaceId Workspace ID
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KnowledgeBaseApiInterface
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGet200Response>>;
-
-    /**
-     * Retrieves a list of all knowledge base documents in the workspace
-     * List knowledge base documents
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGet200Response>;
-
-    /**
-     * Uploads a new document to the knowledge base
-     * @summary Upload knowledge base document
-     * @param {string} orgId Organization ID
-     * @param {string} workspaceId Workspace ID
-     * @param {OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPostRequest} organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPostRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KnowledgeBaseApiInterface
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPost201Response>>;
-
-    /**
-     * Uploads a new document to the knowledge base
-     * Upload knowledge base document
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPost201Response>;
-
-    /**
-     * Processes a text prompt through an AI model and returns the result
-     * @summary Process text through AI proxy
-     * @param {string} orgId Organization ID
-     * @param {string} workspaceId Workspace ID
-     * @param {OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest} organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof KnowledgeBaseApiInterface
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200Response>>;
-
-    /**
-     * Processes a text prompt through an AI model and returns the result
-     * Process text through AI proxy
-     */
-    organisationsOrgIdWorkspacesWorkspaceIdTestProxyPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200Response>;
-
-}
-
-/**
  * 
  */
-export class KnowledgeBaseApi extends runtime.BaseAPI implements KnowledgeBaseApiInterface {
+export class KnowledgeBaseApi extends runtime.BaseAPI {
 
     /**
      * Deletes a document from the knowledge base

@@ -23,9 +23,6 @@
     "/organisations/{orgId}/workspaces/{workspaceId}/outcomes": {
       "post": {
         "summary": "Create a new outcome",
-        "tags": [
-          "Outcomes"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -315,9 +312,6 @@
       },
       "get": {
         "summary": "List outcomes",
-        "tags": [
-          "Outcomes"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -574,9 +568,6 @@
     "/organisations/{orgId}/workspaces/{workspaceId}/outcomes/{outcomeId}": {
       "get": {
         "summary": "Get an outcome by ID",
-        "tags": [
-          "Outcomes"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -838,9 +829,6 @@
       },
       "put": {
         "summary": "Update an outcome",
-        "tags": [
-          "Outcomes"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -1232,9 +1220,6 @@
       },
       "delete": {
         "summary": "Delete an outcome",
-        "tags": [
-          "Outcomes"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -1444,9 +1429,6 @@
             "bearerAuth": []
           }
         ],
-        "tags": [
-          "Organizations"
-        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1598,9 +1580,6 @@
           {
             "bearerAuth": []
           }
-        ],
-        "tags": [
-          "Organizations"
         ],
         "parameters": [
           {
@@ -1760,9 +1739,6 @@
     },
     "/organisations/{orgId}/workspaces/{workspaceId}/feedback": {
       "post": {
-        "tags": [
-          "Feedback"
-        ],
         "summary": "Create new feedback",
         "description": "Creates a new feedback item in the specified workspace",
         "security": [
@@ -2101,9 +2077,6 @@
         }
       },
       "get": {
-        "tags": [
-          "Feedback"
-        ],
         "summary": "List feedback",
         "description": "Lists all feedback items in the specified workspace",
         "security": [
@@ -2283,9 +2256,6 @@
     },
     "/organisations/{orgId}/workspaces/{workspaceId}/feedback/{feedbackId}": {
       "get": {
-        "tags": [
-          "Feedback"
-        ],
         "summary": "Get feedback by ID",
         "description": "Retrieves a specific feedback item by ID",
         "security": [
@@ -2505,9 +2475,6 @@
         }
       },
       "delete": {
-        "tags": [
-          "Feedback"
-        ],
         "summary": "Delete feedback",
         "description": "Deletes a specific feedback item by ID",
         "security": [
@@ -2678,9 +2645,6 @@
     },
     "/organisations/{orgId}/workspaces/{workspaceId}/mock-feedback": {
       "post": {
-        "tags": [
-          "Feedback"
-        ],
         "summary": "Generate mock feedback",
         "description": "Creates mock feedback data for testing and development purposes",
         "parameters": [
@@ -2945,12 +2909,10 @@
       "post": {
         "summary": "Create new opportunity",
         "description": "Creates a new opportunity in the specified workspace",
-        "tags": [
-          "Opportunities"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "bearerAuth": [],
+            "apiKeyAuth": []
           }
         ],
         "parameters": [
@@ -2980,58 +2942,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "title": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "New",
-                      "Solved",
-                      "Planned",
-                      "InProgress"
-                    ]
-                  },
-                  "solutionsGeneratingState": {
-                    "type": "string",
-                    "enum": [
-                      "generating",
-                      "generated",
-                      "initial",
-                      "error"
-                    ]
-                  },
-                  "createdBy": {
-                    "type": "string",
-                    "enum": [
-                      "user",
-                      "generated"
-                    ]
-                  },
-                  "hideContent": {
-                    "type": "boolean"
-                  },
-                  "ownerId": {
-                    "type": "string"
-                  },
-                  "read": {
-                    "type": "boolean"
-                  },
-                  "id": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "title",
-                  "description",
-                  "status"
-                ],
-                "description": "Request schema for creating an opportunity"
+                "$ref": "#/components/schemas/CreateOpportunityPayload"
               }
             }
           }
@@ -3325,12 +3236,10 @@
       "get": {
         "summary": "List opportunities",
         "description": "Lists all opportunities in the specified workspace",
-        "tags": [
-          "Opportunities"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "bearerAuth": [],
+            "apiKeyAuth": []
           }
         ],
         "parameters": [
@@ -3545,12 +3454,10 @@
       "get": {
         "summary": "Get opportunity by ID",
         "description": "Retrieves a specific opportunity by ID",
-        "tags": [
-          "Opportunities"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "bearerAuth": [],
+            "apiKeyAuth": []
           }
         ],
         "parameters": [
@@ -3805,12 +3712,10 @@
       "put": {
         "summary": "Update opportunity",
         "description": "Updates a specific opportunity by ID",
-        "tags": [
-          "Opportunities"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "bearerAuth": [],
+            "apiKeyAuth": []
           }
         ],
         "parameters": [
@@ -3850,43 +3755,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "title": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "New",
-                      "Solved",
-                      "Planned",
-                      "InProgress"
-                    ]
-                  },
-                  "solutionsGeneratingState": {
-                    "type": "string",
-                    "enum": [
-                      "generating",
-                      "generated",
-                      "initial",
-                      "error"
-                    ]
-                  },
-                  "hideContent": {
-                    "type": "boolean"
-                  },
-                  "ownerId": {
-                    "type": "string"
-                  },
-                  "read": {
-                    "type": "boolean"
-                  }
-                },
-                "description": "Request schema for updating an opportunity"
+                "$ref": "#/components/schemas/UpdateOpportunityPayload"
               }
             }
           }
@@ -4180,12 +4049,10 @@
       "delete": {
         "summary": "Delete opportunity",
         "description": "Deletes a specific opportunity by ID",
-        "tags": [
-          "Opportunities"
-        ],
         "security": [
           {
-            "bearerAuth": []
+            "bearerAuth": [],
+            "apiKeyAuth": []
           }
         ],
         "parameters": [
@@ -4388,9 +4255,6 @@
       "post": {
         "summary": "Create new requirement",
         "description": "Creates a new requirement in the specified workspace",
-        "tags": [
-          "Requirements"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4594,9 +4458,6 @@
       "get": {
         "summary": "List requirements",
         "description": "Lists all requirements in the specified workspace",
-        "tags": [
-          "Requirements"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4742,9 +4603,6 @@
       "get": {
         "summary": "Get requirement by ID",
         "description": "Retrieves a specific requirement by ID",
-        "tags": [
-          "Requirements"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -4898,9 +4756,6 @@
       "put": {
         "summary": "Update requirement",
         "description": "Updates a specific requirement by ID",
-        "tags": [
-          "Requirements"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -5108,9 +4963,6 @@
       "delete": {
         "summary": "Delete requirement",
         "description": "Deletes a specific requirement by ID",
-        "tags": [
-          "Requirements"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -5185,9 +5037,6 @@
       "get": {
         "summary": "Get all ready requirements",
         "description": "Retrieves all requirements that are ready to be worked on.",
-        "tags": [
-          "Requirements"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -5311,9 +5160,6 @@
       "post": {
         "summary": "Create new solution",
         "description": "Creates a new solution in the specified workspace",
-        "tags": [
-          "Solutions"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -5573,9 +5419,6 @@
       "get": {
         "summary": "List solutions",
         "description": "Lists all solutions in the specified workspace",
-        "tags": [
-          "Solutions"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -5736,9 +5579,6 @@
       "get": {
         "summary": "Get solution by ID",
         "description": "Retrieves a specific solution by ID",
-        "tags": [
-          "Solutions"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -5907,9 +5747,6 @@
       "put": {
         "summary": "Update solution",
         "description": "Updates a specific solution by ID",
-        "tags": [
-          "Solutions"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -6173,9 +6010,6 @@
       "delete": {
         "summary": "Delete solution",
         "description": "Deletes a specific solution by ID",
-        "tags": [
-          "Solutions"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -6250,9 +6084,6 @@
       "post": {
         "summary": "Create new topic",
         "description": "Creates a new topic in the specified workspace",
-        "tags": [
-          "Topics"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -6356,9 +6187,6 @@
       "get": {
         "summary": "List topics",
         "description": "Lists all topics in the specified workspace",
-        "tags": [
-          "Topics"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -6438,9 +6266,6 @@
       "get": {
         "summary": "Get topic by ID",
         "description": "Retrieves a specific topic by ID",
-        "tags": [
-          "Topics"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -6528,9 +6353,6 @@
       "put": {
         "summary": "Update topic",
         "description": "Updates a specific topic by ID",
-        "tags": [
-          "Topics"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -6640,9 +6462,6 @@
       "delete": {
         "summary": "Delete topic",
         "description": "Deletes a specific topic by ID",
-        "tags": [
-          "Topics"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -6717,9 +6536,6 @@
       "post": {
         "summary": "Create new workspace",
         "description": "Creates a new workspace for the specified organization",
-        "tags": [
-          "Workspaces"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -7044,9 +6860,6 @@
       "get": {
         "summary": "List workspaces",
         "description": "Lists all workspaces for the specified organization",
-        "tags": [
-          "Workspaces"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -7266,9 +7079,6 @@
       "get": {
         "summary": "Get workspace by ID",
         "description": "Retrieves a specific workspace by ID",
-        "tags": [
-          "Workspaces"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -7493,9 +7303,6 @@
       "put": {
         "summary": "Update workspace",
         "description": "Updates a specific workspace by ID",
-        "tags": [
-          "Workspaces"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -7823,9 +7630,6 @@
       "delete": {
         "summary": "Delete workspace",
         "description": "Deletes a specific workspace by ID",
-        "tags": [
-          "Workspaces"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -8021,9 +7825,6 @@
       "post": {
         "summary": "Create new organisation",
         "description": "Creates a new organisation",
-        "tags": [
-          "Organizations"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -8314,9 +8115,6 @@
       "get": {
         "summary": "List organisations",
         "description": "Lists all organisations accessible to the authenticated user",
-        "tags": [
-          "Organizations"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -8497,9 +8295,6 @@
       "get": {
         "summary": "Get organisation by ID",
         "description": "Retrieves a specific organisation by ID",
-        "tags": [
-          "Organizations"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -8722,9 +8517,6 @@
       "put": {
         "summary": "Update organisation",
         "description": "Updates a specific organisation by ID",
-        "tags": [
-          "Organizations"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -9056,9 +8848,6 @@
       "delete": {
         "summary": "Delete organisation",
         "description": "Deletes a specific organisation by ID",
-        "tags": [
-          "Organizations"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -9244,9 +9033,6 @@
       "get": {
         "summary": "Retrieve authenticated user's organization and workspace information",
         "description": "Returns the ID and name of the authenticated user's organization and workspace. This is only callable by an API key which is workspace scoped.",
-        "tags": [
-          "Authentication"
-        ],
         "security": [
           {
             "apiKeyAuth": []
@@ -9743,9 +9529,6 @@
       "post": {
         "summary": "Upload feedback document",
         "description": "Uploads a document related to feedback for processing and analysis",
-        "tags": [
-          "Feedback"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -9867,9 +9650,6 @@
       "post": {
         "summary": "Generate solutions for an opportunity",
         "description": "Asynchronously generates AI-powered solutions based on the feedback associated with an opportunity",
-        "tags": [
-          "Solutions"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -10273,9 +10053,6 @@
       "post": {
         "summary": "Mark all opportunity feedback as seen",
         "description": "Marks all feedback items associated with an opportunity as having been seen by the user",
-        "tags": [
-          "Feedback"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -10334,11 +10111,9 @@
     },
     "/organisations/{orgId}/workspaces/{workspaceId}/opportunities/{opportunityId}/relationships/{action}": {
       "post": {
+        "operationId": "manageOpportunityRelationships",
         "summary": "Manage opportunity relationships",
         "description": "Add or remove relationships between an opportunity and other entities (solutions, outcomes, or feedback)",
-        "tags": [
-          "Opportunities"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -10382,11 +10157,7 @@
             "description": "Action to perform on relationships",
             "example": "add",
             "schema": {
-              "type": "string",
-              "enum": [
-                "add",
-                "remove"
-              ]
+              "$ref": "#/components/schemas/RelationshipAction"
             }
           }
         ],
@@ -10456,9 +10227,6 @@
       "get": {
         "summary": "Get organization status",
         "description": "Retrieves the current status and statistics of an organization",
-        "tags": [
-          "Organizations"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -10557,11 +10325,9 @@
     },
     "/organisations/{orgId}/workspaces/{workspaceId}/outcomes/{outcomeId}/relationships/{action}": {
       "post": {
+        "operationId": "manageOutcomeRelationships",
         "summary": "Manage outcome relationships",
         "description": "Add or remove relationships between an outcome and other entities (opportunities, solutions, or feedback)",
-        "tags": [
-          "Outcomes"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -10605,11 +10371,7 @@
             "description": "Action to perform on relationships",
             "example": "add",
             "schema": {
-              "type": "string",
-              "enum": [
-                "add",
-                "remove"
-              ]
+              "$ref": "#/components/schemas/RelationshipAction"
             }
           }
         ],
@@ -10618,40 +10380,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "opportunityIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Array of opportunity IDs to associate with the outcome",
-                    "example": [
-                      "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
-                    ]
-                  },
-                  "solutionIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Array of solution IDs to associate with the outcome",
-                    "example": [
-                      "f6e5d4c3-b2a1-4b5a-9c8d-1e0f2a3b4c5d"
-                    ]
-                  },
-                  "feedbackIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Array of feedback IDs to associate with the outcome",
-                    "example": [
-                      "c5d4e3f2-a1b2-4c5d-8e9f-0a1b2c3d4e5f"
-                    ]
-                  }
-                },
-                "description": "Request body for managing outcome relationships"
+                "$ref": "#/components/schemas/OutcomeRelationshipsPayload"
               }
             }
           }
@@ -10677,11 +10406,9 @@
     },
     "/organisations/{orgId}/workspaces/{workspaceId}/requirements/{requirementId}/relationships/{action}": {
       "post": {
+        "operationId": "manageRequirementRelationships",
         "summary": "Manage requirement relationships",
         "description": "Add or remove relationships between a requirement and other entities (opportunities, solutions, outcomes, or feedback)",
-        "tags": [
-          "Requirements"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -10725,11 +10452,7 @@
             "description": "Action to perform on relationships",
             "example": "add",
             "schema": {
-              "type": "string",
-              "enum": [
-                "add",
-                "remove"
-              ]
+              "$ref": "#/components/schemas/RelationshipAction"
             }
           }
         ],
@@ -10738,50 +10461,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "opportunityIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Array of opportunity IDs to associate with the requirement",
-                    "example": [
-                      "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
-                    ]
-                  },
-                  "solutionIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Array of solution IDs to associate with the requirement",
-                    "example": [
-                      "f6e5d4c3-b2a1-4b5a-9c8d-1e0f2a3b4c5d"
-                    ]
-                  },
-                  "outcomeIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Array of outcome IDs to associate with the requirement",
-                    "example": [
-                      "c5d4e3f2-a1b2-4c5d-8e9f-0a1b2c3d4e5f"
-                    ]
-                  },
-                  "feedbackIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Array of feedback IDs to associate with the requirement",
-                    "example": [
-                      "b2a1c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
-                    ]
-                  }
-                },
-                "description": "Request body for managing requirement relationships"
+                "$ref": "#/components/schemas/RequirementRelationshipsPayload"
               }
             }
           }
@@ -10807,11 +10487,9 @@
     },
     "/organisations/{orgId}/workspaces/{workspaceId}/solutions/{solutionId}/relationships/{action}": {
       "post": {
+        "operationId": "manageSolutionRelationships",
         "summary": "Manage solution relationships",
         "description": "Add or remove relationships between a solution and other entities (opportunities, outcomes, or feedback)",
-        "tags": [
-          "Solutions"
-        ],
         "security": [
           {
             "bearerAuth": []
@@ -10855,11 +10533,7 @@
             "description": "Action to perform on relationships",
             "example": "add",
             "schema": {
-              "type": "string",
-              "enum": [
-                "add",
-                "remove"
-              ]
+              "$ref": "#/components/schemas/RelationshipAction"
             }
           }
         ],
@@ -10868,40 +10542,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "opportunityIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Array of opportunity IDs to associate with the solution",
-                    "example": [
-                      "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
-                    ]
-                  },
-                  "outcomeIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Array of outcome IDs to associate with the solution",
-                    "example": [
-                      "f6e5d4c3-b2a1-4b5a-9c8d-1e0f2a3b4c5d"
-                    ]
-                  },
-                  "feedbackIds": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "Array of feedback IDs to associate with the solution",
-                    "example": [
-                      "c5d4e3f2-a1b2-4c5d-8e9f-0a1b2c3d4e5f"
-                    ]
-                  }
-                },
-                "description": "Request body for managing solution relationships"
+                "$ref": "#/components/schemas/SolutionRelationshipsPayload"
               }
             }
           }
@@ -11068,6 +10709,226 @@
         "in": "header",
         "name": "Authorization",
         "description": "API key authentication for public API endpoints. This key is scoped by workspace so a unique key is required per workspace within an organisation."
+      }
+    },
+    "schemas": {
+      "CreateOpportunityPayload": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "New",
+              "Solved",
+              "Planned",
+              "InProgress"
+            ]
+          },
+          "solutionsGeneratingState": {
+            "type": "string",
+            "enum": [
+              "generating",
+              "generated",
+              "initial",
+              "error"
+            ]
+          },
+          "createdBy": {
+            "type": "string",
+            "enum": [
+              "user",
+              "generated"
+            ]
+          },
+          "hideContent": {
+            "type": "boolean"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "read": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "status"
+        ],
+        "description": "Request schema for creating an opportunity"
+      },
+      "UpdateOpportunityPayload": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "New",
+              "Solved",
+              "Planned",
+              "InProgress"
+            ]
+          },
+          "solutionsGeneratingState": {
+            "type": "string",
+            "enum": [
+              "generating",
+              "generated",
+              "initial",
+              "error"
+            ]
+          },
+          "hideContent": {
+            "type": "boolean"
+          },
+          "ownerId": {
+            "type": "string"
+          },
+          "read": {
+            "type": "boolean"
+          }
+        },
+        "description": "Request schema for updating an opportunity"
+      },
+      "RelationshipAction": {
+        "type": "string",
+        "enum": [
+          "add",
+          "remove"
+        ]
+      },
+      "OutcomeRelationshipsPayload": {
+        "type": "object",
+        "properties": {
+          "opportunityIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of opportunity IDs to associate with the outcome",
+            "example": [
+              "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
+            ]
+          },
+          "solutionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of solution IDs to associate with the outcome",
+            "example": [
+              "f6e5d4c3-b2a1-4b5a-9c8d-1e0f2a3b4c5d"
+            ]
+          },
+          "feedbackIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of feedback IDs to associate with the outcome",
+            "example": [
+              "c5d4e3f2-a1b2-4c5d-8e9f-0a1b2c3d4e5f"
+            ]
+          }
+        },
+        "description": "Request body for managing outcome relationships"
+      },
+      "RequirementRelationshipsPayload": {
+        "type": "object",
+        "properties": {
+          "opportunityIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of opportunity IDs to associate with the requirement",
+            "example": [
+              "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
+            ]
+          },
+          "solutionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of solution IDs to associate with the requirement",
+            "example": [
+              "f6e5d4c3-b2a1-4b5a-9c8d-1e0f2a3b4c5d"
+            ]
+          },
+          "outcomeIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of outcome IDs to associate with the requirement",
+            "example": [
+              "c5d4e3f2-a1b2-4c5d-8e9f-0a1b2c3d4e5f"
+            ]
+          },
+          "feedbackIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of feedback IDs to associate with the requirement",
+            "example": [
+              "b2a1c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
+            ]
+          }
+        },
+        "description": "Request body for managing requirement relationships"
+      },
+      "SolutionRelationshipsPayload": {
+        "type": "object",
+        "properties": {
+          "opportunityIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of opportunity IDs to associate with the solution",
+            "example": [
+              "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
+            ]
+          },
+          "outcomeIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of outcome IDs to associate with the solution",
+            "example": [
+              "f6e5d4c3-b2a1-4b5a-9c8d-1e0f2a3b4c5d"
+            ]
+          },
+          "feedbackIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of feedback IDs to associate with the solution",
+            "example": [
+              "c5d4e3f2-a1b2-4c5d-8e9f-0a1b2c3d4e5f"
+            ]
+          }
+        },
+        "description": "Request body for managing solution relationships"
       }
     }
   }
