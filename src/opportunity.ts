@@ -62,10 +62,10 @@ export const listOpportunities = (context: UserContext) => async (
 
         const opportunities = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet({
             orgId,
-            workspaceId
+            workspaceId,
         });
 
-        if (opportunities.length === 0) {
+        if (opportunities.data.length === 0) {
             return {
                 content: [{
                     type: "text",
@@ -220,7 +220,7 @@ export const GenerateSolutionsArgsSchema = z.object({
 
 export const generateSolutionsTool = {
     name: "generate_solutions",
-    description: "Start the process of generating solutions for an opportunity.",
+    description: "Start the process of generating solutions for an opportunity. This will use Squad AI to generate new potential solutions for a given opportunity.",
     inputSchema: zodToJsonSchema(GenerateSolutionsArgsSchema),
 };
 

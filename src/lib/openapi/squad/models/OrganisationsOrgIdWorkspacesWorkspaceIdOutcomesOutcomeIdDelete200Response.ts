@@ -13,25 +13,33 @@
  */
 
 import { mapValues } from '../runtime.js';
+import type { OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseData } from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseData.js';
+import {
+    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseDataFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseDataFromJSONTyped,
+    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseDataToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseDataToJSONTyped,
+} from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseData.js';
+
 /**
- * 
+ * Response containing a success message
  * @export
  * @interface OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200Response
  */
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200Response {
     /**
-     * Success message
-     * @type {string}
+     * 
+     * @type {OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseData}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200Response
      */
-    message: string;
+    data: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseData;
 }
 
 /**
  * Check if a given object implements the OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200Response interface.
  */
 export function instanceOfOrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200Response(value: object): value is OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200Response {
-    if (!('message' in value) || value['message'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete20
     }
     return {
         
-        'message': json['message'],
+        'data': OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseDataFromJSON(json['data']),
     };
 }
 
@@ -60,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete20
 
     return {
         
-        'message': value['message'],
+        'data': OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseDataToJSON(value['data']),
     };
 }
 

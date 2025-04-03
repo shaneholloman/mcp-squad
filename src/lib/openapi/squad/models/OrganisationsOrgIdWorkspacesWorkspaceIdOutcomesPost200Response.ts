@@ -13,32 +13,33 @@
  */
 
 import { mapValues } from '../runtime.js';
+import type { OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseData } from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseData.js';
+import {
+    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataFromJSONTyped,
+    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataToJSONTyped,
+} from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseData.js';
+
 /**
- * 
+ * Response containing a single outcome
  * @export
  * @interface OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response
  */
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response {
     /**
      * 
-     * @type {string}
+     * @type {OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseData}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response
      */
-    orgId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response
-     */
-    workspaceId: string;
+    data: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseData;
 }
 
 /**
  * Check if a given object implements the OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response interface.
  */
 export function instanceOfOrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response(value: object): value is OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response {
-    if (!('orgId' in value) || value['orgId'] === undefined) return false;
-    if (!('workspaceId' in value) || value['workspaceId'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }
 
@@ -52,8 +53,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseFr
     }
     return {
         
-        'orgId': json['orgId'],
-        'workspaceId': json['workspaceId'],
+        'data': OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataFromJSON(json['data']),
     };
 }
 
@@ -68,8 +68,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseTo
 
     return {
         
-        'orgId': value['orgId'],
-        'workspaceId': value['workspaceId'],
+        'data': OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataToJSON(value['data']),
     };
 }
 

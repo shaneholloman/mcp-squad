@@ -13,25 +13,33 @@
  */
 
 import { mapValues } from '../runtime.js';
+import type { OrganisationsOrgIdDelete200ResponseData } from './OrganisationsOrgIdDelete200ResponseData.js';
+import {
+    OrganisationsOrgIdDelete200ResponseDataFromJSON,
+    OrganisationsOrgIdDelete200ResponseDataFromJSONTyped,
+    OrganisationsOrgIdDelete200ResponseDataToJSON,
+    OrganisationsOrgIdDelete200ResponseDataToJSONTyped,
+} from './OrganisationsOrgIdDelete200ResponseData.js';
+
 /**
- * 
+ * Response containing a success message
  * @export
  * @interface OrganisationsOrgIdDelete200Response
  */
 export interface OrganisationsOrgIdDelete200Response {
     /**
-     * Success message
-     * @type {string}
+     * 
+     * @type {OrganisationsOrgIdDelete200ResponseData}
      * @memberof OrganisationsOrgIdDelete200Response
      */
-    message: string;
+    data: OrganisationsOrgIdDelete200ResponseData;
 }
 
 /**
  * Check if a given object implements the OrganisationsOrgIdDelete200Response interface.
  */
 export function instanceOfOrganisationsOrgIdDelete200Response(value: object): value is OrganisationsOrgIdDelete200Response {
-    if (!('message' in value) || value['message'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +53,7 @@ export function OrganisationsOrgIdDelete200ResponseFromJSONTyped(json: any, igno
     }
     return {
         
-        'message': json['message'],
+        'data': OrganisationsOrgIdDelete200ResponseDataFromJSON(json['data']),
     };
 }
 
@@ -60,7 +68,7 @@ export function OrganisationsOrgIdDelete200ResponseToJSONTyped(value?: Organisat
 
     return {
         
-        'message': value['message'],
+        'data': OrganisationsOrgIdDelete200ResponseDataToJSON(value['data']),
     };
 }
 

@@ -92,7 +92,7 @@ export const listSolutions = (context: UserContext) => async (
             workspaceId
         });
 
-        if (solutions.length === 0) {
+        if (solutions.data.length === 0) {
             return {
                 content: [{
                     type: "text",
@@ -189,11 +189,11 @@ export const updateSolution = (context: UserContext) => async ({
         });
 
         const updatePayload: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest = {
-            title: title || existingSolution.title,
-            description: description || existingSolution.description,
-            pros: pros || existingSolution.pros,
-            cons: cons || existingSolution.cons,
-            status: status || existingSolution.status
+            title: title || existingSolution.data.title,
+            description: description || existingSolution.data.description,
+            pros: pros || existingSolution.data.pros,
+            cons: cons || existingSolution.data.cons,
+            status: status || existingSolution.data.status
         };
 
         const solution = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPut({

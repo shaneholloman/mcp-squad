@@ -119,17 +119,84 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "orgId": {
-                      "type": "string"
-                    },
-                    "workspaceId": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the outcome",
+                          "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Title of the outcome",
+                          "example": "Increase User Engagement"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Detailed description of the outcome",
+                          "example": "We aim to increase daily active users by 25% in Q3"
+                        },
+                        "priority": {
+                          "type": "number",
+                          "description": "Priority level of the outcome",
+                          "example": 1
+                        },
+                        "trend": {
+                          "type": "number",
+                          "description": "Trend indicator for the outcome",
+                          "example": 0
+                        },
+                        "analyticEvents": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of analytic events associated with the outcome",
+                          "example": [
+                            "user_signup",
+                            "feature_usage"
+                          ]
+                        },
+                        "hideContent": {
+                          "type": "boolean",
+                          "description": "Whether the outcome content should be hidden",
+                          "example": false
+                        },
+                        "ownerId": {
+                          "type": "string",
+                          "description": "ID of the outcome owner",
+                          "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "description": "Creation timestamp",
+                          "example": "2025-02-09T17:35:46Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "description": "Last update timestamp",
+                          "example": "2025-02-09T17:35:46Z"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "title",
+                        "description",
+                        "priority",
+                        "trend",
+                        "analyticEvents",
+                        "hideContent",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Outcome data"
                     }
                   },
                   "required": [
-                    "orgId",
-                    "workspaceId"
-                  ]
+                    "data"
+                  ],
+                  "description": "Response containing a single outcome"
                 }
               }
             }
@@ -345,79 +412,89 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Unique identifier for the outcome",
-                        "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
-                      },
-                      "title": {
-                        "type": "string",
-                        "description": "Title of the outcome",
-                        "example": "Increase User Engagement"
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Detailed description of the outcome",
-                        "example": "We aim to increase daily active users by 25% in Q3"
-                      },
-                      "priority": {
-                        "type": "number",
-                        "description": "Priority level of the outcome",
-                        "example": 1
-                      },
-                      "trend": {
-                        "type": "number",
-                        "description": "Trend indicator for the outcome",
-                        "example": 0
-                      },
-                      "analyticEvents": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Unique identifier for the outcome",
+                            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "Title of the outcome",
+                            "example": "Increase User Engagement"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Detailed description of the outcome",
+                            "example": "We aim to increase daily active users by 25% in Q3"
+                          },
+                          "priority": {
+                            "type": "number",
+                            "description": "Priority level of the outcome",
+                            "example": 1
+                          },
+                          "trend": {
+                            "type": "number",
+                            "description": "Trend indicator for the outcome",
+                            "example": 0
+                          },
+                          "analyticEvents": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "List of analytic events associated with the outcome",
+                            "example": [
+                              "user_signup",
+                              "feature_usage"
+                            ]
+                          },
+                          "hideContent": {
+                            "type": "boolean",
+                            "description": "Whether the outcome content should be hidden",
+                            "example": false
+                          },
+                          "ownerId": {
+                            "type": "string",
+                            "description": "ID of the outcome owner",
+                            "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "description": "Creation timestamp",
+                            "example": "2025-02-09T17:35:46Z"
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "description": "Last update timestamp",
+                            "example": "2025-02-09T17:35:46Z"
+                          }
                         },
-                        "description": "List of analytic events associated with the outcome",
-                        "example": [
-                          "user_signup",
-                          "feature_usage"
+                        "required": [
+                          "id",
+                          "title",
+                          "description",
+                          "priority",
+                          "trend",
+                          "analyticEvents",
+                          "hideContent",
+                          "createdAt",
+                          "updatedAt"
                         ]
                       },
-                      "hideContent": {
-                        "type": "boolean",
-                        "description": "Whether the outcome content should be hidden",
-                        "example": false
-                      },
-                      "ownerId": {
-                        "type": "string",
-                        "description": "ID of the outcome owner",
-                        "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "description": "Creation timestamp",
-                        "example": "2025-02-09T17:35:46Z"
-                      },
-                      "updatedAt": {
-                        "type": "string",
-                        "description": "Last update timestamp",
-                        "example": "2025-02-09T17:35:46Z"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "title",
-                      "description",
-                      "priority",
-                      "trend",
-                      "analyticEvents",
-                      "hideContent",
-                      "createdAt",
-                      "updatedAt"
-                    ]
-                  }
+                      "description": "Array of outcomes"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing an array of outcomes"
                 }
               }
             }
@@ -603,6 +680,9 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "$ref": "#/components/parameters/OutcomeRelationshipsParam"
           }
         ],
         "responses": {
@@ -613,74 +693,84 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "Unique identifier for the outcome",
-                      "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
-                    },
-                    "title": {
-                      "type": "string",
-                      "description": "Title of the outcome",
-                      "example": "Increase User Engagement"
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Detailed description of the outcome",
-                      "example": "We aim to increase daily active users by 25% in Q3"
-                    },
-                    "priority": {
-                      "type": "number",
-                      "description": "Priority level of the outcome",
-                      "example": 1
-                    },
-                    "trend": {
-                      "type": "number",
-                      "description": "Trend indicator for the outcome",
-                      "example": 0
-                    },
-                    "analyticEvents": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the outcome",
+                          "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Title of the outcome",
+                          "example": "Increase User Engagement"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Detailed description of the outcome",
+                          "example": "We aim to increase daily active users by 25% in Q3"
+                        },
+                        "priority": {
+                          "type": "number",
+                          "description": "Priority level of the outcome",
+                          "example": 1
+                        },
+                        "trend": {
+                          "type": "number",
+                          "description": "Trend indicator for the outcome",
+                          "example": 0
+                        },
+                        "analyticEvents": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of analytic events associated with the outcome",
+                          "example": [
+                            "user_signup",
+                            "feature_usage"
+                          ]
+                        },
+                        "hideContent": {
+                          "type": "boolean",
+                          "description": "Whether the outcome content should be hidden",
+                          "example": false
+                        },
+                        "ownerId": {
+                          "type": "string",
+                          "description": "ID of the outcome owner",
+                          "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "description": "Creation timestamp",
+                          "example": "2025-02-09T17:35:46Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "description": "Last update timestamp",
+                          "example": "2025-02-09T17:35:46Z"
+                        }
                       },
-                      "description": "List of analytic events associated with the outcome",
-                      "example": [
-                        "user_signup",
-                        "feature_usage"
-                      ]
-                    },
-                    "hideContent": {
-                      "type": "boolean",
-                      "description": "Whether the outcome content should be hidden",
-                      "example": false
-                    },
-                    "ownerId": {
-                      "type": "string",
-                      "description": "ID of the outcome owner",
-                      "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "description": "Creation timestamp",
-                      "example": "2025-02-09T17:35:46Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "description": "Last update timestamp",
-                      "example": "2025-02-09T17:35:46Z"
+                      "required": [
+                        "id",
+                        "title",
+                        "description",
+                        "priority",
+                        "trend",
+                        "analyticEvents",
+                        "hideContent",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Outcome data"
                     }
                   },
                   "required": [
-                    "id",
-                    "title",
-                    "description",
-                    "priority",
-                    "trend",
-                    "analyticEvents",
-                    "hideContent",
-                    "createdAt",
-                    "updatedAt"
-                  ]
+                    "data"
+                  ],
+                  "description": "Response containing a single outcome"
                 }
               }
             }
@@ -935,74 +1025,84 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string",
-                      "description": "Unique identifier for the outcome",
-                      "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
-                    },
-                    "title": {
-                      "type": "string",
-                      "description": "Title of the outcome",
-                      "example": "Increase User Engagement"
-                    },
-                    "description": {
-                      "type": "string",
-                      "description": "Detailed description of the outcome",
-                      "example": "We aim to increase daily active users by 25% in Q3"
-                    },
-                    "priority": {
-                      "type": "number",
-                      "description": "Priority level of the outcome",
-                      "example": 1
-                    },
-                    "trend": {
-                      "type": "number",
-                      "description": "Trend indicator for the outcome",
-                      "example": 0
-                    },
-                    "analyticEvents": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Unique identifier for the outcome",
+                          "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+                        },
+                        "title": {
+                          "type": "string",
+                          "description": "Title of the outcome",
+                          "example": "Increase User Engagement"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Detailed description of the outcome",
+                          "example": "We aim to increase daily active users by 25% in Q3"
+                        },
+                        "priority": {
+                          "type": "number",
+                          "description": "Priority level of the outcome",
+                          "example": 1
+                        },
+                        "trend": {
+                          "type": "number",
+                          "description": "Trend indicator for the outcome",
+                          "example": 0
+                        },
+                        "analyticEvents": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of analytic events associated with the outcome",
+                          "example": [
+                            "user_signup",
+                            "feature_usage"
+                          ]
+                        },
+                        "hideContent": {
+                          "type": "boolean",
+                          "description": "Whether the outcome content should be hidden",
+                          "example": false
+                        },
+                        "ownerId": {
+                          "type": "string",
+                          "description": "ID of the outcome owner",
+                          "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
+                        },
+                        "createdAt": {
+                          "type": "string",
+                          "description": "Creation timestamp",
+                          "example": "2025-02-09T17:35:46Z"
+                        },
+                        "updatedAt": {
+                          "type": "string",
+                          "description": "Last update timestamp",
+                          "example": "2025-02-09T17:35:46Z"
+                        }
                       },
-                      "description": "List of analytic events associated with the outcome",
-                      "example": [
-                        "user_signup",
-                        "feature_usage"
-                      ]
-                    },
-                    "hideContent": {
-                      "type": "boolean",
-                      "description": "Whether the outcome content should be hidden",
-                      "example": false
-                    },
-                    "ownerId": {
-                      "type": "string",
-                      "description": "ID of the outcome owner",
-                      "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
-                    },
-                    "createdAt": {
-                      "type": "string",
-                      "description": "Creation timestamp",
-                      "example": "2025-02-09T17:35:46Z"
-                    },
-                    "updatedAt": {
-                      "type": "string",
-                      "description": "Last update timestamp",
-                      "example": "2025-02-09T17:35:46Z"
+                      "required": [
+                        "id",
+                        "title",
+                        "description",
+                        "priority",
+                        "trend",
+                        "analyticEvents",
+                        "hideContent",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Outcome data"
                     }
                   },
                   "required": [
-                    "id",
-                    "title",
-                    "description",
-                    "priority",
-                    "trend",
-                    "analyticEvents",
-                    "hideContent",
-                    "createdAt",
-                    "updatedAt"
-                  ]
+                    "data"
+                  ],
+                  "description": "Response containing a single outcome"
                 }
               }
             }
@@ -1265,15 +1365,25 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Success message",
-                      "example": "Outcome deleted successfully"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Success message",
+                          "example": "Outcome deleted successfully"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "description": "Success message data"
                     }
                   },
                   "required": [
-                    "message"
-                  ]
+                    "data"
+                  ],
+                  "description": "Response containing a success message"
                 }
               }
             }
@@ -1836,66 +1946,75 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "Feedback",
-                        "Bug",
-                        "FeatureRequest"
-                      ]
-                    },
-                    "source": {
-                      "type": "string"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "feedback": {
-                      "type": "string"
-                    },
-                    "seen": {
-                      "type": "boolean"
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "organisationId": {
-                      "type": "string"
-                    },
-                    "workspaceId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Feedback",
+                            "Bug",
+                            "FeatureRequest"
+                          ]
+                        },
+                        "source": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "feedback": {
+                          "type": "string"
+                        },
+                        "seen": {
+                          "type": "boolean"
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "organisationId": {
+                          "type": "string"
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "source",
+                        "title",
+                        "description",
+                        "feedback",
+                        "seen",
+                        "hideContent",
+                        "organisationId",
+                        "workspaceId",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Feedback data"
                     }
                   },
                   "required": [
-                    "id",
-                    "type",
-                    "source",
-                    "title",
-                    "description",
-                    "feedback",
-                    "seen",
-                    "hideContent",
-                    "organisationId",
-                    "workspaceId",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Feedback data from a user"
+                  "description": "Response containing a single feedback item"
                 }
               }
             }
@@ -2078,7 +2197,7 @@
       },
       "get": {
         "summary": "List feedback",
-        "description": "Lists all feedback items in the specified workspace",
+        "description": "Lists all feedback in the specified workspace",
         "security": [
           {
             "bearerAuth": []
@@ -2112,71 +2231,81 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "Feedback",
+                              "Bug",
+                              "FeatureRequest"
+                            ]
+                          },
+                          "source": {
+                            "type": "string"
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "feedback": {
+                            "type": "string"
+                          },
+                          "seen": {
+                            "type": "boolean"
+                          },
+                          "hideContent": {
+                            "type": "boolean"
+                          },
+                          "ownerId": {
+                            "type": "string"
+                          },
+                          "organisationId": {
+                            "type": "string"
+                          },
+                          "workspaceId": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "type",
+                          "source",
+                          "title",
+                          "description",
+                          "feedback",
+                          "seen",
+                          "hideContent",
+                          "organisationId",
+                          "workspaceId",
+                          "createdAt",
+                          "updatedAt"
+                        ],
+                        "description": "Feedback data from a user"
                       },
-                      "type": {
-                        "type": "string",
-                        "enum": [
-                          "Feedback",
-                          "Bug",
-                          "FeatureRequest"
-                        ]
-                      },
-                      "source": {
-                        "type": "string"
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "feedback": {
-                        "type": "string"
-                      },
-                      "seen": {
-                        "type": "boolean"
-                      },
-                      "hideContent": {
-                        "type": "boolean"
-                      },
-                      "ownerId": {
-                        "type": "string"
-                      },
-                      "organisationId": {
-                        "type": "string"
-                      },
-                      "workspaceId": {
-                        "type": "string"
-                      },
-                      "createdAt": {
-                        "type": "string"
-                      },
-                      "updatedAt": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type",
-                      "source",
-                      "title",
-                      "description",
-                      "feedback",
-                      "seen",
-                      "hideContent",
-                      "organisationId",
-                      "workspaceId",
-                      "createdAt",
-                      "updatedAt"
-                    ],
-                    "description": "Feedback data from a user"
-                  }
+                      "description": "Array of feedback items"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing an array of feedback items"
                 }
               }
             }
@@ -2250,6 +2379,41 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
           }
         }
       }
@@ -2257,7 +2421,7 @@
     "/organisations/{orgId}/workspaces/{workspaceId}/feedback/{feedbackId}": {
       "get": {
         "summary": "Get feedback by ID",
-        "description": "Retrieves a specific feedback item by ID",
+        "description": "Retrieves a specific feedback by ID",
         "security": [
           {
             "bearerAuth": []
@@ -2293,6 +2457,9 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "$ref": "#/components/parameters/FeedbackRelationshipsParam"
           }
         ],
         "responses": {
@@ -2303,66 +2470,75 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "type": {
-                      "type": "string",
-                      "enum": [
-                        "Feedback",
-                        "Bug",
-                        "FeatureRequest"
-                      ]
-                    },
-                    "source": {
-                      "type": "string"
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "feedback": {
-                      "type": "string"
-                    },
-                    "seen": {
-                      "type": "boolean"
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "organisationId": {
-                      "type": "string"
-                    },
-                    "workspaceId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "Feedback",
+                            "Bug",
+                            "FeatureRequest"
+                          ]
+                        },
+                        "source": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "feedback": {
+                          "type": "string"
+                        },
+                        "seen": {
+                          "type": "boolean"
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "organisationId": {
+                          "type": "string"
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "type",
+                        "source",
+                        "title",
+                        "description",
+                        "feedback",
+                        "seen",
+                        "hideContent",
+                        "organisationId",
+                        "workspaceId",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Feedback data"
                     }
                   },
                   "required": [
-                    "id",
-                    "type",
-                    "source",
-                    "title",
-                    "description",
-                    "feedback",
-                    "seen",
-                    "hideContent",
-                    "organisationId",
-                    "workspaceId",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Feedback data from a user"
+                  "description": "Response containing a single feedback item"
                 }
               }
             }
@@ -2471,12 +2647,47 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
         "summary": "Delete feedback",
-        "description": "Deletes a specific feedback item by ID",
+        "description": "Deletes a specific feedback by ID",
         "security": [
           {
             "bearerAuth": []
@@ -2522,15 +2733,25 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Success message",
-                      "example": "Feedback deleted successfully"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Success message",
+                          "example": "Feedback deleted successfully"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "description": "Success message data"
                     }
                   },
                   "required": [
-                    "message"
-                  ]
+                    "data"
+                  ],
+                  "description": "Response containing a success message"
                 }
               }
             }
@@ -2639,6 +2860,41 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
           }
         }
       }
@@ -2647,6 +2903,11 @@
       "post": {
         "summary": "Generate mock feedback",
         "description": "Creates mock feedback data for testing and development purposes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "in": "path",
@@ -2669,165 +2930,83 @@
             }
           }
         ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "count": {
-                    "type": "number",
-                    "description": "Number of mock feedback items to generate",
-                    "example": 5
-                  }
-                },
-                "description": "Mock feedback generation options"
-              }
-            }
-          }
-        },
         "responses": {
           "200": {
-            "description": "Mock feedback generated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string",
-                        "enum": [
-                          "Feedback",
-                          "Bug",
-                          "FeatureRequest"
-                        ]
-                      },
-                      "source": {
-                        "type": "string"
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "feedback": {
-                        "type": "string"
-                      },
-                      "seen": {
-                        "type": "boolean"
-                      },
-                      "hideContent": {
-                        "type": "boolean"
-                      },
-                      "ownerId": {
-                        "type": "string"
-                      },
-                      "organisationId": {
-                        "type": "string"
-                      },
-                      "workspaceId": {
-                        "type": "string"
-                      },
-                      "createdAt": {
-                        "type": "string"
-                      },
-                      "updatedAt": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "type",
-                      "source",
-                      "title",
-                      "description",
-                      "feedback",
-                      "seen",
-                      "hideContent",
-                      "organisationId",
-                      "workspaceId",
-                      "createdAt",
-                      "updatedAt"
-                    ],
-                    "description": "Feedback data from a user"
-                  },
-                  "description": "Array of generated mock feedback items"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - Invalid input",
+            "description": "Mock feedback created successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "error": {
+                    "data": {
                       "type": "object",
                       "properties": {
-                        "code": {
-                          "type": "string",
-                          "description": "Error code identifier",
-                          "example": "INVALID_REQUEST"
+                        "id": {
+                          "type": "string"
                         },
-                        "description": {
+                        "type": {
                           "type": "string",
-                          "description": "Human-readable error description",
-                          "example": "One or more fields are invalid"
-                        },
-                        "fields": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          },
-                          "description": "List of field names that are missing or invalid",
-                          "example": [
-                            "title",
-                            "description"
+                          "enum": [
+                            "Feedback",
+                            "Bug",
+                            "FeatureRequest"
                           ]
                         },
-                        "validationErrors": {
-                          "type": "object",
-                          "additionalProperties": {},
-                          "description": "Detailed validation error information for each invalid field",
-                          "example": {
-                            "invalidFields": {
-                              "title": {
-                                "type": "too_small",
-                                "message": "Title must be at least 3 characters long",
-                                "path": [
-                                  "title"
-                                ]
-                              },
-                              "deadline": {
-                                "type": "invalid_date",
-                                "message": "Deadline must be a valid date in the future",
-                                "path": [
-                                  "deadline"
-                                ]
-                              }
-                            }
-                          }
+                        "source": {
+                          "type": "string"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "feedback": {
+                          "type": "string"
+                        },
+                        "seen": {
+                          "type": "boolean"
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "organisationId": {
+                          "type": "string"
+                        },
+                        "workspaceId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
                         }
                       },
                       "required": [
-                        "code",
-                        "description"
-                      ]
+                        "id",
+                        "type",
+                        "source",
+                        "title",
+                        "description",
+                        "feedback",
+                        "seen",
+                        "hideContent",
+                        "organisationId",
+                        "workspaceId",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Feedback data"
                     }
                   },
                   "required": [
-                    "error"
+                    "data"
                   ],
-                  "description": "Bad Request - Invalid input parameters or missing required fields"
+                  "description": "Response containing a single feedback item"
                 }
               }
             }
@@ -2863,6 +3042,41 @@
                     "error"
                   ],
                   "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
                 }
               }
             }
@@ -2955,69 +3169,78 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "read": {
-                      "type": "boolean"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "New",
-                        "Solved",
-                        "Planned",
-                        "InProgress"
-                      ]
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "solutionsGeneratingState": {
-                      "type": "string",
-                      "enum": [
-                        "generating",
-                        "generated",
-                        "initial",
-                        "error"
-                      ]
-                    },
-                    "createdBy": {
-                      "type": "string",
-                      "enum": [
-                        "user",
-                        "generated"
-                      ]
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "read": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "New",
+                            "Solved",
+                            "Planned",
+                            "InProgress"
+                          ]
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "solutionsGeneratingState": {
+                          "type": "string",
+                          "enum": [
+                            "generating",
+                            "generated",
+                            "initial",
+                            "error"
+                          ]
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "generated"
+                          ]
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "read",
+                        "status",
+                        "title",
+                        "description",
+                        "solutionsGeneratingState",
+                        "createdBy",
+                        "hideContent",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Opportunity data"
                     }
                   },
                   "required": [
-                    "id",
-                    "read",
-                    "status",
-                    "title",
-                    "description",
-                    "solutionsGeneratingState",
-                    "createdBy",
-                    "hideContent",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Opportunity data for a business"
+                  "description": "Response containing a single opportunity"
                 }
               }
             }
@@ -3270,74 +3493,84 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "read": {
+                            "type": "boolean"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "New",
+                              "Solved",
+                              "Planned",
+                              "InProgress"
+                            ]
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "solutionsGeneratingState": {
+                            "type": "string",
+                            "enum": [
+                              "generating",
+                              "generated",
+                              "initial",
+                              "error"
+                            ]
+                          },
+                          "createdBy": {
+                            "type": "string",
+                            "enum": [
+                              "user",
+                              "generated"
+                            ]
+                          },
+                          "hideContent": {
+                            "type": "boolean"
+                          },
+                          "ownerId": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "read",
+                          "status",
+                          "title",
+                          "description",
+                          "solutionsGeneratingState",
+                          "createdBy",
+                          "hideContent",
+                          "createdAt",
+                          "updatedAt"
+                        ],
+                        "description": "Opportunity data for a business"
                       },
-                      "read": {
-                        "type": "boolean"
-                      },
-                      "status": {
-                        "type": "string",
-                        "enum": [
-                          "New",
-                          "Solved",
-                          "Planned",
-                          "InProgress"
-                        ]
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "solutionsGeneratingState": {
-                        "type": "string",
-                        "enum": [
-                          "generating",
-                          "generated",
-                          "initial",
-                          "error"
-                        ]
-                      },
-                      "createdBy": {
-                        "type": "string",
-                        "enum": [
-                          "user",
-                          "generated"
-                        ]
-                      },
-                      "hideContent": {
-                        "type": "boolean"
-                      },
-                      "ownerId": {
-                        "type": "string"
-                      },
-                      "createdAt": {
-                        "type": "string"
-                      },
-                      "updatedAt": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "read",
-                      "status",
-                      "title",
-                      "description",
-                      "solutionsGeneratingState",
-                      "createdBy",
-                      "hideContent",
-                      "createdAt",
-                      "updatedAt"
-                    ],
-                    "description": "Opportunity data for a business"
-                  }
+                      "description": "Array of opportunities"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing an array of opportunities"
                 }
               }
             }
@@ -3490,6 +3723,9 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "$ref": "#/components/parameters/OpportunityRelationshipsParam"
           }
         ],
         "responses": {
@@ -3500,69 +3736,78 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "read": {
-                      "type": "boolean"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "New",
-                        "Solved",
-                        "Planned",
-                        "InProgress"
-                      ]
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "solutionsGeneratingState": {
-                      "type": "string",
-                      "enum": [
-                        "generating",
-                        "generated",
-                        "initial",
-                        "error"
-                      ]
-                    },
-                    "createdBy": {
-                      "type": "string",
-                      "enum": [
-                        "user",
-                        "generated"
-                      ]
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "read": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "New",
+                            "Solved",
+                            "Planned",
+                            "InProgress"
+                          ]
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "solutionsGeneratingState": {
+                          "type": "string",
+                          "enum": [
+                            "generating",
+                            "generated",
+                            "initial",
+                            "error"
+                          ]
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "generated"
+                          ]
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "read",
+                        "status",
+                        "title",
+                        "description",
+                        "solutionsGeneratingState",
+                        "createdBy",
+                        "hideContent",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Opportunity data"
                     }
                   },
                   "required": [
-                    "id",
-                    "read",
-                    "status",
-                    "title",
-                    "description",
-                    "solutionsGeneratingState",
-                    "createdBy",
-                    "hideContent",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Opportunity data for a business"
+                  "description": "Response containing a single opportunity"
                 }
               }
             }
@@ -3768,69 +4013,78 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "read": {
-                      "type": "boolean"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "New",
-                        "Solved",
-                        "Planned",
-                        "InProgress"
-                      ]
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "solutionsGeneratingState": {
-                      "type": "string",
-                      "enum": [
-                        "generating",
-                        "generated",
-                        "initial",
-                        "error"
-                      ]
-                    },
-                    "createdBy": {
-                      "type": "string",
-                      "enum": [
-                        "user",
-                        "generated"
-                      ]
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "read": {
+                          "type": "boolean"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "New",
+                            "Solved",
+                            "Planned",
+                            "InProgress"
+                          ]
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "solutionsGeneratingState": {
+                          "type": "string",
+                          "enum": [
+                            "generating",
+                            "generated",
+                            "initial",
+                            "error"
+                          ]
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "generated"
+                          ]
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "read",
+                        "status",
+                        "title",
+                        "description",
+                        "solutionsGeneratingState",
+                        "createdBy",
+                        "hideContent",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Opportunity data"
                     }
                   },
                   "required": [
-                    "id",
-                    "read",
-                    "status",
-                    "title",
-                    "description",
-                    "solutionsGeneratingState",
-                    "createdBy",
-                    "hideContent",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Opportunity data for a business"
+                  "description": "Response containing a single opportunity"
                 }
               }
             }
@@ -4095,15 +4349,25 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Success message",
-                      "example": "Opportunity deleted successfully"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Success message",
+                          "example": "Opportunity deleted successfully"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "description": "Success message data"
                     }
                   },
                   "required": [
-                    "message"
-                  ]
+                    "data"
+                  ],
+                  "description": "Response containing a success message"
                 }
               }
             }
@@ -4638,6 +4902,9 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "$ref": "#/components/parameters/RequirementRelationshipsParam"
           }
         ],
         "responses": {
@@ -5296,111 +5563,120 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "systemPrompt": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "aiProcessingState": {
-                      "type": "string",
-                      "enum": [
-                        "INITIAL",
-                        "PROCESSING",
-                        "FINISHED",
-                        "ERROR"
-                      ]
-                    },
-                    "refinementLog": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "role": {
-                            "type": "string",
-                            "enum": [
-                              "user",
-                              "assistant"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "systemPrompt": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "aiProcessingState": {
+                          "type": "string",
+                          "enum": [
+                            "INITIAL",
+                            "PROCESSING",
+                            "FINISHED",
+                            "ERROR"
+                          ]
+                        },
+                        "refinementLog": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "enum": [
+                                  "user",
+                                  "assistant"
+                                ]
+                              },
+                              "content": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "role",
+                              "content"
                             ]
-                          },
-                          "content": {
+                          }
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "New",
+                            "Solved",
+                            "Planned",
+                            "InProgress"
+                          ]
+                        },
+                        "pros": {
+                          "type": "array",
+                          "items": {
                             "type": "string"
                           }
                         },
-                        "required": [
-                          "id",
-                          "role",
-                          "content"
-                        ]
-                      }
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "New",
-                        "Solved",
-                        "Planned",
-                        "InProgress"
-                      ]
-                    },
-                    "pros": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "cons": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "createdBy": {
-                      "type": "string",
-                      "enum": [
-                        "user",
-                        "generated"
-                      ]
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                        "cons": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "generated"
+                          ]
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "systemPrompt",
+                        "aiProcessingState",
+                        "refinementLog",
+                        "title",
+                        "description",
+                        "status",
+                        "pros",
+                        "cons",
+                        "hideContent",
+                        "createdBy",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Solution data"
                     }
                   },
                   "required": [
-                    "id",
-                    "systemPrompt",
-                    "aiProcessingState",
-                    "refinementLog",
-                    "title",
-                    "description",
-                    "status",
-                    "pros",
-                    "cons",
-                    "hideContent",
-                    "createdBy",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Solution data for an opportunity"
+                  "description": "Response containing a single solution"
                 }
               }
             }
@@ -5452,116 +5728,126 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "systemPrompt": {
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "aiProcessingState": {
-                        "type": "string",
-                        "enum": [
-                          "INITIAL",
-                          "PROCESSING",
-                          "FINISHED",
-                          "ERROR"
-                        ]
-                      },
-                      "refinementLog": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string"
-                            },
-                            "role": {
-                              "type": "string",
-                              "enum": [
-                                "user",
-                                "assistant"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "systemPrompt": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "aiProcessingState": {
+                            "type": "string",
+                            "enum": [
+                              "INITIAL",
+                              "PROCESSING",
+                              "FINISHED",
+                              "ERROR"
+                            ]
+                          },
+                          "refinementLog": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "role": {
+                                  "type": "string",
+                                  "enum": [
+                                    "user",
+                                    "assistant"
+                                  ]
+                                },
+                                "content": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "role",
+                                "content"
                               ]
-                            },
-                            "content": {
+                            }
+                          },
+                          "title": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "New",
+                              "Solved",
+                              "Planned",
+                              "InProgress"
+                            ]
+                          },
+                          "pros": {
+                            "type": "array",
+                            "items": {
                               "type": "string"
                             }
                           },
-                          "required": [
-                            "id",
-                            "role",
-                            "content"
-                          ]
-                        }
+                          "cons": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "hideContent": {
+                            "type": "boolean"
+                          },
+                          "createdBy": {
+                            "type": "string",
+                            "enum": [
+                              "user",
+                              "generated"
+                            ]
+                          },
+                          "ownerId": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "systemPrompt",
+                          "aiProcessingState",
+                          "refinementLog",
+                          "title",
+                          "description",
+                          "status",
+                          "pros",
+                          "cons",
+                          "hideContent",
+                          "createdBy",
+                          "createdAt",
+                          "updatedAt"
+                        ],
+                        "description": "Solution data for an opportunity"
                       },
-                      "title": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "status": {
-                        "type": "string",
-                        "enum": [
-                          "New",
-                          "Solved",
-                          "Planned",
-                          "InProgress"
-                        ]
-                      },
-                      "pros": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "cons": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "hideContent": {
-                        "type": "boolean"
-                      },
-                      "createdBy": {
-                        "type": "string",
-                        "enum": [
-                          "user",
-                          "generated"
-                        ]
-                      },
-                      "ownerId": {
-                        "type": "string"
-                      },
-                      "createdAt": {
-                        "type": "string"
-                      },
-                      "updatedAt": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "systemPrompt",
-                      "aiProcessingState",
-                      "refinementLog",
-                      "title",
-                      "description",
-                      "status",
-                      "pros",
-                      "cons",
-                      "hideContent",
-                      "createdBy",
-                      "createdAt",
-                      "updatedAt"
-                    ],
-                    "description": "Solution data for an opportunity"
-                  }
+                      "description": "Array of solutions"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing an array of solutions"
                 }
               }
             }
@@ -5614,6 +5900,9 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "$ref": "#/components/parameters/SolutionRelationshipsParam"
           }
         ],
         "responses": {
@@ -5624,111 +5913,120 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "systemPrompt": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "aiProcessingState": {
-                      "type": "string",
-                      "enum": [
-                        "INITIAL",
-                        "PROCESSING",
-                        "FINISHED",
-                        "ERROR"
-                      ]
-                    },
-                    "refinementLog": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "role": {
-                            "type": "string",
-                            "enum": [
-                              "user",
-                              "assistant"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "systemPrompt": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "aiProcessingState": {
+                          "type": "string",
+                          "enum": [
+                            "INITIAL",
+                            "PROCESSING",
+                            "FINISHED",
+                            "ERROR"
+                          ]
+                        },
+                        "refinementLog": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "enum": [
+                                  "user",
+                                  "assistant"
+                                ]
+                              },
+                              "content": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "role",
+                              "content"
                             ]
-                          },
-                          "content": {
+                          }
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "New",
+                            "Solved",
+                            "Planned",
+                            "InProgress"
+                          ]
+                        },
+                        "pros": {
+                          "type": "array",
+                          "items": {
                             "type": "string"
                           }
                         },
-                        "required": [
-                          "id",
-                          "role",
-                          "content"
-                        ]
-                      }
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "New",
-                        "Solved",
-                        "Planned",
-                        "InProgress"
-                      ]
-                    },
-                    "pros": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "cons": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "createdBy": {
-                      "type": "string",
-                      "enum": [
-                        "user",
-                        "generated"
-                      ]
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                        "cons": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "generated"
+                          ]
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "systemPrompt",
+                        "aiProcessingState",
+                        "refinementLog",
+                        "title",
+                        "description",
+                        "status",
+                        "pros",
+                        "cons",
+                        "hideContent",
+                        "createdBy",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Solution data"
                     }
                   },
                   "required": [
-                    "id",
-                    "systemPrompt",
-                    "aiProcessingState",
-                    "refinementLog",
-                    "title",
-                    "description",
-                    "status",
-                    "pros",
-                    "cons",
-                    "hideContent",
-                    "createdBy",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Solution data for an opportunity"
+                  "description": "Response containing a single solution"
                 }
               }
             }
@@ -5884,111 +6182,120 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "systemPrompt": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "aiProcessingState": {
-                      "type": "string",
-                      "enum": [
-                        "INITIAL",
-                        "PROCESSING",
-                        "FINISHED",
-                        "ERROR"
-                      ]
-                    },
-                    "refinementLog": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "role": {
-                            "type": "string",
-                            "enum": [
-                              "user",
-                              "assistant"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "systemPrompt": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "aiProcessingState": {
+                          "type": "string",
+                          "enum": [
+                            "INITIAL",
+                            "PROCESSING",
+                            "FINISHED",
+                            "ERROR"
+                          ]
+                        },
+                        "refinementLog": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "enum": [
+                                  "user",
+                                  "assistant"
+                                ]
+                              },
+                              "content": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "role",
+                              "content"
                             ]
-                          },
-                          "content": {
+                          }
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "New",
+                            "Solved",
+                            "Planned",
+                            "InProgress"
+                          ]
+                        },
+                        "pros": {
+                          "type": "array",
+                          "items": {
                             "type": "string"
                           }
                         },
-                        "required": [
-                          "id",
-                          "role",
-                          "content"
-                        ]
-                      }
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "New",
-                        "Solved",
-                        "Planned",
-                        "InProgress"
-                      ]
-                    },
-                    "pros": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "cons": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "createdBy": {
-                      "type": "string",
-                      "enum": [
-                        "user",
-                        "generated"
-                      ]
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                        "cons": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "createdBy": {
+                          "type": "string",
+                          "enum": [
+                            "user",
+                            "generated"
+                          ]
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "systemPrompt",
+                        "aiProcessingState",
+                        "refinementLog",
+                        "title",
+                        "description",
+                        "status",
+                        "pros",
+                        "cons",
+                        "hideContent",
+                        "createdBy",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Solution data"
                     }
                   },
                   "required": [
-                    "id",
-                    "systemPrompt",
-                    "aiProcessingState",
-                    "refinementLog",
-                    "title",
-                    "description",
-                    "status",
-                    "pros",
-                    "cons",
-                    "hideContent",
-                    "createdBy",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Solution data for an opportunity"
+                  "description": "Response containing a single solution"
                 }
               }
             }
@@ -6055,15 +6362,25 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Success message",
-                      "example": "Solution deleted successfully"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Success message",
+                          "example": "Solution deleted successfully"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "description": "Success message data"
                     }
                   },
                   "required": [
-                    "message"
-                  ]
+                    "data"
+                  ],
+                  "description": "Response containing a success message"
                 }
               }
             }
@@ -6602,46 +6919,55 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "outcomes": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "homepageUrl": {
-                      "type": "string"
-                    },
-                    "logoUrl": {
-                      "type": "string"
-                    },
-                    "missionStatement": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "outcomes": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "homepageUrl": {
+                          "type": "string"
+                        },
+                        "logoUrl": {
+                          "type": "string"
+                        },
+                        "missionStatement": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "outcomes",
+                        "name",
+                        "missionStatement",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Workspace data"
                     }
                   },
                   "required": [
-                    "id",
-                    "outcomes",
-                    "name",
-                    "missionStatement",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Workspace data"
+                  "description": "Response containing a single workspace"
                 }
               }
             }
@@ -6785,41 +7111,6 @@
               }
             }
           },
-          "404": {
-            "description": "Organization not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "description": "Error code identifier",
-                          "example": "NOT_FOUND"
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "Human-readable error description",
-                          "example": "The requested resource was not found"
-                        }
-                      },
-                      "required": [
-                        "code",
-                        "description"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "error"
-                  ],
-                  "description": "Not Found - The requested resource does not exist"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Internal Server Error",
             "content": {
@@ -6883,51 +7174,61 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "outcomes": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "homepageUrl": {
+                            "type": "string"
+                          },
+                          "logoUrl": {
+                            "type": "string"
+                          },
+                          "missionStatement": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "outcomes",
+                          "name",
+                          "missionStatement",
+                          "createdAt",
+                          "updatedAt"
+                        ],
+                        "description": "Workspace data"
                       },
-                      "outcomes": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "homepageUrl": {
-                        "type": "string"
-                      },
-                      "logoUrl": {
-                        "type": "string"
-                      },
-                      "missionStatement": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "createdAt": {
-                        "type": "string"
-                      },
-                      "updatedAt": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "outcomes",
-                      "name",
-                      "missionStatement",
-                      "createdAt",
-                      "updatedAt"
-                    ],
-                    "description": "Workspace data"
-                  }
+                      "description": "Array of workspaces"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing an array of workspaces"
                 }
               }
             }
@@ -6998,41 +7299,6 @@
                     "error"
                   ],
                   "description": "Forbidden - Insufficient permissions to access this resource"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Organization not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "description": "Error code identifier",
-                          "example": "NOT_FOUND"
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "Human-readable error description",
-                          "example": "The requested resource was not found"
-                        }
-                      },
-                      "required": [
-                        "code",
-                        "description"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "error"
-                  ],
-                  "description": "Not Found - The requested resource does not exist"
                 }
               }
             }
@@ -7114,46 +7380,55 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "outcomes": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "homepageUrl": {
-                      "type": "string"
-                    },
-                    "logoUrl": {
-                      "type": "string"
-                    },
-                    "missionStatement": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "outcomes": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "homepageUrl": {
+                          "type": "string"
+                        },
+                        "logoUrl": {
+                          "type": "string"
+                        },
+                        "missionStatement": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "outcomes",
+                        "name",
+                        "missionStatement",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Workspace data"
                     }
                   },
                   "required": [
-                    "id",
-                    "outcomes",
-                    "name",
-                    "missionStatement",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Workspace data"
+                  "description": "Response containing a single workspace"
                 }
               }
             }
@@ -7229,7 +7504,7 @@
             }
           },
           "404": {
-            "description": "Workspace or organization not found",
+            "description": "Workspace not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -7372,46 +7647,55 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "outcomes": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "homepageUrl": {
-                      "type": "string"
-                    },
-                    "logoUrl": {
-                      "type": "string"
-                    },
-                    "missionStatement": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "outcomes": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "homepageUrl": {
+                          "type": "string"
+                        },
+                        "logoUrl": {
+                          "type": "string"
+                        },
+                        "missionStatement": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "outcomes",
+                        "name",
+                        "missionStatement",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Workspace data"
                     }
                   },
                   "required": [
-                    "id",
-                    "outcomes",
-                    "name",
-                    "missionStatement",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Workspace data"
+                  "description": "Response containing a single workspace"
                 }
               }
             }
@@ -7556,7 +7840,7 @@
             }
           },
           "404": {
-            "description": "Workspace or organization not found",
+            "description": "Workspace not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -7665,15 +7949,25 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Success message",
-                      "example": "Workspace deleted successfully"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Success message",
+                          "example": "Workspace deleted successfully"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "description": "Success message data"
                     }
                   },
                   "required": [
-                    "message"
-                  ]
+                    "data"
+                  ],
+                  "description": "Response containing a success message"
                 }
               }
             }
@@ -7749,7 +8043,7 @@
             }
           },
           "404": {
-            "description": "Workspace or organization not found",
+            "description": "Workspace not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -7884,54 +8178,63 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "stripeCustomerId": {
-                      "type": "string"
-                    },
-                    "maxDailyTokens": {
-                      "type": "number"
-                    },
-                    "maxEntities": {
-                      "type": "number"
-                    },
-                    "entitiesCreatedCount": {
-                      "type": "number"
-                    },
-                    "homepageUrl": {
-                      "type": "string"
-                    },
-                    "logoUrl": {
-                      "type": "string"
-                    },
-                    "outcomeIds": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "stripeCustomerId": {
+                          "type": "string"
+                        },
+                        "maxDailyTokens": {
+                          "type": "number"
+                        },
+                        "maxEntities": {
+                          "type": "number"
+                        },
+                        "entitiesCreatedCount": {
+                          "type": "number"
+                        },
+                        "homepageUrl": {
+                          "type": "string"
+                        },
+                        "logoUrl": {
+                          "type": "string"
+                        },
+                        "outcomeIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "stripeCustomerId",
+                        "maxDailyTokens",
+                        "maxEntities",
+                        "entitiesCreatedCount",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Organisation data"
                     }
                   },
                   "required": [
-                    "id",
-                    "name",
-                    "stripeCustomerId",
-                    "maxDailyTokens",
-                    "maxEntities",
-                    "entitiesCreatedCount",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Organisation data"
+                  "description": "Response containing a single organisation"
                 }
               }
             }
@@ -8126,59 +8429,69 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "stripeCustomerId": {
+                            "type": "string"
+                          },
+                          "maxDailyTokens": {
+                            "type": "number"
+                          },
+                          "maxEntities": {
+                            "type": "number"
+                          },
+                          "entitiesCreatedCount": {
+                            "type": "number"
+                          },
+                          "homepageUrl": {
+                            "type": "string"
+                          },
+                          "logoUrl": {
+                            "type": "string"
+                          },
+                          "outcomeIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "stripeCustomerId",
+                          "maxDailyTokens",
+                          "maxEntities",
+                          "entitiesCreatedCount",
+                          "createdAt",
+                          "updatedAt"
+                        ],
+                        "description": "Organisation data"
                       },
-                      "name": {
-                        "type": "string"
-                      },
-                      "stripeCustomerId": {
-                        "type": "string"
-                      },
-                      "maxDailyTokens": {
-                        "type": "number"
-                      },
-                      "maxEntities": {
-                        "type": "number"
-                      },
-                      "entitiesCreatedCount": {
-                        "type": "number"
-                      },
-                      "homepageUrl": {
-                        "type": "string"
-                      },
-                      "logoUrl": {
-                        "type": "string"
-                      },
-                      "outcomeIds": {
-                        "type": "array",
-                        "items": {
-                          "type": "string"
-                        }
-                      },
-                      "createdAt": {
-                        "type": "string"
-                      },
-                      "updatedAt": {
-                        "type": "string"
-                      }
-                    },
-                    "required": [
-                      "id",
-                      "name",
-                      "stripeCustomerId",
-                      "maxDailyTokens",
-                      "maxEntities",
-                      "entitiesCreatedCount",
-                      "createdAt",
-                      "updatedAt"
-                    ],
-                    "description": "Organisation data"
-                  }
+                      "description": "Array of organisations"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing an array of organisations"
                 }
               }
             }
@@ -8320,54 +8633,63 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "stripeCustomerId": {
-                      "type": "string"
-                    },
-                    "maxDailyTokens": {
-                      "type": "number"
-                    },
-                    "maxEntities": {
-                      "type": "number"
-                    },
-                    "entitiesCreatedCount": {
-                      "type": "number"
-                    },
-                    "homepageUrl": {
-                      "type": "string"
-                    },
-                    "logoUrl": {
-                      "type": "string"
-                    },
-                    "outcomeIds": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "stripeCustomerId": {
+                          "type": "string"
+                        },
+                        "maxDailyTokens": {
+                          "type": "number"
+                        },
+                        "maxEntities": {
+                          "type": "number"
+                        },
+                        "entitiesCreatedCount": {
+                          "type": "number"
+                        },
+                        "homepageUrl": {
+                          "type": "string"
+                        },
+                        "logoUrl": {
+                          "type": "string"
+                        },
+                        "outcomeIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "stripeCustomerId",
+                        "maxDailyTokens",
+                        "maxEntities",
+                        "entitiesCreatedCount",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Organisation data"
                     }
                   },
                   "required": [
-                    "id",
-                    "name",
-                    "stripeCustomerId",
-                    "maxDailyTokens",
-                    "maxEntities",
-                    "entitiesCreatedCount",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Organisation data"
+                  "description": "Response containing a single organisation"
                 }
               }
             }
@@ -8582,54 +8904,63 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "name": {
-                      "type": "string"
-                    },
-                    "stripeCustomerId": {
-                      "type": "string"
-                    },
-                    "maxDailyTokens": {
-                      "type": "number"
-                    },
-                    "maxEntities": {
-                      "type": "number"
-                    },
-                    "entitiesCreatedCount": {
-                      "type": "number"
-                    },
-                    "homepageUrl": {
-                      "type": "string"
-                    },
-                    "logoUrl": {
-                      "type": "string"
-                    },
-                    "outcomeIds": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "stripeCustomerId": {
+                          "type": "string"
+                        },
+                        "maxDailyTokens": {
+                          "type": "number"
+                        },
+                        "maxEntities": {
+                          "type": "number"
+                        },
+                        "entitiesCreatedCount": {
+                          "type": "number"
+                        },
+                        "homepageUrl": {
+                          "type": "string"
+                        },
+                        "logoUrl": {
+                          "type": "string"
+                        },
+                        "outcomeIds": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          }
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "name",
+                        "stripeCustomerId",
+                        "maxDailyTokens",
+                        "maxEntities",
+                        "entitiesCreatedCount",
+                        "createdAt",
+                        "updatedAt"
+                      ],
+                      "description": "Organisation data"
                     }
                   },
                   "required": [
-                    "id",
-                    "name",
-                    "stripeCustomerId",
-                    "maxDailyTokens",
-                    "maxEntities",
-                    "entitiesCreatedCount",
-                    "createdAt",
-                    "updatedAt"
+                    "data"
                   ],
-                  "description": "Organisation data"
+                  "description": "Response containing a single organisation"
                 }
               }
             }
@@ -8873,15 +9204,25 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Success message",
-                      "example": "Organisation deleted successfully"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Success message",
+                          "example": "Organisation deleted successfully"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "description": "Success message data"
                     }
                   },
                   "required": [
-                    "message"
-                  ]
+                    "data"
+                  ],
+                  "description": "Response containing a success message"
                 }
               }
             }
@@ -10929,6 +11270,58 @@
           }
         },
         "description": "Request body for managing solution relationships"
+      }
+    },
+    "parameters": {
+      "OutcomeRelationshipsParam": {
+        "in": "query",
+        "name": "relationships",
+        "required": false,
+        "description": "Comma-separated list of relationships to include in the response",
+        "example": "opportunities,solutions,requirements,feedback",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "FeedbackRelationshipsParam": {
+        "in": "query",
+        "name": "relationships",
+        "required": false,
+        "description": "Comma-separated list of relationships to include in the response",
+        "example": "opportunities,solutions,requirements,outcomes",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "OpportunityRelationshipsParam": {
+        "in": "query",
+        "name": "relationships",
+        "required": false,
+        "description": "Comma-separated list of relationships to include in the response",
+        "example": "solutions,requirements,outcomes,feedback",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "RequirementRelationshipsParam": {
+        "in": "query",
+        "name": "relationships",
+        "required": false,
+        "description": "Comma-separated list of relationships to include in the response",
+        "example": "solutions,opportunities,outcomes,feedback",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "SolutionRelationshipsParam": {
+        "in": "query",
+        "name": "relationships",
+        "required": false,
+        "description": "Comma-separated list of relationships to include in the response",
+        "example": "opportunities,requirements,outcomes,feedback",
+        "schema": {
+          "type": "string"
+        }
       }
     }
   }

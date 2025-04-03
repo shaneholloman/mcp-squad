@@ -13,25 +13,33 @@
  */
 
 import { mapValues } from '../runtime.js';
+import type { OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseData } from './OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseData.js';
+import {
+    OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseDataFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseDataFromJSONTyped,
+    OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseDataToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseDataToJSONTyped,
+} from './OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseData.js';
+
 /**
- * 
+ * Response containing a success message
  * @export
  * @interface OrganisationsOrgIdWorkspacesWorkspaceIdDelete200Response
  */
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdDelete200Response {
     /**
-     * Success message
-     * @type {string}
+     * 
+     * @type {OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseData}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdDelete200Response
      */
-    message: string;
+    data: OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseData;
 }
 
 /**
  * Check if a given object implements the OrganisationsOrgIdWorkspacesWorkspaceIdDelete200Response interface.
  */
 export function instanceOfOrganisationsOrgIdWorkspacesWorkspaceIdDelete200Response(value: object): value is OrganisationsOrgIdWorkspacesWorkspaceIdDelete200Response {
-    if (!('message' in value) || value['message'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }
 
@@ -45,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseFromJSON
     }
     return {
         
-        'message': json['message'],
+        'data': OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseDataFromJSON(json['data']),
     };
 }
 
@@ -60,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseToJSONTy
 
     return {
         
-        'message': value['message'],
+        'data': OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseDataToJSON(value['data']),
     };
 }
 
