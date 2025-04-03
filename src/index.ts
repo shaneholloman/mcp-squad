@@ -34,6 +34,34 @@ import {
   deleteSolutionTool,
   manageSolutionRelationshipsTool
 } from "./solutions.js";
+import {
+  createOutcome, CreateOutcomeArgsSchema,
+  listOutcomes, ListOutcomesArgsSchema,
+  getOutcome, GetOutcomeArgsSchema,
+  updateOutcome, UpdateOutcomeArgsSchema,
+  deleteOutcome, DeleteOutcomeArgsSchema,
+  manageOutcomeRelationships, ManageOutcomeRelationshipsArgsSchema,
+  createOutcomeTool,
+  listOutcomesTool,
+  getOutcomeTool,
+  updateOutcomeTool,
+  deleteOutcomeTool,
+  manageOutcomeRelationshipsTool
+} from "./outcomes.js";
+import {
+  createRequirement, CreateRequirementArgsSchema,
+  listRequirements, ListRequirementsArgsSchema,
+  getRequirement, GetRequirementArgsSchema,
+  updateRequirement, UpdateRequirementArgsSchema,
+  deleteRequirement, DeleteRequirementArgsSchema,
+  manageRequirementRelationships, ManageRequirementRelationshipsArgsSchema,
+  createRequirementTool,
+  listRequirementsTool,
+  getRequirementTool,
+  updateRequirementTool,
+  deleteRequirementTool,
+  manageRequirementRelationshipsTool
+} from "./requirements.js";
 import { getUserContext } from "./helpers/getUser.js";
 
 // Server setup
@@ -69,6 +97,22 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       updateSolutionTool,
       deleteSolutionTool,
       manageSolutionRelationshipsTool,
+      
+      // Outcome tools
+      createOutcomeTool,
+      listOutcomesTool,
+      getOutcomeTool,
+      updateOutcomeTool,
+      deleteOutcomeTool,
+      manageOutcomeRelationshipsTool,
+      
+      // Requirement tools
+      createRequirementTool,
+      listRequirementsTool,
+      getRequirementTool,
+      updateRequirementTool,
+      deleteRequirementTool,
+      manageRequirementRelationshipsTool,
     ],
   };
 });
@@ -241,6 +285,154 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             return {
                 content: [
                     { type: "text", "text": "I was unable to manage relationships for this solution. Please check that all IDs are correct."}
+                ]
+            }
+        }
+      }
+      
+      // Outcome handlers
+      case "create_outcome": {
+        try {
+            const validArgs = CreateOutcomeArgsSchema.parse(args);
+            return await createOutcome(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to create this outcome. Please check back later."}
+                ]
+            }
+        }
+      }
+      case "list_outcomes": {
+        try {
+            const validArgs = ListOutcomesArgsSchema.parse(args);
+            return await listOutcomes(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to list outcomes. Please check back later."}
+                ]
+            }
+        }
+      }
+      case "get_outcome": {
+        try {
+            const validArgs = GetOutcomeArgsSchema.parse(args);
+            return await getOutcome(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to retrieve this outcome. Please check that the ID is correct."}
+                ]
+            }
+        }
+      }
+      case "update_outcome": {
+        try {
+            const validArgs = UpdateOutcomeArgsSchema.parse(args);
+            return await updateOutcome(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to update this outcome. Please check that the ID is correct and all values are valid."}
+                ]
+            }
+        }
+      }
+      case "delete_outcome": {
+        try {
+            const validArgs = DeleteOutcomeArgsSchema.parse(args);
+            return await deleteOutcome(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to delete this outcome. Please check that the ID is correct."}
+                ]
+            }
+        }
+      }
+      case "manage_outcome_relationships": {
+        try {
+            const validArgs = ManageOutcomeRelationshipsArgsSchema.parse(args);
+            return await manageOutcomeRelationships(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to manage relationships for this outcome. Please check that all IDs are correct."}
+                ]
+            }
+        }
+      }
+      
+      // Requirement handlers
+      case "create_requirement": {
+        try {
+            const validArgs = CreateRequirementArgsSchema.parse(args);
+            return await createRequirement(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to create this requirement. Please check back later."}
+                ]
+            }
+        }
+      }
+      case "list_requirements": {
+        try {
+            const validArgs = ListRequirementsArgsSchema.parse(args);
+            return await listRequirements(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to list requirements. Please check back later."}
+                ]
+            }
+        }
+      }
+      case "get_requirement": {
+        try {
+            const validArgs = GetRequirementArgsSchema.parse(args);
+            return await getRequirement(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to retrieve this requirement. Please check that the ID is correct."}
+                ]
+            }
+        }
+      }
+      case "update_requirement": {
+        try {
+            const validArgs = UpdateRequirementArgsSchema.parse(args);
+            return await updateRequirement(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to update this requirement. Please check that the ID is correct and all values are valid."}
+                ]
+            }
+        }
+      }
+      case "delete_requirement": {
+        try {
+            const validArgs = DeleteRequirementArgsSchema.parse(args);
+            return await deleteRequirement(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to delete this requirement. Please check that the ID is correct."}
+                ]
+            }
+        }
+      }
+      case "manage_requirement_relationships": {
+        try {
+            const validArgs = ManageRequirementRelationshipsArgsSchema.parse(args);
+            return await manageRequirementRelationships(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to manage relationships for this requirement. Please check that all IDs are correct."}
                 ]
             }
         }
