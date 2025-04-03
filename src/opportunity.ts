@@ -91,6 +91,10 @@ export const listOpportunities = (context: UserContext) => async (
 // Schema for getting a single opportunity
 export const GetOpportunityArgsSchema = z.object({
     opportunityId: z.string().describe("The ID of the opportunity to retrieve"),
+    relationships: z.array(z.enum(["solutions", "requirements", "outcomes", "feedback"]))
+        .optional()
+        .describe("Relationships to include in the response. Outcomes are business objectives/goals. Solutions are proposed approaches to address opportunities. Requirements are detailed steps to implement a solution. Feedback is additional information or insights related to the opportunity.")
+        .default([]),
 });
 
 export const getOpportunityTool = {
@@ -100,7 +104,8 @@ export const getOpportunityTool = {
 };
 
 export const getOpportunity = (context: UserContext) => async ({
-    opportunityId
+    opportunityId,
+    relationships
 }: z.infer<typeof GetOpportunityArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
@@ -109,6 +114,7 @@ export const getOpportunity = (context: UserContext) => async ({
             orgId,
             workspaceId,
             opportunityId,
+            relationships: relationships.join(",")
         });
 
         return {

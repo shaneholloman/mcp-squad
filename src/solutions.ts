@@ -120,6 +120,10 @@ export const listSolutions = (context: UserContext) => async (
 // Schema for getting a single solution
 export const GetSolutionArgsSchema = z.object({
     solutionId: z.string().describe("The ID of the solution to retrieve"),
+    relationships: z.array(z.enum(["opportunities", "requirements", "outcomes", "feedback"]))
+        .optional()
+        .describe("Relationships to include in the response. Opportunities are problem statements identified for the organisation. Outcomes are business objectives/goals. Requirements are detailed steps to implement a solution. Feedback is additional information or insights related to the opportunity.")
+        .default([]),
 });
 
 export const getSolutionTool = {
