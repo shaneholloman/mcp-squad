@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner } from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner.js';
+import type { OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner } from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner.js';
 import {
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerFromJSONTyped,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner.js';
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerFromJSONTyped,
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerToJSONTyped,
+} from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner.js';
 
 /**
  * Request schema for creating a solution
@@ -95,10 +95,10 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest {
     aiProcessingState?: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestAiProcessingStateEnum;
     /**
      * 
-     * @type {Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner>}
+     * @type {Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner>}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest
      */
-    refinementLog?: Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner>;
+    refinementLog?: Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner>;
 }
 
 
@@ -166,7 +166,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestFromJ
         'id': json['id'] == null ? undefined : json['id'],
         'systemPrompt': json['systemPrompt'] == null ? undefined : json['systemPrompt'],
         'aiProcessingState': json['aiProcessingState'] == null ? undefined : json['aiProcessingState'],
-        'refinementLog': json['refinementLog'] == null ? undefined : ((json['refinementLog'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerFromJSON)),
+        'refinementLog': json['refinementLog'] == null ? undefined : ((json['refinementLog'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerFromJSON)),
     };
 }
 
@@ -192,7 +192,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestToJSO
         'id': value['id'],
         'systemPrompt': value['systemPrompt'],
         'aiProcessingState': value['aiProcessingState'],
-        'refinementLog': value['refinementLog'] == null ? undefined : ((value['refinementLog'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerToJSON)),
+        'refinementLog': value['refinementLog'] == null ? undefined : ((value['refinementLog'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerToJSON)),
     };
 }
 

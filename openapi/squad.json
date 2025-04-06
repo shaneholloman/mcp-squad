@@ -4614,96 +4614,104 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "systemPrompt": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "aiProcessingState": {
-                      "type": "string",
-                      "enum": [
-                        "INITIAL",
-                        "PROCESSING",
-                        "FINISHED",
-                        "ERROR"
-                      ]
-                    },
-                    "refinementLog": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "role": {
-                            "type": "string",
-                            "enum": [
-                              "user",
-                              "assistant"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "systemPrompt": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "aiProcessingState": {
+                          "type": "string",
+                          "enum": [
+                            "INITIAL",
+                            "PROCESSING",
+                            "FINISHED",
+                            "ERROR"
+                          ]
+                        },
+                        "refinementLog": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "enum": [
+                                  "user",
+                                  "assistant"
+                                ]
+                              },
+                              "content": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "role",
+                              "content"
                             ]
-                          },
-                          "content": {
-                            "type": "string"
                           }
                         },
-                        "required": [
-                          "id",
-                          "role",
-                          "content"
-                        ]
-                      }
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "feature": {
-                      "type": "string"
-                    },
-                    "requirements": {
-                      "type": "string"
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "draft",
-                        "ready",
-                        "complete"
-                      ]
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "feature": {
+                          "type": "string"
+                        },
+                        "requirements": {
+                          "type": "string"
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "ready",
+                            "complete"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "systemPrompt",
+                        "aiProcessingState",
+                        "refinementLog",
+                        "title",
+                        "description",
+                        "feature",
+                        "requirements",
+                        "hideContent",
+                        "createdAt",
+                        "updatedAt",
+                        "status"
+                      ],
+                      "description": "Requirement data for a product or feature"
                     }
                   },
                   "required": [
-                    "id",
-                    "systemPrompt",
-                    "aiProcessingState",
-                    "refinementLog",
-                    "title",
-                    "description",
-                    "feature",
-                    "requirements",
-                    "hideContent",
-                    "createdAt",
-                    "updatedAt",
-                    "status"
-                  ],
-                  "description": "Requirement data for a product or feature"
+                    "data"
+                  ]
                 }
               }
             }
@@ -4755,101 +4763,109 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "systemPrompt": {
-                        "type": "string",
-                        "nullable": true
-                      },
-                      "aiProcessingState": {
-                        "type": "string",
-                        "enum": [
-                          "INITIAL",
-                          "PROCESSING",
-                          "FINISHED",
-                          "ERROR"
-                        ]
-                      },
-                      "refinementLog": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "type": "string"
-                            },
-                            "role": {
-                              "type": "string",
-                              "enum": [
-                                "user",
-                                "assistant"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "systemPrompt": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "aiProcessingState": {
+                            "type": "string",
+                            "enum": [
+                              "INITIAL",
+                              "PROCESSING",
+                              "FINISHED",
+                              "ERROR"
+                            ]
+                          },
+                          "refinementLog": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "role": {
+                                  "type": "string",
+                                  "enum": [
+                                    "user",
+                                    "assistant"
+                                  ]
+                                },
+                                "content": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "role",
+                                "content"
                               ]
-                            },
-                            "content": {
-                              "type": "string"
                             }
                           },
-                          "required": [
-                            "id",
-                            "role",
-                            "content"
-                          ]
-                        }
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "feature": {
-                        "type": "string"
-                      },
-                      "requirements": {
-                        "type": "string"
-                      },
-                      "hideContent": {
-                        "type": "boolean"
-                      },
-                      "ownerId": {
-                        "type": "string"
-                      },
-                      "createdAt": {
-                        "type": "string"
-                      },
-                      "updatedAt": {
-                        "type": "string"
-                      },
-                      "status": {
-                        "type": "string",
-                        "enum": [
-                          "draft",
-                          "ready",
-                          "complete"
-                        ]
+                          "title": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "feature": {
+                            "type": "string"
+                          },
+                          "requirements": {
+                            "type": "string"
+                          },
+                          "hideContent": {
+                            "type": "boolean"
+                          },
+                          "ownerId": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "draft",
+                              "ready",
+                              "complete"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "systemPrompt",
+                          "aiProcessingState",
+                          "refinementLog",
+                          "title",
+                          "description",
+                          "feature",
+                          "requirements",
+                          "hideContent",
+                          "createdAt",
+                          "updatedAt",
+                          "status"
+                        ],
+                        "description": "Requirement data for a product or feature"
                       }
-                    },
-                    "required": [
-                      "id",
-                      "systemPrompt",
-                      "aiProcessingState",
-                      "refinementLog",
-                      "title",
-                      "description",
-                      "feature",
-                      "requirements",
-                      "hideContent",
-                      "createdAt",
-                      "updatedAt",
-                      "status"
-                    ],
-                    "description": "Requirement data for a product or feature"
-                  }
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
                 }
               }
             }
@@ -4915,96 +4931,104 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "systemPrompt": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "aiProcessingState": {
-                      "type": "string",
-                      "enum": [
-                        "INITIAL",
-                        "PROCESSING",
-                        "FINISHED",
-                        "ERROR"
-                      ]
-                    },
-                    "refinementLog": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "role": {
-                            "type": "string",
-                            "enum": [
-                              "user",
-                              "assistant"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "systemPrompt": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "aiProcessingState": {
+                          "type": "string",
+                          "enum": [
+                            "INITIAL",
+                            "PROCESSING",
+                            "FINISHED",
+                            "ERROR"
+                          ]
+                        },
+                        "refinementLog": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "enum": [
+                                  "user",
+                                  "assistant"
+                                ]
+                              },
+                              "content": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "role",
+                              "content"
                             ]
-                          },
-                          "content": {
-                            "type": "string"
                           }
                         },
-                        "required": [
-                          "id",
-                          "role",
-                          "content"
-                        ]
-                      }
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "feature": {
-                      "type": "string"
-                    },
-                    "requirements": {
-                      "type": "string"
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "draft",
-                        "ready",
-                        "complete"
-                      ]
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "feature": {
+                          "type": "string"
+                        },
+                        "requirements": {
+                          "type": "string"
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "ready",
+                            "complete"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "systemPrompt",
+                        "aiProcessingState",
+                        "refinementLog",
+                        "title",
+                        "description",
+                        "feature",
+                        "requirements",
+                        "hideContent",
+                        "createdAt",
+                        "updatedAt",
+                        "status"
+                      ],
+                      "description": "Requirement data for a product or feature"
                     }
                   },
                   "required": [
-                    "id",
-                    "systemPrompt",
-                    "aiProcessingState",
-                    "refinementLog",
-                    "title",
-                    "description",
-                    "feature",
-                    "requirements",
-                    "hideContent",
-                    "createdAt",
-                    "updatedAt",
-                    "status"
-                  ],
-                  "description": "Requirement data for a product or feature"
+                    "data"
+                  ]
                 }
               }
             }
@@ -5119,96 +5143,104 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "systemPrompt": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "aiProcessingState": {
-                      "type": "string",
-                      "enum": [
-                        "INITIAL",
-                        "PROCESSING",
-                        "FINISHED",
-                        "ERROR"
-                      ]
-                    },
-                    "refinementLog": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "role": {
-                            "type": "string",
-                            "enum": [
-                              "user",
-                              "assistant"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "systemPrompt": {
+                          "type": "string",
+                          "nullable": true
+                        },
+                        "aiProcessingState": {
+                          "type": "string",
+                          "enum": [
+                            "INITIAL",
+                            "PROCESSING",
+                            "FINISHED",
+                            "ERROR"
+                          ]
+                        },
+                        "refinementLog": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string"
+                              },
+                              "role": {
+                                "type": "string",
+                                "enum": [
+                                  "user",
+                                  "assistant"
+                                ]
+                              },
+                              "content": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "id",
+                              "role",
+                              "content"
                             ]
-                          },
-                          "content": {
-                            "type": "string"
                           }
                         },
-                        "required": [
-                          "id",
-                          "role",
-                          "content"
-                        ]
-                      }
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "feature": {
-                      "type": "string"
-                    },
-                    "requirements": {
-                      "type": "string"
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "draft",
-                        "ready",
-                        "complete"
-                      ]
+                        "title": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "feature": {
+                          "type": "string"
+                        },
+                        "requirements": {
+                          "type": "string"
+                        },
+                        "hideContent": {
+                          "type": "boolean"
+                        },
+                        "ownerId": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "status": {
+                          "type": "string",
+                          "enum": [
+                            "draft",
+                            "ready",
+                            "complete"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "systemPrompt",
+                        "aiProcessingState",
+                        "refinementLog",
+                        "title",
+                        "description",
+                        "feature",
+                        "requirements",
+                        "hideContent",
+                        "createdAt",
+                        "updatedAt",
+                        "status"
+                      ],
+                      "description": "Requirement data for a product or feature"
                     }
                   },
                   "required": [
-                    "id",
-                    "systemPrompt",
-                    "aiProcessingState",
-                    "refinementLog",
-                    "title",
-                    "description",
-                    "feature",
-                    "requirements",
-                    "hideContent",
-                    "createdAt",
-                    "updatedAt",
-                    "status"
-                  ],
-                  "description": "Requirement data for a product or feature"
+                    "data"
+                  ]
                 }
               }
             }
@@ -5275,14 +5307,22 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Success message",
-                      "example": "Requirement deleted successfully"
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Success message",
+                          "example": "Requirement deleted successfully"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ]
                     }
                   },
                   "required": [
-                    "message"
+                    "data"
                   ]
                 }
               }
@@ -5317,23 +5357,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "id": {
-                      "type": "string"
-                    },
-                    "systemPrompt": {
-                      "type": "string",
-                      "nullable": true
-                    },
-                    "aiProcessingState": {
-                      "type": "string",
-                      "enum": [
-                        "INITIAL",
-                        "PROCESSING",
-                        "FINISHED",
-                        "ERROR"
-                      ]
-                    },
-                    "refinementLog": {
+                    "data": {
                       "type": "array",
                       "items": {
                         "type": "object",
@@ -5341,72 +5365,99 @@
                           "id": {
                             "type": "string"
                           },
-                          "role": {
+                          "systemPrompt": {
+                            "type": "string",
+                            "nullable": true
+                          },
+                          "aiProcessingState": {
                             "type": "string",
                             "enum": [
-                              "user",
-                              "assistant"
+                              "INITIAL",
+                              "PROCESSING",
+                              "FINISHED",
+                              "ERROR"
                             ]
                           },
-                          "content": {
+                          "refinementLog": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "role": {
+                                  "type": "string",
+                                  "enum": [
+                                    "user",
+                                    "assistant"
+                                  ]
+                                },
+                                "content": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "id",
+                                "role",
+                                "content"
+                              ]
+                            }
+                          },
+                          "title": {
                             "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "feature": {
+                            "type": "string"
+                          },
+                          "requirements": {
+                            "type": "string"
+                          },
+                          "hideContent": {
+                            "type": "boolean"
+                          },
+                          "ownerId": {
+                            "type": "string"
+                          },
+                          "createdAt": {
+                            "type": "string"
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": [
+                              "draft",
+                              "ready",
+                              "complete"
+                            ]
                           }
                         },
                         "required": [
                           "id",
-                          "role",
-                          "content"
-                        ]
+                          "systemPrompt",
+                          "aiProcessingState",
+                          "refinementLog",
+                          "title",
+                          "description",
+                          "feature",
+                          "requirements",
+                          "hideContent",
+                          "createdAt",
+                          "updatedAt",
+                          "status"
+                        ],
+                        "description": "Requirement data for a product or feature"
                       }
-                    },
-                    "title": {
-                      "type": "string"
-                    },
-                    "description": {
-                      "type": "string"
-                    },
-                    "feature": {
-                      "type": "string"
-                    },
-                    "requirements": {
-                      "type": "string"
-                    },
-                    "hideContent": {
-                      "type": "boolean"
-                    },
-                    "ownerId": {
-                      "type": "string"
-                    },
-                    "createdAt": {
-                      "type": "string"
-                    },
-                    "updatedAt": {
-                      "type": "string"
-                    },
-                    "status": {
-                      "type": "string",
-                      "enum": [
-                        "draft",
-                        "ready",
-                        "complete"
-                      ]
                     }
                   },
                   "required": [
-                    "id",
-                    "systemPrompt",
-                    "aiProcessingState",
-                    "refinementLog",
-                    "title",
-                    "description",
-                    "feature",
-                    "requirements",
-                    "hideContent",
-                    "createdAt",
-                    "updatedAt",
-                    "status"
-                  ],
-                  "description": "Requirement data for a product or feature"
+                    "data"
+                  ]
                 }
               }
             }

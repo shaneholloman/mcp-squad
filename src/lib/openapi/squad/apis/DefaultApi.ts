@@ -47,7 +47,8 @@ import type {
   OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost400Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest,
   OrganisationsOrgIdWorkspacesWorkspaceIdPutRequest,
-  OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner,
+  OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Response,
+  OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest,
   OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest,
@@ -134,8 +135,10 @@ import {
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequestToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdPutRequestFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdPutRequestToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200ResponseFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete200ResponseFromJSON,
@@ -2402,7 +2405,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Lists all requirements in the specified workspace
      * List requirements
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner>>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2436,14 +2439,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Lists all requirements in the specified workspace
      * List requirements
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdRequirementsGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -2452,7 +2455,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new requirement in the specified workspace
      * Create new requirement
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2496,14 +2499,14 @@ export class DefaultApi extends runtime.BaseAPI {
             body: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Creates a new requirement in the specified workspace
      * Create new requirement
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -2569,7 +2572,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Retrieves a specific requirement by ID
      * Get requirement by ID
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2614,14 +2617,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Retrieves a specific requirement by ID
      * Get requirement by ID
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -2630,7 +2633,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific requirement by ID
      * Update requirement
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2681,14 +2684,14 @@ export class DefaultApi extends runtime.BaseAPI {
             body: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Updates a specific requirement by ID
      * Update requirement
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -3329,7 +3332,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Retrieves all requirements that are ready to be worked on.
      * Get all ready requirements
      */
-    async v1RequirementsReadyGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner>> {
+    async v1RequirementsReadyGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Response>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3349,14 +3352,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Retrieves all requirements that are ready to be worked on.
      * Get all ready requirements
      */
-    async v1RequirementsReadyGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner> {
+    async v1RequirementsReadyGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Response> {
         const response = await this.v1RequirementsReadyGetRaw(initOverrides);
         return await response.value();
     }

@@ -105,7 +105,7 @@ export const listRequirements = (context: UserContext) => async (
             workspaceId,
         });
 
-        if (requirements.length === 0) {
+        if (requirements.data.length === 0) {
             return {
                 content: [{
                     type: "text",
@@ -213,29 +213,29 @@ export const updateRequirement = (context: UserContext) => async ({
 
         // Create the update payload with existing values or new ones
         const updatePayload: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest = {
-            title: title !== undefined ? title : existingRequirement.title,
-            description: description !== undefined ? description : existingRequirement.description,
-            feature: feature !== undefined ? feature : existingRequirement.feature,
-            requirements: requirements !== undefined ? requirements : existingRequirement.requirements
+            title: title !== undefined ? title : existingRequirement.data.title,
+            description: description !== undefined ? description : existingRequirement.data.description,
+            feature: feature !== undefined ? feature : existingRequirement.data.feature,
+            requirements: requirements !== undefined ? requirements : existingRequirement.data.requirements
         };
 
         // Add optional fields if they're provided or existed before
         if (hideContent !== undefined) {
             updatePayload.hideContent = hideContent;
-        } else if (existingRequirement.hideContent !== undefined) {
-            updatePayload.hideContent = existingRequirement.hideContent;
+        } else if (existingRequirement.data.hideContent !== undefined) {
+            updatePayload.hideContent = existingRequirement.data.hideContent;
         }
 
         if (ownerId !== undefined) {
             updatePayload.ownerId = ownerId;
-        } else if (existingRequirement.ownerId !== undefined) {
-            updatePayload.ownerId = existingRequirement.ownerId;
+        } else if (existingRequirement.data.ownerId !== undefined) {
+            updatePayload.ownerId = existingRequirement.data.ownerId;
         }
 
         if (status !== undefined) {
             updatePayload.status = status;
-        } else if (existingRequirement.status !== undefined) {
-            updatePayload.status = existingRequirement.status as any;
+        } else if (existingRequirement.data.status !== undefined) {
+            updatePayload.status = existingRequirement.data.status as any;
         }
 
         // Preserve other potential attributes from the original requirement

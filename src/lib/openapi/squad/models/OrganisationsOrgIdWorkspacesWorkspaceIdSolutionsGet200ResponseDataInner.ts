@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner } from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner.js';
+import type { OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner } from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner.js';
 import {
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerFromJSONTyped,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner.js';
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerFromJSONTyped,
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerToJSONTyped,
+} from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner.js';
 
 /**
  * Solution data for an opportunity
@@ -47,10 +47,10 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseD
     aiProcessingState: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInnerAiProcessingStateEnum;
     /**
      * 
-     * @type {Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner>}
+     * @type {Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner>}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInner
      */
-    refinementLog: Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner>;
+    refinementLog: Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner>;
     /**
      * 
      * @type {string}
@@ -179,7 +179,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDa
         'id': json['id'],
         'systemPrompt': json['systemPrompt'],
         'aiProcessingState': json['aiProcessingState'],
-        'refinementLog': ((json['refinementLog'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerFromJSON)),
+        'refinementLog': ((json['refinementLog'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerFromJSON)),
         'title': json['title'],
         'description': json['description'],
         'status': json['status'],
@@ -207,7 +207,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDa
         'id': value['id'],
         'systemPrompt': value['systemPrompt'],
         'aiProcessingState': value['aiProcessingState'],
-        'refinementLog': ((value['refinementLog'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInnerToJSON)),
+        'refinementLog': ((value['refinementLog'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInnerToJSON)),
         'title': value['title'],
         'description': value['description'],
         'status': value['status'],

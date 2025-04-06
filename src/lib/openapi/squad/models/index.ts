@@ -59,10 +59,13 @@ export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost400Response.
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost400ResponseError.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdPutRequest.js';
-export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInner.js';
-export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseInnerRefinementLogInner.js';
+export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Response.js';
+export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner.js';
+export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerRefinementLogInner.js';
+export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete200Response.js';
+export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete200ResponseData.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200Response.js';
 export * from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInner.js';
