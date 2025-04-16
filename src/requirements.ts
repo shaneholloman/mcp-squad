@@ -2,10 +2,13 @@ import { z } from "zod";
 import { squadClient } from "./lib/clients/squad.js";
 import { UserContext } from "./helpers/getUser.js";
 import { 
+    CreateRequirement,
+    CreateRequirementAiProcessingStateEnum,
+    CreateRequirementStatusEnum,
     RelationshipAction, 
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum,
-    RequirementRelationshipsPayload
+    RequirementRelationshipsPayload,
+    UpdateRequirement,
+    UpdateRequirementStatusEnum
 } from "./lib/openapi/squad/models/index.js";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
@@ -15,17 +18,12 @@ export const CreateRequirementArgsSchema = z.object({
     description: z.string().describe("A detailed description of the requirement"),
     feature: z.string().describe("The feature this requirement is for"),
     requirements: z.string().describe("The actual requirements text in detail"),
-    hideContent: z.boolean().optional().describe("Whether the requirement content should be hidden"),
     ownerId: z.string().optional().describe("ID of the requirement owner"),
     status: z.enum([
-        OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Draft,
-        OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Ready,
-        OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Complete
-    ]).optional().describe(`Status of the requirement: ${OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Draft} is not finalized, ${OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Ready} is ready to implement, ${OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Complete} is implemented`),
-    generatedBy: z.string().optional().describe("Identifier of what generated this requirement (if auto-generated)"),
-    generatedFrom: z.string().optional().describe("Source from which this requirement was generated (if auto-generated)"),
-    modelName: z.string().optional().describe("The AI model name used to generate this requirement (if auto-generated)"),
-    modelProvider: z.string().optional().describe("The AI model provider used to generate this requirement (if auto-generated)")
+        CreateRequirementStatusEnum.Draft,
+        CreateRequirementStatusEnum.Ready,
+        CreateRequirementStatusEnum.Complete
+    ]).optional().describe(`Status of the requirement: Draft is not finalized, Ready is ready to implement, Complete is implemented`),
 });
 
 export const createRequirementTool = {
@@ -39,38 +37,31 @@ export const createRequirement = (context: UserContext) => async ({
     description,
     feature,
     requirements,
-    hideContent,
     ownerId,
     status,
-    generatedBy,
-    generatedFrom,
-    modelName,
-    modelProvider
 }: z.infer<typeof CreateRequirementArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
 
         // Create the requirement object
-        const requirementPayload: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest = {
+        const requirementPayload: CreateRequirement = {
             title,
             description,
             feature,
             requirements,
-            hideContent: hideContent || false
+            status: status ?? CreateRequirementStatusEnum.Draft,
+            aiProcessingState: CreateRequirementAiProcessingStateEnum.Initial,
+            refinementLog: []
         };
         
         // Add optional fields if they're defined
         if (ownerId !== undefined) requirementPayload.ownerId = ownerId;
         if (status !== undefined) requirementPayload.status = status;
-        if (generatedBy !== undefined) requirementPayload.generatedBy = generatedBy;
-        if (generatedFrom !== undefined) requirementPayload.generatedFrom = generatedFrom;
-        if (modelName !== undefined) requirementPayload.modelName = modelName;
-        if (modelProvider !== undefined) requirementPayload.modelProvider = modelProvider;
 
         const requirement = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost({
             orgId,
             workspaceId,
-            organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest: requirementPayload
+            createRequirement: requirementPayload
         });
 
         return {
@@ -170,7 +161,7 @@ export const getRequirement = (context: UserContext) => async ({
 };
 
 // Schema for updating a requirement
-export const UpdateRequirementArgsSchema = z.object({
+export const updateRequirementArgsSchema = z.object({
     requirementId: z.string().describe("The ID of the requirement to update"),
     title: z.string().optional().describe("Updated title"),
     description: z.string().optional().describe("Updated description"),
@@ -178,17 +169,15 @@ export const UpdateRequirementArgsSchema = z.object({
     requirements: z.string().optional().describe("Updated requirements text"),
     hideContent: z.boolean().optional().describe("Whether the requirement content should be hidden"),
     ownerId: z.string().optional().describe("Updated ID of the requirement owner"),
-    status: z.enum([
-        OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Draft,
-        OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Ready,
-        OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Complete
-    ]).optional().describe(`Status of the requirement: ${OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Draft} is not finalized, ${OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Ready} is ready to implement, ${OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestStatusEnum.Complete} is implemented`),
+    status: z.enum([ UpdateRequirementStatusEnum.Draft, UpdateRequirementStatusEnum.Ready, UpdateRequirementStatusEnum.Complete]).optional().describe(`Status of the requirement: Draft is not finalized, Ready is ready to implement, Complete is implemented`),
 });
+
+type UpdateRequirementArgs = z.infer<typeof updateRequirementArgsSchema>;
 
 export const updateRequirementTool = {
     name: "update_requirement",
     description: "Update an existing requirement's details.",
-    inputSchema: zodToJsonSchema(UpdateRequirementArgsSchema),
+    inputSchema: zodToJsonSchema(updateRequirementArgsSchema),
 };
 
 export const updateRequirement = (context: UserContext) => async ({
@@ -197,10 +186,9 @@ export const updateRequirement = (context: UserContext) => async ({
     description,
     feature,
     requirements,
-    hideContent,
     ownerId,
     status
-}: z.infer<typeof UpdateRequirementArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+}: UpdateRequirementArgs): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
 
@@ -208,23 +196,16 @@ export const updateRequirement = (context: UserContext) => async ({
         const existingRequirement = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet({
             orgId,
             workspaceId,
-            requirementId
+            requirementId: requirementId
         });
 
         // Create the update payload with existing values or new ones
-        const updatePayload: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest = {
+        const updatePayload: UpdateRequirement = {
             title: title !== undefined ? title : existingRequirement.data.title,
             description: description !== undefined ? description : existingRequirement.data.description,
             feature: feature !== undefined ? feature : existingRequirement.data.feature,
             requirements: requirements !== undefined ? requirements : existingRequirement.data.requirements
         };
-
-        // Add optional fields if they're provided or existed before
-        if (hideContent !== undefined) {
-            updatePayload.hideContent = hideContent;
-        } else if (existingRequirement.data.hideContent !== undefined) {
-            updatePayload.hideContent = existingRequirement.data.hideContent;
-        }
 
         if (ownerId !== undefined) {
             updatePayload.ownerId = ownerId;
@@ -238,32 +219,11 @@ export const updateRequirement = (context: UserContext) => async ({
             updatePayload.status = existingRequirement.data.status as any;
         }
 
-        // Preserve other potential attributes from the original requirement
-        // These might not be available in the typing of the response
-        // but we'll handle them safely if they exist in the API
-        const existingReqObj = existingRequirement as any;
-
-        if (existingReqObj.generatedBy) {
-            updatePayload.generatedBy = existingReqObj.generatedBy;
-        }
-        
-        if (existingReqObj.generatedFrom) {
-            updatePayload.generatedFrom = existingReqObj.generatedFrom;
-        }
-        
-        if (existingReqObj.modelName) {
-            updatePayload.modelName = existingReqObj.modelName;
-        }
-        
-        if (existingReqObj.modelProvider) {
-            updatePayload.modelProvider = existingReqObj.modelProvider;
-        }
-
         const requirement = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut({
             orgId,
             workspaceId,
             requirementId,
-            organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest: updatePayload
+            updateRequirement: updatePayload
         });
 
         return {
@@ -319,10 +279,7 @@ export const deleteRequirement = (context: UserContext) => async ({
 export const ManageRequirementRelationshipsArgsSchema = z.object({
     requirementId: z.string().describe("The ID of the requirement to manage relationships for"),
     action: z.enum(["add", "remove"]).describe("Whether to add or remove the relationships"),
-    opportunityIds: z.array(z.string()).optional().describe("IDs of opportunities to relate to this requirement"),
     solutionIds: z.array(z.string()).optional().describe("IDs of solutions to relate to this requirement"),
-    outcomeIds: z.array(z.string()).optional().describe("IDs of outcomes to relate to this requirement"),
-    feedbackIds: z.array(z.string()).optional().describe("IDs of feedback items to relate to this requirement"),
 });
 
 export const manageRequirementRelationshipsTool = {
@@ -334,19 +291,13 @@ export const manageRequirementRelationshipsTool = {
 export const manageRequirementRelationships = (context: UserContext) => async ({
     requirementId,
     action,
-    opportunityIds,
-    solutionIds,
-    outcomeIds,
-    feedbackIds
+    solutionIds
 }: z.infer<typeof ManageRequirementRelationshipsArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
 
         const relationshipsPayload: RequirementRelationshipsPayload = {
-            opportunityIds: opportunityIds || [],
             solutionIds: solutionIds || [],
-            outcomeIds: outcomeIds || [],
-            feedbackIds: feedbackIds || []
         };
 
         await squadClient().manageRequirementRelationships({
@@ -363,10 +314,7 @@ export const manageRequirementRelationships = (context: UserContext) => async ({
                 text: JSON.stringify({
                     requirementId,
                     action,
-                    opportunityIds,
-                    solutionIds,
-                    outcomeIds,
-                    feedbackIds
+                    solutionIds
                 }, null, 2)
             }]
         };

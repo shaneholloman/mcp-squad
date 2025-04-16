@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesGet200ResponseDataInner } from './OrganisationsOrgIdWorkspacesGet200ResponseDataInner.js';
+import type { Workspace } from './Workspace.js';
 import {
-    OrganisationsOrgIdWorkspacesGet200ResponseDataInnerFromJSON,
-    OrganisationsOrgIdWorkspacesGet200ResponseDataInnerFromJSONTyped,
-    OrganisationsOrgIdWorkspacesGet200ResponseDataInnerToJSON,
-    OrganisationsOrgIdWorkspacesGet200ResponseDataInnerToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesGet200ResponseDataInner.js';
+    WorkspaceFromJSON,
+    WorkspaceFromJSONTyped,
+    WorkspaceToJSON,
+    WorkspaceToJSONTyped,
+} from './Workspace.js';
 
 /**
  * Response containing an array of workspaces
@@ -29,10 +29,10 @@ import {
 export interface OrganisationsOrgIdWorkspacesGet200Response {
     /**
      * Array of workspaces
-     * @type {Array<OrganisationsOrgIdWorkspacesGet200ResponseDataInner>}
+     * @type {Array<Workspace>}
      * @memberof OrganisationsOrgIdWorkspacesGet200Response
      */
-    data: Array<OrganisationsOrgIdWorkspacesGet200ResponseDataInner>;
+    data: Array<Workspace>;
 }
 
 /**
@@ -53,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesGet200ResponseFromJSONTyped(json: an
     }
     return {
         
-        'data': ((json['data'] as Array<any>).map(OrganisationsOrgIdWorkspacesGet200ResponseDataInnerFromJSON)),
+        'data': ((json['data'] as Array<any>).map(WorkspaceFromJSON)),
     };
 }
 
@@ -68,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesGet200ResponseToJSONTyped(value?: Or
 
     return {
         
-        'data': ((value['data'] as Array<any>).map(OrganisationsOrgIdWorkspacesGet200ResponseDataInnerToJSON)),
+        'data': ((value['data'] as Array<any>).map(WorkspaceToJSON)),
     };
 }
 

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { squadClient } from "./lib/clients/squad.js";
 import { UserContext } from "./helpers/getUser.js";
-import { ManageOpportunityRelationshipsRequest, RelationshipAction, UpdateOpportunityPayload, UpdateOpportunityPayloadStatusEnum } from "./lib/openapi/squad/models/index.js";
+import { OpportunityRelationshipsPayload, RelationshipAction, UpdateOpportunityPayload, UpdateOpportunityPayloadStatusEnum } from "./lib/openapi/squad/models/index.js";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 // Schema definitions
@@ -29,7 +29,7 @@ export const createOpportunity = (context: UserContext) => async ({
             createOpportunityPayload: {
                 title,
                 description,
-                status: "New"
+                createdBy: "user"
             }
         });
 
@@ -241,7 +241,6 @@ export const generateSolutions = (context: UserContext) => async ({
             orgId,
             workspaceId,
             opportunityId,
-            organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequest: prompt ? {} : undefined
         });
 
         return {
@@ -283,7 +282,7 @@ export const manageOpportunityRelationships = (context: UserContext) => async ({
     try {
         const { orgId, workspaceId } = context;
 
-        const relationshipsPayload: ManageOpportunityRelationshipsRequest = {
+        const relationshipsPayload: OpportunityRelationshipsPayload = {
             solutionIds: solutionIds || [], 
             outcomeIds: outcomeIds || [],   
             feedbackIds: feedbackIds || []  
@@ -294,7 +293,7 @@ export const manageOpportunityRelationships = (context: UserContext) => async ({
             workspaceId,
             opportunityId,
             action: action as RelationshipAction,
-            manageOpportunityRelationshipsRequest: relationshipsPayload
+            opportunityRelationshipsPayload: relationshipsPayload
         });
 
         return {

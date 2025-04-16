@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInner } from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInner.js';
+import type { SolutionWithRelationships } from './SolutionWithRelationships.js';
 import {
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInnerFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInnerFromJSONTyped,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInnerToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInnerToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInner.js';
+    SolutionWithRelationshipsFromJSON,
+    SolutionWithRelationshipsFromJSONTyped,
+    SolutionWithRelationshipsToJSON,
+    SolutionWithRelationshipsToJSONTyped,
+} from './SolutionWithRelationships.js';
 
 /**
  * Response containing an array of solutions
@@ -29,10 +29,10 @@ import {
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200Response {
     /**
      * Array of solutions
-     * @type {Array<OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInner>}
+     * @type {Array<SolutionWithRelationships>}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200Response
      */
-    data: Array<OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInner>;
+    data: Array<SolutionWithRelationships>;
 }
 
 /**
@@ -53,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseFr
     }
     return {
         
-        'data': ((json['data'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInnerFromJSON)),
+        'data': ((json['data'] as Array<any>).map(SolutionWithRelationshipsFromJSON)),
     };
 }
 
@@ -68,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseTo
 
     return {
         
-        'data': ((value['data'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseDataInnerToJSON)),
+        'data': ((value['data'] as Array<any>).map(SolutionWithRelationshipsToJSON)),
     };
 }
 

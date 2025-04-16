@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInner } from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInner.js';
+import type { Outcome } from './Outcome.js';
 import {
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInnerFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInnerFromJSONTyped,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInnerToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInnerToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInner.js';
+    OutcomeFromJSON,
+    OutcomeFromJSONTyped,
+    OutcomeToJSON,
+    OutcomeToJSONTyped,
+} from './Outcome.js';
 
 /**
  * Response containing an array of outcomes
@@ -29,10 +29,10 @@ import {
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200Response {
     /**
      * Array of outcomes
-     * @type {Array<OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInner>}
+     * @type {Array<Outcome>}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200Response
      */
-    data: Array<OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInner>;
+    data: Array<Outcome>;
 }
 
 /**
@@ -53,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseFro
     }
     return {
         
-        'data': ((json['data'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInnerFromJSON)),
+        'data': ((json['data'] as Array<any>).map(OutcomeFromJSON)),
     };
 }
 
@@ -68,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseToJ
 
     return {
         
-        'data': ((value['data'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseDataInnerToJSON)),
+        'data': ((value['data'] as Array<any>).map(OutcomeToJSON)),
     };
 }
 

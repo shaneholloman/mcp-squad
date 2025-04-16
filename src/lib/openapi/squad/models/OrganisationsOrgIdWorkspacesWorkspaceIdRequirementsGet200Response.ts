@@ -13,26 +13,26 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner } from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner.js';
+import type { Requirement } from './Requirement.js';
 import {
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerFromJSONTyped,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner.js';
+    RequirementFromJSON,
+    RequirementFromJSONTyped,
+    RequirementToJSON,
+    RequirementToJSONTyped,
+} from './Requirement.js';
 
 /**
- * 
+ * Response containing an array of requirements
  * @export
  * @interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Response
  */
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Response {
     /**
-     * 
-     * @type {Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner>}
+     * Array of requirements
+     * @type {Array<Requirement>}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Response
      */
-    data: Array<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner>;
+    data: Array<Requirement>;
 }
 
 /**
@@ -53,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Respons
     }
     return {
         
-        'data': ((json['data'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerFromJSON)),
+        'data': ((json['data'] as Array<any>).map(RequirementFromJSON)),
     };
 }
 
@@ -68,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Respons
 
     return {
         
-        'data': ((value['data'] as Array<any>).map(OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerToJSON)),
+        'data': ((value['data'] as Array<any>).map(RequirementToJSON)),
     };
 }
 

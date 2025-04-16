@@ -25,18 +25,6 @@ export interface OutcomeRelationshipsPayload {
      * @memberof OutcomeRelationshipsPayload
      */
     opportunityIds?: Array<string>;
-    /**
-     * Array of solution IDs to associate with the outcome
-     * @type {Array<string>}
-     * @memberof OutcomeRelationshipsPayload
-     */
-    solutionIds?: Array<string>;
-    /**
-     * Array of feedback IDs to associate with the outcome
-     * @type {Array<string>}
-     * @memberof OutcomeRelationshipsPayload
-     */
-    feedbackIds?: Array<string>;
 }
 
 /**
@@ -57,8 +45,6 @@ export function OutcomeRelationshipsPayloadFromJSONTyped(json: any, ignoreDiscri
     return {
         
         'opportunityIds': json['opportunityIds'] == null ? undefined : json['opportunityIds'],
-        'solutionIds': json['solutionIds'] == null ? undefined : json['solutionIds'],
-        'feedbackIds': json['feedbackIds'] == null ? undefined : json['feedbackIds'],
     };
 }
 
@@ -74,8 +60,6 @@ export function OutcomeRelationshipsPayloadToJSONTyped(value?: OutcomeRelationsh
     return {
         
         'opportunityIds': value['opportunityIds'],
-        'solutionIds': value['solutionIds'],
-        'feedbackIds': value['feedbackIds'],
     };
 }
 

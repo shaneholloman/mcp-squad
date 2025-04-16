@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseData } from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseData.js';
+import type { SolutionWithRelationships } from './SolutionWithRelationships.js';
 import {
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseDataFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseDataFromJSONTyped,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseDataToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseDataToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseData.js';
+    SolutionWithRelationshipsFromJSON,
+    SolutionWithRelationshipsFromJSONTyped,
+    SolutionWithRelationshipsToJSON,
+    SolutionWithRelationshipsToJSONTyped,
+} from './SolutionWithRelationships.js';
 
 /**
  * Response containing a single solution
@@ -28,11 +28,11 @@ import {
  */
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response {
     /**
-     * 
-     * @type {OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseData}
+     * Solution data
+     * @type {SolutionWithRelationships}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response
      */
-    data: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseData;
+    data: SolutionWithRelationships;
 }
 
 /**
@@ -53,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseF
     }
     return {
         
-        'data': OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseDataFromJSON(json['data']),
+        'data': SolutionWithRelationshipsFromJSON(json['data']),
     };
 }
 
@@ -68,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseT
 
     return {
         
-        'data': OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseDataToJSON(value['data']),
+        'data': SolutionWithRelationshipsToJSON(value['data']),
     };
 }
 

@@ -15,104 +15,129 @@
 
 import * as runtime from '../runtime.js';
 import type {
+  CreateFeedbackDocumentPayload,
+  CreateFeedbackDocumentResponse,
   CreateOpportunityPayload,
-  ManageOpportunityRelationshipsRequest,
-  OnboardPost200Response,
-  OnboardPostRequest,
+  CreateOrganisationPayload,
+  CreateOutcomePayload,
+  CreateRequirement,
+  CreateSolutionPayload,
+  CreateTopicPayload,
+  CreateWorkspacePayload,
+  FeedbackArrayResponse,
+  KnowledgeBaseDocumentListResponse,
+  KnowledgeBaseDocumentUploadPayload,
+  KnowledgeBaseDocumentUploadResponse,
+  OnboardingPayload,
+  OnboardingResponse,
+  OnboardingUpdatePayload,
+  OpportunityArrayResponse,
+  OpportunityRelationshipsPayload,
+  OpportunityResponse,
   OrganisationsGet200Response,
   OrganisationsOrgIdDelete200Response,
-  OrganisationsOrgIdPutRequest,
   OrganisationsOrgIdStatusGet200Response,
   OrganisationsOrgIdWorkspacesGet200Response,
   OrganisationsOrgIdWorkspacesPost200Response,
-  OrganisationsOrgIdWorkspacesPostRequest,
   OrganisationsOrgIdWorkspacesWorkspaceIdDelete200Response,
-  OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPost200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdDelete200Response,
-  OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackGet200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest,
-  OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete200Response,
-  OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequest,
-  OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost429Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet401Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet403Response,
-  OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet404Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet500Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200Response,
+  OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet404Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost400Response,
-  OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest,
-  OrganisationsOrgIdWorkspacesWorkspaceIdPutRequest,
   OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response,
-  OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest,
   OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete200Response,
-  OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest,
   OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response,
-  OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest,
   OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDelete200Response,
-  OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest,
-  OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInner,
-  OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest,
+  OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200Response,
+  OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest,
+  OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200Response,
+  OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdDelete200Response,
-  OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest,
   OrganisationsPost200Response,
-  OrganisationsPostRequest,
   OutcomeRelationshipsPayload,
   RelationshipAction,
   RequirementRelationshipsPayload,
   SolutionRelationshipsPayload,
   UpdateOpportunityPayload,
-  V1WhoamiGet200Response,
+  UpdateOrganisationPayload,
+  UpdateOutcomePayload,
+  UpdateRequirement,
+  UpdateSolutionPayload,
+  UpdateTopicPayload,
+  UpdateWorkspacePayload,
+  V1DataIngressPost201Response,
+  WhoAmIResponse,
 } from '../models/index.js';
 import {
+    CreateFeedbackDocumentPayloadFromJSON,
+    CreateFeedbackDocumentPayloadToJSON,
+    CreateFeedbackDocumentResponseFromJSON,
+    CreateFeedbackDocumentResponseToJSON,
     CreateOpportunityPayloadFromJSON,
     CreateOpportunityPayloadToJSON,
-    ManageOpportunityRelationshipsRequestFromJSON,
-    ManageOpportunityRelationshipsRequestToJSON,
-    OnboardPost200ResponseFromJSON,
-    OnboardPost200ResponseToJSON,
-    OnboardPostRequestFromJSON,
-    OnboardPostRequestToJSON,
+    CreateOrganisationPayloadFromJSON,
+    CreateOrganisationPayloadToJSON,
+    CreateOutcomePayloadFromJSON,
+    CreateOutcomePayloadToJSON,
+    CreateRequirementFromJSON,
+    CreateRequirementToJSON,
+    CreateSolutionPayloadFromJSON,
+    CreateSolutionPayloadToJSON,
+    CreateTopicPayloadFromJSON,
+    CreateTopicPayloadToJSON,
+    CreateWorkspacePayloadFromJSON,
+    CreateWorkspacePayloadToJSON,
+    FeedbackArrayResponseFromJSON,
+    FeedbackArrayResponseToJSON,
+    KnowledgeBaseDocumentListResponseFromJSON,
+    KnowledgeBaseDocumentListResponseToJSON,
+    KnowledgeBaseDocumentUploadPayloadFromJSON,
+    KnowledgeBaseDocumentUploadPayloadToJSON,
+    KnowledgeBaseDocumentUploadResponseFromJSON,
+    KnowledgeBaseDocumentUploadResponseToJSON,
+    OnboardingPayloadFromJSON,
+    OnboardingPayloadToJSON,
+    OnboardingResponseFromJSON,
+    OnboardingResponseToJSON,
+    OnboardingUpdatePayloadFromJSON,
+    OnboardingUpdatePayloadToJSON,
+    OpportunityArrayResponseFromJSON,
+    OpportunityArrayResponseToJSON,
+    OpportunityRelationshipsPayloadFromJSON,
+    OpportunityRelationshipsPayloadToJSON,
+    OpportunityResponseFromJSON,
+    OpportunityResponseToJSON,
     OrganisationsGet200ResponseFromJSON,
     OrganisationsGet200ResponseToJSON,
     OrganisationsOrgIdDelete200ResponseFromJSON,
     OrganisationsOrgIdDelete200ResponseToJSON,
-    OrganisationsOrgIdPutRequestFromJSON,
-    OrganisationsOrgIdPutRequestToJSON,
     OrganisationsOrgIdStatusGet200ResponseFromJSON,
     OrganisationsOrgIdStatusGet200ResponseToJSON,
     OrganisationsOrgIdWorkspacesGet200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesGet200ResponseToJSON,
     OrganisationsOrgIdWorkspacesPost200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesPost200ResponseToJSON,
-    OrganisationsOrgIdWorkspacesPostRequestFromJSON,
-    OrganisationsOrgIdWorkspacesPostRequestToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdDelete200ResponseToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPost200ResponseFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPost200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdDelete200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdDelete200ResponseToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackGet200ResponseFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackGet200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequestFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequestToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet200ResponseFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete200ResponseToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequestFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequestToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200ResponseFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost429ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost429ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200ResponseFromJSON,
@@ -121,52 +146,40 @@ import {
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet401ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet403ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet403ResponseToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet404ResponseFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet404ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet500ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet500ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete200ResponseToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet404ResponseFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet404ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost400ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost400ResponseToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequestFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequestToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdPutRequestFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdPutRequestToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200ResponseToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete200ResponseToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequestFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequestToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGet200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDelete200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDelete200ResponseToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequestFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequestToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInnerFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInnerToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequestFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequestToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200ResponseFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200ResponseToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequestFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequestToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200ResponseFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdDelete200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdDelete200ResponseToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequestFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequestToJSON,
     OrganisationsPost200ResponseFromJSON,
     OrganisationsPost200ResponseToJSON,
-    OrganisationsPostRequestFromJSON,
-    OrganisationsPostRequestToJSON,
     OutcomeRelationshipsPayloadFromJSON,
     OutcomeRelationshipsPayloadToJSON,
     RelationshipActionFromJSON,
@@ -177,16 +190,30 @@ import {
     SolutionRelationshipsPayloadToJSON,
     UpdateOpportunityPayloadFromJSON,
     UpdateOpportunityPayloadToJSON,
-    V1WhoamiGet200ResponseFromJSON,
-    V1WhoamiGet200ResponseToJSON,
+    UpdateOrganisationPayloadFromJSON,
+    UpdateOrganisationPayloadToJSON,
+    UpdateOutcomePayloadFromJSON,
+    UpdateOutcomePayloadToJSON,
+    UpdateRequirementFromJSON,
+    UpdateRequirementToJSON,
+    UpdateSolutionPayloadFromJSON,
+    UpdateSolutionPayloadToJSON,
+    UpdateTopicPayloadFromJSON,
+    UpdateTopicPayloadToJSON,
+    UpdateWorkspacePayloadFromJSON,
+    UpdateWorkspacePayloadToJSON,
+    V1DataIngressPost201ResponseFromJSON,
+    V1DataIngressPost201ResponseToJSON,
+    WhoAmIResponseFromJSON,
+    WhoAmIResponseToJSON,
 } from '../models/index.js';
 
-export interface ManageOpportunityRelationshipsOperationRequest {
+export interface ManageOpportunityRelationshipsRequest {
     orgId: string;
     workspaceId: string;
     opportunityId: string;
     action: RelationshipAction;
-    manageOpportunityRelationshipsRequest: ManageOpportunityRelationshipsRequest;
+    opportunityRelationshipsPayload: OpportunityRelationshipsPayload;
 }
 
 export interface ManageOutcomeRelationshipsRequest {
@@ -213,8 +240,8 @@ export interface ManageSolutionRelationshipsRequest {
     solutionRelationshipsPayload: SolutionRelationshipsPayload;
 }
 
-export interface OnboardPostOperationRequest {
-    onboardPostRequest?: OnboardPostRequest;
+export interface OnboardPostRequest {
+    onboardingPayload?: OnboardingPayload;
 }
 
 export interface OrganisationsOrgIdDeleteRequest {
@@ -227,12 +254,12 @@ export interface OrganisationsOrgIdGetRequest {
 
 export interface OrganisationsOrgIdOnboardPutRequest {
     orgId: string;
-    onboardPostRequest?: OnboardPostRequest;
+    onboardingUpdatePayload?: OnboardingUpdatePayload;
 }
 
-export interface OrganisationsOrgIdPutOperationRequest {
+export interface OrganisationsOrgIdPutRequest {
     orgId: string;
-    organisationsOrgIdPutRequest: OrganisationsOrgIdPutRequest;
+    updateOrganisationPayload: UpdateOrganisationPayload;
 }
 
 export interface OrganisationsOrgIdStatusGetRequest {
@@ -243,9 +270,22 @@ export interface OrganisationsOrgIdWorkspacesGetRequest {
     orgId: string;
 }
 
-export interface OrganisationsOrgIdWorkspacesPostOperationRequest {
+export interface OrganisationsOrgIdWorkspacesPostRequest {
     orgId: string;
-    organisationsOrgIdWorkspacesPostRequest: OrganisationsOrgIdWorkspacesPostRequest;
+    createWorkspacePayload: CreateWorkspacePayload;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePostRequest {
+    orgId: string;
+    workspaceId: string;
+    feedbackSource: string;
+    body: string;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdDataIngressPostRequest {
+    orgId: string;
+    workspaceId: string;
+    body: string;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdDeleteRequest {
@@ -256,10 +296,7 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdDeleteRequest {
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPostRequest {
     orgId: string;
     workspaceId: string;
-    file?: Blob;
-    feedbackId?: string;
-    title?: string;
-    description?: string;
+    createFeedbackDocumentPayload: CreateFeedbackDocumentPayload;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdDeleteRequest {
@@ -286,9 +323,31 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostOperationReq
     organisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest;
 }
 
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackProcessPostRequest {
+    orgId: string;
+    workspaceId: string;
+}
+
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdGetRequest {
     orgId: string;
     workspaceId: string;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDeleteRequest {
+    orgId: string;
+    workspaceId: string;
+    fileName: string;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGetRequest {
+    orgId: string;
+    workspaceId: string;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPostRequest {
+    orgId: string;
+    workspaceId: string;
+    knowledgeBaseDocumentUploadPayload: KnowledgeBaseDocumentUploadPayload;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest {
@@ -313,11 +372,10 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunity
     opportunityId: string;
 }
 
-export interface OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostOperationRequest {
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequest {
     orgId: string;
     workspaceId: string;
     opportunityId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequest?: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequest;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGetRequest {
@@ -362,19 +420,19 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdPutRequ
     orgId: string;
     workspaceId: string;
     outcomeId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest;
+    updateOutcomePayload: UpdateOutcomePayload;
 }
 
-export interface OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostOperationRequest {
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest {
     orgId: string;
     workspaceId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest;
+    createOutcomePayload: CreateOutcomePayload;
 }
 
-export interface OrganisationsOrgIdWorkspacesWorkspaceIdPutOperationRequest {
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdPutRequest {
     orgId: string;
     workspaceId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdPutRequest: OrganisationsOrgIdWorkspacesWorkspaceIdPutRequest;
+    updateWorkspacePayload: UpdateWorkspacePayload;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGetRequest {
@@ -382,10 +440,10 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGetRequest {
     workspaceId: string;
 }
 
-export interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostOperationRequest {
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest {
     orgId: string;
     workspaceId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest;
+    createRequirement: CreateRequirement;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDeleteRequest {
@@ -401,11 +459,11 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementI
     relationships?: string;
 }
 
-export interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutOperationRequest {
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest {
     orgId: string;
     workspaceId: string;
     requirementId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest;
+    updateRequirement: UpdateRequirement;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGetRequest {
@@ -413,10 +471,10 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsGetRequest {
     workspaceId: string;
 }
 
-export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostOperationRequest {
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest {
     orgId: string;
     workspaceId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest;
+    createSolutionPayload: CreateSolutionPayload;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDeleteRequest {
@@ -432,11 +490,17 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGetRe
     relationships?: string;
 }
 
-export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutOperationRequest {
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest {
     orgId: string;
     workspaceId: string;
     solutionId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest;
+    updateSolutionPayload: UpdateSolutionPayload;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostOperationRequest {
+    orgId: string;
+    workspaceId: string;
+    organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest: OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGetRequest {
@@ -444,10 +508,10 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGetRequest {
     workspaceId: string;
 }
 
-export interface OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostOperationRequest {
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest {
     orgId: string;
     workspaceId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest;
+    createTopicPayload: CreateTopicPayload;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdDeleteRequest {
@@ -462,15 +526,24 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdGetRequest 
     topicId: string;
 }
 
-export interface OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutOperationRequest {
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest {
     orgId: string;
     workspaceId: string;
     topicId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest;
+    updateTopicPayload: UpdateTopicPayload;
 }
 
-export interface OrganisationsPostOperationRequest {
-    organisationsPostRequest: OrganisationsPostRequest;
+export interface OrganisationsPostRequest {
+    createOrganisationPayload: CreateOrganisationPayload;
+}
+
+export interface V1DataIngressFeedbackSourcePostRequest {
+    feedbackSource: string;
+    body: string;
+}
+
+export interface V1DataIngressPostRequest {
+    body: string;
 }
 
 /**
@@ -482,7 +555,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Add or remove relationships between an opportunity and other entities (solutions, outcomes, or feedback)
      * Manage opportunity relationships
      */
-    async manageOpportunityRelationshipsRaw(requestParameters: ManageOpportunityRelationshipsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async manageOpportunityRelationshipsRaw(requestParameters: ManageOpportunityRelationshipsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -511,10 +584,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['manageOpportunityRelationshipsRequest'] == null) {
+        if (requestParameters['opportunityRelationshipsPayload'] == null) {
             throw new runtime.RequiredError(
-                'manageOpportunityRelationshipsRequest',
-                'Required parameter "manageOpportunityRelationshipsRequest" was null or undefined when calling manageOpportunityRelationships().'
+                'opportunityRelationshipsPayload',
+                'Required parameter "opportunityRelationshipsPayload" was null or undefined when calling manageOpportunityRelationships().'
             );
         }
 
@@ -537,7 +610,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: ManageOpportunityRelationshipsRequestToJSON(requestParameters['manageOpportunityRelationshipsRequest']),
+            body: OpportunityRelationshipsPayloadToJSON(requestParameters['opportunityRelationshipsPayload']),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -547,7 +620,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Add or remove relationships between an opportunity and other entities (solutions, outcomes, or feedback)
      * Manage opportunity relationships
      */
-    async manageOpportunityRelationships(requestParameters: ManageOpportunityRelationshipsOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+    async manageOpportunityRelationships(requestParameters: ManageOpportunityRelationshipsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.manageOpportunityRelationshipsRaw(requestParameters, initOverrides);
     }
 
@@ -773,7 +846,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Create a new organization with workspace and outcomes
      */
-    async onboardPostRaw(requestParameters: OnboardPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OnboardPost200Response>> {
+    async onboardPostRaw(requestParameters: OnboardPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OnboardingResponse>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -793,16 +866,16 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OnboardPostRequestToJSON(requestParameters['onboardPostRequest']),
+            body: OnboardingPayloadToJSON(requestParameters['onboardingPayload']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OnboardPost200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OnboardingResponseFromJSON(jsonValue));
     }
 
     /**
      * Create a new organization with workspace and outcomes
      */
-    async onboardPost(requestParameters: OnboardPostOperationRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OnboardPost200Response> {
+    async onboardPost(requestParameters: OnboardPostRequest = {}, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OnboardingResponse> {
         const response = await this.onboardPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -932,7 +1005,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Update an existing organization, recreate workspace and outcomes
      */
-    async organisationsOrgIdOnboardPutRaw(requestParameters: OrganisationsOrgIdOnboardPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OnboardPost200Response>> {
+    async organisationsOrgIdOnboardPutRaw(requestParameters: OrganisationsOrgIdOnboardPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OnboardingResponse>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -959,16 +1032,16 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: OnboardPostRequestToJSON(requestParameters['onboardPostRequest']),
+            body: OnboardingUpdatePayloadToJSON(requestParameters['onboardingUpdatePayload']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OnboardPost200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OnboardingResponseFromJSON(jsonValue));
     }
 
     /**
      * Update an existing organization, recreate workspace and outcomes
      */
-    async organisationsOrgIdOnboardPut(requestParameters: OrganisationsOrgIdOnboardPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OnboardPost200Response> {
+    async organisationsOrgIdOnboardPut(requestParameters: OrganisationsOrgIdOnboardPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OnboardingResponse> {
         const response = await this.organisationsOrgIdOnboardPutRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -977,7 +1050,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific organisation by ID
      * Update organisation
      */
-    async organisationsOrgIdPutRaw(requestParameters: OrganisationsOrgIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsPost200Response>> {
+    async organisationsOrgIdPutRaw(requestParameters: OrganisationsOrgIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -985,10 +1058,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdPutRequest'] == null) {
+        if (requestParameters['updateOrganisationPayload'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdPutRequest',
-                'Required parameter "organisationsOrgIdPutRequest" was null or undefined when calling organisationsOrgIdPut().'
+                'updateOrganisationPayload',
+                'Required parameter "updateOrganisationPayload" was null or undefined when calling organisationsOrgIdPut().'
             );
         }
 
@@ -1011,7 +1084,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdPutRequestToJSON(requestParameters['organisationsOrgIdPutRequest']),
+            body: UpdateOrganisationPayloadToJSON(requestParameters['updateOrganisationPayload']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsPost200ResponseFromJSON(jsonValue));
@@ -1021,13 +1094,13 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific organisation by ID
      * Update organisation
      */
-    async organisationsOrgIdPut(requestParameters: OrganisationsOrgIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsPost200Response> {
+    async organisationsOrgIdPut(requestParameters: OrganisationsOrgIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsPost200Response> {
         const response = await this.organisationsOrgIdPutRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * Retrieves the current status and statistics of an organization
+     * Retrieves the current status and subscription information of an organization
      * Get organization status
      */
     async organisationsOrgIdStatusGetRaw(requestParameters: OrganisationsOrgIdStatusGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdStatusGet200Response>> {
@@ -1061,7 +1134,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * Retrieves the current status and statistics of an organization
+     * Retrieves the current status and subscription information of an organization
      * Get organization status
      */
     async organisationsOrgIdStatusGet(requestParameters: OrganisationsOrgIdStatusGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdStatusGet200Response> {
@@ -1116,7 +1189,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new workspace for the specified organization
      * Create new workspace
      */
-    async organisationsOrgIdWorkspacesPostRaw(requestParameters: OrganisationsOrgIdWorkspacesPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesPost200Response>> {
+    async organisationsOrgIdWorkspacesPostRaw(requestParameters: OrganisationsOrgIdWorkspacesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -1124,10 +1197,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdWorkspacesPostRequest'] == null) {
+        if (requestParameters['createWorkspacePayload'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesPostRequest',
-                'Required parameter "organisationsOrgIdWorkspacesPostRequest" was null or undefined when calling organisationsOrgIdWorkspacesPost().'
+                'createWorkspacePayload',
+                'Required parameter "createWorkspacePayload" was null or undefined when calling organisationsOrgIdWorkspacesPost().'
             );
         }
 
@@ -1150,7 +1223,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesPostRequestToJSON(requestParameters['organisationsOrgIdWorkspacesPostRequest']),
+            body: CreateWorkspacePayloadToJSON(requestParameters['createWorkspacePayload']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesPost200ResponseFromJSON(jsonValue));
@@ -1160,8 +1233,135 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new workspace for the specified organization
      * Create new workspace
      */
-    async organisationsOrgIdWorkspacesPost(requestParameters: OrganisationsOrgIdWorkspacesPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesPost200Response> {
+    async organisationsOrgIdWorkspacesPost(requestParameters: OrganisationsOrgIdWorkspacesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Receives feedback data and processes it for a specific workspace and organization
+     * Process feedback for a workspace
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<V1DataIngressPost201Response>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePost().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePost().'
+            );
+        }
+
+        if (requestParameters['feedbackSource'] == null) {
+            throw new runtime.RequiredError(
+                'feedbackSource',
+                'Required parameter "feedbackSource" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePost().'
+            );
+        }
+
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'text/plain';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/data-ingress/{feedbackSource}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))).replace(`{${"feedbackSource"}}`, encodeURIComponent(String(requestParameters['feedbackSource']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => V1DataIngressPost201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Receives feedback data and processes it for a specific workspace and organization
+     * Process feedback for a workspace
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<V1DataIngressPost201Response> {
+        const response = await this.organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Receives feedback data and processes it for a specific workspace and organization
+     * Process feedback for a workspace
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdDataIngressPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdDataIngressPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<V1DataIngressPost201Response>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdDataIngressPost().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdDataIngressPost().'
+            );
+        }
+
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdDataIngressPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'text/plain';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/data-ingress`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => V1DataIngressPost201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Receives feedback data and processes it for a specific workspace and organization
+     * Process feedback for a workspace
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdDataIngressPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdDataIngressPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<V1DataIngressPost201Response> {
+        const response = await this.organisationsOrgIdWorkspacesWorkspaceIdDataIngressPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -1219,7 +1419,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Uploads a document related to feedback for processing and analysis
      * Upload feedback document
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<CreateFeedbackDocumentResponse>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -1234,9 +1434,18 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
+        if (requestParameters['createFeedbackDocumentPayload'] == null) {
+            throw new runtime.RequiredError(
+                'createFeedbackDocumentPayload',
+                'Required parameter "createFeedbackDocumentPayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPost().'
+            );
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
 
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
@@ -1246,54 +1455,22 @@ export class DefaultApi extends runtime.BaseAPI {
                 headerParameters["Authorization"] = `Bearer ${tokenString}`;
             }
         }
-        const consumes: runtime.Consume[] = [
-            { contentType: 'multipart/form-data' },
-        ];
-        // @ts-ignore: canConsumeForm may be unused
-        const canConsumeForm = runtime.canConsumeForm(consumes);
-
-        let formParams: { append(param: string, value: any): any };
-        let useForm = false;
-        // use FormData to transmit files using content-type "multipart/form-data"
-        useForm = canConsumeForm;
-        if (useForm) {
-            formParams = new FormData();
-        } else {
-            formParams = new URLSearchParams();
-        }
-
-        if (requestParameters['file'] != null) {
-            formParams.append('file', requestParameters['file'] as any);
-        }
-
-        if (requestParameters['feedbackId'] != null) {
-            formParams.append('feedbackId', requestParameters['feedbackId'] as any);
-        }
-
-        if (requestParameters['title'] != null) {
-            formParams.append('title', requestParameters['title'] as any);
-        }
-
-        if (requestParameters['description'] != null) {
-            formParams.append('description', requestParameters['description'] as any);
-        }
-
         const response = await this.request({
             path: `/organisations/{orgId}/workspaces/{workspaceId}/feedback-document`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: formParams,
+            body: CreateFeedbackDocumentPayloadToJSON(requestParameters['createFeedbackDocumentPayload']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPost200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => CreateFeedbackDocumentResponseFromJSON(jsonValue));
     }
 
     /**
      * Uploads a document related to feedback for processing and analysis
      * Upload feedback document
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<CreateFeedbackDocumentResponse> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdFeedbackDocumentPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -1420,7 +1597,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Lists all feedback in the specified workspace
      * List feedback
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdFeedbackGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackGet200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdFeedbackGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FeedbackArrayResponse>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -1454,14 +1631,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackGet200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => FeedbackArrayResponseFromJSON(jsonValue));
     }
 
     /**
      * Lists all feedback in the specified workspace
      * List feedback
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdFeedbackGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackGet200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdFeedbackGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FeedbackArrayResponse> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdFeedbackGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -1527,6 +1704,55 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Processes unprocessed feedback in the specified workspace
+     * Process Unprocessed Feedback
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdFeedbackProcessPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackProcessPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdFeedbackProcessPost().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdFeedbackProcessPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/feedback/process`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Processes unprocessed feedback in the specified workspace
+     * Process Unprocessed Feedback
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdFeedbackProcessPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackProcessPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.organisationsOrgIdWorkspacesWorkspaceIdFeedbackProcessPostRaw(requestParameters, initOverrides);
+    }
+
+    /**
      * Retrieves a specific workspace by ID
      * Get workspace by ID
      */
@@ -1577,10 +1803,176 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * Deletes a document from the knowledge base
+     * Delete knowledge base document
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDeleteRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDelete().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDelete().'
+            );
+        }
+
+        if (requestParameters['fileName'] == null) {
+            throw new runtime.RequiredError(
+                'fileName',
+                'Required parameter "fileName" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/knowledge-base-documents/{fileName}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))).replace(`{${"fileName"}}`, encodeURIComponent(String(requestParameters['fileName']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * Deletes a document from the knowledge base
+     * Delete knowledge base document
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDelete(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsFileNameDeleteRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * Retrieves a list of all knowledge base documents in the workspace
+     * List knowledge base documents
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KnowledgeBaseDocumentListResponse>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGet().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/knowledge-base-documents`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => KnowledgeBaseDocumentListResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Retrieves a list of all knowledge base documents in the workspace
+     * List knowledge base documents
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KnowledgeBaseDocumentListResponse> {
+        const response = await this.organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Uploads a new document to the knowledge base
+     * Upload knowledge base document
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KnowledgeBaseDocumentUploadResponse>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPost().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPost().'
+            );
+        }
+
+        if (requestParameters['knowledgeBaseDocumentUploadPayload'] == null) {
+            throw new runtime.RequiredError(
+                'knowledgeBaseDocumentUploadPayload',
+                'Required parameter "knowledgeBaseDocumentUploadPayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/knowledge-base-documents`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: KnowledgeBaseDocumentUploadPayloadToJSON(requestParameters['knowledgeBaseDocumentUploadPayload']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => KnowledgeBaseDocumentUploadResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Uploads a new document to the knowledge base
+     * Upload knowledge base document
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KnowledgeBaseDocumentUploadResponse> {
+        const response = await this.organisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates mock feedback data for testing and development purposes
      * Generate mock feedback
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FeedbackArrayResponse>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -1614,14 +2006,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => FeedbackArrayResponseFromJSON(jsonValue));
     }
 
     /**
      * Creates mock feedback data for testing and development purposes
      * Generate mock feedback
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FeedbackArrayResponse> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -1630,7 +2022,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Lists all opportunities in the specified workspace
      * List opportunities
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpportunityArrayResponse>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -1668,14 +2060,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpportunityArrayResponseFromJSON(jsonValue));
     }
 
     /**
      * Lists all opportunities in the specified workspace
      * List opportunities
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpportunityArrayResponse> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -1801,7 +2193,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Asynchronously generates AI-powered solutions based on the feedback associated with an opportunity
      * Generate solutions for an opportunity
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -1827,8 +2219,6 @@ export class DefaultApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'application/json';
-
         if (this.configuration && this.configuration.accessToken) {
             const token = this.configuration.accessToken;
             const tokenString = await token("bearerAuth", []);
@@ -1842,7 +2232,6 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequest']),
         }, initOverrides);
 
         return new runtime.VoidApiResponse(response);
@@ -1852,7 +2241,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Asynchronously generates AI-powered solutions based on the feedback associated with an opportunity
      * Generate solutions for an opportunity
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPostRaw(requestParameters, initOverrides);
     }
 
@@ -1860,7 +2249,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Retrieves a specific opportunity by ID
      * Get opportunity by ID
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpportunityResponse>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -1909,14 +2298,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpportunityResponseFromJSON(jsonValue));
     }
 
     /**
      * Retrieves a specific opportunity by ID
      * Get opportunity by ID
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpportunityResponse> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -1925,7 +2314,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific opportunity by ID
      * Update opportunity
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpportunityResponse>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -1980,14 +2369,14 @@ export class DefaultApi extends runtime.BaseAPI {
             body: UpdateOpportunityPayloadToJSON(requestParameters['updateOpportunityPayload']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpportunityResponseFromJSON(jsonValue));
     }
 
     /**
      * Updates a specific opportunity by ID
      * Update opportunity
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpportunityResponse> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPutRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -1996,7 +2385,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new opportunity in the specified workspace
      * Create new opportunity
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OpportunityResponse>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2044,20 +2433,20 @@ export class DefaultApi extends runtime.BaseAPI {
             body: CreateOpportunityPayloadToJSON(requestParameters['createOpportunityPayload']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OpportunityResponseFromJSON(jsonValue));
     }
 
     /**
      * Creates a new opportunity in the specified workspace
      * Create new opportunity
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OpportunityResponse> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
-     * List outcomes
+     * List all outcomes
      */
     async organisationsOrgIdWorkspacesWorkspaceIdOutcomesGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200Response>> {
         if (requestParameters['orgId'] == null) {
@@ -2097,7 +2486,7 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
-     * List outcomes
+     * List all outcomes
      */
     async organisationsOrgIdWorkspacesWorkspaceIdOutcomesGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdOutcomesGetRaw(requestParameters, initOverrides);
@@ -2243,10 +2632,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest'] == null) {
+        if (requestParameters['updateOutcomePayload'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest',
-                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdPut().'
+                'updateOutcomePayload',
+                'Required parameter "updateOutcomePayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdPut().'
             );
         }
 
@@ -2269,7 +2658,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest']),
+            body: UpdateOutcomePayloadToJSON(requestParameters['updateOutcomePayload']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseFromJSON(jsonValue));
@@ -2286,7 +2675,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Create a new outcome
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2301,10 +2690,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest'] == null) {
+        if (requestParameters['createOutcomePayload'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest',
-                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdOutcomesPost().'
+                'createOutcomePayload',
+                'Required parameter "createOutcomePayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdOutcomesPost().'
             );
         }
 
@@ -2327,7 +2716,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest']),
+            body: CreateOutcomePayloadToJSON(requestParameters['createOutcomePayload']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseFromJSON(jsonValue));
@@ -2336,7 +2725,7 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * Create a new outcome
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdOutcomesPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdOutcomesPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -2345,7 +2734,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific workspace by ID
      * Update workspace
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2360,10 +2749,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdPutRequest'] == null) {
+        if (requestParameters['updateWorkspacePayload'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesWorkspaceIdPutRequest',
-                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdPutRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdPut().'
+                'updateWorkspacePayload',
+                'Required parameter "updateWorkspacePayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdPut().'
             );
         }
 
@@ -2386,7 +2775,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdPutRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdPutRequest']),
+            body: UpdateWorkspacePayloadToJSON(requestParameters['updateWorkspacePayload']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesPost200ResponseFromJSON(jsonValue));
@@ -2396,7 +2785,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific workspace by ID
      * Update workspace
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdPutRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -2455,7 +2844,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new requirement in the specified workspace
      * Create new requirement
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2470,10 +2859,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest'] == null) {
+        if (requestParameters['createRequirement'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest',
-                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost().'
+                'createRequirement',
+                'Required parameter "createRequirement" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost().'
             );
         }
 
@@ -2496,7 +2885,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest']),
+            body: CreateRequirementToJSON(requestParameters['createRequirement']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200ResponseFromJSON(jsonValue));
@@ -2506,7 +2895,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new requirement in the specified workspace
      * Create new requirement
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdRequirementsPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -2633,7 +3022,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific requirement by ID
      * Update requirement
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2655,10 +3044,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest'] == null) {
+        if (requestParameters['updateRequirement'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest',
-                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut().'
+                'updateRequirement',
+                'Required parameter "updateRequirement" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut().'
             );
         }
 
@@ -2681,7 +3070,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest']),
+            body: UpdateRequirementToJSON(requestParameters['updateRequirement']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200ResponseFromJSON(jsonValue));
@@ -2691,7 +3080,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific requirement by ID
      * Update requirement
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPutRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -2750,7 +3139,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new solution in the specified workspace
      * Create new solution
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2765,10 +3154,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest'] == null) {
+        if (requestParameters['createSolutionPayload'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest',
-                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost().'
+                'createSolutionPayload',
+                'Required parameter "createSolutionPayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost().'
             );
         }
 
@@ -2791,7 +3180,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest']),
+            body: CreateSolutionPayloadToJSON(requestParameters['createSolutionPayload']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseFromJSON(jsonValue));
@@ -2801,7 +3190,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new solution in the specified workspace
      * Create new solution
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -2928,7 +3317,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific solution by ID
      * Update solution
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2950,10 +3339,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest'] == null) {
+        if (requestParameters['updateSolutionPayload'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest',
-                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPut().'
+                'updateSolutionPayload',
+                'Required parameter "updateSolutionPayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPut().'
             );
         }
 
@@ -2976,7 +3365,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest']),
+            body: UpdateSolutionPayloadToJSON(requestParameters['updateSolutionPayload']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200ResponseFromJSON(jsonValue));
@@ -2986,8 +3375,68 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific solution by ID
      * Update solution
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response> {
+    async organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Processes a text prompt through an AI model and returns the result
+     * Process text through AI proxy
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200Response>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdTestProxyPost().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdTestProxyPost().'
+            );
+        }
+
+        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest'] == null) {
+            throw new runtime.RequiredError(
+                'organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest',
+                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdTestProxyPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/test-proxy`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Processes a text prompt through an AI model and returns the result
+     * Process text through AI proxy
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdTestProxyPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200Response> {
+        const response = await this.organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -2995,7 +3444,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Lists all topics in the specified workspace
      * List topics
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdTopicsGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInner>>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdTopicsGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -3029,14 +3478,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInnerFromJSON));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Lists all topics in the specified workspace
      * List topics
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdTopicsGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInner>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdTopicsGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdTopicsGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -3045,7 +3494,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new topic in the specified workspace
      * Create new topic
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdTopicsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInner>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdTopicsPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -3060,10 +3509,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest'] == null) {
+        if (requestParameters['createTopicPayload'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest',
-                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdTopicsPost().'
+                'createTopicPayload',
+                'Required parameter "createTopicPayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdTopicsPost().'
             );
         }
 
@@ -3086,17 +3535,17 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest']),
+            body: CreateTopicPayloadToJSON(requestParameters['createTopicPayload']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInnerFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Creates a new topic in the specified workspace
      * Create new topic
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdTopicsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInner> {
+    async organisationsOrgIdWorkspacesWorkspaceIdTopicsPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdTopicsPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -3162,7 +3611,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Retrieves a specific topic by ID
      * Get topic by ID
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInner>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -3203,14 +3652,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInnerFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Retrieves a specific topic by ID
      * Get topic by ID
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInner> {
+    async organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdGetRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -3219,7 +3668,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Updates a specific topic by ID
      * Update topic
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInner>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -3241,10 +3690,10 @@ export class DefaultApi extends runtime.BaseAPI {
             );
         }
 
-        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest'] == null) {
+        if (requestParameters['updateTopicPayload'] == null) {
             throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest',
-                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPut().'
+                'updateTopicPayload',
+                'Required parameter "updateTopicPayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPut().'
             );
         }
 
@@ -3267,17 +3716,17 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest']),
+            body: UpdateTopicPayloadToJSON(requestParameters['updateTopicPayload']),
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInnerFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Updates a specific topic by ID
      * Update topic
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseInner> {
+    async organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdPutRaw(requestParameters, initOverrides);
         return await response.value();
     }
@@ -3286,11 +3735,11 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new organisation
      * Create new organisation
      */
-    async organisationsPostRaw(requestParameters: OrganisationsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsPost200Response>> {
-        if (requestParameters['organisationsPostRequest'] == null) {
+    async organisationsPostRaw(requestParameters: OrganisationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsPost200Response>> {
+        if (requestParameters['createOrganisationPayload'] == null) {
             throw new runtime.RequiredError(
-                'organisationsPostRequest',
-                'Required parameter "organisationsPostRequest" was null or undefined when calling organisationsPost().'
+                'createOrganisationPayload',
+                'Required parameter "createOrganisationPayload" was null or undefined when calling organisationsPost().'
             );
         }
 
@@ -3313,7 +3762,7 @@ export class DefaultApi extends runtime.BaseAPI {
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: OrganisationsPostRequestToJSON(requestParameters['organisationsPostRequest']),
+            body: CreateOrganisationPayloadToJSON(requestParameters['createOrganisationPayload']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsPost200ResponseFromJSON(jsonValue));
@@ -3323,8 +3772,99 @@ export class DefaultApi extends runtime.BaseAPI {
      * Creates a new organisation
      * Create new organisation
      */
-    async organisationsPost(requestParameters: OrganisationsPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsPost200Response> {
+    async organisationsPost(requestParameters: OrganisationsPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsPost200Response> {
         const response = await this.organisationsPostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Receives feedback data and processes it for a specific workspace and organization
+     * Process feedback for a workspace
+     */
+    async v1DataIngressFeedbackSourcePostRaw(requestParameters: V1DataIngressFeedbackSourcePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<V1DataIngressPost201Response>> {
+        if (requestParameters['feedbackSource'] == null) {
+            throw new runtime.RequiredError(
+                'feedbackSource',
+                'Required parameter "feedbackSource" was null or undefined when calling v1DataIngressFeedbackSourcePost().'
+            );
+        }
+
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling v1DataIngressFeedbackSourcePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'text/plain';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // apiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/v1/data-ingress/{feedbackSource}`.replace(`{${"feedbackSource"}}`, encodeURIComponent(String(requestParameters['feedbackSource']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => V1DataIngressPost201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Receives feedback data and processes it for a specific workspace and organization
+     * Process feedback for a workspace
+     */
+    async v1DataIngressFeedbackSourcePost(requestParameters: V1DataIngressFeedbackSourcePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<V1DataIngressPost201Response> {
+        const response = await this.v1DataIngressFeedbackSourcePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Receives feedback data and processes it for a specific workspace and organization
+     * Process feedback for a workspace
+     */
+    async v1DataIngressPostRaw(requestParameters: V1DataIngressPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<V1DataIngressPost201Response>> {
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling v1DataIngressPost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'text/plain';
+
+        if (this.configuration && this.configuration.apiKey) {
+            headerParameters["Authorization"] = await this.configuration.apiKey("Authorization"); // apiKeyAuth authentication
+        }
+
+        const response = await this.request({
+            path: `/v1/data-ingress`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => V1DataIngressPost201ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Receives feedback data and processes it for a specific workspace and organization
+     * Process feedback for a workspace
+     */
+    async v1DataIngressPost(requestParameters: V1DataIngressPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<V1DataIngressPost201Response> {
+        const response = await this.v1DataIngressPostRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -3368,7 +3908,7 @@ export class DefaultApi extends runtime.BaseAPI {
      * Returns the ID and name of the authenticated user\'s organization and workspace. This is only callable by an API key which is workspace scoped.
      * Retrieve authenticated user\'s organization and workspace information
      */
-    async v1WhoamiGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<V1WhoamiGet200Response>> {
+    async v1WhoamiGetRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<WhoAmIResponse>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
@@ -3384,14 +3924,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => V1WhoamiGet200ResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => WhoAmIResponseFromJSON(jsonValue));
     }
 
     /**
      * Returns the ID and name of the authenticated user\'s organization and workspace. This is only callable by an API key which is workspace scoped.
      * Retrieve authenticated user\'s organization and workspace information
      */
-    async v1WhoamiGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<V1WhoamiGet200Response> {
+    async v1WhoamiGet(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<WhoAmIResponse> {
         const response = await this.v1WhoamiGetRaw(initOverrides);
         return await response.value();
     }

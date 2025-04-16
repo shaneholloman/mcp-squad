@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesGet200ResponseDataInner } from './OrganisationsOrgIdWorkspacesGet200ResponseDataInner.js';
+import type { Workspace } from './Workspace.js';
 import {
-    OrganisationsOrgIdWorkspacesGet200ResponseDataInnerFromJSON,
-    OrganisationsOrgIdWorkspacesGet200ResponseDataInnerFromJSONTyped,
-    OrganisationsOrgIdWorkspacesGet200ResponseDataInnerToJSON,
-    OrganisationsOrgIdWorkspacesGet200ResponseDataInnerToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesGet200ResponseDataInner.js';
+    WorkspaceFromJSON,
+    WorkspaceFromJSONTyped,
+    WorkspaceToJSON,
+    WorkspaceToJSONTyped,
+} from './Workspace.js';
 
 /**
  * Response containing a single workspace
@@ -28,11 +28,11 @@ import {
  */
 export interface OrganisationsOrgIdWorkspacesPost200Response {
     /**
-     * 
-     * @type {OrganisationsOrgIdWorkspacesGet200ResponseDataInner}
+     * Workspace data
+     * @type {Workspace}
      * @memberof OrganisationsOrgIdWorkspacesPost200Response
      */
-    data: OrganisationsOrgIdWorkspacesGet200ResponseDataInner;
+    data: Workspace;
 }
 
 /**
@@ -53,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesPost200ResponseFromJSONTyped(json: a
     }
     return {
         
-        'data': OrganisationsOrgIdWorkspacesGet200ResponseDataInnerFromJSON(json['data']),
+        'data': WorkspaceFromJSON(json['data']),
     };
 }
 
@@ -68,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesPost200ResponseToJSONTyped(value?: O
 
     return {
         
-        'data': OrganisationsOrgIdWorkspacesGet200ResponseDataInnerToJSON(value['data']),
+        'data': WorkspaceToJSON(value['data']),
     };
 }
 

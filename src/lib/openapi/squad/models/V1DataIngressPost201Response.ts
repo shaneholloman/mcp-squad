@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { V1DataIngressPost201ResponseData } from './V1DataIngressPost201ResponseData.js';
+import type { FeedbackResponse } from './FeedbackResponse.js';
 import {
-    V1DataIngressPost201ResponseDataFromJSON,
-    V1DataIngressPost201ResponseDataFromJSONTyped,
-    V1DataIngressPost201ResponseDataToJSON,
-    V1DataIngressPost201ResponseDataToJSONTyped,
-} from './V1DataIngressPost201ResponseData.js';
+    FeedbackResponseFromJSON,
+    FeedbackResponseFromJSONTyped,
+    FeedbackResponseToJSON,
+    FeedbackResponseToJSONTyped,
+} from './FeedbackResponse.js';
 
 /**
  * 
@@ -29,10 +29,10 @@ import {
 export interface V1DataIngressPost201Response {
     /**
      * 
-     * @type {V1DataIngressPost201ResponseData}
+     * @type {FeedbackResponse}
      * @memberof V1DataIngressPost201Response
      */
-    data: V1DataIngressPost201ResponseData;
+    data: FeedbackResponse;
 }
 
 /**
@@ -53,7 +53,7 @@ export function V1DataIngressPost201ResponseFromJSONTyped(json: any, ignoreDiscr
     }
     return {
         
-        'data': V1DataIngressPost201ResponseDataFromJSON(json['data']),
+        'data': FeedbackResponseFromJSON(json['data']),
     };
 }
 
@@ -68,7 +68,7 @@ export function V1DataIngressPost201ResponseToJSONTyped(value?: V1DataIngressPos
 
     return {
         
-        'data': V1DataIngressPost201ResponseDataToJSON(value['data']),
+        'data': FeedbackResponseToJSON(value['data']),
     };
 }
 

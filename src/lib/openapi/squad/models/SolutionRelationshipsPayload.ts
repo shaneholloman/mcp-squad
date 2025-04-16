@@ -26,17 +26,11 @@ export interface SolutionRelationshipsPayload {
      */
     opportunityIds?: Array<string>;
     /**
-     * Array of outcome IDs to associate with the solution
+     * Array of requirement IDs to associate with the solution
      * @type {Array<string>}
      * @memberof SolutionRelationshipsPayload
      */
-    outcomeIds?: Array<string>;
-    /**
-     * Array of feedback IDs to associate with the solution
-     * @type {Array<string>}
-     * @memberof SolutionRelationshipsPayload
-     */
-    feedbackIds?: Array<string>;
+    requirementIds?: Array<string>;
 }
 
 /**
@@ -57,8 +51,7 @@ export function SolutionRelationshipsPayloadFromJSONTyped(json: any, ignoreDiscr
     return {
         
         'opportunityIds': json['opportunityIds'] == null ? undefined : json['opportunityIds'],
-        'outcomeIds': json['outcomeIds'] == null ? undefined : json['outcomeIds'],
-        'feedbackIds': json['feedbackIds'] == null ? undefined : json['feedbackIds'],
+        'requirementIds': json['requirementIds'] == null ? undefined : json['requirementIds'],
     };
 }
 
@@ -74,8 +67,7 @@ export function SolutionRelationshipsPayloadToJSONTyped(value?: SolutionRelation
     return {
         
         'opportunityIds': value['opportunityIds'],
-        'outcomeIds': value['outcomeIds'],
-        'feedbackIds': value['feedbackIds'],
+        'requirementIds': value['requirementIds'],
     };
 }
 

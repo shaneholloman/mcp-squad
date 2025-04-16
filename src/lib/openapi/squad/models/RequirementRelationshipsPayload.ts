@@ -20,29 +20,11 @@ import { mapValues } from '../runtime.js';
  */
 export interface RequirementRelationshipsPayload {
     /**
-     * Array of opportunity IDs to associate with the requirement
-     * @type {Array<string>}
-     * @memberof RequirementRelationshipsPayload
-     */
-    opportunityIds?: Array<string>;
-    /**
      * Array of solution IDs to associate with the requirement
      * @type {Array<string>}
      * @memberof RequirementRelationshipsPayload
      */
     solutionIds?: Array<string>;
-    /**
-     * Array of outcome IDs to associate with the requirement
-     * @type {Array<string>}
-     * @memberof RequirementRelationshipsPayload
-     */
-    outcomeIds?: Array<string>;
-    /**
-     * Array of feedback IDs to associate with the requirement
-     * @type {Array<string>}
-     * @memberof RequirementRelationshipsPayload
-     */
-    feedbackIds?: Array<string>;
 }
 
 /**
@@ -62,10 +44,7 @@ export function RequirementRelationshipsPayloadFromJSONTyped(json: any, ignoreDi
     }
     return {
         
-        'opportunityIds': json['opportunityIds'] == null ? undefined : json['opportunityIds'],
         'solutionIds': json['solutionIds'] == null ? undefined : json['solutionIds'],
-        'outcomeIds': json['outcomeIds'] == null ? undefined : json['outcomeIds'],
-        'feedbackIds': json['feedbackIds'] == null ? undefined : json['feedbackIds'],
     };
 }
 
@@ -80,10 +59,7 @@ export function RequirementRelationshipsPayloadToJSONTyped(value?: RequirementRe
 
     return {
         
-        'opportunityIds': value['opportunityIds'],
         'solutionIds': value['solutionIds'],
-        'outcomeIds': value['outcomeIds'],
-        'feedbackIds': value['feedbackIds'],
     };
 }
 

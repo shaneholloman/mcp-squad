@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseData } from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseData.js';
+import type { OutcomeWithRelationships } from './OutcomeWithRelationships.js';
 import {
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataFromJSONTyped,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseData.js';
+    OutcomeWithRelationshipsFromJSON,
+    OutcomeWithRelationshipsFromJSONTyped,
+    OutcomeWithRelationshipsToJSON,
+    OutcomeWithRelationshipsToJSONTyped,
+} from './OutcomeWithRelationships.js';
 
 /**
  * Response containing a single outcome
@@ -29,10 +29,10 @@ import {
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response {
     /**
      * 
-     * @type {OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseData}
+     * @type {OutcomeWithRelationships}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200Response
      */
-    data: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseData;
+    data: OutcomeWithRelationships;
 }
 
 /**
@@ -53,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseFr
     }
     return {
         
-        'data': OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataFromJSON(json['data']),
+        'data': OutcomeWithRelationshipsFromJSON(json['data']),
     };
 }
 
@@ -68,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseTo
 
     return {
         
-        'data': OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPost200ResponseDataToJSON(value['data']),
+        'data': OutcomeWithRelationshipsToJSON(value['data']),
     };
 }
 

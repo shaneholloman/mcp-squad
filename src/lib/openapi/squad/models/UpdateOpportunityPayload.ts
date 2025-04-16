@@ -20,47 +20,71 @@ import { mapValues } from '../runtime.js';
  */
 export interface UpdateOpportunityPayload {
     /**
-     * 
-     * @type {string}
+     * Whether the opportunity has been read
+     * @type {boolean}
      * @memberof UpdateOpportunityPayload
      */
-    title?: string;
+    read?: boolean;
     /**
-     * 
-     * @type {string}
-     * @memberof UpdateOpportunityPayload
-     */
-    description?: string;
-    /**
-     * 
+     * Current status of the opportunity
      * @type {string}
      * @memberof UpdateOpportunityPayload
      */
     status?: UpdateOpportunityPayloadStatusEnum;
     /**
-     * 
+     * Title of the opportunity
+     * @type {string}
+     * @memberof UpdateOpportunityPayload
+     */
+    title?: string;
+    /**
+     * Description of the opportunity
+     * @type {string}
+     * @memberof UpdateOpportunityPayload
+     */
+    description?: string;
+    /**
+     * Current state of solution generation
      * @type {string}
      * @memberof UpdateOpportunityPayload
      */
     solutionsGeneratingState?: UpdateOpportunityPayloadSolutionsGeneratingStateEnum;
     /**
-     * 
-     * @type {boolean}
+     * How the opportunity was created
+     * @type {string}
      * @memberof UpdateOpportunityPayload
      */
-    hideContent?: boolean;
+    createdBy?: UpdateOpportunityPayloadCreatedByEnum;
     /**
-     * 
+     * ID of the opportunity owner
      * @type {string}
      * @memberof UpdateOpportunityPayload
      */
     ownerId?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {Array<string>}
      * @memberof UpdateOpportunityPayload
      */
-    read?: boolean;
+    feedbackIds?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateOpportunityPayload
+     */
+    outcomeIds?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateOpportunityPayload
+     */
+    solutionIds?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof UpdateOpportunityPayload
+     */
+    topicIds?: Array<string>;
 }
 
 
@@ -86,6 +110,15 @@ export const UpdateOpportunityPayloadSolutionsGeneratingStateEnum = {
 } as const;
 export type UpdateOpportunityPayloadSolutionsGeneratingStateEnum = typeof UpdateOpportunityPayloadSolutionsGeneratingStateEnum[keyof typeof UpdateOpportunityPayloadSolutionsGeneratingStateEnum];
 
+/**
+ * @export
+ */
+export const UpdateOpportunityPayloadCreatedByEnum = {
+    User: 'user',
+    Generated: 'generated'
+} as const;
+export type UpdateOpportunityPayloadCreatedByEnum = typeof UpdateOpportunityPayloadCreatedByEnum[keyof typeof UpdateOpportunityPayloadCreatedByEnum];
+
 
 /**
  * Check if a given object implements the UpdateOpportunityPayload interface.
@@ -104,13 +137,17 @@ export function UpdateOpportunityPayloadFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
+        'read': json['read'] == null ? undefined : json['read'],
+        'status': json['status'] == null ? undefined : json['status'],
         'title': json['title'] == null ? undefined : json['title'],
         'description': json['description'] == null ? undefined : json['description'],
-        'status': json['status'] == null ? undefined : json['status'],
         'solutionsGeneratingState': json['solutionsGeneratingState'] == null ? undefined : json['solutionsGeneratingState'],
-        'hideContent': json['hideContent'] == null ? undefined : json['hideContent'],
+        'createdBy': json['createdBy'] == null ? undefined : json['createdBy'],
         'ownerId': json['ownerId'] == null ? undefined : json['ownerId'],
-        'read': json['read'] == null ? undefined : json['read'],
+        'feedbackIds': json['feedbackIds'] == null ? undefined : json['feedbackIds'],
+        'outcomeIds': json['outcomeIds'] == null ? undefined : json['outcomeIds'],
+        'solutionIds': json['solutionIds'] == null ? undefined : json['solutionIds'],
+        'topicIds': json['topicIds'] == null ? undefined : json['topicIds'],
     };
 }
 
@@ -125,13 +162,17 @@ export function UpdateOpportunityPayloadToJSONTyped(value?: UpdateOpportunityPay
 
     return {
         
+        'read': value['read'],
+        'status': value['status'],
         'title': value['title'],
         'description': value['description'],
-        'status': value['status'],
         'solutionsGeneratingState': value['solutionsGeneratingState'],
-        'hideContent': value['hideContent'],
+        'createdBy': value['createdBy'],
         'ownerId': value['ownerId'],
-        'read': value['read'],
+        'feedbackIds': value['feedbackIds'],
+        'outcomeIds': value['outcomeIds'],
+        'solutionIds': value['solutionIds'],
+        'topicIds': value['topicIds'],
     };
 }
 

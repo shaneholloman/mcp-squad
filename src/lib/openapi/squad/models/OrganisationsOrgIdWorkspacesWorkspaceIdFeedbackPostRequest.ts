@@ -14,7 +14,7 @@
 
 import { mapValues } from '../runtime.js';
 /**
- * Request schema for creating feedback
+ * Feedback data from a user
  * @export
  * @interface OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
  */
@@ -24,33 +24,45 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest {
      * @type {string}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
      */
-    title: string;
+    id?: string;
     /**
-     * 
-     * @type {string}
-     * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
-     */
-    description: string;
-    /**
-     * 
+     * Type of feedback
      * @type {string}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
      */
     type: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequestTypeEnum;
     /**
-     * 
+     * Source of the feedback
      * @type {string}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
      */
     source: string;
     /**
-     * 
+     * Title of the feedback
+     * @type {string}
+     * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
+     */
+    title: string;
+    /**
+     * Description of the feedback
+     * @type {string}
+     * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
+     */
+    description: string;
+    /**
+     * Detailed feedback content
      * @type {string}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
      */
     feedback: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
+     */
+    seen?: boolean;
+    /**
+     * ID of the feedback owner
      * @type {string}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
      */
@@ -67,24 +79,6 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest {
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
      */
     workspaceId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
-     */
-    id?: string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
-     */
-    seen?: boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
-     */
-    hideContent?: boolean;
 }
 
 
@@ -103,10 +97,10 @@ export type OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequestTypeEnum =
  * Check if a given object implements the OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest interface.
  */
 export function instanceOfOrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest(value: object): value is OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest {
-    if (!('title' in value) || value['title'] === undefined) return false;
-    if (!('description' in value) || value['description'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     if (!('source' in value) || value['source'] === undefined) return false;
+    if (!('title' in value) || value['title'] === undefined) return false;
+    if (!('description' in value) || value['description'] === undefined) return false;
     if (!('feedback' in value) || value['feedback'] === undefined) return false;
     if (!('organisationId' in value) || value['organisationId'] === undefined) return false;
     if (!('workspaceId' in value) || value['workspaceId'] === undefined) return false;
@@ -123,17 +117,16 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequestFromJS
     }
     return {
         
-        'title': json['title'],
-        'description': json['description'],
+        'id': json['id'] == null ? undefined : json['id'],
         'type': json['type'],
         'source': json['source'],
+        'title': json['title'],
+        'description': json['description'],
         'feedback': json['feedback'],
+        'seen': json['seen'] == null ? undefined : json['seen'],
         'ownerId': json['ownerId'] == null ? undefined : json['ownerId'],
         'organisationId': json['organisationId'],
         'workspaceId': json['workspaceId'],
-        'id': json['id'] == null ? undefined : json['id'],
-        'seen': json['seen'] == null ? undefined : json['seen'],
-        'hideContent': json['hideContent'] == null ? undefined : json['hideContent'],
     };
 }
 
@@ -148,17 +141,16 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequestToJSON
 
     return {
         
-        'title': value['title'],
-        'description': value['description'],
+        'id': value['id'],
         'type': value['type'],
         'source': value['source'],
+        'title': value['title'],
+        'description': value['description'],
         'feedback': value['feedback'],
+        'seen': value['seen'],
         'ownerId': value['ownerId'],
         'organisationId': value['organisationId'],
         'workspaceId': value['workspaceId'],
-        'id': value['id'],
-        'seen': value['seen'],
-        'hideContent': value['hideContent'],
     };
 }
 

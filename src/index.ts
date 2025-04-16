@@ -52,7 +52,7 @@ import {
   createRequirement, CreateRequirementArgsSchema,
   listRequirements, ListRequirementsArgsSchema,
   getRequirement, GetRequirementArgsSchema,
-  updateRequirement, UpdateRequirementArgsSchema,
+  updateRequirement, updateRequirementArgsSchema,
   deleteRequirement, DeleteRequirementArgsSchema,
   manageRequirementRelationships, ManageRequirementRelationshipsArgsSchema,
   createRequirementTool,
@@ -403,7 +403,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       }
       case "update_requirement": {
         try {
-            const validArgs = UpdateRequirementArgsSchema.parse(args);
+            const validArgs = updateRequirementArgsSchema.parse(args);
             return await updateRequirement(userContext)(validArgs);
         } catch (e) {
             return {

@@ -3,20 +3,19 @@ import { squadClient } from "./lib/clients/squad.js";
 import { UserContext } from "./helpers/getUser.js";
 import { 
     RelationshipAction, 
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestStatusEnum,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestCreatedByEnum,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest,
-    SolutionRelationshipsPayload 
+    SolutionRelationshipsPayload,
+    UpdateSolutionPayload,
+    CreateSolutionPayloadStatusEnum,
+    CreateSolutionPayload
 } from "./lib/openapi/squad/models/index.js";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 const statusEnum = z.enum([
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestStatusEnum.New,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestStatusEnum.Solved,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestStatusEnum.Planned,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestStatusEnum.InProgress
-]).optional().describe(`Status of the solution: ${OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestStatusEnum.New} hasn't been developed, ${OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestStatusEnum.InProgress} means we're currently building out requirements and implementing them. ${OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestStatusEnum.Planned} means we've finished developing the solutions and are ready to implement them. ${OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestStatusEnum.Solved} means we've completed the implementation and the opportunity is considered addressed.`);
+    CreateSolutionPayloadStatusEnum.New,
+    CreateSolutionPayloadStatusEnum.InProgress,
+    CreateSolutionPayloadStatusEnum.Planned,
+    CreateSolutionPayloadStatusEnum.Solved
+]).optional().describe(`Status of the solution: ${CreateSolutionPayloadStatusEnum.New} hasn't been developed, ${CreateSolutionPayloadStatusEnum.InProgress} means we're currently building out requirements and implementing them. ${CreateSolutionPayloadStatusEnum.Planned} means we've finished developing the solutions and are ready to implement them. ${CreateSolutionPayloadStatusEnum.Solved} means we've completed the implementation and the opportunity is considered addressed.`);
 
 // Schema for creating a solution
 export const CreateSolutionArgsSchema = z.object({
@@ -43,19 +42,19 @@ export const createSolution = (context: UserContext) => async ({
     try {
         const { orgId, workspaceId } = context;
 
-        const solutionPayload: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest = {
+        const solutionPayload: CreateSolutionPayload = {
             title,
             description,
             pros,
             cons,
-            status: status || OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestStatusEnum.New,
-            createdBy: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequestCreatedByEnum.User
+            status: status || CreateSolutionPayloadStatusEnum.New,
+            createdBy: "user"
         };
 
         const solution = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost({
             orgId,
             workspaceId,
-            organisationsOrgIdWorkspacesWorkspaceIdSolutionsPostRequest: solutionPayload
+            createSolutionPayload: solutionPayload
         });
 
         return {
@@ -181,7 +180,7 @@ export const updateSolution = (context: UserContext) => async ({
     pros,
     cons,
     status
-}: z.infer<typeof UpdateSolutionArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+}: UpdateSolutionPayload & { solutionId: string }): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
 
@@ -189,10 +188,10 @@ export const updateSolution = (context: UserContext) => async ({
         const existingSolution = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
             orgId,
             workspaceId,
-            solutionId
+            solutionId,
         });
 
-        const updatePayload: OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest = {
+        const updatePayload: UpdateSolutionPayload = {
             title: title || existingSolution.data.title,
             description: description || existingSolution.data.description,
             pros: pros || existingSolution.data.pros,
@@ -204,7 +203,7 @@ export const updateSolution = (context: UserContext) => async ({
             orgId,
             workspaceId,
             solutionId,
-            organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPutRequest: updatePayload
+            updateSolutionPayload: updatePayload
         });
 
         return {
@@ -263,13 +262,12 @@ export const ManageSolutionRelationshipsArgsSchema = z.object({
     solutionId: z.string().describe("The ID of the solution to manage relationships for"),
     action: z.enum(["add", "remove"]).describe("Whether to add or remove the relationships"),
     opportunityIds: z.array(z.string()).optional().describe("IDs of opportunities to relate to this solution"),
-    outcomeIds: z.array(z.string()).optional().describe("IDs of outcomes to relate to this solution"),
-    feedbackIds: z.array(z.string()).optional().describe("IDs of feedback items to relate to this solution"),
+    requirementIds: z.array(z.string()).optional().describe("IDs of requirements to relate to this solution"),
 });
 
 export const manageSolutionRelationshipsTool = {
     name: "manage_solution_relationships",
-    description: "Add or remove relationships between a solution and other entities (opportunities, outcomes, or feedback).",
+    description: "Add or remove relationships between a solution and other entities (opportunities or requirements).",
     inputSchema: zodToJsonSchema(ManageSolutionRelationshipsArgsSchema),
 };
 
@@ -277,16 +275,14 @@ export const manageSolutionRelationships = (context: UserContext) => async ({
     solutionId,
     action,
     opportunityIds,
-    outcomeIds,
-    feedbackIds
+    requirementIds
 }: z.infer<typeof ManageSolutionRelationshipsArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
 
         const relationshipsPayload: SolutionRelationshipsPayload = {
+            requirementIds: requirementIds || [],
             opportunityIds: opportunityIds || [],
-            outcomeIds: outcomeIds || [],
-            feedbackIds: feedbackIds || []
         };
 
         await squadClient().manageSolutionRelationships({
@@ -304,8 +300,7 @@ export const manageSolutionRelationships = (context: UserContext) => async ({
                     solutionId,
                     action,
                     opportunityIds,
-                    outcomeIds,
-                    feedbackIds
+                    requirementIds
                 }, null, 2)
             }]
         };

@@ -24,79 +24,51 @@ export interface CreateOpportunityPayload {
      * @type {string}
      * @memberof CreateOpportunityPayload
      */
+    id?: string;
+    /**
+     * Title of the opportunity
+     * @type {string}
+     * @memberof CreateOpportunityPayload
+     */
     title: string;
     /**
-     * 
+     * Description of the opportunity
      * @type {string}
      * @memberof CreateOpportunityPayload
      */
     description: string;
     /**
-     * 
+     * How the opportunity was created
      * @type {string}
      * @memberof CreateOpportunityPayload
      */
-    status: CreateOpportunityPayloadStatusEnum;
+    createdBy: CreateOpportunityPayloadCreatedByEnum;
     /**
-     * 
-     * @type {string}
-     * @memberof CreateOpportunityPayload
-     */
-    solutionsGeneratingState?: CreateOpportunityPayloadSolutionsGeneratingStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateOpportunityPayload
-     */
-    createdBy?: CreateOpportunityPayloadCreatedByEnum;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof CreateOpportunityPayload
-     */
-    hideContent?: boolean;
-    /**
-     * 
+     * ID of the opportunity owner
      * @type {string}
      * @memberof CreateOpportunityPayload
      */
     ownerId?: string;
     /**
      * 
-     * @type {boolean}
+     * @type {Array<string>}
      * @memberof CreateOpportunityPayload
      */
-    read?: boolean;
+    solutionIds?: Array<string>;
     /**
      * 
-     * @type {string}
+     * @type {Array<string>}
      * @memberof CreateOpportunityPayload
      */
-    id?: string;
+    feedbackIds?: Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof CreateOpportunityPayload
+     */
+    outcomeIds?: Array<string>;
 }
 
-
-/**
- * @export
- */
-export const CreateOpportunityPayloadStatusEnum = {
-    New: 'New',
-    Solved: 'Solved',
-    Planned: 'Planned',
-    InProgress: 'InProgress'
-} as const;
-export type CreateOpportunityPayloadStatusEnum = typeof CreateOpportunityPayloadStatusEnum[keyof typeof CreateOpportunityPayloadStatusEnum];
-
-/**
- * @export
- */
-export const CreateOpportunityPayloadSolutionsGeneratingStateEnum = {
-    Generating: 'generating',
-    Generated: 'generated',
-    Initial: 'initial',
-    Error: 'error'
-} as const;
-export type CreateOpportunityPayloadSolutionsGeneratingStateEnum = typeof CreateOpportunityPayloadSolutionsGeneratingStateEnum[keyof typeof CreateOpportunityPayloadSolutionsGeneratingStateEnum];
 
 /**
  * @export
@@ -114,7 +86,7 @@ export type CreateOpportunityPayloadCreatedByEnum = typeof CreateOpportunityPayl
 export function instanceOfCreateOpportunityPayload(value: object): value is CreateOpportunityPayload {
     if (!('title' in value) || value['title'] === undefined) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
-    if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
     return true;
 }
 
@@ -128,15 +100,14 @@ export function CreateOpportunityPayloadFromJSONTyped(json: any, ignoreDiscrimin
     }
     return {
         
+        'id': json['id'] == null ? undefined : json['id'],
         'title': json['title'],
         'description': json['description'],
-        'status': json['status'],
-        'solutionsGeneratingState': json['solutionsGeneratingState'] == null ? undefined : json['solutionsGeneratingState'],
-        'createdBy': json['createdBy'] == null ? undefined : json['createdBy'],
-        'hideContent': json['hideContent'] == null ? undefined : json['hideContent'],
+        'createdBy': json['createdBy'],
         'ownerId': json['ownerId'] == null ? undefined : json['ownerId'],
-        'read': json['read'] == null ? undefined : json['read'],
-        'id': json['id'] == null ? undefined : json['id'],
+        'solutionIds': json['solutionIds'] == null ? undefined : json['solutionIds'],
+        'feedbackIds': json['feedbackIds'] == null ? undefined : json['feedbackIds'],
+        'outcomeIds': json['outcomeIds'] == null ? undefined : json['outcomeIds'],
     };
 }
 
@@ -151,15 +122,14 @@ export function CreateOpportunityPayloadToJSONTyped(value?: CreateOpportunityPay
 
     return {
         
+        'id': value['id'],
         'title': value['title'],
         'description': value['description'],
-        'status': value['status'],
-        'solutionsGeneratingState': value['solutionsGeneratingState'],
         'createdBy': value['createdBy'],
-        'hideContent': value['hideContent'],
         'ownerId': value['ownerId'],
-        'read': value['read'],
-        'id': value['id'],
+        'solutionIds': value['solutionIds'],
+        'feedbackIds': value['feedbackIds'],
+        'outcomeIds': value['outcomeIds'],
     };
 }
 

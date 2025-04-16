@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseData } from './OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseData.js';
+import type { FeedbackWithRelationships } from './FeedbackWithRelationships.js';
 import {
-    OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseDataFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseDataFromJSONTyped,
-    OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseDataToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseDataToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseData.js';
+    FeedbackWithRelationshipsFromJSON,
+    FeedbackWithRelationshipsFromJSONTyped,
+    FeedbackWithRelationshipsToJSON,
+    FeedbackWithRelationshipsToJSONTyped,
+} from './FeedbackWithRelationships.js';
 
 /**
  * Response containing a single feedback item
@@ -28,11 +28,11 @@ import {
  */
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200Response {
     /**
-     * 
-     * @type {OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseData}
+     * Feedback data
+     * @type {FeedbackWithRelationships}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200Response
      */
-    data: OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseData;
+    data: FeedbackWithRelationships;
 }
 
 /**
@@ -53,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseFr
     }
     return {
         
-        'data': OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseDataFromJSON(json['data']),
+        'data': FeedbackWithRelationshipsFromJSON(json['data']),
     };
 }
 
@@ -68,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseTo
 
     return {
         
-        'data': OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseDataToJSON(value['data']),
+        'data': FeedbackWithRelationshipsToJSON(value['data']),
     };
 }
 

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { squadClient } from "./lib/clients/squad.js";
 import { UserContext } from "./helpers/getUser.js";
-import { RelationshipAction, OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest, OutcomeRelationshipsPayload } from "./lib/openapi/squad/models/index.js";
+import { RelationshipAction, CreateOutcomePayload, OutcomeRelationshipsPayload, UpdateOutcomePayload } from "./lib/openapi/squad/models/index.js";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
 // Schema definitions
@@ -34,13 +34,12 @@ export const createOutcome = (context: UserContext) => async ({
         const { orgId, workspaceId } = context;
 
         // Creating with required defaults for any missing fields
-        const outcomeRequest: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest = {
+        const outcomeRequest: CreateOutcomePayload = {
             title,
             description,
             priority: priority !== undefined ? priority : 0,
             trend: trend !== undefined ? trend : 0,
             analyticEvents: analyticEvents !== undefined ? analyticEvents : [],
-            hideContent: hideContent !== undefined ? hideContent : false
         };
         
         // Only add ownerId if it's defined, since it's truly optional
@@ -49,9 +48,8 @@ export const createOutcome = (context: UserContext) => async ({
         const res = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOutcomesPost({
             orgId,
             workspaceId,
-            organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest: outcomeRequest
+            createOutcomePayload: outcomeRequest
         });
-
         return {
             content: [{
                 type: "text",
@@ -62,7 +60,7 @@ export const createOutcome = (context: UserContext) => async ({
         console.error("error", e)
         throw e;
     }
-};
+}
 
 // Schema for listing outcomes
 export const ListOutcomesArgsSchema = z.object({});
@@ -187,13 +185,12 @@ export const updateOutcome = (context: UserContext) => async ({
         });
 
         // Create update payload with required fields and defaults
-        const updatePayload: OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest = {
+        const updatePayload: UpdateOutcomePayload = {
             title: title || existingOutcome.data.title,
             description: description || existingOutcome.data.description,
             priority: priority !== undefined ? priority : (existingOutcome.data.priority || 0),
             trend: trend !== undefined ? trend : (existingOutcome.data.trend || 0),
             analyticEvents: analyticEvents || existingOutcome.data.analyticEvents || [],
-            hideContent: hideContent !== undefined ? hideContent : (existingOutcome.data.hideContent || false)
         };
         
         // Only add ownerId if it's defined in the update or existing outcome
@@ -205,7 +202,7 @@ export const updateOutcome = (context: UserContext) => async ({
             orgId,
             workspaceId,
             outcomeId,
-            organisationsOrgIdWorkspacesWorkspaceIdOutcomesPostRequest: updatePayload
+            updateOutcomePayload: updatePayload
         });
 
         return {
@@ -284,8 +281,6 @@ export const manageOutcomeRelationships = (context: UserContext) => async ({
 
         const relationshipsPayload: OutcomeRelationshipsPayload = {
             opportunityIds: opportunityIds || [],
-            solutionIds: solutionIds || [],
-            feedbackIds: feedbackIds || []
         };
 
         await squadClient().manageOutcomeRelationships({

@@ -14,11 +14,29 @@
 
 import { mapValues } from '../runtime.js';
 /**
- * Organisation data
+ * 
  * @export
  * @interface OrganisationsGet200ResponseDataInner
  */
 export interface OrganisationsGet200ResponseDataInner {
+    /**
+     * Number of tokens used
+     * @type {number}
+     * @memberof OrganisationsGet200ResponseDataInner
+     */
+    tokensUsed: number;
+    /**
+     * Number of unprocessed feedback items
+     * @type {number}
+     * @memberof OrganisationsGet200ResponseDataInner
+     */
+    unprocessedFeedbackCount: number;
+    /**
+     * Subscription type
+     * @type {string}
+     * @memberof OrganisationsGet200ResponseDataInner
+     */
+    subscriptionType: OrganisationsGet200ResponseDataInnerSubscriptionTypeEnum;
     /**
      * 
      * @type {string}
@@ -26,71 +44,94 @@ export interface OrganisationsGet200ResponseDataInner {
      */
     id: string;
     /**
-     * 
+     * Name of the organisation
      * @type {string}
      * @memberof OrganisationsGet200ResponseDataInner
      */
     name: string;
     /**
-     * 
+     * Stripe customer ID for billing
      * @type {string}
      * @memberof OrganisationsGet200ResponseDataInner
      */
     stripeCustomerId: string;
     /**
-     * 
+     * Maximum number of tokens allowed per day
      * @type {number}
      * @memberof OrganisationsGet200ResponseDataInner
      */
     maxDailyTokens: number;
     /**
-     * 
+     * Maximum number of entities allowed
      * @type {number}
      * @memberof OrganisationsGet200ResponseDataInner
      */
     maxEntities: number;
     /**
-     * 
+     * Current count of entities created
      * @type {number}
      * @memberof OrganisationsGet200ResponseDataInner
      */
     entitiesCreatedCount: number;
     /**
-     * 
+     * URL to the organisation's homepage
      * @type {string}
      * @memberof OrganisationsGet200ResponseDataInner
      */
-    homepageUrl?: string;
+    homepageUrl?: string | null;
     /**
-     * 
+     * URL to the organisation's logo
      * @type {string}
      * @memberof OrganisationsGet200ResponseDataInner
      */
-    logoUrl?: string;
+    logoUrl?: string | null;
     /**
-     * 
-     * @type {Array<string>}
-     * @memberof OrganisationsGet200ResponseDataInner
-     */
-    outcomeIds?: Array<string>;
-    /**
-     * 
+     * Creation timestamp
      * @type {string}
      * @memberof OrganisationsGet200ResponseDataInner
      */
     createdAt: string;
     /**
-     * 
+     * Last update timestamp
      * @type {string}
      * @memberof OrganisationsGet200ResponseDataInner
      */
     updatedAt: string;
+    /**
+     * Status of the organisation
+     * @type {string}
+     * @memberof OrganisationsGet200ResponseDataInner
+     */
+    status: OrganisationsGet200ResponseDataInnerStatusEnum;
 }
+
+
+/**
+ * @export
+ */
+export const OrganisationsGet200ResponseDataInnerSubscriptionTypeEnum = {
+    Personal: 'PERSONAL',
+    Professional: 'PROFESSIONAL'
+} as const;
+export type OrganisationsGet200ResponseDataInnerSubscriptionTypeEnum = typeof OrganisationsGet200ResponseDataInnerSubscriptionTypeEnum[keyof typeof OrganisationsGet200ResponseDataInnerSubscriptionTypeEnum];
+
+/**
+ * @export
+ */
+export const OrganisationsGet200ResponseDataInnerStatusEnum = {
+    Active: 'ACTIVE',
+    Archived: 'ARCHIVED'
+} as const;
+export type OrganisationsGet200ResponseDataInnerStatusEnum = typeof OrganisationsGet200ResponseDataInnerStatusEnum[keyof typeof OrganisationsGet200ResponseDataInnerStatusEnum];
+
 
 /**
  * Check if a given object implements the OrganisationsGet200ResponseDataInner interface.
  */
 export function instanceOfOrganisationsGet200ResponseDataInner(value: object): value is OrganisationsGet200ResponseDataInner {
+    if (!('tokensUsed' in value) || value['tokensUsed'] === undefined) return false;
+    if (!('unprocessedFeedbackCount' in value) || value['unprocessedFeedbackCount'] === undefined) return false;
+    if (!('subscriptionType' in value) || value['subscriptionType'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('stripeCustomerId' in value) || value['stripeCustomerId'] === undefined) return false;
@@ -99,6 +140,7 @@ export function instanceOfOrganisationsGet200ResponseDataInner(value: object): v
     if (!('entitiesCreatedCount' in value) || value['entitiesCreatedCount'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
+    if (!('status' in value) || value['status'] === undefined) return false;
     return true;
 }
 
@@ -112,6 +154,9 @@ export function OrganisationsGet200ResponseDataInnerFromJSONTyped(json: any, ign
     }
     return {
         
+        'tokensUsed': json['tokensUsed'],
+        'unprocessedFeedbackCount': json['unprocessedFeedbackCount'],
+        'subscriptionType': json['subscriptionType'],
         'id': json['id'],
         'name': json['name'],
         'stripeCustomerId': json['stripeCustomerId'],
@@ -120,9 +165,9 @@ export function OrganisationsGet200ResponseDataInnerFromJSONTyped(json: any, ign
         'entitiesCreatedCount': json['entitiesCreatedCount'],
         'homepageUrl': json['homepageUrl'] == null ? undefined : json['homepageUrl'],
         'logoUrl': json['logoUrl'] == null ? undefined : json['logoUrl'],
-        'outcomeIds': json['outcomeIds'] == null ? undefined : json['outcomeIds'],
         'createdAt': json['createdAt'],
         'updatedAt': json['updatedAt'],
+        'status': json['status'],
     };
 }
 
@@ -137,6 +182,9 @@ export function OrganisationsGet200ResponseDataInnerToJSONTyped(value?: Organisa
 
     return {
         
+        'tokensUsed': value['tokensUsed'],
+        'unprocessedFeedbackCount': value['unprocessedFeedbackCount'],
+        'subscriptionType': value['subscriptionType'],
         'id': value['id'],
         'name': value['name'],
         'stripeCustomerId': value['stripeCustomerId'],
@@ -145,9 +193,9 @@ export function OrganisationsGet200ResponseDataInnerToJSONTyped(value?: Organisa
         'entitiesCreatedCount': value['entitiesCreatedCount'],
         'homepageUrl': value['homepageUrl'],
         'logoUrl': value['logoUrl'],
-        'outcomeIds': value['outcomeIds'],
         'createdAt': value['createdAt'],
         'updatedAt': value['updatedAt'],
+        'status': value['status'],
     };
 }
 

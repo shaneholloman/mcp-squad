@@ -13,13 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdStatusGet200ResponseMetrics } from './OrganisationsOrgIdStatusGet200ResponseMetrics.js';
+import type { OrganisationsOrgIdStatusGet200ResponseData } from './OrganisationsOrgIdStatusGet200ResponseData.js';
 import {
-    OrganisationsOrgIdStatusGet200ResponseMetricsFromJSON,
-    OrganisationsOrgIdStatusGet200ResponseMetricsFromJSONTyped,
-    OrganisationsOrgIdStatusGet200ResponseMetricsToJSON,
-    OrganisationsOrgIdStatusGet200ResponseMetricsToJSONTyped,
-} from './OrganisationsOrgIdStatusGet200ResponseMetrics.js';
+    OrganisationsOrgIdStatusGet200ResponseDataFromJSON,
+    OrganisationsOrgIdStatusGet200ResponseDataFromJSONTyped,
+    OrganisationsOrgIdStatusGet200ResponseDataToJSON,
+    OrganisationsOrgIdStatusGet200ResponseDataToJSONTyped,
+} from './OrganisationsOrgIdStatusGet200ResponseData.js';
 
 /**
  * Organization status response
@@ -28,39 +28,18 @@ import {
  */
 export interface OrganisationsOrgIdStatusGet200Response {
     /**
-     * Organization ID
-     * @type {string}
-     * @memberof OrganisationsOrgIdStatusGet200Response
-     */
-    id: string;
-    /**
-     * Organization name
-     * @type {string}
-     * @memberof OrganisationsOrgIdStatusGet200Response
-     */
-    name: string;
-    /**
-     * Current organization status
-     * @type {string}
-     * @memberof OrganisationsOrgIdStatusGet200Response
-     */
-    status: string;
-    /**
      * 
-     * @type {OrganisationsOrgIdStatusGet200ResponseMetrics}
+     * @type {OrganisationsOrgIdStatusGet200ResponseData}
      * @memberof OrganisationsOrgIdStatusGet200Response
      */
-    metrics: OrganisationsOrgIdStatusGet200ResponseMetrics;
+    data: OrganisationsOrgIdStatusGet200ResponseData;
 }
 
 /**
  * Check if a given object implements the OrganisationsOrgIdStatusGet200Response interface.
  */
 export function instanceOfOrganisationsOrgIdStatusGet200Response(value: object): value is OrganisationsOrgIdStatusGet200Response {
-    if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('status' in value) || value['status'] === undefined) return false;
-    if (!('metrics' in value) || value['metrics'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }
 
@@ -74,10 +53,7 @@ export function OrganisationsOrgIdStatusGet200ResponseFromJSONTyped(json: any, i
     }
     return {
         
-        'id': json['id'],
-        'name': json['name'],
-        'status': json['status'],
-        'metrics': OrganisationsOrgIdStatusGet200ResponseMetricsFromJSON(json['metrics']),
+        'data': OrganisationsOrgIdStatusGet200ResponseDataFromJSON(json['data']),
     };
 }
 
@@ -92,10 +68,7 @@ export function OrganisationsOrgIdStatusGet200ResponseToJSONTyped(value?: Organi
 
     return {
         
-        'id': value['id'],
-        'name': value['name'],
-        'status': value['status'],
-        'metrics': OrganisationsOrgIdStatusGet200ResponseMetricsToJSON(value['metrics']),
+        'data': OrganisationsOrgIdStatusGet200ResponseDataToJSON(value['data']),
     };
 }
 

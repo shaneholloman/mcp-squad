@@ -13,26 +13,26 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner } from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner.js';
+import type { RequirementWithRelationships } from './RequirementWithRelationships.js';
 import {
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerFromJSONTyped,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerToJSONTyped,
-} from './OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner.js';
+    RequirementWithRelationshipsFromJSON,
+    RequirementWithRelationshipsFromJSONTyped,
+    RequirementWithRelationshipsToJSON,
+    RequirementWithRelationshipsToJSONTyped,
+} from './RequirementWithRelationships.js';
 
 /**
- * 
+ * Response containing a single requirement
  * @export
  * @interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response
  */
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response {
     /**
-     * 
-     * @type {OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner}
+     * Requirement data
+     * @type {RequirementWithRelationships}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Response
      */
-    data: OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInner;
+    data: RequirementWithRelationships;
 }
 
 /**
@@ -53,7 +53,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Respon
     }
     return {
         
-        'data': OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerFromJSON(json['data']),
+        'data': RequirementWithRelationshipsFromJSON(json['data']),
     };
 }
 
@@ -68,7 +68,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsPost200Respon
 
     return {
         
-        'data': OrganisationsOrgIdWorkspacesWorkspaceIdRequirementsGet200ResponseDataInnerToJSON(value['data']),
+        'data': RequirementWithRelationshipsToJSON(value['data']),
     };
 }
 
