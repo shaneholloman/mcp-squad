@@ -32,16 +32,13 @@ export const createRequirementTool = {
     inputSchema: zodToJsonSchema(CreateRequirementArgsSchema),
 };
 
-export const createRequirement = (context: UserContext) => async ({
-    title,
-    description,
-    feature,
-    requirements,
-    ownerId,
-    status,
-}: z.infer<typeof CreateRequirementArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const createRequirement = (context: UserContext) => async (body: z.infer<typeof CreateRequirementArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
+
+        const safeBody = CreateRequirementArgsSchema.parse(body);
+
+        const { title, description, feature, requirements, ownerId, status } = safeBody;
 
         // Create the requirement object
         const requirementPayload: CreateRequirement = {
@@ -180,17 +177,13 @@ export const updateRequirementTool = {
     inputSchema: zodToJsonSchema(updateRequirementArgsSchema),
 };
 
-export const updateRequirement = (context: UserContext) => async ({
-    requirementId,
-    title,
-    description,
-    feature,
-    requirements,
-    ownerId,
-    status
-}: UpdateRequirementArgs): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const updateRequirement = (context: UserContext) => async (body: UpdateRequirementArgs): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
+
+        const safeBody = updateRequirementArgsSchema.parse(body);
+
+        const { requirementId, title, description, feature, requirements, ownerId, status } = safeBody;
 
         // First, get the existing requirement to preserve any values we're not updating
         const existingRequirement = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet({

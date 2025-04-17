@@ -16,12 +16,13 @@ export const createOpportunityTool = {
     inputSchema: zodToJsonSchema(CreateOpportunityArgsSchema),
 };
 
-export const createOpportunity = (context: UserContext) => async ({
-    title,
-    description
-}: z.infer<typeof CreateOpportunityArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const createOpportunity = (context: UserContext) => async (body: z.infer<typeof CreateOpportunityArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
+
+        const safeBody = CreateOpportunityArgsSchema.parse(body);
+
+        const { title, description } = safeBody;
 
         const res = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost({
             orgId,
@@ -148,14 +149,13 @@ export const updateOpportunityTool = {
     inputSchema: zodToJsonSchema(UpdateOpportunityArgsSchema),
 };
 
-export const updateOpportunity = (context: UserContext) => async ({
-    opportunityId,
-    title,
-    description,
-    status
-}: z.infer<typeof UpdateOpportunityArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const updateOpportunity = (context: UserContext) => async (body: z.infer<typeof UpdateOpportunityArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
+
+        const safeBody = UpdateOpportunityArgsSchema.parse(body);
+
+        const { opportunityId, title, description, status } = safeBody;
 
         const updatePayload: UpdateOpportunityPayload = {};
         if (title !== undefined) updatePayload.title = title;

@@ -21,17 +21,13 @@ export const createOutcomeTool = {
     inputSchema: zodToJsonSchema(CreateOutcomeArgsSchema),
 };
 
-export const createOutcome = (context: UserContext) => async ({
-    title,
-    description,
-    priority,
-    trend,
-    analyticEvents,
-    hideContent,
-    ownerId
-}: z.infer<typeof CreateOutcomeArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const createOutcome = (context: UserContext) => async (body: z.infer<typeof CreateOutcomeArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
+
+        const safeBody = CreateOutcomeArgsSchema.parse(body);
+
+        const { title, description, priority, trend, analyticEvents, ownerId } = safeBody;
 
         // Creating with required defaults for any missing fields
         const outcomeRequest: CreateOutcomePayload = {
@@ -164,18 +160,13 @@ export const updateOutcomeTool = {
     inputSchema: zodToJsonSchema(UpdateOutcomeArgsSchema),
 };
 
-export const updateOutcome = (context: UserContext) => async ({
-    outcomeId,
-    title,
-    description,
-    priority,
-    trend, 
-    analyticEvents,
-    hideContent,
-    ownerId
-}: z.infer<typeof UpdateOutcomeArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const updateOutcome = (context: UserContext) => async (body: z.infer<typeof UpdateOutcomeArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
+
+        const safeBody = UpdateOutcomeArgsSchema.parse(body);
+
+        const { outcomeId, title, description, priority, trend, analyticEvents, ownerId } = safeBody;
 
         // First, get the existing outcome to preserve any values we're not updating
         const existingOutcome = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet({

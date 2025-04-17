@@ -32,15 +32,13 @@ export const createSolutionTool = {
     inputSchema: zodToJsonSchema(CreateSolutionArgsSchema),
 };
 
-export const createSolution = (context: UserContext) => async ({
-    title,
-    description,
-    pros,
-    cons,
-    status
-}: z.infer<typeof CreateSolutionArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const createSolution = (context: UserContext) => async (body: z.infer<typeof CreateSolutionArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
+
+        const safeBody = CreateSolutionArgsSchema.parse(body);
+
+        const { title, description, pros, cons, status } = safeBody;
 
         const solutionPayload: CreateSolutionPayload = {
             title,
@@ -172,17 +170,13 @@ export const updateSolutionTool = {
     description: "Update an existing solution's details such as title, description, pros, cons, or status.",
     inputSchema: zodToJsonSchema(UpdateSolutionArgsSchema),
 };
-
-export const updateSolution = (context: UserContext) => async ({
-    solutionId,
-    title,
-    description,
-    pros,
-    cons,
-    status
-}: UpdateSolutionPayload & { solutionId: string }): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const updateSolution = (context: UserContext) => async (body: UpdateSolutionPayload & { solutionId: string }): Promise<{ content: { type: "text"; text: string }[] }> => {
     try {
         const { orgId, workspaceId } = context;
+
+        const safeSolution = UpdateSolutionArgsSchema.parse(body);
+
+        const { solutionId, title, description, pros, cons, status } = safeSolution;
 
         // First, get the existing solution to preserve any values we're not updating
         const existingSolution = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
