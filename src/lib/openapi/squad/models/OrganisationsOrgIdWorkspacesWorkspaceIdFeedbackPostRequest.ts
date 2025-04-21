@@ -56,12 +56,6 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest {
      */
     feedback: string;
     /**
-     * 
-     * @type {boolean}
-     * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
-     */
-    seen?: boolean;
-    /**
      * ID of the feedback owner
      * @type {string}
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
@@ -79,6 +73,12 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest {
      * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
      */
     workspaceId: string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest
+     */
+    seen?: boolean;
 }
 
 
@@ -123,10 +123,10 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequestFromJS
         'title': json['title'],
         'description': json['description'],
         'feedback': json['feedback'],
-        'seen': json['seen'] == null ? undefined : json['seen'],
         'ownerId': json['ownerId'] == null ? undefined : json['ownerId'],
         'organisationId': json['organisationId'],
         'workspaceId': json['workspaceId'],
+        'seen': json['seen'] == null ? undefined : json['seen'],
     };
 }
 
@@ -147,10 +147,10 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequestToJSON
         'title': value['title'],
         'description': value['description'],
         'feedback': value['feedback'],
-        'seen': value['seen'],
         'ownerId': value['ownerId'],
         'organisationId': value['organisationId'],
         'workspaceId': value['workspaceId'],
+        'seen': value['seen'],
     };
 }
 

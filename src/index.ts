@@ -63,6 +63,7 @@ import {
   manageRequirementRelationshipsTool
 } from "./requirements.js";
 import { getUserContext } from "./helpers/getUser.js";
+import { createKnowledgeTool, listKnowledgeTool, getKnowledgeTool, deleteKnowledgeTool, createKnowledge, CreateKnowledgeArgsSchema, deleteKnowledge, DeleteKnowledgeArgsSchema, getKnowledge, GetKnowledgeArgsSchema, listKnowledge, ListKnowledgeArgsSchema } from "./knowledge.js";
 
 // Server setup
 const server = new Server(
@@ -113,6 +114,12 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       updateRequirementTool,
       deleteRequirementTool,
       manageRequirementRelationshipsTool,
+
+      // Knowledge tools
+      createKnowledgeTool,
+      listKnowledgeTool,
+      getKnowledgeTool,
+      deleteKnowledgeTool,
     ],
   };
 });
@@ -433,6 +440,56 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             return {
                 content: [
                     { type: "text", "text": "I was unable to manage relationships for this requirement. Please check that all IDs are correct."}
+                ]
+            }
+        }
+      }
+
+      // Knowledge handlers
+      case "create_knowledge": {
+        try {
+            const validArgs = CreateKnowledgeArgsSchema.parse(args);
+            return await createKnowledge(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to create this knowledge entry. Please check back later."}
+                ]
+            }
+        }
+      }
+      case "list_knowledge": {
+        try {
+            const validArgs = ListKnowledgeArgsSchema.parse(args);
+            return await listKnowledge(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to list knowledge entries. Please check back later."}
+                ]
+            }
+        }
+      }
+      case "get_knowledge": {
+        try {
+            const validArgs = GetKnowledgeArgsSchema.parse(args);
+            return await getKnowledge(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to retrieve this knowledge entry. Please check that the ID is correct."}
+                ]
+            }
+        }
+      }
+      case "delete_knowledge": {
+        try {
+            const validArgs = DeleteKnowledgeArgsSchema.parse(args);
+            return await deleteKnowledge(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to delete this knowledge entry. Please check that the ID is correct."}
                 ]
             }
         }

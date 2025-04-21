@@ -17,6 +17,7 @@ import * as runtime from '../runtime.js';
 import type {
   CreateFeedbackDocumentPayload,
   CreateFeedbackDocumentResponse,
+  CreateKnowledgePayload,
   CreateOpportunityPayload,
   CreateOrganisationPayload,
   CreateOutcomePayload,
@@ -25,6 +26,7 @@ import type {
   CreateTopicPayload,
   CreateWorkspacePayload,
   FeedbackArrayResponse,
+  KnowledgeArrayResponse,
   KnowledgeBaseDocumentListResponse,
   KnowledgeBaseDocumentUploadPayload,
   KnowledgeBaseDocumentUploadResponse,
@@ -43,6 +45,8 @@ import type {
   OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdDelete200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequest,
+  OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete200Response,
+  OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPost200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost429Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdOutcomesGet200Response,
@@ -68,7 +72,9 @@ import type {
   OutcomeRelationshipsPayload,
   RelationshipAction,
   RequirementRelationshipsPayload,
+  SingleKnowledgeResponse,
   SolutionRelationshipsPayload,
+  UpdateKnowledgePayload,
   UpdateOpportunityPayload,
   UpdateOrganisationPayload,
   UpdateOutcomePayload,
@@ -84,6 +90,8 @@ import {
     CreateFeedbackDocumentPayloadToJSON,
     CreateFeedbackDocumentResponseFromJSON,
     CreateFeedbackDocumentResponseToJSON,
+    CreateKnowledgePayloadFromJSON,
+    CreateKnowledgePayloadToJSON,
     CreateOpportunityPayloadFromJSON,
     CreateOpportunityPayloadToJSON,
     CreateOrganisationPayloadFromJSON,
@@ -100,6 +108,8 @@ import {
     CreateWorkspacePayloadToJSON,
     FeedbackArrayResponseFromJSON,
     FeedbackArrayResponseToJSON,
+    KnowledgeArrayResponseFromJSON,
+    KnowledgeArrayResponseToJSON,
     KnowledgeBaseDocumentListResponseFromJSON,
     KnowledgeBaseDocumentListResponseToJSON,
     KnowledgeBaseDocumentUploadPayloadFromJSON,
@@ -136,6 +146,10 @@ import {
     OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPost200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequestFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdFeedbackPostRequestToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete200ResponseFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete200ResponseToJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPost200ResponseFromJSON,
+    OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPost200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost429ResponseFromJSON,
@@ -186,8 +200,12 @@ import {
     RelationshipActionToJSON,
     RequirementRelationshipsPayloadFromJSON,
     RequirementRelationshipsPayloadToJSON,
+    SingleKnowledgeResponseFromJSON,
+    SingleKnowledgeResponseToJSON,
     SolutionRelationshipsPayloadFromJSON,
     SolutionRelationshipsPayloadToJSON,
+    UpdateKnowledgePayloadFromJSON,
+    UpdateKnowledgePayloadToJSON,
     UpdateOpportunityPayloadFromJSON,
     UpdateOpportunityPayloadToJSON,
     UpdateOrganisationPayloadFromJSON,
@@ -348,6 +366,36 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeBaseDocumentsPo
     orgId: string;
     workspaceId: string;
     knowledgeBaseDocumentUploadPayload: KnowledgeBaseDocumentUploadPayload;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeGetRequest {
+    orgId: string;
+    workspaceId: string;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDeleteRequest {
+    orgId: string;
+    workspaceId: string;
+    knowledgeId: string;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGetRequest {
+    orgId: string;
+    workspaceId: string;
+    knowledgeId: string;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdPutRequest {
+    orgId: string;
+    workspaceId: string;
+    knowledgeId: string;
+    updateKnowledgePayload: UpdateKnowledgePayload;
+}
+
+export interface OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgePostRequest {
+    orgId: string;
+    workspaceId: string;
+    createKnowledgePayload: CreateKnowledgePayload;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest {
@@ -1969,10 +2017,291 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * List all pieces of knowledge
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<KnowledgeArrayResponse>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGet().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/knowledge`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => KnowledgeArrayResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * List all pieces of knowledge
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<KnowledgeArrayResponse> {
+        const response = await this.organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Delete a piece of knowledge
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDeleteRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete200Response>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete().'
+            );
+        }
+
+        if (requestParameters['knowledgeId'] == null) {
+            throw new runtime.RequiredError(
+                'knowledgeId',
+                'Required parameter "knowledgeId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/knowledge/{knowledgeId}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))).replace(`{${"knowledgeId"}}`, encodeURIComponent(String(requestParameters['knowledgeId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete200ResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Delete a piece of knowledge
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDeleteRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete200Response> {
+        const response = await this.organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDeleteRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Get a piece of knowledge by ID
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGetRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SingleKnowledgeResponse>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet().'
+            );
+        }
+
+        if (requestParameters['knowledgeId'] == null) {
+            throw new runtime.RequiredError(
+                'knowledgeId',
+                'Required parameter "knowledgeId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/knowledge/{knowledgeId}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))).replace(`{${"knowledgeId"}}`, encodeURIComponent(String(requestParameters['knowledgeId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SingleKnowledgeResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Get a piece of knowledge by ID
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGetRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SingleKnowledgeResponse> {
+        const response = await this.organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGetRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Update a piece of knowledge
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdPutRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SingleKnowledgeResponse>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdPut().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdPut().'
+            );
+        }
+
+        if (requestParameters['knowledgeId'] == null) {
+            throw new runtime.RequiredError(
+                'knowledgeId',
+                'Required parameter "knowledgeId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdPut().'
+            );
+        }
+
+        if (requestParameters['updateKnowledgePayload'] == null) {
+            throw new runtime.RequiredError(
+                'updateKnowledgePayload',
+                'Required parameter "updateKnowledgePayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdPut().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/knowledge/{knowledgeId}`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))).replace(`{${"knowledgeId"}}`, encodeURIComponent(String(requestParameters['knowledgeId']))),
+            method: 'PUT',
+            headers: headerParameters,
+            query: queryParameters,
+            body: UpdateKnowledgePayloadToJSON(requestParameters['updateKnowledgePayload']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SingleKnowledgeResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Update a piece of knowledge
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdPut(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdPutRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SingleKnowledgeResponse> {
+        const response = await this.organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdPutRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Create a new piece of knowledge
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgePostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SingleKnowledgeResponse>> {
+        if (requestParameters['orgId'] == null) {
+            throw new runtime.RequiredError(
+                'orgId',
+                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost().'
+            );
+        }
+
+        if (requestParameters['workspaceId'] == null) {
+            throw new runtime.RequiredError(
+                'workspaceId',
+                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost().'
+            );
+        }
+
+        if (requestParameters['createKnowledgePayload'] == null) {
+            throw new runtime.RequiredError(
+                'createKnowledgePayload',
+                'Required parameter "createKnowledgePayload" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (this.configuration && this.configuration.accessToken) {
+            const token = this.configuration.accessToken;
+            const tokenString = await token("bearerAuth", []);
+
+            if (tokenString) {
+                headerParameters["Authorization"] = `Bearer ${tokenString}`;
+            }
+        }
+        const response = await this.request({
+            path: `/organisations/{orgId}/workspaces/{workspaceId}/knowledge`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: CreateKnowledgePayloadToJSON(requestParameters['createKnowledgePayload']),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SingleKnowledgeResponseFromJSON(jsonValue));
+    }
+
+    /**
+     * Create a new piece of knowledge
+     */
+    async organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdKnowledgePostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SingleKnowledgeResponse> {
+        const response = await this.organisationsOrgIdWorkspacesWorkspaceIdKnowledgePostRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * Creates mock feedback data for testing and development purposes
      * Generate mock feedback
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<FeedbackArrayResponse>> {
+    async organisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPost200Response>> {
         if (requestParameters['orgId'] == null) {
             throw new runtime.RequiredError(
                 'orgId',
@@ -2006,14 +2335,14 @@ export class DefaultApi extends runtime.BaseAPI {
             query: queryParameters,
         }, initOverrides);
 
-        return new runtime.JSONApiResponse(response, (jsonValue) => FeedbackArrayResponseFromJSON(jsonValue));
+        return new runtime.JSONApiResponse(response, (jsonValue) => OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPost200ResponseFromJSON(jsonValue));
     }
 
     /**
      * Creates mock feedback data for testing and development purposes
      * Generate mock feedback
      */
-    async organisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<FeedbackArrayResponse> {
+    async organisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdMockFeedbackPostRaw(requestParameters, initOverrides);
         return await response.value();
     }

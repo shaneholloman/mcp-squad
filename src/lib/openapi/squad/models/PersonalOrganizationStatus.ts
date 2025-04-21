@@ -90,7 +90,7 @@ export interface PersonalOrganizationStatus {
      * @type {string}
      * @memberof PersonalOrganizationStatus
      */
-    stripeCustomerId: string;
+    stripeCustomerId?: string;
     /**
      * Maximum number of tokens allowed per day
      * @type {number}
@@ -176,7 +176,6 @@ export function instanceOfPersonalOrganizationStatus(value: object): value is Pe
     if (!('remainingEntities' in value) || value['remainingEntities'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('stripeCustomerId' in value) || value['stripeCustomerId'] === undefined) return false;
     if (!('maxDailyTokens' in value) || value['maxDailyTokens'] === undefined) return false;
     if (!('maxEntities' in value) || value['maxEntities'] === undefined) return false;
     if (!('entitiesCreatedCount' in value) || value['entitiesCreatedCount'] === undefined) return false;
@@ -207,7 +206,7 @@ export function PersonalOrganizationStatusFromJSONTyped(json: any, ignoreDiscrim
         'remainingEntities': json['remainingEntities'],
         'id': json['id'],
         'name': json['name'],
-        'stripeCustomerId': json['stripeCustomerId'],
+        'stripeCustomerId': json['stripeCustomerId'] == null ? undefined : json['stripeCustomerId'],
         'maxDailyTokens': json['maxDailyTokens'],
         'maxEntities': json['maxEntities'],
         'entitiesCreatedCount': json['entitiesCreatedCount'],

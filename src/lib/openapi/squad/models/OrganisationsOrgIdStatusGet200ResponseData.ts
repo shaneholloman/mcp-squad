@@ -69,7 +69,7 @@ export interface OrganisationsOrgIdStatusGet200ResponseData {
      * @type {string}
      * @memberof OrganisationsOrgIdStatusGet200ResponseData
      */
-    stripeCustomerId: string;
+    stripeCustomerId?: string;
     /**
      * Maximum number of tokens allowed per day
      * @type {number}
@@ -185,7 +185,6 @@ export function instanceOfOrganisationsOrgIdStatusGet200ResponseData(value: obje
     if (!('unprocessedFeedbackCount' in value) || value['unprocessedFeedbackCount'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('stripeCustomerId' in value) || value['stripeCustomerId'] === undefined) return false;
     if (!('maxDailyTokens' in value) || value['maxDailyTokens'] === undefined) return false;
     if (!('maxEntities' in value) || value['maxEntities'] === undefined) return false;
     if (!('entitiesCreatedCount' in value) || value['entitiesCreatedCount'] === undefined) return false;
@@ -216,7 +215,7 @@ export function OrganisationsOrgIdStatusGet200ResponseDataFromJSONTyped(json: an
         'unprocessedFeedbackCount': json['unprocessedFeedbackCount'],
         'id': json['id'],
         'name': json['name'],
-        'stripeCustomerId': json['stripeCustomerId'],
+        'stripeCustomerId': json['stripeCustomerId'] == null ? undefined : json['stripeCustomerId'],
         'maxDailyTokens': json['maxDailyTokens'],
         'maxEntities': json['maxEntities'],
         'entitiesCreatedCount': json['entitiesCreatedCount'],

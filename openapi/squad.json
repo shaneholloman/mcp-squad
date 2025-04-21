@@ -1341,9 +1341,6 @@
                     "description": "Detailed feedback content",
                     "example": "I found the dashboard charts difficult to understand at first glance..."
                   },
-                  "seen": {
-                    "type": "boolean"
-                  },
                   "ownerId": {
                     "type": "string",
                     "description": "ID of the feedback owner",
@@ -1354,6 +1351,9 @@
                   },
                   "workspaceId": {
                     "type": "string"
+                  },
+                  "seen": {
+                    "type": "boolean"
                   }
                 },
                 "required": [
@@ -2182,7 +2182,15 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FeedbackArrayResponse"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MockFeedbackResponse"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
                 }
               }
             }
@@ -8130,6 +8138,1127 @@
         }
       }
     },
+    "/organisations/{orgId}/workspaces/{workspaceId}/knowledge": {
+      "post": {
+        "summary": "Create a new piece of knowledge",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKnowledgePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleKnowledgeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INVALID_REQUEST"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "One or more fields are invalid"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of field names that are missing or invalid",
+                          "example": [
+                            "title",
+                            "description"
+                          ]
+                        },
+                        "validationErrors": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "description": "Detailed validation error information for each invalid field",
+                          "example": {
+                            "invalidFields": {
+                              "title": {
+                                "type": "too_small",
+                                "message": "Title must be at least 3 characters long",
+                                "path": [
+                                  "title"
+                                ]
+                              },
+                              "deadline": {
+                                "type": "invalid_date",
+                                "message": "Deadline must be a valid date in the future",
+                                "path": [
+                                  "deadline"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Bad Request - Invalid input parameters or missing required fields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List all pieces of knowledge",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/KnowledgeArrayResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/knowledge/{knowledgeId}": {
+      "get": {
+        "summary": "Get a piece of knowledge by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "knowledgeId",
+            "required": true,
+            "description": "Knowledge ID",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleKnowledgeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INVALID_REQUEST"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "One or more fields are invalid"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of field names that are missing or invalid",
+                          "example": [
+                            "title",
+                            "description"
+                          ]
+                        },
+                        "validationErrors": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "description": "Detailed validation error information for each invalid field",
+                          "example": {
+                            "invalidFields": {
+                              "title": {
+                                "type": "too_small",
+                                "message": "Title must be at least 3 characters long",
+                                "path": [
+                                  "title"
+                                ]
+                              },
+                              "deadline": {
+                                "type": "invalid_date",
+                                "message": "Deadline must be a valid date in the future",
+                                "path": [
+                                  "deadline"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Bad Request - Invalid input parameters or missing required fields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Knowledge does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "NOT_FOUND"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "The requested resource was not found"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Not Found - The requested resource does not exist"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a piece of knowledge",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "knowledgeId",
+            "required": true,
+            "description": "Knowledge ID",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateKnowledgePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleKnowledgeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INVALID_REQUEST"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "One or more fields are invalid"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of field names that are missing or invalid",
+                          "example": [
+                            "title",
+                            "description"
+                          ]
+                        },
+                        "validationErrors": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "description": "Detailed validation error information for each invalid field",
+                          "example": {
+                            "invalidFields": {
+                              "title": {
+                                "type": "too_small",
+                                "message": "Title must be at least 3 characters long",
+                                "path": [
+                                  "title"
+                                ]
+                              },
+                              "deadline": {
+                                "type": "invalid_date",
+                                "message": "Deadline must be a valid date in the future",
+                                "path": [
+                                  "deadline"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Bad Request - Invalid input parameters or missing required fields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Knowledge does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "NOT_FOUND"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "The requested resource was not found"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Not Found - The requested resource does not exist"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a piece of knowledge",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "knowledgeId",
+            "required": true,
+            "description": "Knowledge ID",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Success message",
+                          "example": "Knowledge deleted successfully"
+                        }
+                      },
+                      "required": [
+                        "message"
+                      ],
+                      "description": "Success message data"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing a success message"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Knowledge does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "NOT_FOUND"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "The requested resource was not found"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Not Found - The requested resource does not exist"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/organisations/{orgId}/workspaces/{workspaceId}/test-proxy": {
       "post": {
         "summary": "Process text through AI proxy",
@@ -8954,39 +10083,48 @@
       "OnboardingResponse": {
         "type": "object",
         "properties": {
-          "workspace": {
-            "$ref": "#/components/schemas/Workspace"
-          },
-          "outcomes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/Outcome"
-            }
-          },
-          "organisation": {
+          "data": {
             "type": "object",
             "properties": {
-              "id": {
-                "type": "string",
-                "description": "Unique identifier for the organization",
-                "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184"
+              "workspace": {
+                "$ref": "#/components/schemas/Workspace"
               },
-              "name": {
-                "type": "string",
-                "description": "Name of the organization",
-                "example": "Acme Corporation"
+              "outcomes": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Outcome"
+                },
+                "description": "Array of outcomes"
+              },
+              "organisation": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "Unique identifier for the organization",
+                    "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the organization",
+                    "example": "Acme Corporation"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ]
               }
             },
             "required": [
-              "id",
-              "name"
+              "workspace",
+              "outcomes",
+              "organisation"
             ]
           }
         },
         "required": [
-          "workspace",
-          "outcomes",
-          "organisation"
+          "data"
         ],
         "description": "Response schema for onboarding"
       },
@@ -8995,17 +10133,6 @@
         "properties": {
           "id": {
             "type": "string"
-          },
-          "outcomes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "IDs of outcomes associated with this workspace",
-            "example": [
-              "outcome_123",
-              "outcome_456"
-            ]
           },
           "name": {
             "type": "string",
@@ -9045,7 +10172,6 @@
         },
         "required": [
           "id",
-          "outcomes",
           "name",
           "missionStatement",
           "createdAt",
@@ -9120,6 +10246,52 @@
           "data"
         ],
         "description": "Response containing an array of feedback items"
+      },
+      "MockFeedbackResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "Description of the feedback",
+              "example": "Pet Stay Properties exceeded our expectations with their exceptional service and spotless accommodations."
+            },
+            "feedback": {
+              "type": "string",
+              "description": "Feedback text",
+              "example": "We recently booked a stay for our furry friend at Pet Stay Properties and were blown away by the level of service and cleanliness. The property was immaculate, and the staff went above and beyond to ensure our pet's comfort. We will definitely be using them again!"
+            },
+            "source": {
+              "type": "string",
+              "description": "Source of the feedback",
+              "example": "generate-example"
+            },
+            "title": {
+              "type": "string",
+              "description": "Title of the feedback",
+              "example": "Excellent Service and Cleanliness"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "Feedback",
+                "Bug",
+                "FeatureRequest"
+              ],
+              "description": "Type of the feedback",
+              "example": "Feedback"
+            }
+          },
+          "required": [
+            "description",
+            "feedback",
+            "source",
+            "title",
+            "type"
+          ]
+        },
+        "description": "Array of mock feedback strings"
       },
       "CreateOpportunityPayload": {
         "type": "object",
@@ -10328,7 +11500,6 @@
         "required": [
           "id",
           "name",
-          "stripeCustomerId",
           "maxDailyTokens",
           "maxEntities",
           "entitiesCreatedCount",
@@ -10819,6 +11990,149 @@
           }
         },
         "description": "Request body for managing solution relationships"
+      },
+      "CreateKnowledgePayload": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "An optional Knowledge ID must be a uuid",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+          },
+          "title": {
+            "type": "string",
+            "description": "Knowledge title",
+            "example": "Best practices for AI in healthcare"
+          },
+          "description": {
+            "type": "string",
+            "description": "Knowledge description - a short summary of the knowledge",
+            "example": "A collection of best practices for AI in healthcare"
+          },
+          "content": {
+            "type": "string",
+            "description": "Knowledge content - the full content of the knowledge",
+            "example": "A collection of best practices for AI in healthcare"
+          }
+        },
+        "required": [
+          "title",
+          "description",
+          "content"
+        ],
+        "description": "Request schema for creating knowledge"
+      },
+      "SingleKnowledgeResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Knowledge"
+              }
+            ],
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "Knowledge content - the full content of the knowledge",
+                "example": "A collection of best practices for AI in healthcare"
+              }
+            },
+            "required": [
+              "content"
+            ]
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "description": "Response containing a single knowledge"
+      },
+      "Knowledge": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Knowledge ID",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+          },
+          "filePath": {
+            "type": "string",
+            "description": "File path of the knowledge",
+            "example": "/knowledge/7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+          },
+          "title": {
+            "type": "string",
+            "description": "Knowledge title",
+            "example": "Best practices for AI in healthcare"
+          },
+          "description": {
+            "type": "string",
+            "description": "Knowledge description - a short summary of the knowledge",
+            "example": "A collection of best practices for AI in healthcare"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Knowledge creation timestamp",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Knowledge update timestamp",
+            "example": "2023-01-01T00:00:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "filePath",
+          "title",
+          "description",
+          "createdAt",
+          "updatedAt"
+        ],
+        "description": "Knowledge entity schema"
+      },
+      "KnowledgeArrayResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Knowledge"
+            },
+            "description": "Array of knowledge"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "description": "Response containing an array of knowledge"
+      },
+      "UpdateKnowledgePayload": {
+        "type": "object",
+        "properties": {
+          "filePath": {
+            "type": "string",
+            "description": "File path of the knowledge",
+            "example": "/knowledge/7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+          },
+          "title": {
+            "type": "string",
+            "description": "Knowledge title",
+            "example": "Best practices for AI in healthcare"
+          },
+          "description": {
+            "type": "string",
+            "description": "Knowledge description - a short summary of the knowledge",
+            "example": "A collection of best practices for AI in healthcare"
+          },
+          "content": {
+            "type": "string",
+            "description": "Knowledge content - the full content of the knowledge",
+            "example": "A collection of best practices for AI in healthcare"
+          }
+        },
+        "description": "Request schema for updating knowledge"
       }
     },
     "parameters": {

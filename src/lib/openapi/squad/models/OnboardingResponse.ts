@@ -13,27 +13,13 @@
  */
 
 import { mapValues } from '../runtime.js';
-import type { Outcome } from './Outcome.js';
+import type { OnboardingResponseData } from './OnboardingResponseData.js';
 import {
-    OutcomeFromJSON,
-    OutcomeFromJSONTyped,
-    OutcomeToJSON,
-    OutcomeToJSONTyped,
-} from './Outcome.js';
-import type { OnboardingResponseOrganisation } from './OnboardingResponseOrganisation.js';
-import {
-    OnboardingResponseOrganisationFromJSON,
-    OnboardingResponseOrganisationFromJSONTyped,
-    OnboardingResponseOrganisationToJSON,
-    OnboardingResponseOrganisationToJSONTyped,
-} from './OnboardingResponseOrganisation.js';
-import type { Workspace } from './Workspace.js';
-import {
-    WorkspaceFromJSON,
-    WorkspaceFromJSONTyped,
-    WorkspaceToJSON,
-    WorkspaceToJSONTyped,
-} from './Workspace.js';
+    OnboardingResponseDataFromJSON,
+    OnboardingResponseDataFromJSONTyped,
+    OnboardingResponseDataToJSON,
+    OnboardingResponseDataToJSONTyped,
+} from './OnboardingResponseData.js';
 
 /**
  * Response schema for onboarding
@@ -43,31 +29,17 @@ import {
 export interface OnboardingResponse {
     /**
      * 
-     * @type {Workspace}
+     * @type {OnboardingResponseData}
      * @memberof OnboardingResponse
      */
-    workspace: Workspace;
-    /**
-     * 
-     * @type {Array<Outcome>}
-     * @memberof OnboardingResponse
-     */
-    outcomes: Array<Outcome>;
-    /**
-     * 
-     * @type {OnboardingResponseOrganisation}
-     * @memberof OnboardingResponse
-     */
-    organisation: OnboardingResponseOrganisation;
+    data: OnboardingResponseData;
 }
 
 /**
  * Check if a given object implements the OnboardingResponse interface.
  */
 export function instanceOfOnboardingResponse(value: object): value is OnboardingResponse {
-    if (!('workspace' in value) || value['workspace'] === undefined) return false;
-    if (!('outcomes' in value) || value['outcomes'] === undefined) return false;
-    if (!('organisation' in value) || value['organisation'] === undefined) return false;
+    if (!('data' in value) || value['data'] === undefined) return false;
     return true;
 }
 
@@ -81,9 +53,7 @@ export function OnboardingResponseFromJSONTyped(json: any, ignoreDiscriminator: 
     }
     return {
         
-        'workspace': WorkspaceFromJSON(json['workspace']),
-        'outcomes': ((json['outcomes'] as Array<any>).map(OutcomeFromJSON)),
-        'organisation': OnboardingResponseOrganisationFromJSON(json['organisation']),
+        'data': OnboardingResponseDataFromJSON(json['data']),
     };
 }
 
@@ -98,9 +68,7 @@ export function OnboardingResponseToJSONTyped(value?: OnboardingResponse | null,
 
     return {
         
-        'workspace': WorkspaceToJSON(value['workspace']),
-        'outcomes': ((value['outcomes'] as Array<any>).map(OutcomeToJSON)),
-        'organisation': OnboardingResponseOrganisationToJSON(value['organisation']),
+        'data': OnboardingResponseDataToJSON(value['data']),
     };
 }
 

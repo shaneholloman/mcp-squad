@@ -54,7 +54,7 @@ export interface ProfessionalOrganizationStatus {
      * @type {string}
      * @memberof ProfessionalOrganizationStatus
      */
-    stripeCustomerId: string;
+    stripeCustomerId?: string;
     /**
      * Maximum number of tokens allowed per day
      * @type {number}
@@ -134,7 +134,6 @@ export function instanceOfProfessionalOrganizationStatus(value: object): value i
     if (!('unprocessedFeedbackCount' in value) || value['unprocessedFeedbackCount'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
-    if (!('stripeCustomerId' in value) || value['stripeCustomerId'] === undefined) return false;
     if (!('maxDailyTokens' in value) || value['maxDailyTokens'] === undefined) return false;
     if (!('maxEntities' in value) || value['maxEntities'] === undefined) return false;
     if (!('entitiesCreatedCount' in value) || value['entitiesCreatedCount'] === undefined) return false;
@@ -159,7 +158,7 @@ export function ProfessionalOrganizationStatusFromJSONTyped(json: any, ignoreDis
         'unprocessedFeedbackCount': json['unprocessedFeedbackCount'],
         'id': json['id'],
         'name': json['name'],
-        'stripeCustomerId': json['stripeCustomerId'],
+        'stripeCustomerId': json['stripeCustomerId'] == null ? undefined : json['stripeCustomerId'],
         'maxDailyTokens': json['maxDailyTokens'],
         'maxEntities': json['maxEntities'],
         'entitiesCreatedCount': json['entitiesCreatedCount'],

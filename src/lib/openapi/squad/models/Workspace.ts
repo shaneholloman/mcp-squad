@@ -26,12 +26,6 @@ export interface Workspace {
      */
     id: string;
     /**
-     * IDs of outcomes associated with this workspace
-     * @type {Array<string>}
-     * @memberof Workspace
-     */
-    outcomes: Array<string>;
-    /**
      * Name of the workspace
      * @type {string}
      * @memberof Workspace
@@ -80,7 +74,6 @@ export interface Workspace {
  */
 export function instanceOfWorkspace(value: object): value is Workspace {
     if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('outcomes' in value) || value['outcomes'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
     if (!('missionStatement' in value) || value['missionStatement'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
@@ -99,7 +92,6 @@ export function WorkspaceFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     return {
         
         'id': json['id'],
-        'outcomes': json['outcomes'],
         'name': json['name'],
         'homepageUrl': json['homepageUrl'] == null ? undefined : json['homepageUrl'],
         'logoUrl': json['logoUrl'] == null ? undefined : json['logoUrl'],
@@ -122,7 +114,6 @@ export function WorkspaceToJSONTyped(value?: Workspace | null, ignoreDiscriminat
     return {
         
         'id': value['id'],
-        'outcomes': value['outcomes'],
         'name': value['name'],
         'homepageUrl': value['homepageUrl'],
         'logoUrl': value['logoUrl'],
