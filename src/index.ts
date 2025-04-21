@@ -64,6 +64,7 @@ import {
 } from "./requirements.js";
 import { getUserContext } from "./helpers/getUser.js";
 import { createKnowledgeTool, listKnowledgeTool, getKnowledgeTool, deleteKnowledgeTool, createKnowledge, CreateKnowledgeArgsSchema, deleteKnowledge, DeleteKnowledgeArgsSchema, getKnowledge, GetKnowledgeArgsSchema, listKnowledge, ListKnowledgeArgsSchema } from "./knowledge.js";
+import { getWorkspaceTool, updateWorkspaceTool, getWorkspace, GetWorkspaceArgsSchema, updateWorkspace, UpdateWorkspaceArgsSchema } from "./workspace.js";
 
 // Server setup
 const server = new Server(
@@ -120,6 +121,10 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       listKnowledgeTool,
       getKnowledgeTool,
       deleteKnowledgeTool,
+
+      // Workspace tools
+      getWorkspaceTool,
+      updateWorkspaceTool,
     ],
   };
 });
@@ -490,6 +495,32 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             return {
                 content: [
                     { type: "text", "text": "I was unable to delete this knowledge entry. Please check that the ID is correct."}
+                ]
+            }
+        }
+      }
+
+      // Workspace handlers
+      case "get_workspace": {
+        try {
+            const validArgs = GetWorkspaceArgsSchema.parse(args);
+            return await getWorkspace(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to retrieve this workspace. Please check that the ID is correct."}
+                ]
+            }
+        }
+      }
+      case "update_workspace": {
+        try {
+            const validArgs = UpdateWorkspaceArgsSchema.parse(args);
+            return await updateWorkspace(userContext)(validArgs);
+        } catch (e) {
+            return {
+                content: [
+                    { type: "text", "text": "I was unable to update this workspace. Please check that the ID is correct."}
                 ]
             }
         }
