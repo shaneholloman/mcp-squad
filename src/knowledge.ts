@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { squadClient } from "./lib/clients/squad.js";
-import { UserContext } from "./helpers/getUser.js";
 import { zodToJsonSchema } from "zod-to-json-schema";
+import { UserContext } from "./helpers/getUser.js";
+import { squadClient } from "./lib/clients/squad.js";
 
 // Schema definitions
 export const CreateKnowledgeArgsSchema = z.object({
@@ -12,11 +12,15 @@ export const CreateKnowledgeArgsSchema = z.object({
 
 export const createKnowledgeTool = {
   name: "create_knowledge",
-  description: "Create a new knowledge entry. Knowledge entries are text documents that can be used as references or information sources.",
+  description:
+    "Create a new knowledge entry. Knowledge entries are text documents that can be used as references or information sources.",
   inputSchema: zodToJsonSchema(CreateKnowledgeArgsSchema),
 };
 
-export const createKnowledge = (context: UserContext) => async (body: z.infer<typeof CreateKnowledgeArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const createKnowledge = async (
+  context: UserContext,
+  body: Record<string, unknown> | undefined,
+): Promise<{ content: { type: "text"; text: string }[] }> => {
   try {
     const { orgId, workspaceId } = context;
 
@@ -24,21 +28,24 @@ export const createKnowledge = (context: UserContext) => async (body: z.infer<ty
 
     const { title, description, content } = safeBody;
 
-    const res = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost({
-      orgId,
-      workspaceId,
-      createKnowledgePayload: {
-        title,
-        description,
-        content
-      }
-    });
+    const res =
+      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost({
+        orgId,
+        workspaceId,
+        createKnowledgePayload: {
+          title,
+          description,
+          content,
+        },
+      });
 
     return {
-      content: [{
-        type: "text",
-        text: JSON.stringify(res, null, 2),
-      }],
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(res, null, 2),
+        },
+      ],
     };
   } catch (e) {
     console.error("error", e);
@@ -51,37 +58,47 @@ export const ListKnowledgeArgsSchema = z.object({});
 
 export const listKnowledgeTool = {
   name: "list_knowledge",
-  description: "List all knowledge entries in the workspace. Knowledge entries are text documents that can be used as references or information sources. List only shows the available items and a short description for the actual knowledge use the get by id call.",
+  description:
+    "List all knowledge entries in the workspace. Knowledge entries are text documents that can be used as references or information sources. List only shows the available items and a short description for the actual knowledge use the get by id call.",
   inputSchema: zodToJsonSchema(ListKnowledgeArgsSchema),
 };
 
-export const listKnowledge = (context: UserContext) => async (
-  _args: z.infer<typeof ListKnowledgeArgsSchema>
+export const listKnowledge = async (
+  context: UserContext,
 ): Promise<{ content: { type: "text"; text: string }[] }> => {
   try {
     const { orgId, workspaceId } = context;
 
-    const knowledge = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGet({
-      orgId,
-      workspaceId,
-    });
+    const knowledge =
+      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGet({
+        orgId,
+        workspaceId,
+      });
 
     if (knowledge.data.length === 0) {
       return {
-        content: [{
-          type: "text",
-          text: "No knowledge entries found."
-        }]
+        content: [
+          {
+            type: "text",
+            text: "No knowledge entries found.",
+          },
+        ],
       };
     }
 
     return {
-      content: [{
-        type: "text",
-        text: JSON.stringify({
-          knowledge,
-        }, null, 2)
-      }]
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(
+            {
+              knowledge,
+            },
+            null,
+            2,
+          ),
+        },
+      ],
     };
   } catch (e) {
     console.error("error", e);
@@ -96,27 +113,40 @@ export const GetKnowledgeArgsSchema = z.object({
 
 export const getKnowledgeTool = {
   name: "get_knowledge",
-  description: "Get details of a specific knowledge entry by ID. Knowledge entries are text documents that can be used as references or information sources.",
+  description:
+    "Get details of a specific knowledge entry by ID. Knowledge entries are text documents that can be used as references or information sources.",
   inputSchema: zodToJsonSchema(GetKnowledgeArgsSchema),
 };
 
-export const getKnowledge = (context: UserContext) => async ({
-  knowledgeId
-}: z.infer<typeof GetKnowledgeArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const getKnowledge = async (
+  context: UserContext,
+  args: Record<string, unknown> | undefined,
+): Promise<{
+  content: { type: "text"; text: string }[];
+}> => {
   try {
     const { orgId, workspaceId } = context;
 
-    const knowledge = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet({
-      orgId,
-      workspaceId,
-      knowledgeId
-    });
+    const safeArgs = GetKnowledgeArgsSchema.parse(args);
+
+    const { knowledgeId } = safeArgs;
+
+    const knowledge =
+      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet(
+        {
+          orgId,
+          workspaceId,
+          knowledgeId,
+        },
+      );
 
     return {
-      content: [{
-        type: "text",
-        text: JSON.stringify(knowledge, null, 2)
-      }]
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(knowledge, null, 2),
+        },
+      ],
     };
   } catch (e) {
     console.error("error", e);
@@ -135,26 +165,59 @@ export const deleteKnowledgeTool = {
   inputSchema: zodToJsonSchema(DeleteKnowledgeArgsSchema),
 };
 
-export const deleteKnowledge = (context: UserContext) => async ({
-  knowledgeId
-}: z.infer<typeof DeleteKnowledgeArgsSchema>): Promise<{ content: { type: "text"; text: string }[] }> => {
+export const deleteKnowledge = async (
+  context: UserContext,
+  args: Record<string, unknown> | undefined,
+): Promise<{
+  content: { type: "text"; text: string }[];
+}> => {
   try {
     const { orgId, workspaceId } = context;
 
-    const result = await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete({
-      orgId,
-      workspaceId,
-      knowledgeId
-    });
+    const safeArgs = DeleteKnowledgeArgsSchema.parse(args);
+
+    const { knowledgeId } = safeArgs;
+
+    const result =
+      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete(
+        {
+          orgId,
+          workspaceId,
+          knowledgeId,
+        },
+      );
 
     return {
-      content: [{
-        type: "text",
-        text: JSON.stringify(result, null, 2)
-      }]
+      content: [
+        {
+          type: "text",
+          text: JSON.stringify(result, null, 2),
+        },
+      ],
     };
   } catch (e) {
     console.error("error", e);
     throw e;
   }
+};
+
+export const knowledgeTools = [
+  createKnowledgeTool,
+  listKnowledgeTool,
+  getKnowledgeTool,
+  deleteKnowledgeTool,
+];
+
+export const runKnowledgeTool = (name: string) => {
+  const mapper = {
+    create_knowledge: createKnowledge,
+    list_knowledge: listKnowledge,
+    get_knowledge: getKnowledge,
+    delete_knowledge: deleteKnowledge,
+  };
+
+  if (!mapper[name as keyof typeof mapper]) {
+    return null;
+  }
+  return mapper[name as keyof typeof mapper];
 };

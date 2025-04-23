@@ -1,5 +1,8 @@
-import { DefaultApi, FetchParams, Middleware, RequestContext } from "../../openapi/squad/index.js";
-import { squadClient } from "../squad.js";
+import {
+  FetchParams,
+  Middleware,
+  RequestContext,
+} from "../../openapi/squad/index.js";
 
 export const getAPIKey = () => {
   if (!process.env.SQUAD_API_KEY) {
@@ -10,9 +13,7 @@ export const getAPIKey = () => {
 
 export function setAuthHeaderMiddleware(): Middleware {
   return {
-    pre: async (
-      ctx: RequestContext
-    ): Promise<void | FetchParams> => {
+    pre: async (ctx: RequestContext): Promise<void | FetchParams> => {
       if (!ctx.init.headers) ctx.init.headers = {};
 
       (ctx.init.headers as Record<string, string>)["Authorization"] =
