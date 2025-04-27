@@ -4,6 +4,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
+import { feedbackTools, runFeedbackTool } from "./feedback.js";
 import { getUserContext } from "./helpers/getUser.js";
 import { knowledgeTools, runKnowledgeTool } from "./knowledge.js";
 import { opportunityTools, runOpportunityTool } from "./opportunity.js";
@@ -35,6 +36,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
       ...requirementTools,
       ...knowledgeTools,
       ...workspaceTool,
+      ...feedbackTools,
     ],
   };
 });
@@ -51,6 +53,7 @@ server.setRequestHandler(CallToolRequestSchema, async request => {
       runOpportunityTool,
       runOutcomeTool,
       runRequirementTool,
+      runFeedbackTool,
     ];
 
     const runner = runners.find(
