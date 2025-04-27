@@ -116,7 +116,6 @@ export const listSolutionsTool = {
 
 export const listSolutions = async (
   context: UserContext,
-  args: Record<string, unknown> | undefined,
 ): Promise<{ content: { type: "text"; text: string }[] }> => {
   try {
     const { orgId, workspaceId } = context;
@@ -490,3 +489,36 @@ export const runSolutionTool = (name: string) => {
   }
   return mapper[name as keyof typeof mapper];
 };
+
+export const vercelTool = (context: UserContext) => ({
+  create_solution: {
+    description: createSolutionTool.description,
+    parameters: createSolutionTool.inputSchema,
+    execute: (args: z.infer<typeof CreateSolutionArgsSchema>) => createSolution(context, args),
+  },
+  list_solutions: {
+    description: listSolutionsTool.description,
+    parameters: listSolutionsTool.inputSchema,
+    execute: () => listSolutions(context),
+  },
+  get_solution: {
+    description: getSolutionTool.description,
+    parameters: getSolutionTool.inputSchema,
+    execute: (args: z.infer<typeof GetSolutionArgsSchema>) => getSolution(context, args),
+  },
+  update_solution: {
+    description: updateSolutionTool.description,
+    parameters: updateSolutionTool.inputSchema,
+    execute: (args: z.infer<typeof UpdateSolutionArgsSchema>) => updateSolution(context, args),
+  },
+  delete_solution: {
+    description: deleteSolutionTool.description,
+    parameters: deleteSolutionTool.inputSchema,
+    execute: (args: z.infer<typeof DeleteSolutionArgsSchema>) => deleteSolution(context, args),
+  },
+  manage_solution_relationships: {
+    description: manageSolutionRelationshipsTool.description,
+    parameters: manageSolutionRelationshipsTool.inputSchema,
+    execute: (args: z.infer<typeof ManageSolutionRelationshipsArgsSchema>) => manageSolutionRelationships(context, args),
+  },
+});

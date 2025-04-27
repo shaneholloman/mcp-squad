@@ -158,3 +158,16 @@ export const runWorkspaceTool = (name: string) => {
   }
   return mapper[name as keyof typeof mapper];
 };
+
+export const vercelTool = (context: UserContext) => ({
+  get_workspace: {
+    description: getWorkspaceTool.description,
+    parameters: getWorkspaceTool.inputSchema,
+    execute: () => getWorkspace(context),
+  },
+  update_workspace: {
+    description: updateWorkspaceTool.description,
+    parameters: updateWorkspaceTool.inputSchema,
+    execute: (args: z.infer<typeof UpdateWorkspaceArgsSchema>) => updateWorkspace(context, args),
+  },
+});

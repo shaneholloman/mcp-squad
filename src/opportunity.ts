@@ -495,3 +495,41 @@ export const runOpportunityTool = (name: string) => {
   }
   return mapper[name as keyof typeof mapper];
 };
+
+export const vercelTool = (context: UserContext) => ({
+  create_opportunity: {
+    description: createOpportunityTool.description,
+    parameters: createOpportunityTool.inputSchema,
+    execute: (args: z.infer<typeof CreateOpportunityArgsSchema>) => createOpportunity(context, args),
+  },
+  list_opportunities: {
+    description: listOpportunitiesTool.description,
+    parameters: listOpportunitiesTool.inputSchema,
+    execute: () => listOpportunities(context),
+  },
+  get_opportunity: {
+    description: getOpportunityTool.description,
+    parameters: getOpportunityTool.inputSchema,
+    execute: (args: z.infer<typeof GetOpportunityArgsSchema>) => getOpportunity(context, args),
+  },
+  update_opportunity: {
+    description: updateOpportunityTool.description,
+    parameters: updateOpportunityTool.inputSchema,
+    execute: (args: z.infer<typeof UpdateOpportunityArgsSchema>) => updateOpportunity(context, args),
+  },
+  delete_opportunity: {
+    description: deleteOpportunityTool.description,
+    parameters: deleteOpportunityTool.inputSchema,
+    execute: (args: z.infer<typeof DeleteOpportunityArgsSchema>) => deleteOpportunity(context, args),
+  },
+  generate_solutions: {
+    description: generateSolutionsTool.description,
+    parameters: generateSolutionsTool.inputSchema,
+    execute: (args: z.infer<typeof GenerateSolutionsArgsSchema>) => generateSolutions(context, args),
+  },
+  manage_opportunity_relationships: {
+    description: manageOpportunityRelationshipsTool.description,
+    parameters: manageOpportunityRelationshipsTool.inputSchema,
+    execute: (args: z.infer<typeof ManageOpportunityRelationshipsArgsSchema>) => manageOpportunityRelationships(context, args),
+  },
+})

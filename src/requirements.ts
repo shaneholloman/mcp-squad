@@ -510,3 +510,36 @@ export const runRequirementTool = (name: string) => {
   }
   return mapper[name as keyof typeof mapper];
 };
+
+export const vercelTool = (context: UserContext) => ({
+  create_requirement: {
+    description: createRequirementTool.description,
+    parameters: createRequirementTool.inputSchema,
+    execute: (args: z.infer<typeof CreateRequirementArgsSchema>) => createRequirement(context, args),
+  },
+  list_requirements: {
+    description: listRequirementsTool.description,
+    parameters: listRequirementsTool.inputSchema,
+    execute: () => listRequirements(context),
+  },
+  get_requirement: {
+    description: getRequirementTool.description,
+    parameters: getRequirementTool.inputSchema,
+    execute: (args: z.infer<typeof GetRequirementArgsSchema>) => getRequirement(context, args),
+  },
+  update_requirement: {
+    description: updateRequirementTool.description,
+    parameters: updateRequirementTool.inputSchema,
+    execute: (args: z.infer<typeof updateRequirementArgsSchema>) => updateRequirement(context, args),
+  },
+  delete_requirement: {
+    description: deleteRequirementTool.description,
+    parameters: deleteRequirementTool.inputSchema,
+    execute: (args: z.infer<typeof DeleteRequirementArgsSchema>) => deleteRequirement(context, args),
+  },
+  manage_requirement_relationships: {
+    description: manageRequirementRelationshipsTool.description,
+    parameters: manageRequirementRelationshipsTool.inputSchema,
+    execute: (args: z.infer<typeof ManageRequirementRelationshipsArgsSchema>) => manageRequirementRelationships(context, args),
+  },
+});

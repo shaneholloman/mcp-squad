@@ -480,3 +480,36 @@ export const runOutcomeTool = (name: string) => {
   }
   return mapper[name as keyof typeof mapper];
 };
+
+export const vercelTool = (context: UserContext) => ({
+  create_outcome: {
+    description: createOutcomeTool.description,
+    parameters: createOutcomeTool.inputSchema,
+    execute: (args: z.infer<typeof CreateOutcomeArgsSchema>) => createOutcome(context, args),
+  },
+  list_outcomes: {
+    description: listOutcomesTool.description,
+    parameters: listOutcomesTool.inputSchema,
+    execute: () => listOutcomes(context),
+  },
+  get_outcome: {
+    description: getOutcomeTool.description,
+    parameters: getOutcomeTool.inputSchema,
+    execute: (args: z.infer<typeof GetOutcomeArgsSchema>) => getOutcome(context, args),
+  },
+  update_outcome: {
+    description: updateOutcomeTool.description,
+    parameters: updateOutcomeTool.inputSchema,
+    execute: (args: z.infer<typeof UpdateOutcomeArgsSchema>) => updateOutcome(context, args),
+  },
+  delete_outcome: {
+    description: deleteOutcomeTool.description,
+    parameters: deleteOutcomeTool.inputSchema,
+    execute: (args: z.infer<typeof DeleteOutcomeArgsSchema>) => deleteOutcome(context, args),
+  },
+  manage_outcome_relationships: {
+    description: manageOutcomeRelationshipsTool.description,
+    parameters: manageOutcomeRelationshipsTool.inputSchema,
+    execute: (args: z.infer<typeof ManageOutcomeRelationshipsArgsSchema>) => manageOutcomeRelationships(context, args),
+  },
+});

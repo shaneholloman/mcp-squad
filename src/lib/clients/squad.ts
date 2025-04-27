@@ -1,5 +1,5 @@
 import * as SquadApi from "../openapi/squad/index.js";
-import { setAuthHeaderMiddleware } from "./middleware/with-api-key.js";
+import { withAuth } from "./middleware/with-auth.js";
 
 const getEnv = (): "production" | "staging" | "development" => {
   if (!process.env.SQUAD_ENV) {
@@ -27,13 +27,13 @@ const getBasePath = (): string => {
 
 let instance: SquadApi.DefaultApi | null = null;
 
-export function squadClient(): SquadApi.DefaultApi {
+export function squadClient(jwt?: string): SquadApi.DefaultApi {
   const basePath = getBasePath();
   if (!instance) {
     instance = new SquadApi.DefaultApi(
       new SquadApi.Configuration({
         basePath,
-        middleware: [setAuthHeaderMiddleware()],
+        middleware: [withAuth(jwt)],
       }),
     );
   }

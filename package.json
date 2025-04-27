@@ -11,6 +11,7 @@
     "build": "tsc",
     "format": "eslint . --ignore-path .gitignore",
     "format:fix": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts)\"",
+    "build:package": "tsup ./src/package.ts",
     "openapi:squad": "open, api-generator-cli generate -g typescript-fetch -c ./openapi-generator-config.json -i ./openapi/squad.json -o src/lib/openapi/squad && tsx ./scripts/openapi-client-esm-fix.ts"
   },
   "files": [
@@ -29,6 +30,7 @@
     "prettier": "^3.3.0",
     "prettier-plugin-organize-imports": "^3.2.4",
     "ts-node": "^10.9.2",
+    "tsup": "^8.4.0",
     "tsx": "^4.19.3",
     "typescript": "^5.8.2"
   }

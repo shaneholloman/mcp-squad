@@ -3,6 +3,7 @@ import { squadClient } from "../lib/clients/squad.js";
 export type UserContext = {
   orgId: string;
   workspaceId: string;
+  jwt?: string;
 };
 
 let context: UserContext | null = null;

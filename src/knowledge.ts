@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
+import { parseAnyDef, zodToJsonSchema } from "zod-to-json-schema";
 import { UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 
@@ -29,7 +29,7 @@ export const createKnowledge = async (
     const { title, description, content } = safeBody;
 
     const res =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost({
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost({
         orgId,
         workspaceId,
         createKnowledgePayload: {
@@ -70,7 +70,7 @@ export const listKnowledge = async (
     const { orgId, workspaceId } = context;
 
     const knowledge =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGet({
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGet({
         orgId,
         workspaceId,
       });
@@ -132,7 +132,7 @@ export const getKnowledge = async (
     const { knowledgeId } = safeArgs;
 
     const knowledge =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet(
         {
           orgId,
           workspaceId,
@@ -179,7 +179,7 @@ export const deleteKnowledge = async (
     const { knowledgeId } = safeArgs;
 
     const result =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete(
         {
           orgId,
           workspaceId,
@@ -221,3 +221,27 @@ export const runKnowledgeTool = (name: string) => {
   }
   return mapper[name as keyof typeof mapper];
 };
+
+
+export const vercelTool = (context: UserContext) => ({
+  create_knowledge: {
+    description: createKnowledgeTool.description,
+    parameters: createKnowledgeTool.inputSchema,
+    execute: (args: z.infer<typeof CreateKnowledgeArgsSchema>) => createKnowledge(context, args),
+  },
+  list_knowledge: {
+    description: listKnowledgeTool.description,
+    parameters: listKnowledgeTool.inputSchema,
+    execute: () => listKnowledge(context),
+  },
+  get_knowledge: {
+    description: getKnowledgeTool.description,
+    parameters: getKnowledgeTool.inputSchema,
+    execute: (args: z.infer<typeof GetKnowledgeArgsSchema>) => getKnowledge(context, args),
+  },
+  delete_knowledge: {
+    description: deleteKnowledgeTool.description,
+    parameters: deleteKnowledgeTool.inputSchema,
+    execute: (args: z.infer<typeof DeleteKnowledgeArgsSchema>) => deleteKnowledge(context, args),
+  },
+})

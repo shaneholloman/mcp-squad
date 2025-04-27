@@ -65,7 +65,6 @@ export const listFeedbackTool = {
 
 export const listFeedback = async (
   context: UserContext,
-  _args: Record<string, unknown> | undefined,
 ): Promise<{ content: { type: "text"; text: string }[] }> => {
   try {
     const { orgId, workspaceId } = context;
@@ -222,3 +221,27 @@ export const runFeedbackTool = (name: string) => {
 
   return mapper[name as keyof typeof mapper];
 };
+
+export const vercelTool = (context: UserContext) => ({
+  create_feedback: {
+    description: createFeedbackTool.description,
+    parameters: createFeedbackTool.inputSchema,
+    execute: (args: z.infer<typeof CreateFeedbackArgsSchema>) => createFeedback(context, args),
+  },
+  list_feedback: {
+    description: listFeedbackTool.description,
+    parameters: listFeedbackTool.inputSchema,
+    execute: () => listFeedback(context),
+  },
+  get_feedback: {
+    description: getFeedbackTool.description,
+    parameters: getFeedbackTool.inputSchema,
+    execute: (args: z.infer<typeof GetFeedbackArgsSchema>) => getFeedback(context, args),
+  },
+  delete_feedback: {
+    description: deleteFeedbackTool.description,
+    parameters: deleteFeedbackTool.inputSchema,
+    execute: (args: z.infer<typeof DeleteFeedbackArgsSchema>) => deleteFeedback(context, args),
+  },
+})
+  
