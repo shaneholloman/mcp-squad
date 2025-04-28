@@ -30,11 +30,11 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build project
-        run: yarn build
+        run: yarn bun:build
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: ./bin/* # Upload all files from the bin directory
+          files: ./bin/bin/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
