@@ -44,9 +44,22 @@ docker run --rm -i \
   mcp/meet-squad
 ```
 
+#### Option B – Bun
 
+First, ensure you have [Bun](https://bun.sh/) installed.
 
-#### Option B – From source
+```bash
+# Install dependencies (if you haven't already)
+npm install # Or bun install
+
+# Build the executable
+bun run bun:build
+
+# Run the server (replace <your-key>)
+SQUAD_API_KEY=<your-key> ./squad-mcp-executable
+```
+
+#### Option C – From source
 
 ```bash
 git clone https://github.com/the-basilisk-ai/squad-mcp.git
