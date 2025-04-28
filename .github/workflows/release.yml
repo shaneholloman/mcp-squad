@@ -10,7 +10,7 @@ jobs:
   build-and-release:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Needed to create the release
+      contents: write # Needed by ncipollo/release-action
 
     steps:
       - name: Checkout code
@@ -19,22 +19,22 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Or your project's required Node.js version
+          node-version: '20'
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v1
         with:
-          bun-version: latest # Or specify a specific Bun version
+          bun-version: latest
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
       - name: Build project
-        run: yarn bun:build
+        run: yarn bun:build # Creates files in ./bin/
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+      - name: Create Release and Upload Binaries
+        uses: ncipollo/release-action@v1
         with:
-          files: ./bin/bin/*
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "./bin/*" # Correct glob pattern for the binaries
+          token: ${{ secrets.GITHUB_TOKEN }}
+          # By default, this action doesn't upload source code archives
