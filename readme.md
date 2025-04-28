@@ -91,7 +91,6 @@ Add a *mcpServers* entry to your client’s configuration (e.g. **claude_desktop
       "command": "C:/path/to/squad-mcp.exe",
       "env": {
         "SQUAD_API_KEY": "YOUR_API_KEY_HERE",
-        "SQUAD_ENV": "production"
       }
     }
   }
@@ -114,7 +113,6 @@ Add a *mcpServers* entry to your client’s configuration (e.g. **claude_desktop
       ],
       "env": {
         "SQUAD_API_KEY": "YOUR_API_KEY_HERE",
-        "SQUAD_ENV": "production"
       }
     }
   }
