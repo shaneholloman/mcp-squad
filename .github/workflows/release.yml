@@ -32,6 +32,9 @@ jobs:
       - name: Build project
         run: yarn bun:build # Creates files in ./bin/
 
+      - name: Make binaries executable
+        run: chmod +x ./bin/*
+
       - name: Create Release and Upload Binaries
         uses: ncipollo/release-action@v1
         with:
