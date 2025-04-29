@@ -3,6 +3,8 @@ Squad MCP Server
 
 A **Model Context Protocol (MCP) server** that connects *Squad* — the AI‑powered product‑discovery and strategy platform — to any MCP‑aware large‑language‑model (LLM) application. It exposes a rich tool‑kit for creating, querying and updating product‑strategy artefacts (opportunities, solutions, outcomes, requirements, knowledge, workspaces and feedback) directly from your favourite AI co‑pilot.
 
+This repository also contains the source code for the `@squadai/tools` NPM package, which provides the client-side tools for interacting with the Squad API.
+
 Why?
 ----
 
@@ -77,6 +79,40 @@ npm run build           # transpiles to ./dist
 node dist/index.js
 ```
 
+----
+
+📦 NPM Package (@squadai/tools)
+-----------------------------
+
+This repository also includes an NPM package, `@squadai/tools`, which provides a set of functions for interacting with the Squad API programmatically from your own Node.js applications or scripts.
+
+To install the package:
+
+```bash
+npm install @squadai/tools
+# or
+yarn add @squadai/tools
+# or
+pnpm add @squadai/tools
+```
+
+You can then import and use the tools in your code. You will still need a Squad API key or JWT for authentication (see Quick start section above).
+
+Example usage (conceptual):
+
+```typescript
+import { squadClient, listOpportunities } from '@squadai/tools';
+
+const client = squadClient({ apiKey: process.env.SQUAD_API_KEY });
+
+async function main() {
+  const opportunities = await listOpportunities(client, { /* filter options */ });
+  console.log(opportunities);
+}
+
+main();
+```
+
 ⚙️ Integrating with an MCP client
 --------------------------------
 
@@ -143,4 +179,3 @@ node dist/index.js
 ```
 
 The test suite is work‑in‑progress; contributions welcome.
-

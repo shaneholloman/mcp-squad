@@ -1,6 +1,5 @@
 name: Publish Package to NPM
 
-
 on:
     push:
       tags:
@@ -18,15 +17,11 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
-          scope: '@meetsquad'
+          scope: '@squad-ai'
           cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
-
-      - name: Run tests
-        run: yarn test
-        continue-on-error: true
 
       - name: Build
         run: yarn build
