@@ -1,5 +1,4 @@
 import { z, ZodError } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 import {
@@ -35,7 +34,7 @@ export const createRequirementTool = {
   name: "create_requirement",
   description:
     "Create a new requirement. A requirement defines the specific implementation details needed to fulfill a solution or feature.",
-  inputSchema: zodToJsonSchema(CreateRequirementArgsSchema),
+  inputSchema: CreateRequirementArgsSchema,
 };
 
 export const createRequirement = async (
@@ -65,14 +64,13 @@ export const createRequirement = async (
     if (ownerId !== undefined) requirementPayload.ownerId = ownerId;
     if (status !== undefined) requirementPayload.status = status;
 
-    const requirement =
-      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost(
-        {
-          orgId,
-          workspaceId,
-          createRequirement: requirementPayload,
-        },
-      );
+    const requirement = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost({
+      orgId,
+      workspaceId,
+      createRequirement: requirementPayload,
+    });
 
     return {
       content: [
@@ -106,7 +104,7 @@ export const listRequirementsTool = {
   name: "list_requirements",
   description:
     "List all requirements in the workspace. Requirements define the specific implementation details needed to fulfill solutions features.",
-  inputSchema: zodToJsonSchema(ListRequirementsArgsSchema),
+  inputSchema: ListRequirementsArgsSchema,
 };
 
 export const listRequirements = async (
@@ -115,13 +113,12 @@ export const listRequirements = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const requirements =
-      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsGet(
-        {
-          orgId,
-          workspaceId,
-        },
-      );
+    const requirements = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsGet({
+      orgId,
+      workspaceId,
+    });
 
     if (requirements.data.length === 0) {
       return {
@@ -181,7 +178,7 @@ export const getRequirementTool = {
   name: "get_requirement",
   description:
     "Get details of a specific requirement by ID. Requirements define the specific implementation details needed to fulfill solutions or features.",
-  inputSchema: zodToJsonSchema(GetRequirementArgsSchema),
+  inputSchema: GetRequirementArgsSchema,
 };
 
 export const getRequirement = async (
@@ -195,15 +192,14 @@ export const getRequirement = async (
     const safeBody = GetRequirementArgsSchema.parse(body);
     const { requirementId, relationships } = safeBody;
 
-    const requirement =
-      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet(
-        {
-          orgId,
-          workspaceId,
-          requirementId,
-          relationships: relationships.join(","),
-        },
-      );
+    const requirement = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet({
+      orgId,
+      workspaceId,
+      requirementId,
+      relationships: relationships.join(","),
+    });
 
     return {
       content: [
@@ -265,7 +261,7 @@ type UpdateRequirementArgs = z.infer<typeof updateRequirementArgsSchema>;
 export const updateRequirementTool = {
   name: "update_requirement",
   description: "Update an existing requirement's details.",
-  inputSchema: zodToJsonSchema(updateRequirementArgsSchema),
+  inputSchema: updateRequirementArgsSchema,
 };
 
 export const updateRequirement = async (
@@ -288,14 +284,13 @@ export const updateRequirement = async (
     } = safeBody;
 
     // First, get the existing requirement to preserve any values we're not updating
-    const existingRequirement =
-      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet(
-        {
-          orgId,
-          workspaceId,
-          requirementId: requirementId,
-        },
-      );
+    const existingRequirement = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet({
+      orgId,
+      workspaceId,
+      requirementId: requirementId,
+    });
 
     // Create the update payload with existing values or new ones
     const updatePayload: UpdateRequirement = {
@@ -324,15 +319,14 @@ export const updateRequirement = async (
       updatePayload.status = existingRequirement.data.status as any;
     }
 
-    const requirement =
-      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut(
-        {
-          orgId,
-          workspaceId,
-          requirementId,
-          updateRequirement: updatePayload,
-        },
-      );
+    const requirement = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut({
+      orgId,
+      workspaceId,
+      requirementId,
+      updateRequirement: updatePayload,
+    });
 
     return {
       content: [
@@ -367,7 +361,7 @@ export const DeleteRequirementArgsSchema = z.object({
 export const deleteRequirementTool = {
   name: "delete_requirement",
   description: "Delete a requirement by ID.",
-  inputSchema: zodToJsonSchema(DeleteRequirementArgsSchema),
+  inputSchema: DeleteRequirementArgsSchema,
 };
 
 export const deleteRequirement = async (
@@ -380,13 +374,13 @@ export const deleteRequirement = async (
     const { orgId, workspaceId } = context;
     const { requirementId } = DeleteRequirementArgsSchema.parse(body);
 
-    await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete(
-      {
-        orgId,
-        workspaceId,
-        requirementId,
-      },
-    );
+    await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete({
+      orgId,
+      workspaceId,
+      requirementId,
+    });
 
     return {
       content: [
@@ -432,7 +426,7 @@ export const manageRequirementRelationshipsTool = {
   name: "manage_requirement_relationships",
   description:
     "Add or remove relationships between a requirement and other entities (opportunities, solutions, outcomes, or feedback).",
-  inputSchema: zodToJsonSchema(ManageRequirementRelationshipsArgsSchema),
+  inputSchema: ManageRequirementRelationshipsArgsSchema,
 };
 
 export const manageRequirementRelationships = async (
@@ -515,31 +509,37 @@ export const vercelTool = (context: UserContext) => ({
   create_requirement: {
     description: createRequirementTool.description,
     parameters: createRequirementTool.inputSchema,
-    execute: (args: z.infer<typeof CreateRequirementArgsSchema>) => createRequirement(context, args),
+    execute: async (args: z.infer<typeof CreateRequirementArgsSchema>) =>
+      await createRequirement(context, args),
   },
   list_requirements: {
     description: listRequirementsTool.description,
     parameters: listRequirementsTool.inputSchema,
-    execute: () => listRequirements(context),
+    execute: async () => await listRequirements(context),
   },
   get_requirement: {
     description: getRequirementTool.description,
     parameters: getRequirementTool.inputSchema,
-    execute: (args: z.infer<typeof GetRequirementArgsSchema>) => getRequirement(context, args),
+    execute: async (args: z.infer<typeof GetRequirementArgsSchema>) =>
+      await getRequirement(context, args),
   },
   update_requirement: {
     description: updateRequirementTool.description,
     parameters: updateRequirementTool.inputSchema,
-    execute: (args: z.infer<typeof updateRequirementArgsSchema>) => updateRequirement(context, args),
+    execute: async (args: z.infer<typeof updateRequirementArgsSchema>) =>
+      await updateRequirement(context, args),
   },
   delete_requirement: {
     description: deleteRequirementTool.description,
     parameters: deleteRequirementTool.inputSchema,
-    execute: (args: z.infer<typeof DeleteRequirementArgsSchema>) => deleteRequirement(context, args),
+    execute: async (args: z.infer<typeof DeleteRequirementArgsSchema>) =>
+      await deleteRequirement(context, args),
   },
   manage_requirement_relationships: {
     description: manageRequirementRelationshipsTool.description,
     parameters: manageRequirementRelationshipsTool.inputSchema,
-    execute: (args: z.infer<typeof ManageRequirementRelationshipsArgsSchema>) => manageRequirementRelationships(context, args),
+    execute: async (
+      args: z.infer<typeof ManageRequirementRelationshipsArgsSchema>,
+    ) => await manageRequirementRelationships(context, args),
   },
 });

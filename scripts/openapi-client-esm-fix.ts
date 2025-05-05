@@ -1,6 +1,5 @@
 import fs from "fs";
 import * as glob from "glob";
-import path from "path";
 
 const files = glob.sync("./src/lib/openapi/squad/**/*.ts");
 
@@ -16,5 +15,4 @@ files.forEach(file => {
     },
   );
   fs.writeFileSync(file, fixed);
-  console.log(`✔️ fixed imports in ${path.relative(".", file)}`);
 });

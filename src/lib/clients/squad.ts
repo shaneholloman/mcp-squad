@@ -2,7 +2,6 @@ import * as SquadApi from "../openapi/squad/index.js";
 import { withAuth } from "./middleware/with-auth.js";
 
 const getEnv = (): "production" | "staging" | "development" => {
-  console.log("SQUAD_ENV", process.env.SQUAD_ENV);
   if (!process.env.SQUAD_ENV) {
     return "production";
   }
@@ -32,17 +31,23 @@ declare global {
 }
 
 // Function overload signatures
-export function squadClient(options: { apiKey?: string; jwt?: string }): SquadApi.DefaultApi;
+export function squadClient(options: {
+  apiKey?: string;
+  jwt?: string;
+}): SquadApi.DefaultApi;
 export function squadClient(jwt?: string): SquadApi.DefaultApi;
 
 // Implementation
-export function squadClient(optionsOrJwt?: { apiKey?: string; jwt?: string } | string): SquadApi.DefaultApi {
+export function squadClient(
+  optionsOrJwt?: { apiKey?: string; jwt?: string } | string,
+): SquadApi.DefaultApi {
   // Handle the case where a string (JWT) is passed directly
   let options: { apiKey?: string; jwt?: string };
-  if (typeof optionsOrJwt === 'string') {
+  if (typeof optionsOrJwt === "string") {
     options = { jwt: optionsOrJwt };
   } else if (!optionsOrJwt) {
     // No parameters - use API key
+
     options = { apiKey: process.env.SQUAD_API_KEY };
   } else {
     options = optionsOrJwt;
@@ -50,36 +55,43 @@ export function squadClient(optionsOrJwt?: { apiKey?: string; jwt?: string } | s
 
   // Validate that exactly one auth method is provided
   if (!options.apiKey && !options.jwt) {
+    console.error(
+      "[squadClient] Authentication error: Neither API key nor JWT provided",
+    );
     throw new Error("Either apiKey or jwt must be provided");
   }
   if (options.apiKey && options.jwt) {
+    console.error(
+      "[squadClient] Authentication error: Both API key and JWT provided",
+    );
     throw new Error("Only one of apiKey or jwt should be provided");
   }
 
   const basePath = getBasePath();
-  
-  console.log("basePath", basePath);
+  const authMethod = options.jwt ? "JWT" : "API Key";
+
   // Create a new instance every time with JWT, don't cache
   if (options.jwt) {
-    console.log("Creating new client instance with JWT");
-    return new SquadApi.DefaultApi(
+    const client = new SquadApi.DefaultApi(
       new SquadApi.Configuration({
         basePath,
         middleware: [withAuth(options.jwt)],
       }),
     );
+
+    return client;
   }
-  
+
   // For API key, we can still use caching
   if (!global.squadApiKeyInstance) {
-    console.log("Creating new client instance with API key");
     global.squadApiKeyInstance = new SquadApi.DefaultApi(
       new SquadApi.Configuration({
         basePath,
         middleware: [withAuth(undefined)], // API key from env
       }),
     );
+  } else {
   }
-  
+
   return global.squadApiKeyInstance;
 }

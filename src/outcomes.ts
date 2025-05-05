@@ -1,5 +1,4 @@
 import { z, ZodError } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 import {
@@ -36,7 +35,7 @@ export const createOutcomeTool = {
   name: "create_outcome",
   description:
     "Create a new outcome. An outcome is a business objective or goal that the organization aims to achieve.",
-  inputSchema: zodToJsonSchema(CreateOutcomeArgsSchema),
+  inputSchema: CreateOutcomeArgsSchema,
 };
 
 export const createOutcome = async (
@@ -63,12 +62,13 @@ export const createOutcome = async (
     // Only add ownerId if it's defined, since it's truly optional
     if (ownerId !== undefined) outcomeRequest.ownerId = ownerId;
 
-    const res =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesPost({
-        orgId,
-        workspaceId,
-        createOutcomePayload: outcomeRequest,
-      });
+    const res = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesPost({
+      orgId,
+      workspaceId,
+      createOutcomePayload: outcomeRequest,
+    });
     return {
       content: [
         {
@@ -101,7 +101,7 @@ export const listOutcomesTool = {
   name: "list_outcomes",
   description:
     "List all outcomes in the workspace. Outcomes are business objectives or goals that the organization aims to achieve.",
-  inputSchema: zodToJsonSchema(ListOutcomesArgsSchema),
+  inputSchema: ListOutcomesArgsSchema,
 };
 
 export const listOutcomes = async (
@@ -110,11 +110,12 @@ export const listOutcomes = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const outcomes =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesGet({
-        orgId,
-        workspaceId,
-      });
+    const outcomes = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesGet({
+      orgId,
+      workspaceId,
+    });
 
     if (outcomes.data.length === 0) {
       return {
@@ -169,7 +170,7 @@ export const getOutcomeTool = {
   name: "get_outcome",
   description:
     "Get details of a specific outcome by ID. Outcomes are business objectives or goals that the organization aims to achieve.",
-  inputSchema: zodToJsonSchema(GetOutcomeArgsSchema),
+  inputSchema: GetOutcomeArgsSchema,
 };
 
 export const getOutcome = async (
@@ -183,15 +184,14 @@ export const getOutcome = async (
     const safeArgs = GetOutcomeArgsSchema.parse(args);
     const { outcomeId, relationships } = safeArgs;
 
-    const outcome =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet(
-        {
-          orgId,
-          workspaceId,
-          outcomeId,
-          relationships: relationships.join(","),
-        },
-      );
+    const outcome = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet({
+      orgId,
+      workspaceId,
+      outcomeId,
+      relationships: relationships.join(","),
+    });
 
     return {
       content: [
@@ -239,7 +239,7 @@ export const UpdateOutcomeArgsSchema = z.object({
 export const updateOutcomeTool = {
   name: "update_outcome",
   description: "Update an existing outcome's details.",
-  inputSchema: zodToJsonSchema(UpdateOutcomeArgsSchema),
+  inputSchema: UpdateOutcomeArgsSchema,
 };
 
 export const updateOutcome = async (
@@ -262,14 +262,13 @@ export const updateOutcome = async (
     } = safeBody;
 
     // First, get the existing outcome to preserve any values we're not updating
-    const existingOutcome =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet(
-        {
-          orgId,
-          workspaceId,
-          outcomeId,
-        },
-      );
+    const existingOutcome = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet({
+      orgId,
+      workspaceId,
+      outcomeId,
+    });
 
     // Create update payload with required fields and defaults
     const updatePayload: UpdateOutcomePayload = {
@@ -287,15 +286,14 @@ export const updateOutcome = async (
       updatePayload.ownerId = ownerId || existingOutcome.data.ownerId;
     }
 
-    const outcome =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdPut(
-        {
-          orgId,
-          workspaceId,
-          outcomeId,
-          updateOutcomePayload: updatePayload,
-        },
-      );
+    const outcome = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdPut({
+      orgId,
+      workspaceId,
+      outcomeId,
+      updateOutcomePayload: updatePayload,
+    });
 
     return {
       content: [
@@ -330,7 +328,7 @@ export const DeleteOutcomeArgsSchema = z.object({
 export const deleteOutcomeTool = {
   name: "delete_outcome",
   description: "Delete an outcome by ID.",
-  inputSchema: zodToJsonSchema(DeleteOutcomeArgsSchema),
+  inputSchema: DeleteOutcomeArgsSchema,
 };
 
 export const deleteOutcome = async (
@@ -344,14 +342,13 @@ export const deleteOutcome = async (
     const safeArgs = DeleteOutcomeArgsSchema.parse(args);
     const { outcomeId } = safeArgs;
 
-    const result =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete(
-        {
-          orgId,
-          workspaceId,
-          outcomeId,
-        },
-      );
+    const result = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete({
+      orgId,
+      workspaceId,
+      outcomeId,
+    });
 
     return {
       content: [
@@ -397,7 +394,7 @@ export const manageOutcomeRelationshipsTool = {
   name: "manage_outcome_relationships",
   description:
     "Add or remove relationships between an outcome and opportunities for the business.",
-  inputSchema: zodToJsonSchema(ManageOutcomeRelationshipsArgsSchema),
+  inputSchema: ManageOutcomeRelationshipsArgsSchema,
 };
 
 export const manageOutcomeRelationships = async (
@@ -485,31 +482,37 @@ export const vercelTool = (context: UserContext) => ({
   create_outcome: {
     description: createOutcomeTool.description,
     parameters: createOutcomeTool.inputSchema,
-    execute: (args: z.infer<typeof CreateOutcomeArgsSchema>) => createOutcome(context, args),
+    execute: async (args: z.infer<typeof CreateOutcomeArgsSchema>) =>
+      await createOutcome(context, args),
   },
   list_outcomes: {
     description: listOutcomesTool.description,
     parameters: listOutcomesTool.inputSchema,
-    execute: () => listOutcomes(context),
+    execute: async () => await listOutcomes(context),
   },
   get_outcome: {
     description: getOutcomeTool.description,
     parameters: getOutcomeTool.inputSchema,
-    execute: (args: z.infer<typeof GetOutcomeArgsSchema>) => getOutcome(context, args),
+    execute: async (args: z.infer<typeof GetOutcomeArgsSchema>) =>
+      await getOutcome(context, args),
   },
   update_outcome: {
     description: updateOutcomeTool.description,
     parameters: updateOutcomeTool.inputSchema,
-    execute: (args: z.infer<typeof UpdateOutcomeArgsSchema>) => updateOutcome(context, args),
+    execute: async (args: z.infer<typeof UpdateOutcomeArgsSchema>) =>
+      await updateOutcome(context, args),
   },
   delete_outcome: {
     description: deleteOutcomeTool.description,
     parameters: deleteOutcomeTool.inputSchema,
-    execute: (args: z.infer<typeof DeleteOutcomeArgsSchema>) => deleteOutcome(context, args),
+    execute: async (args: z.infer<typeof DeleteOutcomeArgsSchema>) =>
+      await deleteOutcome(context, args),
   },
   manage_outcome_relationships: {
     description: manageOutcomeRelationshipsTool.description,
     parameters: manageOutcomeRelationshipsTool.inputSchema,
-    execute: (args: z.infer<typeof ManageOutcomeRelationshipsArgsSchema>) => manageOutcomeRelationships(context, args),
+    execute: async (
+      args: z.infer<typeof ManageOutcomeRelationshipsArgsSchema>,
+    ) => await manageOutcomeRelationships(context, args),
   },
 });

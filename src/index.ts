@@ -4,6 +4,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
+import { zodToJsonSchema } from "zod-to-json-schema";
 import { feedbackTools, runFeedbackTool } from "./feedback.js";
 import { getUserContext } from "./helpers/getUser.js";
 import { knowledgeTools, runKnowledgeTool } from "./knowledge.js";
@@ -26,24 +27,36 @@ const server = new Server(
   },
 );
 
+// Log all available tools
+const allTools = [
+  ...opportunityTools,
+  ...solutionTools,
+  ...outcomeTools,
+  ...requirementTools,
+  ...knowledgeTools,
+  ...workspaceTool,
+  ...feedbackTools,
+];
+
+allTools.forEach(tool => {});
+
 // Tool handlers
 server.setRequestHandler(ListToolsRequestSchema, async () => {
-  return {
-    tools: [
-      ...opportunityTools,
-      ...solutionTools,
-      ...outcomeTools,
-      ...requirementTools,
-      ...knowledgeTools,
-      ...workspaceTool,
-      ...feedbackTools,
-    ],
+  const toolsResponse = {
+    tools: allTools.map(tool => ({
+      ...tool,
+      inputSchema: zodToJsonSchema(tool.inputSchema),
+    })),
   };
+
+  return toolsResponse;
 });
 
 server.setRequestHandler(CallToolRequestSchema, async request => {
+  const startTime = Date.now();
   try {
     const { name, arguments: args } = request.params;
+
     const userContext = await getUserContext();
 
     const runners = [
@@ -61,13 +74,21 @@ server.setRequestHandler(CallToolRequestSchema, async request => {
     )?.(name);
 
     if (runner !== null && runner !== undefined) {
-      return await runner(userContext, args);
+      const result = await runner(userContext, args);
+      const executionTime = Date.now() - startTime;
+
+      return result;
     }
 
+    console.error(`[squad-mcp:server:error] Unknown tool: ${name}`);
     throw new Error(`Unknown tool: ${name}`);
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-    console.log("error", error);
+    const executionTime = Date.now() - startTime;
+    console.error(
+      `[squad-mcp:server:error] Tool execution failed after ${executionTime}ms`,
+    );
+    console.error(`[squad-mcp:server:error] Error details:`, error);
     return {
       content: [{ type: "text", text: `Error: ${errorMessage}` }],
       isError: true,
@@ -78,11 +99,19 @@ server.setRequestHandler(CallToolRequestSchema, async request => {
 // Start server
 async function runServer() {
   const transport = new StdioServerTransport();
-  await server.connect(transport);
-  console.error("Secure MCP Filesystem Server running on stdio");
+
+  try {
+    await server.connect(transport);
+  } catch (error) {
+    console.error(
+      "[squad-mcp:server:error] Failed to connect server to transport:",
+      error,
+    );
+    throw error;
+  }
 }
 
 runServer().catch(error => {
-  console.error("Fatal error running server:", error);
+  console.error("[squad-mcp:server:fatal] Fatal error running server:", error);
   process.exit(1);
 });

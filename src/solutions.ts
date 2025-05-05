@@ -1,5 +1,4 @@
 import { z, ZodError } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 import {
@@ -43,7 +42,7 @@ export const createSolutionTool = {
   name: "create_solution",
   description:
     "Create a new solution. A solution is a proposed approach to address an opportunity. A solution will be a detailed plan to address an opportunity.",
-  inputSchema: zodToJsonSchema(CreateSolutionArgsSchema),
+  inputSchema: CreateSolutionArgsSchema,
 };
 
 export const createSolution = async (
@@ -66,12 +65,13 @@ export const createSolution = async (
       createdBy: "user",
     };
 
-    const solution =
-      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost({
-        orgId,
-        workspaceId,
-        createSolutionPayload: solutionPayload,
-      });
+    const solution = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost({
+      orgId,
+      workspaceId,
+      createSolutionPayload: solutionPayload,
+    });
 
     return {
       content: [
@@ -111,25 +111,21 @@ export const listSolutionsTool = {
   name: "list_solutions",
   description:
     "List all solutions in the workspace. Solutions are proposed approaches to address opportunities.",
-  inputSchema: zodToJsonSchema(ListSolutionsArgsSchema),
+  inputSchema: ListSolutionsArgsSchema,
 };
 
 export const listSolutions = async (
   context: UserContext,
 ): Promise<{ content: { type: "text"; text: string }[] }> => {
   try {
-    console.log("list solutions");
     const { orgId, workspaceId } = context;
 
-    console.log("context in list solutions", context);
-
-    const solutions =
-      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsGet({
-        orgId,
-        workspaceId,
-      });
-
-    console.log("solutions", solutions);
+    const solutions = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsGet({
+      orgId,
+      workspaceId,
+    });
 
     if (solutions.data.length === 0) {
       return {
@@ -190,7 +186,7 @@ export const GetSolutionArgsSchema = z.object({
 export const getSolutionTool = {
   name: "get_solution",
   description: "Get details of a specific solution by ID.",
-  inputSchema: zodToJsonSchema(GetSolutionArgsSchema),
+  inputSchema: GetSolutionArgsSchema,
 };
 
 export const getSolution = async (
@@ -204,14 +200,13 @@ export const getSolution = async (
     const { solutionId } = safeArgs;
     const { orgId, workspaceId } = context;
 
-    const solution =
-      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet(
-        {
-          orgId,
-          workspaceId,
-          solutionId,
-        },
-      );
+    const solution = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
+      orgId,
+      workspaceId,
+      solutionId,
+    });
 
     return {
       content: [
@@ -264,7 +259,7 @@ export const updateSolutionTool = {
   name: "update_solution",
   description:
     "Update an existing solution's details such as title, description, pros, cons, or status.",
-  inputSchema: zodToJsonSchema(UpdateSolutionArgsSchema),
+  inputSchema: UpdateSolutionArgsSchema,
 };
 export const updateSolution = async (
   context: UserContext,
@@ -278,14 +273,13 @@ export const updateSolution = async (
     const { solutionId, title, description, pros, cons, status } = safeSolution;
 
     // First, get the existing solution to preserve any values we're not updating
-    const existingSolution =
-      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet(
-        {
-          orgId,
-          workspaceId,
-          solutionId,
-        },
-      );
+    const existingSolution = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
+      orgId,
+      workspaceId,
+      solutionId,
+    });
 
     const updatePayload: UpdateSolutionPayload = {
       title: title || existingSolution.data.title,
@@ -295,15 +289,14 @@ export const updateSolution = async (
       status: status || existingSolution.data.status,
     };
 
-    const solution =
-      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPut(
-        {
-          orgId,
-          workspaceId,
-          solutionId,
-          updateSolutionPayload: updatePayload,
-        },
-      );
+    const solution = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPut({
+      orgId,
+      workspaceId,
+      solutionId,
+      updateSolutionPayload: updatePayload,
+    });
 
     return {
       content: [
@@ -344,7 +337,7 @@ export const DeleteSolutionArgsSchema = z.object({
 export const deleteSolutionTool = {
   name: "delete_solution",
   description: "Delete a solution by ID.",
-  inputSchema: zodToJsonSchema(DeleteSolutionArgsSchema),
+  inputSchema: DeleteSolutionArgsSchema,
 };
 
 export const deleteSolution = async (
@@ -359,13 +352,13 @@ export const deleteSolution = async (
     const safeArgs = DeleteSolutionArgsSchema.parse(args);
     const { solutionId } = safeArgs;
 
-    await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDelete(
-      {
-        orgId,
-        workspaceId,
-        solutionId,
-      },
-    );
+    await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDelete({
+      orgId,
+      workspaceId,
+      solutionId,
+    });
 
     return {
       content: [
@@ -420,7 +413,7 @@ export const manageSolutionRelationshipsTool = {
   name: "manage_solution_relationships",
   description:
     "Add or remove relationships between a solution and other entities (opportunities or requirements).",
-  inputSchema: zodToJsonSchema(ManageSolutionRelationshipsArgsSchema),
+  inputSchema: ManageSolutionRelationshipsArgsSchema,
 };
 
 export const manageSolutionRelationships = async (
@@ -500,7 +493,8 @@ export const vercelTool = (context: UserContext) => ({
   create_solution: {
     description: createSolutionTool.description,
     parameters: createSolutionTool.inputSchema,
-    execute: (args: z.infer<typeof CreateSolutionArgsSchema>) => createSolution(context, args),
+    execute: async (args: z.infer<typeof CreateSolutionArgsSchema>) =>
+      await createSolution(context, args),
   },
   list_solutions: {
     description: listSolutionsTool.description,
@@ -510,21 +504,26 @@ export const vercelTool = (context: UserContext) => ({
   get_solution: {
     description: getSolutionTool.description,
     parameters: getSolutionTool.inputSchema,
-    execute: (args: z.infer<typeof GetSolutionArgsSchema>) => getSolution(context, args),
+    execute: async (args: z.infer<typeof GetSolutionArgsSchema>) =>
+      await getSolution(context, args),
   },
   update_solution: {
     description: updateSolutionTool.description,
     parameters: updateSolutionTool.inputSchema,
-    execute: (args: z.infer<typeof UpdateSolutionArgsSchema>) => updateSolution(context, args),
+    execute: async (args: z.infer<typeof UpdateSolutionArgsSchema>) =>
+      await updateSolution(context, args),
   },
   delete_solution: {
     description: deleteSolutionTool.description,
     parameters: deleteSolutionTool.inputSchema,
-    execute: (args: z.infer<typeof DeleteSolutionArgsSchema>) => deleteSolution(context, args),
+    execute: async (args: z.infer<typeof DeleteSolutionArgsSchema>) =>
+      await deleteSolution(context, args),
   },
   manage_solution_relationships: {
     description: manageSolutionRelationshipsTool.description,
     parameters: manageSolutionRelationshipsTool.inputSchema,
-    execute: (args: z.infer<typeof ManageSolutionRelationshipsArgsSchema>) => manageSolutionRelationships(context, args),
+    execute: async (
+      args: z.infer<typeof ManageSolutionRelationshipsArgsSchema>,
+    ) => await manageSolutionRelationships(context, args),
   },
 });

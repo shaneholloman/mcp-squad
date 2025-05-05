@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 import {
@@ -23,7 +22,7 @@ export const createOpportunityTool = {
   name: "create_opportunity",
   description:
     "Create a new opportunity. An opportunity is a detailed problem statement identified for the organisation. It doesn't have any solutionising and simply captures an opportunity for the organisation.",
-  inputSchema: zodToJsonSchema(CreateOpportunityArgsSchema),
+  inputSchema: CreateOpportunityArgsSchema,
 };
 
 export const createOpportunity = async (
@@ -37,18 +36,17 @@ export const createOpportunity = async (
 
     const { title, description } = safeBody;
 
-    const res =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost(
-        {
-          orgId,
-          workspaceId,
-          createOpportunityPayload: {
-            title,
-            description,
-            createdBy: "user",
-          },
-        },
-      );
+    const res = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost({
+      orgId,
+      workspaceId,
+      createOpportunityPayload: {
+        title,
+        description,
+        createdBy: "user",
+      },
+    });
 
     return {
       content: [
@@ -77,7 +75,7 @@ export const listOpportunitiesTool = {
   name: "list_opportunities",
   description:
     "List all opportunities in the workspace. Opportunities are problem statements identified for the organisation.",
-  inputSchema: zodToJsonSchema(ListOpportunitiesArgsSchema),
+  inputSchema: ListOpportunitiesArgsSchema,
 };
 
 export const listOpportunities = async (
@@ -86,13 +84,12 @@ export const listOpportunities = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const opportunities =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet(
-        {
-          orgId,
-          workspaceId,
-        },
-      );
+    const opportunities = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet({
+      orgId,
+      workspaceId,
+    });
 
     if (opportunities.data.length === 0) {
       return {
@@ -147,7 +144,7 @@ export const getOpportunityTool = {
   name: "get_opportunity",
   description:
     "Get details of a specific opportunity by ID. Opportunities are problem statements identified for the organisation.",
-  inputSchema: zodToJsonSchema(GetOpportunityArgsSchema),
+  inputSchema: GetOpportunityArgsSchema,
 };
 
 export const getOpportunity = async (
@@ -163,15 +160,14 @@ export const getOpportunity = async (
 
     const { opportunityId, relationships } = safeArgs;
 
-    const opportunity =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGet(
-        {
-          orgId,
-          workspaceId,
-          opportunityId,
-          relationships: relationships.join(","),
-        },
-      );
+    const opportunity = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGet({
+      orgId,
+      workspaceId,
+      opportunityId,
+      relationships: relationships.join(","),
+    });
 
     return {
       content: [
@@ -215,7 +211,7 @@ export const updateOpportunityTool = {
   name: "update_opportunity",
   description:
     "Update an existing opportunity's details such as title, description, or status.",
-  inputSchema: zodToJsonSchema(UpdateOpportunityArgsSchema),
+  inputSchema: UpdateOpportunityArgsSchema,
 };
 
 export const updateOpportunity = async (
@@ -234,15 +230,14 @@ export const updateOpportunity = async (
     if (description !== undefined) updatePayload.description = description;
     if (status !== undefined) updatePayload.status = status;
 
-    const opportunity =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPut(
-        {
-          orgId,
-          workspaceId,
-          opportunityId,
-          updateOpportunityPayload: updatePayload,
-        },
-      );
+    const opportunity = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPut({
+      orgId,
+      workspaceId,
+      opportunityId,
+      updateOpportunityPayload: updatePayload,
+    });
 
     return {
       content: [
@@ -272,7 +267,7 @@ export const DeleteOpportunityArgsSchema = z.object({
 export const deleteOpportunityTool = {
   name: "delete_opportunity",
   description: "Delete an opportunity by ID.",
-  inputSchema: zodToJsonSchema(DeleteOpportunityArgsSchema),
+  inputSchema: DeleteOpportunityArgsSchema,
 };
 
 export const deleteOpportunity = async (
@@ -288,14 +283,13 @@ export const deleteOpportunity = async (
 
     const { opportunityId } = safeArgs;
 
-    const result =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete(
-        {
-          orgId,
-          workspaceId,
-          opportunityId,
-        },
-      );
+    const result = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete({
+      orgId,
+      workspaceId,
+      opportunityId,
+    });
 
     return {
       content: [
@@ -338,7 +332,7 @@ export const generateSolutionsTool = {
   name: "generate_solutions",
   description:
     "Start the process of generating solutions for an opportunity. This will use Squad AI to generate new potential solutions for a given opportunity.",
-  inputSchema: zodToJsonSchema(GenerateSolutionsArgsSchema),
+  inputSchema: GenerateSolutionsArgsSchema,
 };
 
 export const generateSolutions = async (
@@ -354,7 +348,9 @@ export const generateSolutions = async (
 
     const { opportunityId, prompt } = safeArgs;
 
-    await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPost(
+    await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPost(
       {
         orgId,
         workspaceId,
@@ -414,7 +410,7 @@ export const manageOpportunityRelationshipsTool = {
   name: "manage_opportunity_relationships",
   description:
     "Add or remove relationships between an opportunity and other entities (solutions, outcomes, or feedback).",
-  inputSchema: zodToJsonSchema(ManageOpportunityRelationshipsArgsSchema),
+  inputSchema: ManageOpportunityRelationshipsArgsSchema,
 };
 
 export const manageOpportunityRelationships = async (
@@ -500,36 +496,43 @@ export const vercelTool = (context: UserContext) => ({
   create_opportunity: {
     description: createOpportunityTool.description,
     parameters: createOpportunityTool.inputSchema,
-    execute: (args: z.infer<typeof CreateOpportunityArgsSchema>) => createOpportunity(context, args),
+    execute: async (args: z.infer<typeof CreateOpportunityArgsSchema>) =>
+      await createOpportunity(context, args),
   },
   list_opportunities: {
     description: listOpportunitiesTool.description,
     parameters: listOpportunitiesTool.inputSchema,
-    execute: () => listOpportunities(context),
+    execute: async () => await listOpportunities(context),
   },
   get_opportunity: {
     description: getOpportunityTool.description,
     parameters: getOpportunityTool.inputSchema,
-    execute: (args: z.infer<typeof GetOpportunityArgsSchema>) => getOpportunity(context, args),
+    execute: async (args: z.infer<typeof GetOpportunityArgsSchema>) =>
+      await getOpportunity(context, args),
   },
   update_opportunity: {
     description: updateOpportunityTool.description,
     parameters: updateOpportunityTool.inputSchema,
-    execute: (args: z.infer<typeof UpdateOpportunityArgsSchema>) => updateOpportunity(context, args),
+    execute: async (args: z.infer<typeof UpdateOpportunityArgsSchema>) =>
+      await updateOpportunity(context, args),
   },
   delete_opportunity: {
     description: deleteOpportunityTool.description,
     parameters: deleteOpportunityTool.inputSchema,
-    execute: (args: z.infer<typeof DeleteOpportunityArgsSchema>) => deleteOpportunity(context, args),
+    execute: async (args: z.infer<typeof DeleteOpportunityArgsSchema>) =>
+      await deleteOpportunity(context, args),
   },
   generate_solutions: {
     description: generateSolutionsTool.description,
     parameters: generateSolutionsTool.inputSchema,
-    execute: (args: z.infer<typeof GenerateSolutionsArgsSchema>) => generateSolutions(context, args),
+    execute: async (args: z.infer<typeof GenerateSolutionsArgsSchema>) =>
+      await generateSolutions(context, args),
   },
   manage_opportunity_relationships: {
     description: manageOpportunityRelationshipsTool.description,
     parameters: manageOpportunityRelationshipsTool.inputSchema,
-    execute: (args: z.infer<typeof ManageOpportunityRelationshipsArgsSchema>) => manageOpportunityRelationships(context, args),
+    execute: async (
+      args: z.infer<typeof ManageOpportunityRelationshipsArgsSchema>,
+    ) => await manageOpportunityRelationships(context, args),
   },
-})
+});

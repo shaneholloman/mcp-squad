@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 
@@ -17,7 +16,7 @@ export const createFeedbackTool = {
   name: "create_feedback",
   description:
     "Create a new feedback entry. Feedback is a customer created insight into your product. This is often in the form of a review, survey, or questionnaire.",
-  inputSchema: zodToJsonSchema(CreateFeedbackArgsSchema),
+  inputSchema: CreateFeedbackArgsSchema,
 };
 
 export const createFeedback = async (
@@ -29,15 +28,14 @@ export const createFeedback = async (
 
     const safeBody = CreateFeedbackArgsSchema.parse(body);
 
-    const res =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePost(
-        {
-          orgId,
-          workspaceId,
-          feedbackSource: safeBody.feedbackSource,
-          body: safeBody.body,
-        },
-      );
+    const res = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePost({
+      orgId,
+      workspaceId,
+      feedbackSource: safeBody.feedbackSource,
+      body: safeBody.body,
+    });
 
     return {
       content: [
@@ -60,7 +58,7 @@ export const listFeedbackTool = {
   name: "list_feedback",
   description:
     "List all feedback for the workspace. This feedback is gathered from various sources, is created by our customers and helps us understand how to improve the business.",
-  inputSchema: zodToJsonSchema(ListFeedbackArgsSchema),
+  inputSchema: ListFeedbackArgsSchema,
 };
 
 export const listFeedback = async (
@@ -69,11 +67,12 @@ export const listFeedback = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const feedback =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdFeedbackGet({
-        orgId,
-        workspaceId,
-      });
+    const feedback = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdFeedbackGet({
+      orgId,
+      workspaceId,
+    });
 
     if (feedback.data.length === 0) {
       return {
@@ -119,7 +118,7 @@ export const getFeedbackTool = {
   name: "get_feedback",
   description:
     "Get details of a specific feedback entry by ID. Feedback entries are text documents that can be used as references or information sources.",
-  inputSchema: zodToJsonSchema(GetFeedbackArgsSchema),
+  inputSchema: GetFeedbackArgsSchema,
 };
 
 export const getFeedback = async (
@@ -131,15 +130,14 @@ export const getFeedback = async (
 
     const safeBody = GetFeedbackArgsSchema.parse(body);
 
-    const feedback =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdGet(
-        {
-          orgId,
-          workspaceId,
-          feedbackId: safeBody.feedbackId,
-          relationships: safeBody.relationships,
-        },
-      );
+    const feedback = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdGet({
+      orgId,
+      workspaceId,
+      feedbackId: safeBody.feedbackId,
+      relationships: safeBody.relationships,
+    });
 
     return {
       content: [
@@ -163,7 +161,7 @@ export const DeleteFeedbackArgsSchema = z.object({
 export const deleteFeedbackTool = {
   name: "delete_feedback",
   description: "Delete a feedback entry by ID.",
-  inputSchema: zodToJsonSchema(DeleteFeedbackArgsSchema),
+  inputSchema: DeleteFeedbackArgsSchema,
 };
 
 export const deleteFeedback = async (
@@ -177,14 +175,13 @@ export const deleteFeedback = async (
 
     const feedbackId = safeBody.feedbackId;
 
-    const result =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdDelete(
-        {
-          orgId,
-          workspaceId,
-          feedbackId,
-        },
-      );
+    const result = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdDelete({
+      orgId,
+      workspaceId,
+      feedbackId,
+    });
 
     return {
       content: [
@@ -226,22 +223,24 @@ export const vercelTool = (context: UserContext) => ({
   create_feedback: {
     description: createFeedbackTool.description,
     parameters: createFeedbackTool.inputSchema,
-    execute: (args: z.infer<typeof CreateFeedbackArgsSchema>) => createFeedback(context, args),
+    execute: async (args: z.infer<typeof CreateFeedbackArgsSchema>) =>
+      await createFeedback(context, args),
   },
   list_feedback: {
     description: listFeedbackTool.description,
     parameters: listFeedbackTool.inputSchema,
-    execute: () => listFeedback(context),
+    execute: async () => await listFeedback(context),
   },
   get_feedback: {
     description: getFeedbackTool.description,
     parameters: getFeedbackTool.inputSchema,
-    execute: (args: z.infer<typeof GetFeedbackArgsSchema>) => getFeedback(context, args),
+    execute: async (args: z.infer<typeof GetFeedbackArgsSchema>) =>
+      await getFeedback(context, args),
   },
   delete_feedback: {
     description: deleteFeedbackTool.description,
     parameters: deleteFeedbackTool.inputSchema,
-    execute: (args: z.infer<typeof DeleteFeedbackArgsSchema>) => deleteFeedback(context, args),
+    execute: async (args: z.infer<typeof DeleteFeedbackArgsSchema>) =>
+      await deleteFeedback(context, args),
   },
-})
-  
+});

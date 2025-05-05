@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { parseAnyDef, zodToJsonSchema } from "zod-to-json-schema";
 import { UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 
@@ -14,7 +13,7 @@ export const createKnowledgeTool = {
   name: "create_knowledge",
   description:
     "Create a new knowledge entry. Knowledge entries are text documents that can be used as references or information sources.",
-  inputSchema: zodToJsonSchema(CreateKnowledgeArgsSchema),
+  inputSchema: CreateKnowledgeArgsSchema,
 };
 
 export const createKnowledge = async (
@@ -28,16 +27,17 @@ export const createKnowledge = async (
 
     const { title, description, content } = safeBody;
 
-    const res =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost({
-        orgId,
-        workspaceId,
-        createKnowledgePayload: {
-          title,
-          description,
-          content,
-        },
-      });
+    const res = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost({
+      orgId,
+      workspaceId,
+      createKnowledgePayload: {
+        title,
+        description,
+        content,
+      },
+    });
 
     return {
       content: [
@@ -60,7 +60,7 @@ export const listKnowledgeTool = {
   name: "list_knowledge",
   description:
     "List all knowledge entries in the workspace. Knowledge entries are text documents that can be used as references or information sources. List only shows the available items and a short description for the actual knowledge use the get by id call.",
-  inputSchema: zodToJsonSchema(ListKnowledgeArgsSchema),
+  inputSchema: ListKnowledgeArgsSchema,
 };
 
 export const listKnowledge = async (
@@ -69,11 +69,12 @@ export const listKnowledge = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const knowledge =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGet({
-        orgId,
-        workspaceId,
-      });
+    const knowledge = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGet({
+      orgId,
+      workspaceId,
+    });
 
     if (knowledge.data.length === 0) {
       return {
@@ -115,7 +116,7 @@ export const getKnowledgeTool = {
   name: "get_knowledge",
   description:
     "Get details of a specific knowledge entry by ID. Knowledge entries are text documents that can be used as references or information sources.",
-  inputSchema: zodToJsonSchema(GetKnowledgeArgsSchema),
+  inputSchema: GetKnowledgeArgsSchema,
 };
 
 export const getKnowledge = async (
@@ -131,14 +132,13 @@ export const getKnowledge = async (
 
     const { knowledgeId } = safeArgs;
 
-    const knowledge =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet(
-        {
-          orgId,
-          workspaceId,
-          knowledgeId,
-        },
-      );
+    const knowledge = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet({
+      orgId,
+      workspaceId,
+      knowledgeId,
+    });
 
     return {
       content: [
@@ -162,7 +162,7 @@ export const DeleteKnowledgeArgsSchema = z.object({
 export const deleteKnowledgeTool = {
   name: "delete_knowledge",
   description: "Delete a knowledge entry by ID.",
-  inputSchema: zodToJsonSchema(DeleteKnowledgeArgsSchema),
+  inputSchema: DeleteKnowledgeArgsSchema,
 };
 
 export const deleteKnowledge = async (
@@ -178,14 +178,13 @@ export const deleteKnowledge = async (
 
     const { knowledgeId } = safeArgs;
 
-    const result =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete(
-        {
-          orgId,
-          workspaceId,
-          knowledgeId,
-        },
-      );
+    const result = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete({
+      orgId,
+      workspaceId,
+      knowledgeId,
+    });
 
     return {
       content: [
@@ -222,26 +221,28 @@ export const runKnowledgeTool = (name: string) => {
   return mapper[name as keyof typeof mapper];
 };
 
-
 export const vercelTool = (context: UserContext) => ({
   create_knowledge: {
     description: createKnowledgeTool.description,
     parameters: createKnowledgeTool.inputSchema,
-    execute: (args: z.infer<typeof CreateKnowledgeArgsSchema>) => createKnowledge(context, args),
+    execute: async (args: z.infer<typeof CreateKnowledgeArgsSchema>) =>
+      await createKnowledge(context, args),
   },
   list_knowledge: {
     description: listKnowledgeTool.description,
     parameters: listKnowledgeTool.inputSchema,
-    execute: () => listKnowledge(context),
+    execute: async () => await listKnowledge(context),
   },
   get_knowledge: {
     description: getKnowledgeTool.description,
     parameters: getKnowledgeTool.inputSchema,
-    execute: (args: z.infer<typeof GetKnowledgeArgsSchema>) => getKnowledge(context, args),
+    execute: async (args: z.infer<typeof GetKnowledgeArgsSchema>) =>
+      await getKnowledge(context, args),
   },
   delete_knowledge: {
     description: deleteKnowledgeTool.description,
     parameters: deleteKnowledgeTool.inputSchema,
-    execute: (args: z.infer<typeof DeleteKnowledgeArgsSchema>) => deleteKnowledge(context, args),
+    execute: async (args: z.infer<typeof DeleteKnowledgeArgsSchema>) =>
+      await deleteKnowledge(context, args),
   },
-})
+});

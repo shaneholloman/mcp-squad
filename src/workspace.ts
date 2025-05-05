@@ -1,5 +1,4 @@
 import { z, ZodError } from "zod";
-import { zodToJsonSchema } from "zod-to-json-schema";
 import { UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 import { UpdateWorkspacePayload } from "./lib/openapi/squad/models/index.js";
@@ -10,7 +9,7 @@ export const getWorkspaceTool = {
   name: "get_workspace",
   description:
     "Get details of a specific workspace by ID. Workspaces contain the project name, detailed description, and mission statement.",
-  inputSchema: zodToJsonSchema(getWorkspaceSchema),
+  inputSchema: getWorkspaceSchema,
 };
 
 export const getWorkspace = async (
@@ -19,11 +18,12 @@ export const getWorkspace = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const workspace =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdGet({
-        orgId,
-        workspaceId,
-      });
+    const workspace = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdGet({
+      orgId,
+      workspaceId,
+    });
 
     return {
       content: [
@@ -75,7 +75,7 @@ export const updateWorkspaceTool = {
   name: "update_workspace",
   description:
     "Update an existing workspace's details such as name, description, mission statement, or associated outcomes.",
-  inputSchema: zodToJsonSchema(UpdateWorkspaceArgsSchema),
+  inputSchema: UpdateWorkspaceArgsSchema,
 };
 
 export const updateWorkspace = async (
@@ -106,12 +106,13 @@ export const updateWorkspace = async (
     if (description !== undefined) updatePayload.description = description;
     if (outcomes !== undefined) updatePayload.outcomes = outcomes;
 
-    const workspace =
-      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdPut({
-        orgId,
-        workspaceId,
-        updateWorkspacePayload: updatePayload,
-      });
+    const workspace = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdPut({
+      orgId,
+      workspaceId,
+      updateWorkspacePayload: updatePayload,
+    });
 
     return {
       content: [
@@ -163,11 +164,12 @@ export const vercelTool = (context: UserContext) => ({
   get_workspace: {
     description: getWorkspaceTool.description,
     parameters: getWorkspaceTool.inputSchema,
-    execute: () => getWorkspace(context),
+    execute: async () => await getWorkspace(context),
   },
   update_workspace: {
     description: updateWorkspaceTool.description,
     parameters: updateWorkspaceTool.inputSchema,
-    execute: (args: z.infer<typeof UpdateWorkspaceArgsSchema>) => updateWorkspace(context, args),
+    execute: async (args: z.infer<typeof UpdateWorkspaceArgsSchema>) =>
+      await updateWorkspace(context, args),
   },
 });
