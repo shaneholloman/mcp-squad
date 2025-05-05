@@ -4,12 +4,14 @@
           "skipLibCheck": true,
           "forceConsistentCasingInFileNames": true,
           "resolveJsonModule": true,
-      "outDir": "./dist",
+          "outDir": "./dist",
           "strict": true,
           "target": "ES2022",
-      "rootDir": "./src",
-      "moduleResolution": "NodeNext",
-      "module": "NodeNext"
+          "rootDir": "./src",
+          "moduleResolution": "NodeNext",
+          "module": "NodeNext",
+          "declaration": true,
+          "declarationMap": true
     },
     "include": [
       "src/**/*.ts"
