@@ -14,5 +14,10 @@ export default defineConfig({
     return {
       js: '.js'
     }
-  }
+  },
+  external: [
+    'zod', 
+    '@modelcontextprotocol/sdk'
+  ],
+  minify: true
 });
