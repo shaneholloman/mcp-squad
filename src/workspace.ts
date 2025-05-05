@@ -20,7 +20,7 @@ export const getWorkspace = async (
     const { orgId, workspaceId } = context;
 
     const workspace =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdGet({
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdGet({
         orgId,
         workspaceId,
       });
@@ -107,7 +107,7 @@ export const updateWorkspace = async (
     if (outcomes !== undefined) updatePayload.outcomes = outcomes;
 
     const workspace =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdPut({
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdPut({
         orgId,
         workspaceId,
         updateWorkspacePayload: updatePayload,

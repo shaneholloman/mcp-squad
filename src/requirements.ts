@@ -66,7 +66,7 @@ export const createRequirement = async (
     if (status !== undefined) requirementPayload.status = status;
 
     const requirement =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost(
+      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsPost(
         {
           orgId,
           workspaceId,
@@ -116,7 +116,7 @@ export const listRequirements = async (
     const { orgId, workspaceId } = context;
 
     const requirements =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdRequirementsGet(
+      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsGet(
         {
           orgId,
           workspaceId,
@@ -196,7 +196,7 @@ export const getRequirement = async (
     const { requirementId, relationships } = safeBody;
 
     const requirement =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet(
+      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet(
         {
           orgId,
           workspaceId,
@@ -289,7 +289,7 @@ export const updateRequirement = async (
 
     // First, get the existing requirement to preserve any values we're not updating
     const existingRequirement =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet(
+      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet(
         {
           orgId,
           workspaceId,
@@ -325,7 +325,7 @@ export const updateRequirement = async (
     }
 
     const requirement =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut(
+      await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdPut(
         {
           orgId,
           workspaceId,
@@ -380,7 +380,7 @@ export const deleteRequirement = async (
     const { orgId, workspaceId } = context;
     const { requirementId } = DeleteRequirementArgsSchema.parse(body);
 
-    await squadClient().organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete(
+    await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdDelete(
       {
         orgId,
         workspaceId,
@@ -450,7 +450,7 @@ export const manageRequirementRelationships = async (
       solutionIds: solutionIds || [],
     };
 
-    await squadClient().manageRequirementRelationships({
+    await squadClient({ jwt: context.jwt }).manageRequirementRelationships({
       orgId,
       workspaceId,
       requirementId,

@@ -64,7 +64,7 @@ export const createOutcome = async (
     if (ownerId !== undefined) outcomeRequest.ownerId = ownerId;
 
     const res =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOutcomesPost({
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesPost({
         orgId,
         workspaceId,
         createOutcomePayload: outcomeRequest,
@@ -111,7 +111,7 @@ export const listOutcomes = async (
     const { orgId, workspaceId } = context;
 
     const outcomes =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOutcomesGet({
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesGet({
         orgId,
         workspaceId,
       });
@@ -184,7 +184,7 @@ export const getOutcome = async (
     const { outcomeId, relationships } = safeArgs;
 
     const outcome =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet(
         {
           orgId,
           workspaceId,
@@ -263,7 +263,7 @@ export const updateOutcome = async (
 
     // First, get the existing outcome to preserve any values we're not updating
     const existingOutcome =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet(
         {
           orgId,
           workspaceId,
@@ -288,7 +288,7 @@ export const updateOutcome = async (
     }
 
     const outcome =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdPut(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdPut(
         {
           orgId,
           workspaceId,
@@ -345,7 +345,7 @@ export const deleteOutcome = async (
     const { outcomeId } = safeArgs;
 
     const result =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete(
         {
           orgId,
           workspaceId,
@@ -415,7 +415,7 @@ export const manageOutcomeRelationships = async (
       opportunityIds: opportunityIds || [],
     };
 
-    await squadClient().manageOutcomeRelationships({
+    await squadClient(context.jwt).manageOutcomeRelationships({
       orgId,
       workspaceId,
       outcomeId,

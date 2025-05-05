@@ -16,10 +16,20 @@ export function withAuth(jwt?: string): Middleware {
     pre: async (ctx: RequestContext): Promise<void | FetchParams> => {
       if (!ctx.init.headers) ctx.init.headers = {};
 
+      console.log("using auth method", jwt ? "Bearer" : "API Key");
+
       const authMethod = jwt ? `Bearer ${jwt}` : getAPIKey();
 
-      (ctx.init.headers as Record<string, string>)["Authorization"] =
-        authMethod;
+      const authHeaders = {
+        authorization: authMethod,
+      };
+
+      ctx.init.headers = {
+        ...ctx.init.headers,
+        ...authHeaders,
+      };
+
+      console.log("headers", ctx.init.headers);
     },
   };
 }

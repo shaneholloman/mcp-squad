@@ -38,7 +38,7 @@ export const createOpportunity = async (
     const { title, description } = safeBody;
 
     const res =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost(
         {
           orgId,
           workspaceId,
@@ -87,7 +87,7 @@ export const listOpportunities = async (
     const { orgId, workspaceId } = context;
 
     const opportunities =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet(
         {
           orgId,
           workspaceId,
@@ -164,7 +164,7 @@ export const getOpportunity = async (
     const { opportunityId, relationships } = safeArgs;
 
     const opportunity =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGet(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGet(
         {
           orgId,
           workspaceId,
@@ -235,7 +235,7 @@ export const updateOpportunity = async (
     if (status !== undefined) updatePayload.status = status;
 
     const opportunity =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPut(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPut(
         {
           orgId,
           workspaceId,
@@ -289,7 +289,7 @@ export const deleteOpportunity = async (
     const { opportunityId } = safeArgs;
 
     const result =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete(
         {
           orgId,
           workspaceId,
@@ -354,7 +354,7 @@ export const generateSolutions = async (
 
     const { opportunityId, prompt } = safeArgs;
 
-    await squadClient().organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPost(
+    await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPost(
       {
         orgId,
         workspaceId,
@@ -437,7 +437,7 @@ export const manageOpportunityRelationships = async (
       feedbackIds: feedbackIds || [],
     };
 
-    await squadClient().manageOpportunityRelationships({
+    await squadClient(context.jwt).manageOpportunityRelationships({
       orgId,
       workspaceId,
       opportunityId,

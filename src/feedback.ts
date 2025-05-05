@@ -30,7 +30,7 @@ export const createFeedback = async (
     const safeBody = CreateFeedbackArgsSchema.parse(body);
 
     const res =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePost(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdDataIngressFeedbackSourcePost(
         {
           orgId,
           workspaceId,
@@ -70,7 +70,7 @@ export const listFeedback = async (
     const { orgId, workspaceId } = context;
 
     const feedback =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdFeedbackGet({
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdFeedbackGet({
         orgId,
         workspaceId,
       });
@@ -132,7 +132,7 @@ export const getFeedback = async (
     const safeBody = GetFeedbackArgsSchema.parse(body);
 
     const feedback =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdGet(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdGet(
         {
           orgId,
           workspaceId,
@@ -178,7 +178,7 @@ export const deleteFeedback = async (
     const feedbackId = safeBody.feedbackId;
 
     const result =
-      await squadClient().organisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdDelete(
+      await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdFeedbackFeedbackIdDelete(
         {
           orgId,
           workspaceId,
