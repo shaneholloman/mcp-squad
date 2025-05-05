@@ -24,7 +24,7 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Build
-        run: yarn build
+        run: build:package
 
       - name: Extract version from tag
         if: startsWith(github.ref, 'refs/tags/v')

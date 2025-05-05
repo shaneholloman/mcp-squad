@@ -1,9 +1,16 @@
 {
   "name": "@squadai/tools",
   "version": "1.0.2",
-  "main": "index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "license": "MIT",
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "bin": {
     "meet-squad": "./dist/index.js"
   },
@@ -11,7 +18,7 @@
     "build": "tsc",
     "format": "eslint . --ignore-path .gitignore",
     "format:fix": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts)\"",
-    "build:package": "tsup ./src/package.ts --dts",
+    "build:package": "tsup --config tsup.config.ts",
     "openapi:squad": "open, api-generator-cli generate -g typescript-fetch -c ./openapi-generator-config.json -i ./openapi/squad.json -o src/lib/openapi/squad && tsx ./scripts/openapi-client-esm-fix.ts",
     "bun:build:macos:arm64": "bun build ./src/index.ts --compile --target=bun-darwin-arm64 --outfile ./bin/squad-mcp-macos-arm64",
     "bun:build:macos:64": "bun build ./src/index.ts --compile --target=bun-darwin-x64 --outfile ./bin/squad-mcp-macos-64",
