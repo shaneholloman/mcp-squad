@@ -98,19 +98,21 @@ pnpm add @squadai/tools
 
 You can then import and use the tools in your code. You will still need a Squad API key or JWT for authentication (see Quick start section above).
 
-Example usage (conceptual):
+Example usage (Vercel AI):
 
 ```typescript
-import { squadClient, listOpportunities } from '@squadai/tools';
+import { generateText, tool } from 'ai';
+import { tools as squadTools } from "@squadai/tools"
 
-const client = squadClient({ apiKey: process.env.SQUAD_API_KEY });
-
-async function main() {
-  const opportunities = await listOpportunities(client, { /* filter options */ });
-  console.log(opportunities);
-}
-
-main();
+const result = await generateText({
+  model: yourModel,
+  tools: squadTools({
+    jwt: "JWT",
+    orgId: "orgId",
+    workspaceId: "workspaceId"
+  }),
+  prompt: 'What is the weather in San Francisco?',
+});
 ```
 
 ⚙️ Integrating with an MCP client
