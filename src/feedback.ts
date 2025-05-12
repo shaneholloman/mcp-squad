@@ -1,6 +1,13 @@
 import { z } from "zod";
-import { UserContext } from "./helpers/getUser.js";
+import { chatToolHelperSchema, UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
+
+export enum FeedbackTool {
+  CreateFeedback = "create_feedback",
+  ListFeedback = "list_feedback",
+  GetFeedback = "get_feedback",
+  DeleteFeedback = "delete_feedback",
+}
 
 // Schema definitions
 export const CreateFeedbackArgsSchema = z.object({
@@ -13,7 +20,7 @@ export const CreateFeedbackArgsSchema = z.object({
 });
 
 export const createFeedbackTool = {
-  name: "create_feedback",
+  name: FeedbackTool.CreateFeedback,
   description:
     "Create a new feedback entry. Feedback is a customer created insight into your product. This is often in the form of a review, survey, or questionnaire.",
   inputSchema: CreateFeedbackArgsSchema,
@@ -55,7 +62,7 @@ export const createFeedback = async (
 export const ListFeedbackArgsSchema = z.object({});
 
 export const listFeedbackTool = {
-  name: "list_feedback",
+  name: FeedbackTool.ListFeedback,
   description:
     "List all feedback for the workspace. This feedback is gathered from various sources, is created by our customers and helps us understand how to improve the business.",
   inputSchema: ListFeedbackArgsSchema,
@@ -115,7 +122,7 @@ export const GetFeedbackArgsSchema = z.object({
 });
 
 export const getFeedbackTool = {
-  name: "get_feedback",
+  name: FeedbackTool.GetFeedback,
   description:
     "Get details of a specific feedback entry by ID. Feedback entries are text documents that can be used as references or information sources.",
   inputSchema: GetFeedbackArgsSchema,
@@ -159,7 +166,7 @@ export const DeleteFeedbackArgsSchema = z.object({
 });
 
 export const deleteFeedbackTool = {
-  name: "delete_feedback",
+  name: FeedbackTool.DeleteFeedback,
   description: "Delete a feedback entry by ID.",
   inputSchema: DeleteFeedbackArgsSchema,
 };
@@ -206,10 +213,10 @@ export const feedbackTools = [
 
 export const runFeedbackTool = (name: string) => {
   const mapper = {
-    create_feedback: createFeedback,
-    list_feedback: listFeedback,
-    get_feedback: getFeedback,
-    delete_feedback: deleteFeedback,
+    [FeedbackTool.CreateFeedback]: createFeedback,
+    [FeedbackTool.ListFeedback]: listFeedback,
+    [FeedbackTool.GetFeedback]: getFeedback,
+    [FeedbackTool.DeleteFeedback]: deleteFeedback,
   };
 
   if (!mapper[name as keyof typeof mapper]) {
@@ -219,28 +226,57 @@ export const runFeedbackTool = (name: string) => {
   return mapper[name as keyof typeof mapper];
 };
 
+const createFeedbackChatTool = CreateFeedbackArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Creating feedback...",
+    defaultCompletedText: "Feedback created.",
+  }),
+);
+
+const listFeedbackChatTool = ListFeedbackArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Listing feedback...",
+    defaultCompletedText: "Feedback listed.",
+  }),
+);
+
+const getFeedbackChatTool = GetFeedbackArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Getting feedback...",
+    defaultCompletedText: "Feedback retrieved.",
+  }),
+);
+
+const deleteFeedbackChatTool = DeleteFeedbackArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Deleting feedback...",
+    defaultCompletedText: "Feedback deleted.",
+  }),
+);
+
 export const vercelTool = (context: UserContext) => ({
-  create_feedback: {
+  [FeedbackTool.CreateFeedback]: {
     description: createFeedbackTool.description,
-    parameters: createFeedbackTool.inputSchema,
-    execute: async (args: z.infer<typeof CreateFeedbackArgsSchema>) =>
+    parameters: createFeedbackChatTool,
+    execute: async (args: z.infer<typeof createFeedbackChatTool>) =>
       await createFeedback(context, args),
   },
-  list_feedback: {
+  [FeedbackTool.ListFeedback]: {
     description: listFeedbackTool.description,
-    parameters: listFeedbackTool.inputSchema,
-    execute: async () => await listFeedback(context),
+    parameters: listFeedbackChatTool,
+    execute: async (args: z.infer<typeof listFeedbackChatTool>) =>
+      await listFeedback(context),
   },
-  get_feedback: {
+  [FeedbackTool.GetFeedback]: {
     description: getFeedbackTool.description,
-    parameters: getFeedbackTool.inputSchema,
-    execute: async (args: z.infer<typeof GetFeedbackArgsSchema>) =>
+    parameters: getFeedbackChatTool,
+    execute: async (args: z.infer<typeof getFeedbackChatTool>) =>
       await getFeedback(context, args),
   },
-  delete_feedback: {
+  [FeedbackTool.DeleteFeedback]: {
     description: deleteFeedbackTool.description,
-    parameters: deleteFeedbackTool.inputSchema,
-    execute: async (args: z.infer<typeof DeleteFeedbackArgsSchema>) =>
+    parameters: deleteFeedbackChatTool,
+    execute: async (args: z.infer<typeof deleteFeedbackChatTool>) =>
       await deleteFeedback(context, args),
   },
 });

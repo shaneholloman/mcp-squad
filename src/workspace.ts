@@ -1,12 +1,17 @@
 import { z, ZodError } from "zod";
-import { UserContext } from "./helpers/getUser.js";
+import { chatToolHelperSchema, UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 import { UpdateWorkspacePayload } from "./lib/openapi/squad/models/index.js";
+
+export enum WorkspaceTool {
+  GetWorkspace = "get_workspace",
+  UpdateWorkspace = "update_workspace",
+}
 
 const getWorkspaceSchema = z.object({});
 
 export const getWorkspaceTool = {
-  name: "get_workspace",
+  name: WorkspaceTool.GetWorkspace,
   description:
     "Get details of a specific workspace by ID. Workspaces contain the project name, detailed description, and mission statement.",
   inputSchema: getWorkspaceSchema,
@@ -72,7 +77,7 @@ export const UpdateWorkspaceArgsSchema = z.object({
 });
 
 export const updateWorkspaceTool = {
-  name: "update_workspace",
+  name: WorkspaceTool.UpdateWorkspace,
   description:
     "Update an existing workspace's details such as name, description, mission statement, or associated outcomes.",
   inputSchema: UpdateWorkspaceArgsSchema,
@@ -150,8 +155,8 @@ export const workspaceTool = [getWorkspaceTool, updateWorkspaceTool];
 
 export const runWorkspaceTool = (name: string) => {
   const mapper = {
-    get_workspace: getWorkspace,
-    update_workspace: updateWorkspace,
+    [WorkspaceTool.GetWorkspace]: getWorkspace,
+    [WorkspaceTool.UpdateWorkspace]: updateWorkspace,
   };
 
   if (!mapper[name as keyof typeof mapper]) {
@@ -160,16 +165,31 @@ export const runWorkspaceTool = (name: string) => {
   return mapper[name as keyof typeof mapper];
 };
 
+const getWorkspaceChatTool = getWorkspaceSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Retrieving workspace...",
+    defaultCompletedText: "Workspace retrieved.",
+  }),
+);
+
+const updateWorkspaceChatTool = UpdateWorkspaceArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Updating workspace...",
+    defaultCompletedText: "Workspace updated.",
+  }),
+);
+
 export const vercelTool = (context: UserContext) => ({
-  get_workspace: {
+  [WorkspaceTool.GetWorkspace]: {
     description: getWorkspaceTool.description,
-    parameters: getWorkspaceTool.inputSchema,
-    execute: async () => await getWorkspace(context),
+    parameters: getWorkspaceChatTool,
+    execute: async (args: z.infer<typeof getWorkspaceChatTool>) =>
+      await getWorkspace(context),
   },
-  update_workspace: {
+  [WorkspaceTool.UpdateWorkspace]: {
     description: updateWorkspaceTool.description,
-    parameters: updateWorkspaceTool.inputSchema,
-    execute: async (args: z.infer<typeof UpdateWorkspaceArgsSchema>) =>
+    parameters: updateWorkspaceChatTool,
+    execute: async (args: z.infer<typeof updateWorkspaceChatTool>) =>
       await updateWorkspace(context, args),
   },
 });

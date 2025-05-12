@@ -1,5 +1,5 @@
 import { z, ZodError } from "zod";
-import { UserContext } from "./helpers/getUser.js";
+import { chatToolHelperSchema, UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 import {
   CreateSolutionPayload,
@@ -8,6 +8,15 @@ import {
   SolutionRelationshipsPayload,
   UpdateSolutionPayload,
 } from "./lib/openapi/squad/models/index.js";
+
+export enum SolutionTool {
+  CreateSolution = "create_solution",
+  ListSolutions = "list_solutions",
+  GetSolution = "get_solution",
+  UpdateSolution = "update_solution",
+  DeleteSolution = "delete_solution",
+  ManageSolutionRelationships = "manage_solution_relationships",
+}
 
 const statusEnum = z
   .enum([
@@ -39,7 +48,7 @@ export const CreateSolutionArgsSchema = z.object({
 });
 
 export const createSolutionTool = {
-  name: "create_solution",
+  name: SolutionTool.CreateSolution,
   description:
     "Create a new solution. A solution is a proposed approach to address an opportunity. A solution will be a detailed plan to address an opportunity.",
   inputSchema: CreateSolutionArgsSchema,
@@ -108,7 +117,7 @@ export const createSolution = async (
 export const ListSolutionsArgsSchema = z.object({});
 
 export const listSolutionsTool = {
-  name: "list_solutions",
+  name: SolutionTool.ListSolutions,
   description:
     "List all solutions in the workspace. Solutions are proposed approaches to address opportunities.",
   inputSchema: ListSolutionsArgsSchema,
@@ -184,7 +193,7 @@ export const GetSolutionArgsSchema = z.object({
 });
 
 export const getSolutionTool = {
-  name: "get_solution",
+  name: SolutionTool.GetSolution,
   description: "Get details of a specific solution by ID.",
   inputSchema: GetSolutionArgsSchema,
 };
@@ -256,7 +265,7 @@ export const UpdateSolutionArgsSchema = z.object({
 });
 
 export const updateSolutionTool = {
-  name: "update_solution",
+  name: SolutionTool.UpdateSolution,
   description:
     "Update an existing solution's details such as title, description, pros, cons, or status.",
   inputSchema: UpdateSolutionArgsSchema,
@@ -335,7 +344,7 @@ export const DeleteSolutionArgsSchema = z.object({
 });
 
 export const deleteSolutionTool = {
-  name: "delete_solution",
+  name: SolutionTool.DeleteSolution,
   description: "Delete a solution by ID.",
   inputSchema: DeleteSolutionArgsSchema,
 };
@@ -410,7 +419,7 @@ export const ManageSolutionRelationshipsArgsSchema = z.object({
 });
 
 export const manageSolutionRelationshipsTool = {
-  name: "manage_solution_relationships",
+  name: SolutionTool.ManageSolutionRelationships,
   description:
     "Add or remove relationships between a solution and other entities (opportunities or requirements).",
   inputSchema: ManageSolutionRelationshipsArgsSchema,
@@ -475,12 +484,12 @@ export const solutionTools = [
 
 export const runSolutionTool = (name: string) => {
   const mapper = {
-    create_solution: createSolution,
-    list_solutions: listSolutions,
-    get_solution: getSolution,
-    update_solution: updateSolution,
-    delete_solution: deleteSolution,
-    manage_solution_relationships: manageSolutionRelationships,
+    [SolutionTool.CreateSolution]: createSolution,
+    [SolutionTool.ListSolutions]: listSolutions,
+    [SolutionTool.GetSolution]: getSolution,
+    [SolutionTool.UpdateSolution]: updateSolution,
+    [SolutionTool.DeleteSolution]: deleteSolution,
+    [SolutionTool.ManageSolutionRelationships]: manageSolutionRelationships,
   };
 
   if (!mapper[name as keyof typeof mapper]) {
@@ -489,41 +498,85 @@ export const runSolutionTool = (name: string) => {
   return mapper[name as keyof typeof mapper];
 };
 
+const createSolutionChatTool = CreateSolutionArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Creating solution...",
+    defaultCompletedText: "Solution created.",
+  }),
+);
+
+const listSolutionsChatTool = listSolutionsTool.inputSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Listing solutions...",
+    defaultCompletedText: "Solutions listed.",
+  }),
+);
+
+const getSolutionChatTool = GetSolutionArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Getting solution...",
+    defaultCompletedText: "Solution retrieved.",
+  }),
+);
+
+const updateSolutionChatTool = UpdateSolutionArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Updating solution...",
+    defaultCompletedText: "Solution updated.",
+  }),
+);
+
+const deleteSolutionChatTool = DeleteSolutionArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Deleting solution...",
+    defaultCompletedText: "Solution deleted.",
+  }),
+);
+
+const manageSolutionRelationshipsChatTool =
+  ManageSolutionRelationshipsArgsSchema.merge(
+    chatToolHelperSchema({
+      defaultInProgressText: "Managing solution relationships...",
+      defaultCompletedText: "Solution relationships managed.",
+    }),
+  );
+
 export const vercelTool = (context: UserContext) => ({
-  create_solution: {
+  [SolutionTool.CreateSolution]: {
     description: createSolutionTool.description,
-    parameters: createSolutionTool.inputSchema,
-    execute: async (args: z.infer<typeof CreateSolutionArgsSchema>) =>
+    parameters: createSolutionChatTool,
+    execute: async (args: z.infer<typeof createSolutionChatTool>) =>
       await createSolution(context, args),
   },
-  list_solutions: {
+  [SolutionTool.ListSolutions]: {
     description: listSolutionsTool.description,
-    parameters: listSolutionsTool.inputSchema,
-    execute: async () => await listSolutions(context),
+    parameters: listSolutionsChatTool,
+    execute: async (args: z.infer<typeof listSolutionsChatTool>) =>
+      await listSolutions(context),
   },
-  get_solution: {
+  [SolutionTool.GetSolution]: {
     description: getSolutionTool.description,
-    parameters: getSolutionTool.inputSchema,
-    execute: async (args: z.infer<typeof GetSolutionArgsSchema>) =>
+    parameters: getSolutionChatTool,
+    execute: async (args: z.infer<typeof getSolutionChatTool>) =>
       await getSolution(context, args),
   },
-  update_solution: {
+  [SolutionTool.UpdateSolution]: {
     description: updateSolutionTool.description,
-    parameters: updateSolutionTool.inputSchema,
-    execute: async (args: z.infer<typeof UpdateSolutionArgsSchema>) =>
+    parameters: updateSolutionChatTool,
+    execute: async (args: z.infer<typeof updateSolutionChatTool>) =>
       await updateSolution(context, args),
   },
-  delete_solution: {
+  [SolutionTool.DeleteSolution]: {
     description: deleteSolutionTool.description,
-    parameters: deleteSolutionTool.inputSchema,
-    execute: async (args: z.infer<typeof DeleteSolutionArgsSchema>) =>
+    parameters: deleteSolutionChatTool,
+    execute: async (args: z.infer<typeof deleteSolutionChatTool>) =>
       await deleteSolution(context, args),
   },
-  manage_solution_relationships: {
+  [SolutionTool.ManageSolutionRelationships]: {
     description: manageSolutionRelationshipsTool.description,
-    parameters: manageSolutionRelationshipsTool.inputSchema,
+    parameters: manageSolutionRelationshipsChatTool,
     execute: async (
-      args: z.infer<typeof ManageSolutionRelationshipsArgsSchema>,
+      args: z.infer<typeof manageSolutionRelationshipsChatTool>,
     ) => await manageSolutionRelationships(context, args),
   },
 });

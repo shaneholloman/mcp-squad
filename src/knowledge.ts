@@ -1,6 +1,13 @@
 import { z } from "zod";
-import { UserContext } from "./helpers/getUser.js";
+import { chatToolHelperSchema, UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
+
+export enum KnowledgeTool {
+  CreateKnowledge = "create_knowledge",
+  ListKnowledge = "list_knowledge",
+  GetKnowledge = "get_knowledge",
+  DeleteKnowledge = "delete_knowledge",
+}
 
 // Schema definitions
 export const CreateKnowledgeArgsSchema = z.object({
@@ -10,7 +17,7 @@ export const CreateKnowledgeArgsSchema = z.object({
 });
 
 export const createKnowledgeTool = {
-  name: "create_knowledge",
+  name: KnowledgeTool.CreateKnowledge,
   description:
     "Create a new knowledge entry. Knowledge entries are text documents that can be used as references or information sources.",
   inputSchema: CreateKnowledgeArgsSchema,
@@ -57,7 +64,7 @@ export const createKnowledge = async (
 export const ListKnowledgeArgsSchema = z.object({});
 
 export const listKnowledgeTool = {
-  name: "list_knowledge",
+  name: KnowledgeTool.ListKnowledge,
   description:
     "List all knowledge entries in the workspace. Knowledge entries are text documents that can be used as references or information sources. List only shows the available items and a short description for the actual knowledge use the get by id call.",
   inputSchema: ListKnowledgeArgsSchema,
@@ -113,7 +120,7 @@ export const GetKnowledgeArgsSchema = z.object({
 });
 
 export const getKnowledgeTool = {
-  name: "get_knowledge",
+  name: KnowledgeTool.GetKnowledge,
   description:
     "Get details of a specific knowledge entry by ID. Knowledge entries are text documents that can be used as references or information sources.",
   inputSchema: GetKnowledgeArgsSchema,
@@ -160,7 +167,7 @@ export const DeleteKnowledgeArgsSchema = z.object({
 });
 
 export const deleteKnowledgeTool = {
-  name: "delete_knowledge",
+  name: KnowledgeTool.DeleteKnowledge,
   description: "Delete a knowledge entry by ID.",
   inputSchema: DeleteKnowledgeArgsSchema,
 };
@@ -207,12 +214,40 @@ export const knowledgeTools = [
   deleteKnowledgeTool,
 ];
 
+const createKnowledgeChatTool = CreateKnowledgeArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Creating knowledge...",
+    defaultCompletedText: "Knowledge created.",
+  }),
+);
+
+const listKnowledgeChatTool = ListKnowledgeArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Listing knowledge...",
+    defaultCompletedText: "Knowledge listed.",
+  }),
+);
+
+const getKnowledgeChatTool = GetKnowledgeArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Getting knowledge...",
+    defaultCompletedText: "Knowledge retrieved.",
+  }),
+);
+
+const deleteKnowledgeChatTool = DeleteKnowledgeArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Deleting knowledge...",
+    defaultCompletedText: "Knowledge deleted.",
+  }),
+);
+
 export const runKnowledgeTool = (name: string) => {
   const mapper = {
-    create_knowledge: createKnowledge,
-    list_knowledge: listKnowledge,
-    get_knowledge: getKnowledge,
-    delete_knowledge: deleteKnowledge,
+    [KnowledgeTool.CreateKnowledge]: createKnowledge,
+    [KnowledgeTool.ListKnowledge]: listKnowledge,
+    [KnowledgeTool.GetKnowledge]: getKnowledge,
+    [KnowledgeTool.DeleteKnowledge]: deleteKnowledge,
   };
 
   if (!mapper[name as keyof typeof mapper]) {
@@ -222,27 +257,27 @@ export const runKnowledgeTool = (name: string) => {
 };
 
 export const vercelTool = (context: UserContext) => ({
-  create_knowledge: {
+  [KnowledgeTool.CreateKnowledge]: {
     description: createKnowledgeTool.description,
-    parameters: createKnowledgeTool.inputSchema,
-    execute: async (args: z.infer<typeof CreateKnowledgeArgsSchema>) =>
+    parameters: createKnowledgeChatTool,
+    execute: async (args: z.infer<typeof createKnowledgeChatTool>) =>
       await createKnowledge(context, args),
   },
-  list_knowledge: {
+  [KnowledgeTool.ListKnowledge]: {
     description: listKnowledgeTool.description,
-    parameters: listKnowledgeTool.inputSchema,
+    parameters: listKnowledgeChatTool,
     execute: async () => await listKnowledge(context),
   },
-  get_knowledge: {
+  [KnowledgeTool.GetKnowledge]: {
     description: getKnowledgeTool.description,
-    parameters: getKnowledgeTool.inputSchema,
-    execute: async (args: z.infer<typeof GetKnowledgeArgsSchema>) =>
+    parameters: getKnowledgeChatTool,
+    execute: async (args: z.infer<typeof getKnowledgeChatTool>) =>
       await getKnowledge(context, args),
   },
-  delete_knowledge: {
+  [KnowledgeTool.DeleteKnowledge]: {
     description: deleteKnowledgeTool.description,
-    parameters: deleteKnowledgeTool.inputSchema,
-    execute: async (args: z.infer<typeof DeleteKnowledgeArgsSchema>) =>
+    parameters: deleteKnowledgeChatTool,
+    execute: async (args: z.infer<typeof deleteKnowledgeChatTool>) =>
       await deleteKnowledge(context, args),
   },
 });

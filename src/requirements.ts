@@ -11,6 +11,14 @@ import {
   UpdateRequirementStatusEnum,
 } from "./lib/openapi/squad/models/index.js";
 
+export enum RequirementTool {
+  CreateRequirement = "create_requirement",
+  ListRequirements = "list_requirements",
+  GetRequirement = "get_requirement",
+  UpdateRequirement = "update_requirement",
+  DeleteRequirement = "delete_requirement",
+  ManageRequirementRelationships = "manage_requirement_relationships",
+}
 // Schema definitions
 export const CreateRequirementArgsSchema = z.object({
   title: z.string().describe("A short title for the requirement"),
@@ -31,7 +39,7 @@ export const CreateRequirementArgsSchema = z.object({
 });
 
 export const createRequirementTool = {
-  name: "create_requirement",
+  name: RequirementTool.CreateRequirement,
   description:
     "Create a new requirement. A requirement defines the specific implementation details needed to fulfill a solution or feature.",
   inputSchema: CreateRequirementArgsSchema,
@@ -101,7 +109,7 @@ export const createRequirement = async (
 export const ListRequirementsArgsSchema = z.object({});
 
 export const listRequirementsTool = {
-  name: "list_requirements",
+  name: RequirementTool.ListRequirements,
   description:
     "List all requirements in the workspace. Requirements define the specific implementation details needed to fulfill solutions features.",
   inputSchema: ListRequirementsArgsSchema,
@@ -175,7 +183,7 @@ export const GetRequirementArgsSchema = z.object({
 });
 
 export const getRequirementTool = {
-  name: "get_requirement",
+  name: RequirementTool.GetRequirement,
   description:
     "Get details of a specific requirement by ID. Requirements define the specific implementation details needed to fulfill solutions or features.",
   inputSchema: GetRequirementArgsSchema,
@@ -259,7 +267,7 @@ export const updateRequirementArgsSchema = z.object({
 type UpdateRequirementArgs = z.infer<typeof updateRequirementArgsSchema>;
 
 export const updateRequirementTool = {
-  name: "update_requirement",
+  name: RequirementTool.UpdateRequirement,
   description: "Update an existing requirement's details.",
   inputSchema: updateRequirementArgsSchema,
 };
@@ -359,7 +367,7 @@ export const DeleteRequirementArgsSchema = z.object({
 });
 
 export const deleteRequirementTool = {
-  name: "delete_requirement",
+  name: RequirementTool.DeleteRequirement,
   description: "Delete a requirement by ID.",
   inputSchema: DeleteRequirementArgsSchema,
 };
@@ -423,7 +431,7 @@ export const ManageRequirementRelationshipsArgsSchema = z.object({
 });
 
 export const manageRequirementRelationshipsTool = {
-  name: "manage_requirement_relationships",
+  name: RequirementTool.ManageRequirementRelationships,
   description:
     "Add or remove relationships between a requirement and other entities (opportunities, solutions, outcomes, or feedback).",
   inputSchema: ManageRequirementRelationshipsArgsSchema,
@@ -491,12 +499,13 @@ export const requirementTools = [
 
 export const runRequirementTool = (name: string) => {
   const mapper = {
-    create_requirement: createRequirement,
-    list_requirements: listRequirements,
-    get_requirement: getRequirement,
-    update_requirement: updateRequirement,
-    delete_requirement: deleteRequirement,
-    manage_requirement_relationships: manageRequirementRelationships,
+    [RequirementTool.CreateRequirement]: createRequirement,
+    [RequirementTool.ListRequirements]: listRequirements,
+    [RequirementTool.GetRequirement]: getRequirement,
+    [RequirementTool.UpdateRequirement]: updateRequirement,
+    [RequirementTool.DeleteRequirement]: deleteRequirement,
+    [RequirementTool.ManageRequirementRelationships]:
+      manageRequirementRelationships,
   };
 
   if (!mapper[name as keyof typeof mapper]) {
@@ -506,36 +515,36 @@ export const runRequirementTool = (name: string) => {
 };
 
 export const vercelTool = (context: UserContext) => ({
-  create_requirement: {
+  [RequirementTool.CreateRequirement]: {
     description: createRequirementTool.description,
     parameters: createRequirementTool.inputSchema,
     execute: async (args: z.infer<typeof CreateRequirementArgsSchema>) =>
       await createRequirement(context, args),
   },
-  list_requirements: {
+  [RequirementTool.ListRequirements]: {
     description: listRequirementsTool.description,
     parameters: listRequirementsTool.inputSchema,
     execute: async () => await listRequirements(context),
   },
-  get_requirement: {
+  [RequirementTool.GetRequirement]: {
     description: getRequirementTool.description,
     parameters: getRequirementTool.inputSchema,
     execute: async (args: z.infer<typeof GetRequirementArgsSchema>) =>
       await getRequirement(context, args),
   },
-  update_requirement: {
+  [RequirementTool.UpdateRequirement]: {
     description: updateRequirementTool.description,
     parameters: updateRequirementTool.inputSchema,
     execute: async (args: z.infer<typeof updateRequirementArgsSchema>) =>
       await updateRequirement(context, args),
   },
-  delete_requirement: {
+  [RequirementTool.DeleteRequirement]: {
     description: deleteRequirementTool.description,
     parameters: deleteRequirementTool.inputSchema,
     execute: async (args: z.infer<typeof DeleteRequirementArgsSchema>) =>
       await deleteRequirement(context, args),
   },
-  manage_requirement_relationships: {
+  [RequirementTool.ManageRequirementRelationships]: {
     description: manageRequirementRelationshipsTool.description,
     parameters: manageRequirementRelationshipsTool.inputSchema,
     execute: async (

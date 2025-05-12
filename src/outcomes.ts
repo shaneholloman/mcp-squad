@@ -1,5 +1,5 @@
 import { z, ZodError } from "zod";
-import { UserContext } from "./helpers/getUser.js";
+import { chatToolHelperSchema, UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 import {
   CreateOutcomePayload,
@@ -8,6 +8,14 @@ import {
   UpdateOutcomePayload,
 } from "./lib/openapi/squad/models/index.js";
 
+export enum OutcomeTool {
+  CreateOutcome = "create_outcome",
+  ListOutcomes = "list_outcomes",
+  GetOutcome = "get_outcome",
+  UpdateOutcome = "update_outcome",
+  DeleteOutcome = "delete_outcome",
+  ManageOutcomeRelationships = "manage_outcome_relationships",
+}
 // Schema definitions
 export const CreateOutcomeArgsSchema = z.object({
   title: z.string().describe("A short title for the outcome"),
@@ -32,7 +40,7 @@ export const CreateOutcomeArgsSchema = z.object({
 });
 
 export const createOutcomeTool = {
-  name: "create_outcome",
+  name: OutcomeTool.CreateOutcome,
   description:
     "Create a new outcome. An outcome is a business objective or goal that the organization aims to achieve.",
   inputSchema: CreateOutcomeArgsSchema,
@@ -98,7 +106,7 @@ export const createOutcome = async (
 export const ListOutcomesArgsSchema = z.object({});
 
 export const listOutcomesTool = {
-  name: "list_outcomes",
+  name: OutcomeTool.ListOutcomes,
   description:
     "List all outcomes in the workspace. Outcomes are business objectives or goals that the organization aims to achieve.",
   inputSchema: ListOutcomesArgsSchema,
@@ -167,7 +175,7 @@ export const GetOutcomeArgsSchema = z.object({
 });
 
 export const getOutcomeTool = {
-  name: "get_outcome",
+  name: OutcomeTool.GetOutcome,
   description:
     "Get details of a specific outcome by ID. Outcomes are business objectives or goals that the organization aims to achieve.",
   inputSchema: GetOutcomeArgsSchema,
@@ -237,7 +245,7 @@ export const UpdateOutcomeArgsSchema = z.object({
 });
 
 export const updateOutcomeTool = {
-  name: "update_outcome",
+  name: OutcomeTool.UpdateOutcome,
   description: "Update an existing outcome's details.",
   inputSchema: UpdateOutcomeArgsSchema,
 };
@@ -326,7 +334,7 @@ export const DeleteOutcomeArgsSchema = z.object({
 });
 
 export const deleteOutcomeTool = {
-  name: "delete_outcome",
+  name: OutcomeTool.DeleteOutcome,
   description: "Delete an outcome by ID.",
   inputSchema: DeleteOutcomeArgsSchema,
 };
@@ -391,7 +399,7 @@ export const ManageOutcomeRelationshipsArgsSchema = z.object({
 });
 
 export const manageOutcomeRelationshipsTool = {
-  name: "manage_outcome_relationships",
+  name: OutcomeTool.ManageOutcomeRelationships,
   description:
     "Add or remove relationships between an outcome and opportunities for the business.",
   inputSchema: ManageOutcomeRelationshipsArgsSchema,
@@ -464,12 +472,12 @@ export const outcomeTools = [
 
 export const runOutcomeTool = (name: string) => {
   const mapper = {
-    create_outcome: createOutcome,
-    list_outcomes: listOutcomes,
-    get_outcome: getOutcome,
-    update_outcome: updateOutcome,
-    delete_outcome: deleteOutcome,
-    manage_outcome_relationships: manageOutcomeRelationships,
+    [OutcomeTool.CreateOutcome]: createOutcome,
+    [OutcomeTool.ListOutcomes]: listOutcomes,
+    [OutcomeTool.GetOutcome]: getOutcome,
+    [OutcomeTool.UpdateOutcome]: updateOutcome,
+    [OutcomeTool.DeleteOutcome]: deleteOutcome,
+    [OutcomeTool.ManageOutcomeRelationships]: manageOutcomeRelationships,
   };
 
   if (!mapper[name as keyof typeof mapper]) {
@@ -478,41 +486,84 @@ export const runOutcomeTool = (name: string) => {
   return mapper[name as keyof typeof mapper];
 };
 
+const createOutcomeChatTool = CreateOutcomeArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Creating outcome...",
+    defaultCompletedText: "Outcome created.",
+  }),
+);
+
+const listOutcomesChatTool = ListOutcomesArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Listing outcomes...",
+    defaultCompletedText: "Outcomes listed.",
+  }),
+);
+
+const getOutcomeChatTool = GetOutcomeArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Getting outcome...",
+    defaultCompletedText: "Outcome retrieved.",
+  }),
+);
+
+const updateOutcomeChatTool = UpdateOutcomeArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Updating outcome...",
+    defaultCompletedText: "Outcome updated.",
+  }),
+);
+
+const deleteOutcomeChatTool = DeleteOutcomeArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Deleting outcome...",
+    defaultCompletedText: "Outcome deleted.",
+  }),
+);
+
+const manageOutcomeRelationshipsChatTool =
+  ManageOutcomeRelationshipsArgsSchema.merge(
+    chatToolHelperSchema({
+      defaultInProgressText: "Managing outcome relationships...",
+      defaultCompletedText: "Outcome relationships managed.",
+    }),
+  );
+
 export const vercelTool = (context: UserContext) => ({
-  create_outcome: {
+  [OutcomeTool.CreateOutcome]: {
     description: createOutcomeTool.description,
-    parameters: createOutcomeTool.inputSchema,
-    execute: async (args: z.infer<typeof CreateOutcomeArgsSchema>) =>
+    parameters: createOutcomeChatTool,
+    execute: async (args: z.infer<typeof createOutcomeChatTool>) =>
       await createOutcome(context, args),
   },
-  list_outcomes: {
+  [OutcomeTool.ListOutcomes]: {
     description: listOutcomesTool.description,
-    parameters: listOutcomesTool.inputSchema,
-    execute: async () => await listOutcomes(context),
+    parameters: listOutcomesChatTool,
+    execute: async (args: z.infer<typeof listOutcomesChatTool>) =>
+      await listOutcomes(context),
   },
-  get_outcome: {
+  [OutcomeTool.GetOutcome]: {
     description: getOutcomeTool.description,
-    parameters: getOutcomeTool.inputSchema,
-    execute: async (args: z.infer<typeof GetOutcomeArgsSchema>) =>
+    parameters: getOutcomeChatTool,
+    execute: async (args: z.infer<typeof getOutcomeChatTool>) =>
       await getOutcome(context, args),
   },
-  update_outcome: {
+  [OutcomeTool.UpdateOutcome]: {
     description: updateOutcomeTool.description,
-    parameters: updateOutcomeTool.inputSchema,
-    execute: async (args: z.infer<typeof UpdateOutcomeArgsSchema>) =>
+    parameters: updateOutcomeChatTool,
+    execute: async (args: z.infer<typeof updateOutcomeChatTool>) =>
       await updateOutcome(context, args),
   },
-  delete_outcome: {
+  [OutcomeTool.DeleteOutcome]: {
     description: deleteOutcomeTool.description,
-    parameters: deleteOutcomeTool.inputSchema,
-    execute: async (args: z.infer<typeof DeleteOutcomeArgsSchema>) =>
+    parameters: deleteOutcomeChatTool,
+    execute: async (args: z.infer<typeof deleteOutcomeChatTool>) =>
       await deleteOutcome(context, args),
   },
-  manage_outcome_relationships: {
+  [OutcomeTool.ManageOutcomeRelationships]: {
     description: manageOutcomeRelationshipsTool.description,
-    parameters: manageOutcomeRelationshipsTool.inputSchema,
-    execute: async (
-      args: z.infer<typeof ManageOutcomeRelationshipsArgsSchema>,
-    ) => await manageOutcomeRelationships(context, args),
+    parameters: manageOutcomeRelationshipsChatTool,
+    execute: async (args: z.infer<typeof manageOutcomeRelationshipsChatTool>) =>
+      await manageOutcomeRelationships(context, args),
   },
 });
