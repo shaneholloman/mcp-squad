@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { UserContext } from "./helpers/getUser.js";
+import { chatToolHelperSchema, UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 import {
   OpportunityRelationshipsPayload,
@@ -7,6 +7,16 @@ import {
   UpdateOpportunityPayload,
   UpdateOpportunityPayloadStatusEnum,
 } from "./lib/openapi/squad/models/index.js";
+
+export enum OpportunityTool {
+  CreateOpportunity = "create_opportunity",
+  ListOpportunities = "list_opportunities",
+  GetOpportunity = "get_opportunity",
+  UpdateOpportunity = "update_opportunity",
+  DeleteOpportunity = "delete_opportunity",
+  GenerateSolutions = "generate_solutions",
+  ManageOpportunityRelationships = "manage_opportunity_relationships",
+}
 
 // Schema definitions
 export const CreateOpportunityArgsSchema = z.object({
@@ -19,7 +29,7 @@ export const CreateOpportunityArgsSchema = z.object({
 });
 
 export const createOpportunityTool = {
-  name: "create_opportunity",
+  name: OpportunityTool.CreateOpportunity,
   description:
     "Create a new opportunity. An opportunity is a detailed problem statement identified for the organisation. It doesn't have any solutionising and simply captures an opportunity for the organisation.",
   inputSchema: CreateOpportunityArgsSchema,
@@ -72,7 +82,7 @@ export const createOpportunity = async (
 export const ListOpportunitiesArgsSchema = z.object({});
 
 export const listOpportunitiesTool = {
-  name: "list_opportunities",
+  name: OpportunityTool.ListOpportunities,
   description:
     "List all opportunities in the workspace. Opportunities are problem statements identified for the organisation.",
   inputSchema: ListOpportunitiesArgsSchema,
@@ -208,7 +218,7 @@ export const UpdateOpportunityArgsSchema = z.object({
 });
 
 export const updateOpportunityTool = {
-  name: "update_opportunity",
+  name: OpportunityTool.UpdateOpportunity,
   description:
     "Update an existing opportunity's details such as title, description, or status.",
   inputSchema: UpdateOpportunityArgsSchema,
@@ -265,7 +275,7 @@ export const DeleteOpportunityArgsSchema = z.object({
 });
 
 export const deleteOpportunityTool = {
-  name: "delete_opportunity",
+  name: OpportunityTool.DeleteOpportunity,
   description: "Delete an opportunity by ID.",
   inputSchema: DeleteOpportunityArgsSchema,
 };
@@ -329,7 +339,7 @@ export const GenerateSolutionsArgsSchema = z.object({
 });
 
 export const generateSolutionsTool = {
-  name: "generate_solutions",
+  name: OpportunityTool.GenerateSolutions,
   description:
     "Start the process of generating solutions for an opportunity. This will use Squad AI to generate new potential solutions for a given opportunity.",
   inputSchema: GenerateSolutionsArgsSchema,
@@ -407,7 +417,7 @@ export const ManageOpportunityRelationshipsArgsSchema = z.object({
 });
 
 export const manageOpportunityRelationshipsTool = {
-  name: "manage_opportunity_relationships",
+  name: OpportunityTool.ManageOpportunityRelationships,
   description:
     "Add or remove relationships between an opportunity and other entities (solutions, outcomes, or feedback).",
   inputSchema: ManageOpportunityRelationshipsArgsSchema,
@@ -477,13 +487,14 @@ export const opportunityTools = [
 
 export const runOpportunityTool = (name: string) => {
   const mapper = {
-    create_opportunity: createOpportunity,
-    list_opportunities: listOpportunities,
-    get_opportunity: getOpportunity,
-    update_opportunity: updateOpportunity,
-    delete_opportunity: deleteOpportunity,
-    generate_solutions: generateSolutions,
-    manage_opportunity_relationships: manageOpportunityRelationships,
+    [OpportunityTool.CreateOpportunity]: createOpportunity,
+    [OpportunityTool.ListOpportunities]: listOpportunities,
+    [OpportunityTool.GetOpportunity]: getOpportunity,
+    [OpportunityTool.UpdateOpportunity]: updateOpportunity,
+    [OpportunityTool.DeleteOpportunity]: deleteOpportunity,
+    [OpportunityTool.GenerateSolutions]: generateSolutions,
+    [OpportunityTool.ManageOpportunityRelationships]:
+      manageOpportunityRelationships,
   };
 
   if (!mapper[name as keyof typeof mapper]) {
@@ -492,47 +503,98 @@ export const runOpportunityTool = (name: string) => {
   return mapper[name as keyof typeof mapper];
 };
 
+const createOpportunityChatTool = CreateOpportunityArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Creating opportunity...",
+    defaultCompletedText: "Opportunity created",
+  }),
+);
+
+const listOpportunitiesChatTool = ListOpportunitiesArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Listing opportunities...",
+    defaultCompletedText: "Opportunities listed",
+  }),
+);
+
+const getOpportunityChatTool = GetOpportunityArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Getting opportunity...",
+    defaultCompletedText: "Opportunity retrieved",
+  }),
+);
+
+const updateOpportunityChatTool = UpdateOpportunityArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Updating opportunity...",
+    defaultCompletedText: "Opportunity updated",
+  }),
+);
+
+const deleteOpportunityChatTool = DeleteOpportunityArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Deleting opportunity...",
+    defaultCompletedText: "Opportunity deleted",
+  }),
+);
+
+const generateSolutionsChatTool = GenerateSolutionsArgsSchema.merge(
+  chatToolHelperSchema({
+    defaultInProgressText: "Generating solutions...",
+    defaultCompletedText: "Solutions generated",
+  }),
+);
+
+const manageOpportunityRelationshipsChatTool =
+  ManageOpportunityRelationshipsArgsSchema.merge(
+    chatToolHelperSchema({
+      defaultInProgressText: "Managing opportunity relationships...",
+      defaultCompletedText: "Opportunity relationships managed",
+    }),
+  );
+
 export const vercelTool = (context: UserContext) => ({
-  create_opportunity: {
+  [OpportunityTool.CreateOpportunity]: {
     description: createOpportunityTool.description,
-    parameters: createOpportunityTool.inputSchema,
-    execute: async (args: z.infer<typeof CreateOpportunityArgsSchema>) =>
+    parameters: createOpportunityChatTool,
+    execute: async (args: z.infer<typeof createOpportunityChatTool>) =>
       await createOpportunity(context, args),
   },
-  list_opportunities: {
+  [OpportunityTool.ListOpportunities]: {
     description: listOpportunitiesTool.description,
-    parameters: listOpportunitiesTool.inputSchema,
-    execute: async () => await listOpportunities(context),
+    parameters: listOpportunitiesChatTool,
+    execute: async (args: z.infer<typeof listOpportunitiesChatTool>) =>
+      await listOpportunities(context),
   },
-  get_opportunity: {
+  [OpportunityTool.GetOpportunity]: {
     description: getOpportunityTool.description,
-    parameters: getOpportunityTool.inputSchema,
-    execute: async (args: z.infer<typeof GetOpportunityArgsSchema>) =>
+    parameters: getOpportunityChatTool,
+    execute: async (args: z.infer<typeof getOpportunityChatTool>) =>
       await getOpportunity(context, args),
   },
-  update_opportunity: {
+  [OpportunityTool.UpdateOpportunity]: {
     description: updateOpportunityTool.description,
-    parameters: updateOpportunityTool.inputSchema,
-    execute: async (args: z.infer<typeof UpdateOpportunityArgsSchema>) =>
+    parameters: updateOpportunityChatTool,
+    execute: async (args: z.infer<typeof updateOpportunityChatTool>) =>
       await updateOpportunity(context, args),
   },
-  delete_opportunity: {
+  [OpportunityTool.DeleteOpportunity]: {
     description: deleteOpportunityTool.description,
-    parameters: deleteOpportunityTool.inputSchema,
-    execute: async (args: z.infer<typeof DeleteOpportunityArgsSchema>) =>
+    parameters: deleteOpportunityChatTool,
+    execute: async (args: z.infer<typeof deleteOpportunityChatTool>) =>
       await deleteOpportunity(context, args),
   },
-  generate_solutions: {
+  [OpportunityTool.GenerateSolutions]: {
     description: generateSolutionsTool.description,
-    parameters: generateSolutionsTool.inputSchema,
-    execute: async (args: z.infer<typeof GenerateSolutionsArgsSchema>) =>
+    parameters: generateSolutionsChatTool,
+    execute: async (args: z.infer<typeof generateSolutionsChatTool>) =>
       await generateSolutions(context, args),
   },
-  manage_opportunity_relationships: {
+  [OpportunityTool.ManageOpportunityRelationships]: {
     description: manageOpportunityRelationshipsTool.description,
-    parameters: manageOpportunityRelationshipsTool.inputSchema,
+    parameters: manageOpportunityRelationshipsChatTool,
     execute: async (
-      args: z.infer<typeof ManageOpportunityRelationshipsArgsSchema>,
+      args: z.infer<typeof manageOpportunityRelationshipsChatTool>,
     ) => await manageOpportunityRelationships(context, args),
   },
 });

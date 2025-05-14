@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { squadClient } from "../lib/clients/squad.js";
 
 export type UserContext = {
@@ -24,3 +25,23 @@ export const getUserContext = async () => {
     throw e;
   }
 };
+
+export const chatToolHelperSchema = ({
+  defaultInProgressText = "Thinking...",
+  defaultCompletedText = "Done",
+}: {
+  defaultInProgressText?: string;
+  defaultCompletedText?: string;
+}) =>
+  z.object({
+    inProgressText: z
+      .string()
+      .optional()
+      .default(defaultInProgressText)
+      .describe("Text to display while the tool is in progress"),
+    completedText: z
+      .string()
+      .optional()
+      .default(defaultCompletedText)
+      .describe("Text to display when the tool has completed"),
+  });
