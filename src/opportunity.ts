@@ -62,7 +62,7 @@ export const createOpportunity = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(res, null, 2),
+          text: JSON.stringify(res),
         },
       ],
     };
@@ -116,13 +116,7 @@ export const listOpportunities = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              opportunities,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(opportunities),
         },
       ],
     };
@@ -183,7 +177,7 @@ export const getOpportunity = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(opportunity, null, 2),
+          text: JSON.stringify(opportunity),
         },
       ],
     };
@@ -253,7 +247,7 @@ export const updateOpportunity = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(opportunity, null, 2),
+          text: JSON.stringify(opportunity),
         },
       ],
     };
@@ -307,10 +301,10 @@ export const deleteOpportunity = async (
           type: "text",
           text: JSON.stringify(
             {
-              opportunityId,
+              data: {
+                id: opportunityId,
+              },
             },
-            null,
-            2,
           ),
         },
       ],
@@ -374,10 +368,10 @@ export const generateSolutions = async (
           type: "text",
           text: JSON.stringify(
             {
-              opportunityId,
+              data: {
+                id: opportunityId,
+              },
             },
-            null,
-            2,
           ),
         },
       ],
@@ -451,21 +445,19 @@ export const manageOpportunityRelationships = async (
       opportunityRelationshipsPayload: relationshipsPayload,
     });
 
+    const updatedOpportunity = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGet({
+      orgId,
+      workspaceId,
+      opportunityId,
+    });
+
     return {
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              opportunityId,
-              action,
-              solutionIds,
-              outcomeIds,
-              feedbackIds,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(updatedOpportunity),
         },
       ],
     };

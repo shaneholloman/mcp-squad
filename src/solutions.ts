@@ -74,7 +74,7 @@ export const createSolution = async (
       createdBy: "user",
     };
 
-    const solution = await squadClient({
+    const data = await squadClient({
       jwt: context.jwt,
     }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost({
       orgId,
@@ -86,13 +86,7 @@ export const createSolution = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              solution,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(data, null, 2),
         },
       ],
     };
@@ -157,13 +151,7 @@ export const listSolutions = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              solutions,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(solutions),
         },
       ],
     };
@@ -221,13 +209,7 @@ export const getSolution = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              solution,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(solution),
         },
       ],
     };
@@ -311,13 +293,7 @@ export const updateSolution = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              solution,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(solution),
         },
       ],
     };
@@ -373,13 +349,11 @@ export const deleteSolution = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              solutionId,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify({
+            data: {
+              id: solutionId,
+            }
+          }),
         },
       ],
     };
@@ -450,20 +424,17 @@ export const manageSolutionRelationships = async (
       solutionRelationshipsPayload: relationshipsPayload,
     });
 
+    const data = await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
+      orgId,
+      workspaceId,
+      solutionId,
+    });
+
     return {
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              solutionId,
-              action,
-              opportunityIds,
-              requirementIds,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(data),
         },
       ],
     };

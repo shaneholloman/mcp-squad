@@ -48,7 +48,7 @@ export const createFeedback = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(res, null, 2),
+          text: JSON.stringify(res),
         },
       ],
     };
@@ -96,13 +96,7 @@ export const listFeedback = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              feedback,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(feedback),
         },
       ],
     };
@@ -150,7 +144,7 @@ export const getFeedback = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(feedback, null, 2),
+          text: JSON.stringify(feedback),
         },
       ],
     };
@@ -194,7 +188,7 @@ export const deleteFeedback = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(result, null, 2),
+          text: JSON.stringify(result),
         },
       ],
     };

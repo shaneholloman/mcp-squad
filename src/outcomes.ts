@@ -81,7 +81,7 @@ export const createOutcome = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(res, null, 2),
+          text: JSON.stringify(res),
         },
       ],
     };
@@ -140,13 +140,7 @@ export const listOutcomes = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              outcomes,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(outcomes),
         },
       ],
     };
@@ -205,7 +199,7 @@ export const getOutcome = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(outcome, null, 2),
+          text: JSON.stringify(outcome),
         },
       ],
     };
@@ -307,7 +301,7 @@ export const updateOutcome = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(outcome, null, 2),
+          text: JSON.stringify(outcome),
         },
       ],
     };
@@ -362,13 +356,11 @@ export const deleteOutcome = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              outcomeId,
+          text: JSON.stringify({
+            data: {
+              id: outcomeId,
             },
-            null,
-            2,
-          ),
+          }),
         },
       ],
     };
@@ -428,19 +420,17 @@ export const manageOutcomeRelationships = async (
       outcomeRelationshipsPayload: relationshipsPayload,
     });
 
+    const updatedOutcome = await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet({
+      orgId,
+      workspaceId,
+      outcomeId,
+    });
+
     return {
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              outcomeId,
-              action,
-              opportunityIds,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(updatedOutcome),
         },
       ],
     };

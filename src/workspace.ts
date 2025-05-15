@@ -34,7 +34,7 @@ export const getWorkspace = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(workspace, null, 2),
+          text: JSON.stringify(workspace),
         },
       ],
     };
@@ -123,7 +123,7 @@ export const updateWorkspace = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(workspace, null, 2),
+          text: JSON.stringify(workspace),
         },
       ],
     };

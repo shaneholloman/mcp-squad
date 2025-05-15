@@ -50,7 +50,7 @@ export const createKnowledge = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(res, null, 2),
+          text: JSON.stringify(res),
         },
       ],
     };
@@ -98,13 +98,7 @@ export const listKnowledge = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              knowledge,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(knowledge),
         },
       ],
     };
@@ -151,7 +145,7 @@ export const getKnowledge = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(knowledge, null, 2),
+          text: JSON.stringify(knowledge),
         },
       ],
     };
@@ -197,7 +191,7 @@ export const deleteKnowledge = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(result, null, 2),
+          text: JSON.stringify(result),
         },
       ],
     };

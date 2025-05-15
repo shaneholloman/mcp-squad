@@ -84,7 +84,7 @@ export const createRequirement = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(requirement, null, 2),
+          text: JSON.stringify(requirement),
         },
       ],
     };
@@ -143,13 +143,7 @@ export const listRequirements = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              requirements,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(requirements),
         },
       ],
     };
@@ -213,7 +207,7 @@ export const getRequirement = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(requirement, null, 2),
+          text: JSON.stringify(requirement),
         },
       ],
     };
@@ -394,13 +388,11 @@ export const deleteRequirement = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              requirementId,
+          text: JSON.stringify({
+            data: {
+              id: requirementId,
             },
-            null,
-            2,
-          ),
+          }),
         },
       ],
     };
@@ -460,19 +452,17 @@ export const manageRequirementRelationships = async (
       requirementRelationshipsPayload: relationshipsPayload,
     });
 
+    const updatedRequirement = await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet({
+      orgId,
+      workspaceId,
+      requirementId,
+    });
+
     return {
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              requirementId,
-              action,
-              solutionIds,
-            },
-            null,
-            2,
-          ),
+          text: JSON.stringify(updatedRequirement),
         },
       ],
     };
