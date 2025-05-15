@@ -334,7 +334,7 @@ export const updateRequirement = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(requirement, null, 2),
+          text: JSON.stringify(requirement),
         },
       ],
     };
@@ -462,7 +462,11 @@ export const manageRequirementRelationships = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(updatedRequirement),
+          text: JSON.stringify(
+            {
+              updatedRequirement,
+            },
+          ),
         },
       ],
     };

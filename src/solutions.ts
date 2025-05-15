@@ -130,23 +130,6 @@ export const listSolutions = async (
       workspaceId,
     });
 
-    if (solutions.data.length === 0) {
-      return {
-        content: [
-          {
-            type: "text",
-            text: JSON.stringify(
-              {
-                solutions: [],
-              },
-              null,
-              2,
-            ),
-          },
-        ],
-      };
-    }
-
     return {
       content: [
         {
