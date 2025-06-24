@@ -21,13 +21,15 @@ export enum SolutionTool {
 const statusEnum = z
   .enum([
     CreateSolutionPayloadStatusEnum.New,
-    CreateSolutionPayloadStatusEnum.InProgress,
+    CreateSolutionPayloadStatusEnum.InDevelopment,
     CreateSolutionPayloadStatusEnum.Planned,
-    CreateSolutionPayloadStatusEnum.Solved,
+    CreateSolutionPayloadStatusEnum.Complete,
+    CreateSolutionPayloadStatusEnum.Cancelled,
+    CreateSolutionPayloadStatusEnum.Backlog,
   ])
   .optional()
   .describe(
-    `Status of the solution: ${CreateSolutionPayloadStatusEnum.New} hasn't been developed, ${CreateSolutionPayloadStatusEnum.InProgress} means we're currently building out requirements and implementing them. ${CreateSolutionPayloadStatusEnum.Planned} means we've finished developing the solutions and are ready to implement them. ${CreateSolutionPayloadStatusEnum.Solved} means we've completed the implementation and the opportunity is considered addressed.`,
+    `Status of the solution: ${CreateSolutionPayloadStatusEnum.New} hasn't been developed, ${CreateSolutionPayloadStatusEnum.InDevelopment} means we're currently building out requirements and implementing them. ${CreateSolutionPayloadStatusEnum.Planned} means we've finished developing the solutions and are ready to implement them. ${CreateSolutionPayloadStatusEnum.Complete} means we've completed the implementation and the opportunity is considered addressed. ${CreateSolutionPayloadStatusEnum.Cancelled} means we've cancelled the implementation and the opportunity is no longer considered addressed. ${CreateSolutionPayloadStatusEnum.Backlog} means we've added this to the backlog and it will be worked on in the future.`,
   );
 
 // Schema for creating a solution

@@ -70,16 +70,12 @@ export const UpdateWorkspaceArgsSchema = z.object({
     .string()
     .optional()
     .describe("Updated detailed description of the workspace"),
-  outcomes: z
-    .array(z.string())
-    .optional()
-    .describe("Updated list of outcome IDs associated with this workspace"),
 });
 
 export const updateWorkspaceTool = {
   name: WorkspaceTool.UpdateWorkspace,
   description:
-    "Update an existing workspace's details such as name, description, mission statement, or associated outcomes.",
+    "Update an existing workspace's details such as name, description, mission statement.",
   inputSchema: UpdateWorkspaceArgsSchema,
 };
 
@@ -99,7 +95,6 @@ export const updateWorkspace = async (
       logoUrl,
       missionStatement,
       description,
-      outcomes,
     } = safeBody;
 
     const updatePayload: UpdateWorkspacePayload = {};
@@ -109,7 +104,6 @@ export const updateWorkspace = async (
     if (missionStatement !== undefined)
       updatePayload.missionStatement = missionStatement;
     if (description !== undefined) updatePayload.description = description;
-    if (outcomes !== undefined) updatePayload.outcomes = outcomes;
 
     const workspace = await squadClient(
       context.jwt,

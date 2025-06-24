@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Squad API",
-    "version": "0.14.0",
+    "version": "1.4.0",
     "description": "API for managing Squad resources"
   },
   "servers": [
@@ -1270,6 +1270,58 @@
         }
       }
     },
+    "/organisations/{orgId}/workspaces/{workspaceId}/onboarding": {
+      "post": {
+        "summary": "Process business description and knowledge to create workspace details, outcomes, opportunities, and solutions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "b7e2d5a9-3c18-4e6f-9a42-f8d1c7b5e3a2",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnboardingV2Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Request accepted, processing started"
+          },
+          "400": {
+            "description": "Invalid request body"
+          },
+          "404": {
+            "description": "One or more knowledge entities not found"
+          }
+        }
+      }
+    },
     "/organisations/{orgId}/workspaces/{workspaceId}/feedback": {
       "post": {
         "summary": "Create new feedback",
@@ -1309,7 +1361,8 @@
                 "type": "object",
                 "properties": {
                   "id": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                   },
                   "type": {
                     "type": "string",
@@ -1347,10 +1400,12 @@
                     "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
                   },
                   "organisationId": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                   },
                   "workspaceId": {
-                    "type": "string"
+                    "type": "string",
+                    "format": "uuid"
                   },
                   "seen": {
                     "type": "boolean"
@@ -5918,30 +5973,14 @@
                         }
                       ],
                       "properties": {
-                        "tokensUsed": {
-                          "type": "number",
-                          "description": "Number of tokens used",
-                          "example": 123456
-                        },
                         "unprocessedFeedbackCount": {
                           "type": "number",
                           "description": "Number of unprocessed feedback items",
                           "example": 123
-                        },
-                        "subscriptionType": {
-                          "type": "string",
-                          "enum": [
-                            "PERSONAL",
-                            "PROFESSIONAL"
-                          ],
-                          "description": "Subscription type",
-                          "example": "PROFESSIONAL"
                         }
                       },
                       "required": [
-                        "tokensUsed",
-                        "unprocessedFeedbackCount",
-                        "subscriptionType"
+                        "unprocessedFeedbackCount"
                       ]
                     }
                   },
@@ -6154,30 +6193,14 @@
                           }
                         ],
                         "properties": {
-                          "tokensUsed": {
-                            "type": "number",
-                            "description": "Number of tokens used",
-                            "example": 123456
-                          },
                           "unprocessedFeedbackCount": {
                             "type": "number",
                             "description": "Number of unprocessed feedback items",
                             "example": 123
-                          },
-                          "subscriptionType": {
-                            "type": "string",
-                            "enum": [
-                              "PERSONAL",
-                              "PROFESSIONAL"
-                            ],
-                            "description": "Subscription type",
-                            "example": "PROFESSIONAL"
                           }
                         },
                         "required": [
-                          "tokensUsed",
-                          "unprocessedFeedbackCount",
-                          "subscriptionType"
+                          "unprocessedFeedbackCount"
                         ]
                       },
                       "description": "Array of organisations"
@@ -6335,30 +6358,14 @@
                         }
                       ],
                       "properties": {
-                        "tokensUsed": {
-                          "type": "number",
-                          "description": "Number of tokens used",
-                          "example": 123456
-                        },
                         "unprocessedFeedbackCount": {
                           "type": "number",
                           "description": "Number of unprocessed feedback items",
                           "example": 123
-                        },
-                        "subscriptionType": {
-                          "type": "string",
-                          "enum": [
-                            "PERSONAL",
-                            "PROFESSIONAL"
-                          ],
-                          "description": "Subscription type",
-                          "example": "PROFESSIONAL"
                         }
                       },
                       "required": [
-                        "tokensUsed",
-                        "unprocessedFeedbackCount",
-                        "subscriptionType"
+                        "unprocessedFeedbackCount"
                       ]
                     }
                   },
@@ -6557,30 +6564,14 @@
                         }
                       ],
                       "properties": {
-                        "tokensUsed": {
-                          "type": "number",
-                          "description": "Number of tokens used",
-                          "example": 123456
-                        },
                         "unprocessedFeedbackCount": {
                           "type": "number",
                           "description": "Number of unprocessed feedback items",
                           "example": 123
-                        },
-                        "subscriptionType": {
-                          "type": "string",
-                          "enum": [
-                            "PERSONAL",
-                            "PROFESSIONAL"
-                          ],
-                          "description": "Subscription type",
-                          "example": "PROFESSIONAL"
                         }
                       },
                       "required": [
-                        "tokensUsed",
-                        "unprocessedFeedbackCount",
-                        "subscriptionType"
+                        "unprocessedFeedbackCount"
                       ]
                     }
                   },
@@ -7418,185 +7409,6 @@
         }
       }
     },
-    "/organisations/{orgId}/workspaces/{workspaceId}/knowledge-base-documents": {
-      "get": {
-        "summary": "List knowledge base documents",
-        "description": "Retrieves a list of all knowledge base documents in the workspace",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orgId",
-            "required": true,
-            "description": "Organization ID",
-            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "path",
-            "name": "workspaceId",
-            "required": true,
-            "description": "Workspace ID",
-            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully retrieved document list",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/KnowledgeBaseDocumentListResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request - invalid input parameters"
-          },
-          "401": {
-            "description": "Unauthorized - invalid or missing authentication"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      },
-      "post": {
-        "summary": "Upload knowledge base document",
-        "description": "Uploads a new document to the knowledge base",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orgId",
-            "required": true,
-            "description": "Organization ID",
-            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "path",
-            "name": "workspaceId",
-            "required": true,
-            "description": "Workspace ID",
-            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/KnowledgeBaseDocumentUploadPayload"
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Document successfully uploaded",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/KnowledgeBaseDocumentUploadResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request - invalid input parameters or file format"
-          },
-          "401": {
-            "description": "Unauthorized - invalid or missing authentication"
-          },
-          "413": {
-            "description": "Payload too large - file exceeds size limit"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/organisations/{orgId}/workspaces/{workspaceId}/knowledge-base-documents/{fileName}": {
-      "delete": {
-        "summary": "Delete knowledge base document",
-        "description": "Deletes a document from the knowledge base",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orgId",
-            "required": true,
-            "description": "Organization ID",
-            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "path",
-            "name": "workspaceId",
-            "required": true,
-            "description": "Workspace ID",
-            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "path",
-            "name": "fileName",
-            "required": true,
-            "description": "Name of the document file",
-            "example": "product_requirements.pdf",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Document successfully deleted"
-          },
-          "400": {
-            "description": "Bad request - invalid input parameters"
-          },
-          "401": {
-            "description": "Unauthorized - invalid or missing authentication"
-          },
-          "404": {
-            "description": "Document not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
     "/organisations/{orgId}/workspaces/{workspaceId}/opportunities/{opportunityId}/feedback/mark-all-seen": {
       "post": {
         "summary": "Mark all opportunity feedback as seen",
@@ -7768,13 +7580,56 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "anyOf": [
+                      "allOf": [
                         {
-                          "$ref": "#/components/schemas/ProfessionalOrganizationStatus"
-                        },
-                        {
-                          "$ref": "#/components/schemas/PersonalOrganizationStatus"
+                          "$ref": "#/components/schemas/Organisation"
                         }
+                      ],
+                      "properties": {
+                        "hasRemainingCredits": {
+                          "type": "boolean",
+                          "description": "Whether the organization has remaining credits",
+                          "example": true
+                        },
+                        "billingCycleCreditAllowance": {
+                          "type": "number",
+                          "description": "The number of credits available for the current billing cycle",
+                          "example": 250
+                        },
+                        "billingCycleCreditUsage": {
+                          "type": "number",
+                          "description": "The number of credits used in the current billing cycle so far",
+                          "example": 100
+                        },
+                        "billingCycleFlexCreditUsage": {
+                          "type": "number",
+                          "description": "The number of flex credits used in the current billing cycle so far",
+                          "example": 100
+                        },
+                        "currentBillingCycleStartDate": {
+                          "type": "string",
+                          "description": "The date the current billing cycle started",
+                          "example": "2025-06-24"
+                        },
+                        "currentBillingCycleEndDate": {
+                          "type": "string",
+                          "description": "The date the current billing cycle will end",
+                          "example": "2025-06-24"
+                        },
+                        "totalMembers": {
+                          "type": "number",
+                          "description": "The total number of members in the organization",
+                          "example": 10
+                        }
+                      },
+                      "required": [
+                        "hasRemainingCredits",
+                        "billingCycleCreditAllowance",
+                        "billingCycleCreditUsage",
+                        "billingCycleFlexCreditUsage",
+                        "currentBillingCycleStartDate",
+                        "currentBillingCycleEndDate",
+                        "totalMembers"
                       ],
                       "description": "Organization status data"
                     }
@@ -8134,6 +7989,534 @@
           },
           "500": {
             "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/solutions/prioritise": {
+      "post": {
+        "summary": "Prioritise solutions",
+        "description": "Reorders one or more solutions based on provided order",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrioritiseSolutionsRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Solutions prioritised successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrioritiseSolutionsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/knowledge/source/url": {
+      "post": {
+        "summary": "Create a new piece of knowledge from a URL",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKnowledgeFromUrlPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SingleKnowledgeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INVALID_REQUEST"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "One or more fields are invalid"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of field names that are missing or invalid",
+                          "example": [
+                            "title",
+                            "description"
+                          ]
+                        },
+                        "validationErrors": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "description": "Detailed validation error information for each invalid field",
+                          "example": {
+                            "invalidFields": {
+                              "title": {
+                                "type": "too_small",
+                                "message": "Title must be at least 3 characters long",
+                                "path": [
+                                  "title"
+                                ]
+                              },
+                              "deadline": {
+                                "type": "invalid_date",
+                                "message": "Deadline must be a valid date in the future",
+                                "path": [
+                                  "deadline"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Bad Request - Invalid input parameters or missing required fields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/knowledge/source/pdf": {
+      "post": {
+        "summary": "Create a new piece of knowledge from a PDF file",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateKnowledgeFromPdfPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SingleKnowledgeResponseWithUploadPdf"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INVALID_REQUEST"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "One or more fields are invalid"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of field names that are missing or invalid",
+                          "example": [
+                            "title",
+                            "description"
+                          ]
+                        },
+                        "validationErrors": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "description": "Detailed validation error information for each invalid field",
+                          "example": {
+                            "invalidFields": {
+                              "title": {
+                                "type": "too_small",
+                                "message": "Title must be at least 3 characters long",
+                                "path": [
+                                  "title"
+                                ]
+                              },
+                              "deadline": {
+                                "type": "invalid_date",
+                                "message": "Deadline must be a valid date in the future",
+                                "path": [
+                                  "deadline"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Bad Request - Invalid input parameters or missing required fields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
           }
         }
       }
@@ -9384,6 +9767,519 @@
           }
         }
       }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/token-usage": {
+      "post": {
+        "summary": "Track token usage",
+        "description": "Tracks token usage for a given request",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "inputTokens": {
+                    "type": "number",
+                    "description": "Number of input tokens",
+                    "example": 123
+                  },
+                  "outputTokens": {
+                    "type": "number",
+                    "description": "Number of output tokens",
+                    "example": 456
+                  },
+                  "modelConfig": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "service": {
+                            "type": "string",
+                            "enum": [
+                              "claude"
+                            ]
+                          },
+                          "model": {
+                            "type": "string",
+                            "enum": [
+                              "claude-sonnet-4-20250514",
+                              "claude-3-7-sonnet-20250219",
+                              "claude-3-5-sonnet-20240620",
+                              "claude-3-5-sonnet-20241022",
+                              "claude-3-5-haiku-20241022"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "service",
+                          "model"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "service": {
+                            "type": "string",
+                            "enum": [
+                              "lambdalabs"
+                            ]
+                          },
+                          "model": {
+                            "type": "string",
+                            "enum": [
+                              "llama3.1-405b-instruct-fp8",
+                              "llama3.1-8b-instruct",
+                              "llama3.1-nemotron-70b-instruct-fp8",
+                              "llama3.2-3b-instruct",
+                              "llama3.3-70b-instruct-fp8"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "service",
+                          "model"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "service": {
+                            "type": "string",
+                            "enum": [
+                              "deepseek"
+                            ]
+                          },
+                          "model": {
+                            "type": "string",
+                            "enum": [
+                              "deepseek-reasoner",
+                              "deepseek-chat"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "service",
+                          "model"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "service": {
+                            "type": "string",
+                            "enum": [
+                              "openai"
+                            ]
+                          },
+                          "model": {
+                            "type": "string",
+                            "enum": [
+                              "o3-mini-2025-01-31",
+                              "gpt-4.1-2025-04-14"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "service",
+                          "model"
+                        ]
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "service": {
+                            "type": "string",
+                            "enum": [
+                              "gemini"
+                            ]
+                          },
+                          "model": {
+                            "type": "string",
+                            "enum": [
+                              "gemini-2.5-pro-preview-03-25",
+                              "gemini-2.5-flash",
+                              "gemini-2.0-flash-001",
+                              "gemini-1.5-flash"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "service",
+                          "model"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "inputTokens",
+                  "outputTokens",
+                  "modelConfig"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Token usage tracked successfully"
+          },
+          "400": {
+            "description": "Bad Request - Invalid input"
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions"
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/strategy-document": {
+      "get": {
+        "summary": "Get strategy document",
+        "description": "Retrieves the strategy document for the specified workspace",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateStrategyDocumentPayload"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required"
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions"
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/similarity-search": {
+      "post": {
+        "summary": "Find similar entities",
+        "description": "Finds similar entities to the given query",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "Query string",
+                    "example": "Number of tokens used"
+                  },
+                  "filters": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "knowledge-base",
+                        "insights",
+                        "opportunities",
+                        "solutions"
+                      ]
+                    },
+                    "description": "List of Pinecone sources to search over",
+                    "example": [
+                      "knowledge-base",
+                      "opportunities"
+                    ]
+                  }
+                },
+                "required": [
+                  "query",
+                  "filters"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Similarity search completed successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/SimilaritySearchResponse"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing a similarity search result"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INVALID_REQUEST"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "One or more fields are invalid"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of field names that are missing or invalid",
+                          "example": [
+                            "title",
+                            "description"
+                          ]
+                        },
+                        "validationErrors": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "description": "Detailed validation error information for each invalid field",
+                          "example": {
+                            "invalidFields": {
+                              "title": {
+                                "type": "too_small",
+                                "message": "Title must be at least 3 characters long",
+                                "path": [
+                                  "title"
+                                ]
+                              },
+                              "deadline": {
+                                "type": "invalid_date",
+                                "message": "Deadline must be a valid date in the future",
+                                "path": [
+                                  "deadline"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Bad Request - Invalid input parameters or missing required fields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -9406,7 +10302,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "title": {
             "type": "string",
@@ -9463,6 +10360,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "Unique identifier for the outcome",
             "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
           },
@@ -9578,6 +10476,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "Unique identifier for the opportunity",
             "example": "opp_123"
           },
@@ -9666,7 +10565,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "systemPrompt": {
             "type": "string",
@@ -9692,6 +10592,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "Unique identifier for the log entry",
                   "example": "log_123"
                 },
@@ -9732,13 +10633,15 @@
           "status": {
             "type": "string",
             "enum": [
+              "Backlog",
               "New",
-              "Solved",
               "Planned",
-              "InProgress"
+              "InDevelopment",
+              "Complete",
+              "Cancelled"
             ],
-            "description": "Entity status",
-            "example": "New"
+            "description": "Solution status",
+            "example": "Backlog"
           },
           "pros": {
             "type": "array",
@@ -9791,6 +10694,11 @@
             "type": "string",
             "description": "Last update timestamp",
             "example": "2025-03-26T22:35:46Z"
+          },
+          "priority": {
+            "type": "string",
+            "description": "User indicated priority for the solution (fractional-indexing string)",
+            "example": "a0"
           }
         },
         "required": [
@@ -9805,7 +10713,8 @@
           "hideContent",
           "createdBy",
           "createdAt",
-          "updatedAt"
+          "updatedAt",
+          "priority"
         ],
         "description": "Solution data for an opportunity"
       },
@@ -9814,6 +10723,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "Unique identifier for the requirement",
             "example": "req_123"
           },
@@ -9841,6 +10751,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "Unique identifier for the log entry",
                   "example": "log_123"
                 },
@@ -9937,6 +10848,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "Unique identifier for the feedback",
             "example": "fb_123"
           },
@@ -10101,6 +11013,7 @@
                 "properties": {
                   "id": {
                     "type": "string",
+                    "format": "uuid",
                     "description": "Unique identifier for the organization",
                     "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184"
                   },
@@ -10132,7 +11045,10 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid",
+            "description": "ID of the workspace",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f"
           },
           "name": {
             "type": "string",
@@ -10141,11 +11057,13 @@
           },
           "homepageUrl": {
             "type": "string",
+            "nullable": true,
             "description": "URL to the workspace's homepage",
             "example": "https://product.example.com"
           },
           "logoUrl": {
             "type": "string",
+            "nullable": true,
             "description": "URL to the workspace's logo",
             "example": "https://product.example.com/logo.png"
           },
@@ -10168,6 +11086,22 @@
             "type": "string",
             "description": "Last update timestamp",
             "example": "2025-03-26T22:35:46Z"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Initializing",
+              "OnboardingConsiderWorkspace",
+              "OnboardingConsiderOpportunities",
+              "OnboardingConsiderOpportunitiesToOutcomes",
+              "OnboardingConsiderSolutionGeneration",
+              "OnboardingConsiderSolutionsToBuild",
+              "OnboardingSelectSolutionsToBuild",
+              "Active",
+              "Inactive"
+            ],
+            "description": "Status of the workspace",
+            "example": "Initializing"
           }
         },
         "required": [
@@ -10175,7 +11109,8 @@
           "name",
           "missionStatement",
           "createdAt",
-          "updatedAt"
+          "updatedAt",
+          "status"
         ],
         "description": "Workspace data"
       },
@@ -10186,6 +11121,40 @@
             "$ref": "#/components/schemas/OnboardingPayload"
           }
         ]
+      },
+      "OnboardingV2Payload": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Text input describing the business or product",
+            "example": "A technology company focused on AI solutions for enterprise customers"
+          },
+          "knowledgeIds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Array of knowledge entity IDs to process",
+            "example": [
+              "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+              "b7e2d5a9-3c18-4e6f-9a42-f8d1c7b5e3a2"
+            ]
+          },
+          "newProduct": {
+            "type": "boolean",
+            "default": false,
+            "description": "Flag indicating if this is a new product (optional)",
+            "example": true
+          }
+        },
+        "required": [
+          "text",
+          "knowledgeIds"
+        ],
+        "description": "Request schema for one-shot onboarding"
       },
       "FeedbackWithRelationships": {
         "allOf": [
@@ -10297,7 +11266,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "title": {
             "type": "string",
@@ -10357,6 +11327,7 @@
             "properties": {
               "id": {
                 "type": "string",
+                "format": "uuid",
                 "description": "Unique identifier for the opportunity",
                 "example": "opp_123"
               },
@@ -10556,7 +11527,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "title": {
             "type": "string",
@@ -10689,7 +11661,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "systemPrompt": {
             "type": "string",
@@ -10715,6 +11688,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "Unique identifier for the log entry",
                   "example": "log_123"
                 },
@@ -10876,6 +11850,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "Unique identifier for the log entry",
                   "example": "log_123"
                 },
@@ -10961,7 +11936,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "systemPrompt": {
             "type": "string",
@@ -10982,7 +11958,8 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "uuid"
                 },
                 "role": {
                   "type": "string",
@@ -11015,13 +11992,15 @@
           "status": {
             "type": "string",
             "enum": [
+              "Backlog",
               "New",
-              "Solved",
               "Planned",
-              "InProgress"
+              "InDevelopment",
+              "Complete",
+              "Cancelled"
             ],
-            "description": "Entity status",
-            "example": "New"
+            "description": "Solution status",
+            "example": "Backlog"
           },
           "pros": {
             "type": "array",
@@ -11138,6 +12117,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "Unique identifier for the log entry",
                   "example": "log_123"
                 },
@@ -11178,13 +12158,15 @@
           "status": {
             "type": "string",
             "enum": [
+              "Backlog",
               "New",
-              "Solved",
               "Planned",
-              "InProgress"
+              "InDevelopment",
+              "Complete",
+              "Cancelled"
             ],
-            "description": "Entity status",
-            "example": "New"
+            "description": "Solution status",
+            "example": "Backlog"
           },
           "pros": {
             "type": "array",
@@ -11242,7 +12224,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "title": {
             "type": "string",
@@ -11364,7 +12347,9 @@
             "type": "string"
           },
           "missionStatement": {
-            "type": "string"
+            "type": "string",
+            "description": "Mission statement for the workspace",
+            "example": "Develop innovative products that solve real customer problems"
           },
           "description": {
             "type": "string"
@@ -11386,25 +12371,47 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the workspace",
+            "example": "Product Development"
           },
           "homepageUrl": {
-            "type": "string"
+            "type": "string",
+            "nullable": true,
+            "description": "URL to the workspace's homepage",
+            "example": "https://product.example.com"
           },
           "logoUrl": {
-            "type": "string"
+            "type": "string",
+            "nullable": true,
+            "description": "URL to the workspace's logo",
+            "example": "https://product.example.com/logo.png"
           },
           "missionStatement": {
-            "type": "string"
+            "type": "string",
+            "description": "Mission statement for the workspace",
+            "example": "Develop innovative products that solve real customer problems"
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "Detailed description of the workspace",
+            "example": "This workspace focuses on our core product development initiatives, including roadmap planning, feature development, and product improvements."
           },
-          "outcomes": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "status": {
+            "type": "string",
+            "enum": [
+              "Initializing",
+              "OnboardingConsiderWorkspace",
+              "OnboardingConsiderOpportunities",
+              "OnboardingConsiderOpportunitiesToOutcomes",
+              "OnboardingConsiderSolutionGeneration",
+              "OnboardingConsiderSolutionsToBuild",
+              "OnboardingSelectSolutionsToBuild",
+              "Active",
+              "Inactive"
+            ],
+            "description": "Status of the workspace",
+            "example": "Initializing"
           }
         },
         "description": "Request schema for updating a workspace"
@@ -11437,7 +12444,8 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "format": "uuid"
           },
           "name": {
             "type": "string",
@@ -11448,21 +12456,6 @@
             "type": "string",
             "description": "Stripe customer ID for billing",
             "example": "cus_1234567890"
-          },
-          "maxDailyTokens": {
-            "type": "number",
-            "description": "Maximum number of tokens allowed per day",
-            "example": 100000
-          },
-          "maxEntities": {
-            "type": "number",
-            "description": "Maximum number of entities allowed",
-            "example": 50
-          },
-          "entitiesCreatedCount": {
-            "type": "number",
-            "description": "Current count of entities created",
-            "example": 12
           },
           "homepageUrl": {
             "type": "string",
@@ -11480,6 +12473,27 @@
             "type": "string",
             "description": "Creation timestamp",
             "example": "2025-03-26T22:35:46Z"
+          },
+          "accountType": {
+            "type": "string",
+            "enum": [
+              "HOBBY",
+              "PROFESSIONAL",
+              "TEAM"
+            ],
+            "default": "HOBBY",
+            "description": "Account type",
+            "example": "HOBBY"
+          },
+          "billingCycleStartDate": {
+            "type": "string",
+            "description": "The start date of the current billing cycle.",
+            "example": "2025-03-26T22:35:46Z"
+          },
+          "billingCycleFlexCreditAllowance": {
+            "type": "number",
+            "description": "Number of flex credits available at the start of the current billing cycle.",
+            "example": 100000
           },
           "updatedAt": {
             "type": "string",
@@ -11500,10 +12514,10 @@
         "required": [
           "id",
           "name",
-          "maxDailyTokens",
-          "maxEntities",
-          "entitiesCreatedCount",
           "createdAt",
+          "accountType",
+          "billingCycleStartDate",
+          "billingCycleFlexCreditAllowance",
           "updatedAt",
           "status"
         ],
@@ -11529,6 +12543,27 @@
             "description": "URL to the organisation's logo",
             "example": "https://acme.example.com/logo.png"
           },
+          "accountType": {
+            "type": "string",
+            "enum": [
+              "HOBBY",
+              "PROFESSIONAL",
+              "TEAM"
+            ],
+            "default": "HOBBY",
+            "description": "Account type",
+            "example": "HOBBY"
+          },
+          "billingCycleStartDate": {
+            "type": "string",
+            "description": "The start date of the current billing cycle.",
+            "example": "2025-03-26T22:35:46Z"
+          },
+          "billingCycleFlexCreditAllowance": {
+            "type": "number",
+            "description": "Number of flex credits available at the start of the current billing cycle.",
+            "example": 100000
+          },
           "status": {
             "type": "string",
             "enum": [
@@ -11553,6 +12588,7 @@
                 "properties": {
                   "id": {
                     "type": "string",
+                    "format": "uuid",
                     "description": "Organization ID",
                     "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184"
                   },
@@ -11572,6 +12608,7 @@
                 "properties": {
                   "id": {
                     "type": "string",
+                    "format": "uuid",
                     "description": "Workspace ID",
                     "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f"
                   },
@@ -11616,11 +12653,13 @@
           },
           "workspaceId": {
             "type": "string",
+            "format": "uuid",
             "description": "ID of the workspace",
             "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f"
           },
           "organisationId": {
             "type": "string",
+            "format": "uuid",
             "description": "ID of the organization",
             "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184"
           }
@@ -11685,107 +12724,6 @@
         ],
         "description": "Uploaded document information"
       },
-      "KnowledgeBaseDocumentListResponse": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/KnowledgeBaseDocument"
-            }
-          }
-        },
-        "required": [
-          "data"
-        ],
-        "description": "List of knowledge base documents"
-      },
-      "KnowledgeBaseDocument": {
-        "type": "object",
-        "properties": {
-          "fileName": {
-            "type": "string",
-            "description": "Name of the document file",
-            "example": "product_requirements.pdf"
-          },
-          "fileSize": {
-            "type": "number",
-            "description": "Size of the document in bytes",
-            "example": 256000
-          },
-          "mimeType": {
-            "type": "string",
-            "description": "MIME type of the document",
-            "example": "application/pdf"
-          },
-          "uploadDate": {
-            "type": "string",
-            "description": "Date and time when the document was uploaded",
-            "example": "2023-05-15T10:30:00Z"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "processing",
-              "ready",
-              "error"
-            ],
-            "description": "Processing status of the document",
-            "example": "ready"
-          },
-          "url": {
-            "type": "string",
-            "description": "URL to access the document if available",
-            "example": "https://example.com/documents/product_requirements.pdf"
-          }
-        },
-        "required": [
-          "fileName",
-          "fileSize",
-          "mimeType",
-          "uploadDate",
-          "status"
-        ],
-        "description": "Knowledge base document data"
-      },
-      "KnowledgeBaseDocumentUploadPayload": {
-        "type": "object",
-        "properties": {
-          "fileName": {
-            "type": "string",
-            "description": "Name of the document file",
-            "example": "product_requirements.pdf"
-          },
-          "fileContent": {
-            "type": "string",
-            "description": "Base64 encoded content of the file",
-            "example": "JVBERi0xLjMKJcTl8uXrp/Og0..."
-          },
-          "mimeType": {
-            "type": "string",
-            "description": "MIME type of the document",
-            "example": "application/pdf"
-          }
-        },
-        "required": [
-          "fileName",
-          "fileContent",
-          "mimeType"
-        ],
-        "description": "Knowledge base document upload request"
-      },
-      "KnowledgeBaseDocumentUploadResponse": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "$ref": "#/components/schemas/KnowledgeBaseDocument"
-          }
-        },
-        "required": [
-          "data"
-        ],
-        "description": "Uploaded document information"
-      },
       "RelationshipAction": {
         "type": "string",
         "enum": [
@@ -11828,110 +12766,6 @@
           }
         },
         "description": "Request body for managing opportunity relationships"
-      },
-      "ProfessionalOrganizationStatus": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Organisation"
-          }
-        ],
-        "properties": {
-          "subscriptionType": {
-            "type": "string",
-            "enum": [
-              "PERSONAL",
-              "PROFESSIONAL"
-            ],
-            "description": "Subscription type of the organization",
-            "example": "PROFESSIONAL"
-          },
-          "tokensUsed": {
-            "type": "number",
-            "description": "Number of tokens used by the organization",
-            "example": 125000
-          },
-          "unprocessedFeedbackCount": {
-            "type": "number",
-            "description": "Count of unprocessed feedback items",
-            "example": 15
-          }
-        },
-        "required": [
-          "subscriptionType",
-          "tokensUsed",
-          "unprocessedFeedbackCount"
-        ],
-        "description": "Organization status for professional subscription"
-      },
-      "PersonalOrganizationStatus": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Organisation"
-          }
-        ],
-        "properties": {
-          "subscriptionType": {
-            "type": "string",
-            "enum": [
-              "PERSONAL",
-              "PROFESSIONAL"
-            ],
-            "description": "Subscription type of the organization",
-            "example": "PROFESSIONAL"
-          },
-          "tokensUsed": {
-            "type": "number",
-            "description": "Number of tokens used by the organization",
-            "example": 125000
-          },
-          "unprocessedFeedbackCount": {
-            "type": "number",
-            "description": "Count of unprocessed feedback items",
-            "example": 15
-          },
-          "hasRemainingTokens": {
-            "type": "boolean",
-            "description": "Whether the organization has remaining tokens",
-            "example": true
-          },
-          "tokensPercentageUsed": {
-            "type": "number",
-            "description": "Percentage of token allocation used (max 100%)",
-            "example": 75
-          },
-          "tokensRemaining": {
-            "type": "number",
-            "description": "Number of tokens remaining in allocation",
-            "example": 25000
-          },
-          "hasExceededTokenAllowance": {
-            "type": "boolean",
-            "description": "Whether the organization has exceeded its token allowance",
-            "example": false
-          },
-          "isOverMaxEntities": {
-            "type": "boolean",
-            "description": "Whether the organization has exceeded its entity limit",
-            "example": false
-          },
-          "remainingEntities": {
-            "type": "number",
-            "description": "Number of entities remaining in allocation",
-            "example": 250
-          }
-        },
-        "required": [
-          "subscriptionType",
-          "tokensUsed",
-          "unprocessedFeedbackCount",
-          "hasRemainingTokens",
-          "tokensPercentageUsed",
-          "tokensRemaining",
-          "hasExceededTokenAllowance",
-          "isOverMaxEntities",
-          "remainingEntities"
-        ],
-        "description": "Organization status for personal subscription with usage limits"
       },
       "OutcomeRelationshipsPayload": {
         "type": "object",
@@ -11991,11 +12825,244 @@
         },
         "description": "Request body for managing solution relationships"
       },
+      "PrioritiseSolutionsRequest": {
+        "type": "object",
+        "properties": {
+          "beforeId": {
+            "type": "string",
+            "nullable": true,
+            "format": "uuid",
+            "description": "ID of solution before which to place the solutions, or null to place at the end"
+          },
+          "nextId": {
+            "type": "string",
+            "nullable": true,
+            "format": "uuid",
+            "description": "ID of solution after which to place the solutions, or null to place at the beginning"
+          },
+          "solutionIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "description": "List of solution IDs to move"
+          }
+        },
+        "required": [
+          "beforeId",
+          "solutionIds"
+        ],
+        "description": "Request schema for prioritising solutions",
+        "example": {
+          "beforeId": "e3f2c1b4-7a8d-5e4f-b8c7-7a8c9d1e2f3a",
+          "nextId": null,
+          "solutionIds": [
+            "d4e71c2b-a498-42af-b7f5-69de06a0d7c4",
+            "b5f2a0f4-6a7d-4a1f-9e6b-6bcb9c22d7c4",
+            "c0e195d9-b918-4a3a-bd8b-f730361d044e"
+          ]
+        }
+      },
+      "PrioritiseSolutionsResponse": {
+        "type": "object",
+        "properties": {
+          "updatedSolutions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "priority": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "priority"
+              ]
+            },
+            "description": "List of updated solutions with their new priorities. Note this may include more solutions than the input, if a re-balance was triggered."
+          }
+        },
+        "required": [
+          "updatedSolutions"
+        ],
+        "description": "Response schema for prioritising solutions",
+        "example": {
+          "updatedSolutions": [
+            {
+              "id": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4",
+              "priority": "a0"
+            },
+            {
+              "id": "b5f2a0f4-6a7d-4a1f-9e6b-6bcb9c22d7c4",
+              "priority": "a1"
+            },
+            {
+              "id": "c0e195d9-b918-4a3a-bd8b-f730361d044e",
+              "priority": "a2"
+            }
+          ]
+        }
+      },
+      "CreateKnowledgeFromUrlPayload": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "The URL the user wishes to create knowledge from",
+            "example": "https://example.com"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "description": "Request schema for creating knowledge from a URL"
+      },
+      "SingleKnowledgeResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Knowledge"
+              }
+            ],
+            "properties": {
+              "content": {
+                "type": "string",
+                "description": "Knowledge content - the full content of the knowledge, this will only be available post processing",
+                "example": "A collection of best practices for AI in healthcare"
+              }
+            }
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "description": "Response containing a single knowledge"
+      },
+      "Knowledge": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Knowledge ID",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "initial",
+              "processing",
+              "completed",
+              "error"
+            ],
+            "description": "Knowledge state",
+            "example": "initial"
+          },
+          "title": {
+            "type": "string",
+            "description": "Knowledge title",
+            "example": "Best practices for AI in healthcare"
+          },
+          "description": {
+            "type": "string",
+            "description": "Knowledge description - a short summary of the knowledge",
+            "example": "A collection of best practices for AI in healthcare"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Knowledge creation timestamp",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "Knowledge update timestamp",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "text",
+              "url",
+              "pdf"
+            ],
+            "description": "Type of knowledge",
+            "example": "text"
+          },
+          "pdfFileUrl": {
+            "type": "string",
+            "description": "URL of the PDF file of the knowledge (mutually exclusive with url)",
+            "example": "https://example.com/document.pdf"
+          },
+          "txtFileUrl": {
+            "type": "string",
+            "description": "URL of the TXT file of the knowledge (mutually exclusive with url)",
+            "example": "/knowledge/7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL of the knowledge source (mutually exclusive with filePath)",
+            "example": "https://example.com/document.pdf"
+          }
+        },
+        "required": [
+          "id",
+          "state",
+          "title",
+          "description",
+          "createdAt",
+          "updatedAt",
+          "source"
+        ],
+        "description": "Knowledge entity schema"
+      },
+      "CreateKnowledgeFromPdfPayload": {
+        "type": "object",
+        "properties": {
+          "fileName": {
+            "type": "string",
+            "description": "The name of the file to create knowledge from",
+            "example": "example.pdf"
+          }
+        },
+        "required": [
+          "fileName"
+        ],
+        "description": "Request schema for creating knowledge from a PDF file"
+      },
+      "SingleKnowledgeResponseWithUploadPdf": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/Knowledge"
+          }
+        ],
+        "properties": {
+          "uploadUrl": {
+            "type": "string",
+            "description": "The single use secure S3 upload url.",
+            "example": "https://s3.amazonaws.com/basilisk-ai-dev/example.pdf"
+          }
+        },
+        "required": [
+          "uploadUrl"
+        ],
+        "description": "Response containing a single knowledge"
+      },
       "CreateKnowledgePayload": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "An optional Knowledge ID must be a uuid",
             "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
           },
@@ -12022,76 +13089,6 @@
         ],
         "description": "Request schema for creating knowledge"
       },
-      "SingleKnowledgeResponse": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Knowledge"
-              }
-            ],
-            "properties": {
-              "content": {
-                "type": "string",
-                "description": "Knowledge content - the full content of the knowledge",
-                "example": "A collection of best practices for AI in healthcare"
-              }
-            },
-            "required": [
-              "content"
-            ]
-          }
-        },
-        "required": [
-          "data"
-        ],
-        "description": "Response containing a single knowledge"
-      },
-      "Knowledge": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Knowledge ID",
-            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
-          },
-          "filePath": {
-            "type": "string",
-            "description": "File path of the knowledge",
-            "example": "/knowledge/7b9e5d2c-f314-48a9-be56-9843a2f6c019"
-          },
-          "title": {
-            "type": "string",
-            "description": "Knowledge title",
-            "example": "Best practices for AI in healthcare"
-          },
-          "description": {
-            "type": "string",
-            "description": "Knowledge description - a short summary of the knowledge",
-            "example": "A collection of best practices for AI in healthcare"
-          },
-          "createdAt": {
-            "type": "string",
-            "description": "Knowledge creation timestamp",
-            "example": "2023-01-01T00:00:00.000Z"
-          },
-          "updatedAt": {
-            "type": "string",
-            "description": "Knowledge update timestamp",
-            "example": "2023-01-01T00:00:00.000Z"
-          }
-        },
-        "required": [
-          "id",
-          "filePath",
-          "title",
-          "description",
-          "createdAt",
-          "updatedAt"
-        ],
-        "description": "Knowledge entity schema"
-      },
       "KnowledgeArrayResponse": {
         "type": "object",
         "properties": {
@@ -12111,11 +13108,6 @@
       "UpdateKnowledgePayload": {
         "type": "object",
         "properties": {
-          "filePath": {
-            "type": "string",
-            "description": "File path of the knowledge",
-            "example": "/knowledge/7b9e5d2c-f314-48a9-be56-9843a2f6c019"
-          },
           "title": {
             "type": "string",
             "description": "Knowledge title",
@@ -12128,11 +13120,175 @@
           },
           "content": {
             "type": "string",
-            "description": "Knowledge content - the full content of the knowledge",
+            "description": "The content of the knowledge, only available for text sources, optional",
             "example": "A collection of best practices for AI in healthcare"
           }
         },
         "description": "Request schema for updating knowledge"
+      },
+      "UpdateStrategyDocumentPayload": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "report": {
+                "type": "string",
+                "description": "Strategy document report",
+                "example": "# Strategy Document\n## Mission\n..."
+              }
+            },
+            "required": [
+              "report"
+            ]
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "description": "Request schema for updating a strategy document"
+      },
+      "SimilaritySearchResponse": {
+        "type": "object",
+        "properties": {
+          "opportunities": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "nodeId": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "nodeId"
+                  ]
+                }
+              },
+              "required": [
+                "id"
+              ]
+            },
+            "description": "Array of matched opportunities"
+          },
+          "knowledge": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id"
+                  ]
+                }
+              },
+              "required": [
+                "id"
+              ]
+            },
+            "description": "Array of matched knowledge items"
+          },
+          "insights": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "nodeId": {
+                      "type": "string"
+                    },
+                    "feedbackId": {
+                      "type": "string"
+                    },
+                    "content": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "nodeId"
+                  ]
+                }
+              },
+              "required": [
+                "id"
+              ]
+            },
+            "description": "Array of matched insights items"
+          },
+          "solutions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number"
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "nodeId": {
+                      "type": "string"
+                    },
+                    "status": {},
+                    "content": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "nodeId"
+                  ]
+                }
+              },
+              "required": [
+                "id"
+              ]
+            },
+            "description": "Array of matched solutions items"
+          },
+          "totalResults": {
+            "type": "number",
+            "description": "Total number of results"
+          }
+        },
+        "description": "Similarity search response data"
       }
     },
     "parameters": {
