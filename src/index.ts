@@ -11,6 +11,7 @@ import { knowledgeTools, runKnowledgeTool } from "./knowledge.js";
 import { opportunityTools, runOpportunityTool } from "./opportunity.js";
 import { outcomeTools, runOutcomeTool } from "./outcomes.js";
 import { requirementTools, runRequirementTool } from "./requirements.js";
+import { runSimilaritySearchTool, similaritySearchTools } from "./similarity-search.js";
 import { runSolutionTool, solutionTools } from "./solutions.js";
 import { runWorkspaceTool, workspaceTool } from "./workspace.js";
 
@@ -36,6 +37,7 @@ const allTools = [
   ...knowledgeTools,
   ...workspaceTool,
   ...feedbackTools,
+  ...similaritySearchTools,
 ];
 
 allTools.forEach(tool => {});
@@ -67,6 +69,7 @@ server.setRequestHandler(CallToolRequestSchema, async request => {
       runOutcomeTool,
       runRequirementTool,
       runFeedbackTool,
+      runSimilaritySearchTool,
     ];
 
     const runner = runners.find(
