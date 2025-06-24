@@ -34,7 +34,7 @@ export const SimilaritySearchArgsSchema = z.object({
 export const similaritySearchTool = {
   name: SimilaritySearchTool.SimilaritySearch,
   description:
-    "Perform a semantic similarity search across the workspace. This searches through knowledge documents, feedback insights, opportunities, and solutions to find content similar to your query.",
+    "Perform a semantic similarity search across the workspace. This searches through knowledge documents, feedback insights, opportunities, and solutions to find content similar to your query. Each result will contain a nodeId or an id. These can be used to retrieve the full content of the entity using the get_knowledge_document, get_insight, get_opportunity, or get_solution tools.",
   inputSchema: SimilaritySearchArgsSchema,
 };
 
