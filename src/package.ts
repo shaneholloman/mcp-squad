@@ -13,6 +13,7 @@ import {
 } from "./requirements.js";
 import { vercelTool as solutionsTool, SolutionTool } from "./solutions.js";
 import { vercelTool as workspaceTool, WorkspaceTool } from "./workspace.js";
+import { vercelTool as similaritySearchTool, SimilaritySearchTool } from "./similarity-search.js";
 
 export const toolsEnum = z.enum([
   KnowledgeTool.CreateKnowledge,
@@ -45,6 +46,7 @@ export const toolsEnum = z.enum([
   RequirementTool.DeleteRequirement,
   WorkspaceTool.GetWorkspace,
   WorkspaceTool.UpdateWorkspace,
+  SimilaritySearchTool.SimilaritySearch,
 ]);
 
 export const tools = (context: UserContext) => ({
@@ -55,4 +57,5 @@ export const tools = (context: UserContext) => ({
   ...feedbackTool(context),
   ...outcomesTool(context),
   ...requirementsTool(context),
+  ...similaritySearchTool(context),
 });
