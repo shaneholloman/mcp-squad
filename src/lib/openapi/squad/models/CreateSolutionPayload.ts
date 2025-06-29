@@ -94,6 +94,12 @@ export interface CreateSolutionPayload {
      */
     ownerId?: string;
     /**
+     * Product Requirements Document content for the solution
+     * @type {string}
+     * @memberof CreateSolutionPayload
+     */
+    prd: string;
+    /**
      * 
      * @type {Array<string>}
      * @memberof CreateSolutionPayload
@@ -149,6 +155,7 @@ export function instanceOfCreateSolutionPayload(value: object): value is CreateS
     if (!('title' in value) || value['title'] === undefined) return false;
     if (!('description' in value) || value['description'] === undefined) return false;
     if (!('createdBy' in value) || value['createdBy'] === undefined) return false;
+    if (!('prd' in value) || value['prd'] === undefined) return false;
     return true;
 }
 
@@ -173,6 +180,7 @@ export function CreateSolutionPayloadFromJSONTyped(json: any, ignoreDiscriminato
         'cons': json['cons'] == null ? undefined : json['cons'],
         'createdBy': json['createdBy'],
         'ownerId': json['ownerId'] == null ? undefined : json['ownerId'],
+        'prd': json['prd'],
         'opportunityIds': json['opportunityIds'] == null ? undefined : json['opportunityIds'],
         'requirementIds': json['requirementIds'] == null ? undefined : json['requirementIds'],
     };
@@ -200,6 +208,7 @@ export function CreateSolutionPayloadToJSONTyped(value?: CreateSolutionPayload |
         'cons': value['cons'],
         'createdBy': value['createdBy'],
         'ownerId': value['ownerId'],
+        'prd': value['prd'],
         'opportunityIds': value['opportunityIds'],
         'requirementIds': value['requirementIds'],
     };

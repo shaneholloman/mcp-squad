@@ -88,6 +88,12 @@ export interface UpdateSolutionPayload {
      */
     ownerId?: string;
     /**
+     * Product Requirements Document content for the solution
+     * @type {string}
+     * @memberof UpdateSolutionPayload
+     */
+    prd?: string;
+    /**
      * 
      * @type {Array<string>}
      * @memberof UpdateSolutionPayload
@@ -163,6 +169,7 @@ export function UpdateSolutionPayloadFromJSONTyped(json: any, ignoreDiscriminato
         'cons': json['cons'] == null ? undefined : json['cons'],
         'createdBy': json['createdBy'] == null ? undefined : json['createdBy'],
         'ownerId': json['ownerId'] == null ? undefined : json['ownerId'],
+        'prd': json['prd'] == null ? undefined : json['prd'],
         'opportunityIds': json['opportunityIds'] == null ? undefined : json['opportunityIds'],
         'requirementIds': json['requirementIds'] == null ? undefined : json['requirementIds'],
     };
@@ -189,6 +196,7 @@ export function UpdateSolutionPayloadToJSONTyped(value?: UpdateSolutionPayload |
         'cons': value['cons'],
         'createdBy': value['createdBy'],
         'ownerId': value['ownerId'],
+        'prd': value['prd'],
         'opportunityIds': value['opportunityIds'],
         'requirementIds': value['requirementIds'],
     };

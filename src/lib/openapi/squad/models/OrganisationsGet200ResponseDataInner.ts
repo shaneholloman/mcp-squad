@@ -20,11 +20,23 @@ import { mapValues } from '../runtime.js';
  */
 export interface OrganisationsGet200ResponseDataInner {
     /**
+     * Number of tokens used
+     * @type {number}
+     * @memberof OrganisationsGet200ResponseDataInner
+     */
+    tokensUsed: number;
+    /**
      * Number of unprocessed feedback items
      * @type {number}
      * @memberof OrganisationsGet200ResponseDataInner
      */
     unprocessedFeedbackCount: number;
+    /**
+     * Subscription type
+     * @type {string}
+     * @memberof OrganisationsGet200ResponseDataInner
+     */
+    subscriptionType: OrganisationsGet200ResponseDataInnerSubscriptionTypeEnum;
     /**
      * 
      * @type {string}
@@ -44,6 +56,24 @@ export interface OrganisationsGet200ResponseDataInner {
      */
     stripeCustomerId?: string;
     /**
+     * Maximum number of tokens allowed per day
+     * @type {number}
+     * @memberof OrganisationsGet200ResponseDataInner
+     */
+    maxDailyTokens: number;
+    /**
+     * Maximum number of entities allowed
+     * @type {number}
+     * @memberof OrganisationsGet200ResponseDataInner
+     */
+    maxEntities: number;
+    /**
+     * Current count of entities created
+     * @type {number}
+     * @memberof OrganisationsGet200ResponseDataInner
+     */
+    entitiesCreatedCount: number;
+    /**
      * URL to the organisation's homepage
      * @type {string}
      * @memberof OrganisationsGet200ResponseDataInner
@@ -62,24 +92,6 @@ export interface OrganisationsGet200ResponseDataInner {
      */
     createdAt: string;
     /**
-     * Account type
-     * @type {string}
-     * @memberof OrganisationsGet200ResponseDataInner
-     */
-    accountType: OrganisationsGet200ResponseDataInnerAccountTypeEnum;
-    /**
-     * The start date of the current billing cycle.
-     * @type {string}
-     * @memberof OrganisationsGet200ResponseDataInner
-     */
-    billingCycleStartDate: string;
-    /**
-     * Number of flex credits available at the start of the current billing cycle.
-     * @type {number}
-     * @memberof OrganisationsGet200ResponseDataInner
-     */
-    billingCycleFlexCreditAllowance: number;
-    /**
      * Last update timestamp
      * @type {string}
      * @memberof OrganisationsGet200ResponseDataInner
@@ -97,12 +109,11 @@ export interface OrganisationsGet200ResponseDataInner {
 /**
  * @export
  */
-export const OrganisationsGet200ResponseDataInnerAccountTypeEnum = {
-    Hobby: 'HOBBY',
-    Professional: 'PROFESSIONAL',
-    Team: 'TEAM'
+export const OrganisationsGet200ResponseDataInnerSubscriptionTypeEnum = {
+    Personal: 'PERSONAL',
+    Professional: 'PROFESSIONAL'
 } as const;
-export type OrganisationsGet200ResponseDataInnerAccountTypeEnum = typeof OrganisationsGet200ResponseDataInnerAccountTypeEnum[keyof typeof OrganisationsGet200ResponseDataInnerAccountTypeEnum];
+export type OrganisationsGet200ResponseDataInnerSubscriptionTypeEnum = typeof OrganisationsGet200ResponseDataInnerSubscriptionTypeEnum[keyof typeof OrganisationsGet200ResponseDataInnerSubscriptionTypeEnum];
 
 /**
  * @export
@@ -118,13 +129,15 @@ export type OrganisationsGet200ResponseDataInnerStatusEnum = typeof Organisation
  * Check if a given object implements the OrganisationsGet200ResponseDataInner interface.
  */
 export function instanceOfOrganisationsGet200ResponseDataInner(value: object): value is OrganisationsGet200ResponseDataInner {
+    if (!('tokensUsed' in value) || value['tokensUsed'] === undefined) return false;
     if (!('unprocessedFeedbackCount' in value) || value['unprocessedFeedbackCount'] === undefined) return false;
+    if (!('subscriptionType' in value) || value['subscriptionType'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('maxDailyTokens' in value) || value['maxDailyTokens'] === undefined) return false;
+    if (!('maxEntities' in value) || value['maxEntities'] === undefined) return false;
+    if (!('entitiesCreatedCount' in value) || value['entitiesCreatedCount'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
-    if (!('accountType' in value) || value['accountType'] === undefined) return false;
-    if (!('billingCycleStartDate' in value) || value['billingCycleStartDate'] === undefined) return false;
-    if (!('billingCycleFlexCreditAllowance' in value) || value['billingCycleFlexCreditAllowance'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
     return true;
@@ -140,16 +153,18 @@ export function OrganisationsGet200ResponseDataInnerFromJSONTyped(json: any, ign
     }
     return {
         
+        'tokensUsed': json['tokensUsed'],
         'unprocessedFeedbackCount': json['unprocessedFeedbackCount'],
+        'subscriptionType': json['subscriptionType'],
         'id': json['id'],
         'name': json['name'],
         'stripeCustomerId': json['stripeCustomerId'] == null ? undefined : json['stripeCustomerId'],
+        'maxDailyTokens': json['maxDailyTokens'],
+        'maxEntities': json['maxEntities'],
+        'entitiesCreatedCount': json['entitiesCreatedCount'],
         'homepageUrl': json['homepageUrl'] == null ? undefined : json['homepageUrl'],
         'logoUrl': json['logoUrl'] == null ? undefined : json['logoUrl'],
         'createdAt': json['createdAt'],
-        'accountType': json['accountType'],
-        'billingCycleStartDate': json['billingCycleStartDate'],
-        'billingCycleFlexCreditAllowance': json['billingCycleFlexCreditAllowance'],
         'updatedAt': json['updatedAt'],
         'status': json['status'],
     };
@@ -166,16 +181,18 @@ export function OrganisationsGet200ResponseDataInnerToJSONTyped(value?: Organisa
 
     return {
         
+        'tokensUsed': value['tokensUsed'],
         'unprocessedFeedbackCount': value['unprocessedFeedbackCount'],
+        'subscriptionType': value['subscriptionType'],
         'id': value['id'],
         'name': value['name'],
         'stripeCustomerId': value['stripeCustomerId'],
+        'maxDailyTokens': value['maxDailyTokens'],
+        'maxEntities': value['maxEntities'],
+        'entitiesCreatedCount': value['entitiesCreatedCount'],
         'homepageUrl': value['homepageUrl'],
         'logoUrl': value['logoUrl'],
         'createdAt': value['createdAt'],
-        'accountType': value['accountType'],
-        'billingCycleStartDate': value['billingCycleStartDate'],
-        'billingCycleFlexCreditAllowance': value['billingCycleFlexCreditAllowance'],
         'updatedAt': value['updatedAt'],
         'status': value['status'],
     };

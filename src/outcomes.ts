@@ -420,7 +420,9 @@ export const manageOutcomeRelationships = async (
       outcomeRelationshipsPayload: relationshipsPayload,
     });
 
-    const updatedOutcome = await squadClient(context.jwt).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet({
+    const updatedOutcome = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet({
       orgId,
       workspaceId,
       outcomeId,

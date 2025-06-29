@@ -299,13 +299,11 @@ export const deleteOpportunity = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              data: {
-                id: opportunityId,
-              },
+          text: JSON.stringify({
+            data: {
+              id: opportunityId,
             },
-          ),
+          }),
         },
       ],
     };
@@ -366,13 +364,11 @@ export const generateSolutions = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              data: {
-                id: opportunityId,
-              },
+          text: JSON.stringify({
+            data: {
+              id: opportunityId,
             },
-          ),
+          }),
         },
       ],
     };

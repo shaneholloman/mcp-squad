@@ -117,6 +117,12 @@ export interface Solution {
      * @memberof Solution
      */
     priority: string;
+    /**
+     * Product Requirements Document content for the solution
+     * @type {string}
+     * @memberof Solution
+     */
+    prd: string;
 }
 
 
@@ -171,6 +177,7 @@ export function instanceOfSolution(value: object): value is Solution {
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     if (!('priority' in value) || value['priority'] === undefined) return false;
+    if (!('prd' in value) || value['prd'] === undefined) return false;
     return true;
 }
 
@@ -199,6 +206,7 @@ export function SolutionFromJSONTyped(json: any, ignoreDiscriminator: boolean): 
         'createdAt': json['createdAt'],
         'updatedAt': json['updatedAt'],
         'priority': json['priority'],
+        'prd': json['prd'],
     };
 }
 
@@ -228,6 +236,7 @@ export function SolutionToJSONTyped(value?: Solution | null, ignoreDiscriminator
         'createdAt': value['createdAt'],
         'updatedAt': value['updatedAt'],
         'priority': value['priority'],
+        'prd': value['prd'],
     };
 }
 

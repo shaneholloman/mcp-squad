@@ -35,7 +35,8 @@ const statusEnum = z
 // Schema for creating a solution
 export const CreateSolutionArgsSchema = z.object({
   title: z.string().describe("A short title for the solution"),
-  description: z.string().describe("A description of the solution."),
+  description: z.string().describe("A short description of the solution."),
+  prd: z.string().optional().describe("A full PRD for the solution."),
   pros: z
     .array(z.string())
     .describe(
@@ -65,7 +66,7 @@ export const createSolution = async (
 
     const safeBody = CreateSolutionArgsSchema.parse(body);
 
-    const { title, description, pros, cons, status } = safeBody;
+    const { title, description, pros, cons, status, prd } = safeBody;
 
     const solutionPayload: CreateSolutionPayload = {
       title,
@@ -74,6 +75,7 @@ export const createSolution = async (
       cons,
       status: status || CreateSolutionPayloadStatusEnum.New,
       createdBy: "user",
+      prd: prd || "",
     };
 
     const data = await squadClient({
@@ -220,6 +222,7 @@ export const UpdateSolutionArgsSchema = z.object({
   solutionId: z.string().describe("The ID of the solution to update"),
   title: z.string().optional().describe("Updated title"),
   description: z.string().optional().describe("Updated description"),
+  prd: z.string().optional().describe("Updated PRD"),
   pros: z
     .array(z.string())
     .optional()
@@ -246,7 +249,8 @@ export const updateSolution = async (
 
     const safeSolution = UpdateSolutionArgsSchema.parse(body);
 
-    const { solutionId, title, description, pros, cons, status } = safeSolution;
+    const { solutionId, title, description, pros, cons, status, prd } =
+      safeSolution;
 
     // First, get the existing solution to preserve any values we're not updating
     const existingSolution = await squadClient({
@@ -263,6 +267,7 @@ export const updateSolution = async (
       pros: pros || existingSolution.data.pros,
       cons: cons || existingSolution.data.cons,
       status: status || existingSolution.data.status,
+      prd: prd || existingSolution.data.prd,
     };
 
     const solution = await squadClient({
@@ -337,7 +342,7 @@ export const deleteSolution = async (
           text: JSON.stringify({
             data: {
               id: solutionId,
-            }
+            },
           }),
         },
       ],
@@ -409,7 +414,9 @@ export const manageSolutionRelationships = async (
       solutionRelationshipsPayload: relationshipsPayload,
     });
 
-    const data = await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
+    const data = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
       orgId,
       workspaceId,
       solutionId,

@@ -169,6 +169,12 @@ export interface SolutionWithRelationships {
      * @memberof SolutionWithRelationships
      */
     priority: string;
+    /**
+     * Product Requirements Document content for the solution
+     * @type {string}
+     * @memberof SolutionWithRelationships
+     */
+    prd: string;
 }
 
 
@@ -227,6 +233,7 @@ export function instanceOfSolutionWithRelationships(value: object): value is Sol
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     if (!('priority' in value) || value['priority'] === undefined) return false;
+    if (!('prd' in value) || value['prd'] === undefined) return false;
     return true;
 }
 
@@ -259,6 +266,7 @@ export function SolutionWithRelationshipsFromJSONTyped(json: any, ignoreDiscrimi
         'createdAt': json['createdAt'],
         'updatedAt': json['updatedAt'],
         'priority': json['priority'],
+        'prd': json['prd'],
     };
 }
 
@@ -292,6 +300,7 @@ export function SolutionWithRelationshipsToJSONTyped(value?: SolutionWithRelatio
         'createdAt': value['createdAt'],
         'updatedAt': value['updatedAt'],
         'priority': value['priority'],
+        'prd': value['prd'],
     };
 }
 

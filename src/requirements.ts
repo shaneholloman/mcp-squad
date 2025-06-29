@@ -452,7 +452,9 @@ export const manageRequirementRelationships = async (
       requirementRelationshipsPayload: relationshipsPayload,
     });
 
-    const updatedRequirement = await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet({
+    const updatedRequirement = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdRequirementsRequirementIdGet({
       orgId,
       workspaceId,
       requirementId,
@@ -462,11 +464,9 @@ export const manageRequirementRelationships = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              updatedRequirement,
-            },
-          ),
+          text: JSON.stringify({
+            updatedRequirement,
+          }),
         },
       ],
     };

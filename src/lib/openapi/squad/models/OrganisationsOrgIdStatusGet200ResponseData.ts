@@ -13,6 +13,21 @@
  */
 
 import { mapValues } from '../runtime.js';
+import type { PersonalOrganizationStatus } from './PersonalOrganizationStatus.js';
+import {
+    PersonalOrganizationStatusFromJSON,
+    PersonalOrganizationStatusFromJSONTyped,
+    PersonalOrganizationStatusToJSON,
+    PersonalOrganizationStatusToJSONTyped,
+} from './PersonalOrganizationStatus.js';
+import type { ProfessionalOrganizationStatus } from './ProfessionalOrganizationStatus.js';
+import {
+    ProfessionalOrganizationStatusFromJSON,
+    ProfessionalOrganizationStatusFromJSONTyped,
+    ProfessionalOrganizationStatusToJSON,
+    ProfessionalOrganizationStatusToJSONTyped,
+} from './ProfessionalOrganizationStatus.js';
+
 /**
  * Organization status data
  * @export
@@ -20,47 +35,23 @@ import { mapValues } from '../runtime.js';
  */
 export interface OrganisationsOrgIdStatusGet200ResponseData {
     /**
-     * Whether the organization has remaining credits
-     * @type {boolean}
-     * @memberof OrganisationsOrgIdStatusGet200ResponseData
-     */
-    hasRemainingCredits: boolean;
-    /**
-     * The number of credits available for the current billing cycle
-     * @type {number}
-     * @memberof OrganisationsOrgIdStatusGet200ResponseData
-     */
-    billingCycleCreditAllowance: number;
-    /**
-     * The number of credits used in the current billing cycle so far
-     * @type {number}
-     * @memberof OrganisationsOrgIdStatusGet200ResponseData
-     */
-    billingCycleCreditUsage: number;
-    /**
-     * The number of flex credits used in the current billing cycle so far
-     * @type {number}
-     * @memberof OrganisationsOrgIdStatusGet200ResponseData
-     */
-    billingCycleFlexCreditUsage: number;
-    /**
-     * The date the current billing cycle started
+     * Subscription type of the organization
      * @type {string}
      * @memberof OrganisationsOrgIdStatusGet200ResponseData
      */
-    currentBillingCycleStartDate: string;
+    subscriptionType: OrganisationsOrgIdStatusGet200ResponseDataSubscriptionTypeEnum;
     /**
-     * The date the current billing cycle will end
-     * @type {string}
-     * @memberof OrganisationsOrgIdStatusGet200ResponseData
-     */
-    currentBillingCycleEndDate: string;
-    /**
-     * The total number of members in the organization
+     * Number of tokens used by the organization
      * @type {number}
      * @memberof OrganisationsOrgIdStatusGet200ResponseData
      */
-    totalMembers: number;
+    tokensUsed: number;
+    /**
+     * Count of unprocessed feedback items
+     * @type {number}
+     * @memberof OrganisationsOrgIdStatusGet200ResponseData
+     */
+    unprocessedFeedbackCount: number;
     /**
      * 
      * @type {string}
@@ -80,6 +71,24 @@ export interface OrganisationsOrgIdStatusGet200ResponseData {
      */
     stripeCustomerId?: string;
     /**
+     * Maximum number of tokens allowed per day
+     * @type {number}
+     * @memberof OrganisationsOrgIdStatusGet200ResponseData
+     */
+    maxDailyTokens: number;
+    /**
+     * Maximum number of entities allowed
+     * @type {number}
+     * @memberof OrganisationsOrgIdStatusGet200ResponseData
+     */
+    maxEntities: number;
+    /**
+     * Current count of entities created
+     * @type {number}
+     * @memberof OrganisationsOrgIdStatusGet200ResponseData
+     */
+    entitiesCreatedCount: number;
+    /**
      * URL to the organisation's homepage
      * @type {string}
      * @memberof OrganisationsOrgIdStatusGet200ResponseData
@@ -98,24 +107,6 @@ export interface OrganisationsOrgIdStatusGet200ResponseData {
      */
     createdAt: string;
     /**
-     * Account type
-     * @type {string}
-     * @memberof OrganisationsOrgIdStatusGet200ResponseData
-     */
-    accountType: OrganisationsOrgIdStatusGet200ResponseDataAccountTypeEnum;
-    /**
-     * The start date of the current billing cycle.
-     * @type {string}
-     * @memberof OrganisationsOrgIdStatusGet200ResponseData
-     */
-    billingCycleStartDate: string;
-    /**
-     * Number of flex credits available at the start of the current billing cycle.
-     * @type {number}
-     * @memberof OrganisationsOrgIdStatusGet200ResponseData
-     */
-    billingCycleFlexCreditAllowance: number;
-    /**
      * Last update timestamp
      * @type {string}
      * @memberof OrganisationsOrgIdStatusGet200ResponseData
@@ -127,18 +118,53 @@ export interface OrganisationsOrgIdStatusGet200ResponseData {
      * @memberof OrganisationsOrgIdStatusGet200ResponseData
      */
     status: OrganisationsOrgIdStatusGet200ResponseDataStatusEnum;
+    /**
+     * Whether the organization has remaining tokens
+     * @type {boolean}
+     * @memberof OrganisationsOrgIdStatusGet200ResponseData
+     */
+    hasRemainingTokens: boolean;
+    /**
+     * Percentage of token allocation used (max 100%)
+     * @type {number}
+     * @memberof OrganisationsOrgIdStatusGet200ResponseData
+     */
+    tokensPercentageUsed: number;
+    /**
+     * Number of tokens remaining in allocation
+     * @type {number}
+     * @memberof OrganisationsOrgIdStatusGet200ResponseData
+     */
+    tokensRemaining: number;
+    /**
+     * Whether the organization has exceeded its token allowance
+     * @type {boolean}
+     * @memberof OrganisationsOrgIdStatusGet200ResponseData
+     */
+    hasExceededTokenAllowance: boolean;
+    /**
+     * Whether the organization has exceeded its entity limit
+     * @type {boolean}
+     * @memberof OrganisationsOrgIdStatusGet200ResponseData
+     */
+    isOverMaxEntities: boolean;
+    /**
+     * Number of entities remaining in allocation
+     * @type {number}
+     * @memberof OrganisationsOrgIdStatusGet200ResponseData
+     */
+    remainingEntities: number;
 }
 
 
 /**
  * @export
  */
-export const OrganisationsOrgIdStatusGet200ResponseDataAccountTypeEnum = {
-    Hobby: 'HOBBY',
-    Professional: 'PROFESSIONAL',
-    Team: 'TEAM'
+export const OrganisationsOrgIdStatusGet200ResponseDataSubscriptionTypeEnum = {
+    Personal: 'PERSONAL',
+    Professional: 'PROFESSIONAL'
 } as const;
-export type OrganisationsOrgIdStatusGet200ResponseDataAccountTypeEnum = typeof OrganisationsOrgIdStatusGet200ResponseDataAccountTypeEnum[keyof typeof OrganisationsOrgIdStatusGet200ResponseDataAccountTypeEnum];
+export type OrganisationsOrgIdStatusGet200ResponseDataSubscriptionTypeEnum = typeof OrganisationsOrgIdStatusGet200ResponseDataSubscriptionTypeEnum[keyof typeof OrganisationsOrgIdStatusGet200ResponseDataSubscriptionTypeEnum];
 
 /**
  * @export
@@ -154,21 +180,23 @@ export type OrganisationsOrgIdStatusGet200ResponseDataStatusEnum = typeof Organi
  * Check if a given object implements the OrganisationsOrgIdStatusGet200ResponseData interface.
  */
 export function instanceOfOrganisationsOrgIdStatusGet200ResponseData(value: object): value is OrganisationsOrgIdStatusGet200ResponseData {
-    if (!('hasRemainingCredits' in value) || value['hasRemainingCredits'] === undefined) return false;
-    if (!('billingCycleCreditAllowance' in value) || value['billingCycleCreditAllowance'] === undefined) return false;
-    if (!('billingCycleCreditUsage' in value) || value['billingCycleCreditUsage'] === undefined) return false;
-    if (!('billingCycleFlexCreditUsage' in value) || value['billingCycleFlexCreditUsage'] === undefined) return false;
-    if (!('currentBillingCycleStartDate' in value) || value['currentBillingCycleStartDate'] === undefined) return false;
-    if (!('currentBillingCycleEndDate' in value) || value['currentBillingCycleEndDate'] === undefined) return false;
-    if (!('totalMembers' in value) || value['totalMembers'] === undefined) return false;
+    if (!('subscriptionType' in value) || value['subscriptionType'] === undefined) return false;
+    if (!('tokensUsed' in value) || value['tokensUsed'] === undefined) return false;
+    if (!('unprocessedFeedbackCount' in value) || value['unprocessedFeedbackCount'] === undefined) return false;
     if (!('id' in value) || value['id'] === undefined) return false;
     if (!('name' in value) || value['name'] === undefined) return false;
+    if (!('maxDailyTokens' in value) || value['maxDailyTokens'] === undefined) return false;
+    if (!('maxEntities' in value) || value['maxEntities'] === undefined) return false;
+    if (!('entitiesCreatedCount' in value) || value['entitiesCreatedCount'] === undefined) return false;
     if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
-    if (!('accountType' in value) || value['accountType'] === undefined) return false;
-    if (!('billingCycleStartDate' in value) || value['billingCycleStartDate'] === undefined) return false;
-    if (!('billingCycleFlexCreditAllowance' in value) || value['billingCycleFlexCreditAllowance'] === undefined) return false;
     if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
     if (!('status' in value) || value['status'] === undefined) return false;
+    if (!('hasRemainingTokens' in value) || value['hasRemainingTokens'] === undefined) return false;
+    if (!('tokensPercentageUsed' in value) || value['tokensPercentageUsed'] === undefined) return false;
+    if (!('tokensRemaining' in value) || value['tokensRemaining'] === undefined) return false;
+    if (!('hasExceededTokenAllowance' in value) || value['hasExceededTokenAllowance'] === undefined) return false;
+    if (!('isOverMaxEntities' in value) || value['isOverMaxEntities'] === undefined) return false;
+    if (!('remainingEntities' in value) || value['remainingEntities'] === undefined) return false;
     return true;
 }
 
@@ -182,24 +210,26 @@ export function OrganisationsOrgIdStatusGet200ResponseDataFromJSONTyped(json: an
     }
     return {
         
-        'hasRemainingCredits': json['hasRemainingCredits'],
-        'billingCycleCreditAllowance': json['billingCycleCreditAllowance'],
-        'billingCycleCreditUsage': json['billingCycleCreditUsage'],
-        'billingCycleFlexCreditUsage': json['billingCycleFlexCreditUsage'],
-        'currentBillingCycleStartDate': json['currentBillingCycleStartDate'],
-        'currentBillingCycleEndDate': json['currentBillingCycleEndDate'],
-        'totalMembers': json['totalMembers'],
+        'subscriptionType': json['subscriptionType'],
+        'tokensUsed': json['tokensUsed'],
+        'unprocessedFeedbackCount': json['unprocessedFeedbackCount'],
         'id': json['id'],
         'name': json['name'],
         'stripeCustomerId': json['stripeCustomerId'] == null ? undefined : json['stripeCustomerId'],
+        'maxDailyTokens': json['maxDailyTokens'],
+        'maxEntities': json['maxEntities'],
+        'entitiesCreatedCount': json['entitiesCreatedCount'],
         'homepageUrl': json['homepageUrl'] == null ? undefined : json['homepageUrl'],
         'logoUrl': json['logoUrl'] == null ? undefined : json['logoUrl'],
         'createdAt': json['createdAt'],
-        'accountType': json['accountType'],
-        'billingCycleStartDate': json['billingCycleStartDate'],
-        'billingCycleFlexCreditAllowance': json['billingCycleFlexCreditAllowance'],
         'updatedAt': json['updatedAt'],
         'status': json['status'],
+        'hasRemainingTokens': json['hasRemainingTokens'],
+        'tokensPercentageUsed': json['tokensPercentageUsed'],
+        'tokensRemaining': json['tokensRemaining'],
+        'hasExceededTokenAllowance': json['hasExceededTokenAllowance'],
+        'isOverMaxEntities': json['isOverMaxEntities'],
+        'remainingEntities': json['remainingEntities'],
     };
 }
 
@@ -214,24 +244,26 @@ export function OrganisationsOrgIdStatusGet200ResponseDataToJSONTyped(value?: Or
 
     return {
         
-        'hasRemainingCredits': value['hasRemainingCredits'],
-        'billingCycleCreditAllowance': value['billingCycleCreditAllowance'],
-        'billingCycleCreditUsage': value['billingCycleCreditUsage'],
-        'billingCycleFlexCreditUsage': value['billingCycleFlexCreditUsage'],
-        'currentBillingCycleStartDate': value['currentBillingCycleStartDate'],
-        'currentBillingCycleEndDate': value['currentBillingCycleEndDate'],
-        'totalMembers': value['totalMembers'],
+        'subscriptionType': value['subscriptionType'],
+        'tokensUsed': value['tokensUsed'],
+        'unprocessedFeedbackCount': value['unprocessedFeedbackCount'],
         'id': value['id'],
         'name': value['name'],
         'stripeCustomerId': value['stripeCustomerId'],
+        'maxDailyTokens': value['maxDailyTokens'],
+        'maxEntities': value['maxEntities'],
+        'entitiesCreatedCount': value['entitiesCreatedCount'],
         'homepageUrl': value['homepageUrl'],
         'logoUrl': value['logoUrl'],
         'createdAt': value['createdAt'],
-        'accountType': value['accountType'],
-        'billingCycleStartDate': value['billingCycleStartDate'],
-        'billingCycleFlexCreditAllowance': value['billingCycleFlexCreditAllowance'],
         'updatedAt': value['updatedAt'],
         'status': value['status'],
+        'hasRemainingTokens': value['hasRemainingTokens'],
+        'tokensPercentageUsed': value['tokensPercentageUsed'],
+        'tokensRemaining': value['tokensRemaining'],
+        'hasExceededTokenAllowance': value['hasExceededTokenAllowance'],
+        'isOverMaxEntities': value['isOverMaxEntities'],
+        'remainingEntities': value['remainingEntities'],
     };
 }
 
