@@ -160,10 +160,10 @@ export const listOutcomes = async (
 export const GetOutcomeArgsSchema = z.object({
   outcomeId: z.string().describe("The ID of the outcome to retrieve"),
   relationships: z
-    .array(z.enum(["opportunities", "solutions", "requirements", "feedback"]))
+    .array(z.enum(["opportunities", "solutions", "feedback"]))
     .optional()
     .describe(
-      "Relationships to include in the response. Opportunities are problem statements identified for the organisation. Solutions are proposed approaches to address opportunities. Requirements are detailed steps to implement a solution. Feedback is additional information or insights related to the opportunity.",
+      "Relationships to include in the response. Opportunities are problem statements identified for the organisation. Solutions are proposed approaches to address opportunities. Feedback is additional information or insights related to the opportunity.",
     )
     .default([]),
 });

@@ -11,8 +11,8 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
-    // to enforce using type for object type definitions, can be type or interface 
-    "@typescript-eslint/consistent-type-definitions": ["error", "type"], 
+    // to enforce using type for object type definitions, can be type or interface
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"],
 
     "prettier/prettier": "error",
     "no-unused-vars": "off",
@@ -35,7 +35,7 @@
       }
     }
   ],
-  "ignorePatterns": ["dist/", "node_modules/", "scripts/"],
+  "ignorePatterns": ["dist/", "node_modules/", "scripts/", "src/lib/openapi/"],
   "env": {
     "browser": true,
     "es2021": true

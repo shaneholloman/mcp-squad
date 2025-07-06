@@ -35,8 +35,8 @@ const statusEnum = z
 // Schema for creating a solution
 export const CreateSolutionArgsSchema = z.object({
   title: z.string().describe("A short title for the solution"),
-  description: z.string().describe("A short description of the solution."),
-  prd: z.string().optional().describe("A full PRD for the solution."),
+  description: z.string().describe("A brief AI-friendly summary of the solution for context and search purposes. Keep this concise."),
+  prd: z.string().describe("The complete Product Requirements Document (PRD) containing the full detailed specification, implementation plan, and requirements for this solution. This is the primary content field."),
   pros: z
     .array(z.string())
     .describe(
@@ -53,7 +53,7 @@ export const CreateSolutionArgsSchema = z.object({
 export const createSolutionTool = {
   name: SolutionTool.CreateSolution,
   description:
-    "Create a new solution. A solution is a proposed approach to address an opportunity. A solution will be a detailed plan to address an opportunity.",
+    "Create a new solution. A solution is a proposed approach to address an opportunity. The 'prd' field should contain the complete detailed specification, while 'description' should be a brief summary for AI context.",
   inputSchema: CreateSolutionArgsSchema,
 };
 
@@ -75,7 +75,7 @@ export const createSolution = async (
       cons,
       status: status || CreateSolutionPayloadStatusEnum.New,
       createdBy: "user",
-      prd: prd || "",
+      prd: prd,
     };
 
     const data = await squadClient({
@@ -159,10 +159,10 @@ export const listSolutions = async (
 export const GetSolutionArgsSchema = z.object({
   solutionId: z.string().describe("The ID of the solution to retrieve"),
   relationships: z
-    .array(z.enum(["opportunities", "requirements", "outcomes", "feedback"]))
+    .array(z.enum(["opportunities", "outcomes", "feedback"]))
     .optional()
     .describe(
-      "Relationships to include in the response. Opportunities are problem statements identified for the organisation. Outcomes are business objectives/goals. Requirements are detailed steps to implement a solution. Feedback is additional information or insights related to the opportunity.",
+      "Relationships to include in the response. Opportunities are problem statements identified for the organisation. Outcomes are business objectives/goals. Feedback is additional information or insights related to the opportunity.",
     )
     .default([]),
 });
@@ -221,8 +221,8 @@ export const getSolution = async (
 export const UpdateSolutionArgsSchema = z.object({
   solutionId: z.string().describe("The ID of the solution to update"),
   title: z.string().optional().describe("Updated title"),
-  description: z.string().optional().describe("Updated description"),
-  prd: z.string().optional().describe("Updated PRD"),
+  description: z.string().optional().describe("Updated brief AI-friendly summary for context and search purposes"),
+  prd: z.string().optional().describe("Updated complete Product Requirements Document (PRD) containing the full detailed specification and implementation plan"),
   pros: z
     .array(z.string())
     .optional()
@@ -376,16 +376,12 @@ export const ManageSolutionRelationshipsArgsSchema = z.object({
     .array(z.string())
     .optional()
     .describe("IDs of opportunities to relate to this solution"),
-  requirementIds: z
-    .array(z.string())
-    .optional()
-    .describe("IDs of requirements to relate to this solution"),
 });
 
 export const manageSolutionRelationshipsTool = {
   name: SolutionTool.ManageSolutionRelationships,
   description:
-    "Add or remove relationships between a solution and other entities (opportunities or requirements).",
+    "Add or remove relationships between a solution and other entities (opportunities).",
   inputSchema: ManageSolutionRelationshipsArgsSchema,
 };
 
@@ -399,10 +395,10 @@ export const manageSolutionRelationships = async (
     const { orgId, workspaceId } = context;
 
     const safeArgs = ManageSolutionRelationshipsArgsSchema.parse(args);
-    const { solutionId, action, opportunityIds, requirementIds } = safeArgs;
+    const { solutionId, action, opportunityIds } = safeArgs;
 
     const relationshipsPayload: SolutionRelationshipsPayload = {
-      requirementIds: requirementIds || [],
+      requirementIds: [],
       opportunityIds: opportunityIds || [],
     };
 

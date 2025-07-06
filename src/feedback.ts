@@ -110,7 +110,7 @@ export const listFeedback = async (
 export const GetFeedbackArgsSchema = z.object({
   feedbackId: z.string().describe("The ID of the feedback entry to retrieve"),
   relationships: z
-    .enum(["opportunities", "solutions", "requirements", "outcomes"])
+    .enum(["opportunities", "solutions", "outcomes"])
     .optional()
     .describe("Show other entities that this feedback is related to."),
 });
