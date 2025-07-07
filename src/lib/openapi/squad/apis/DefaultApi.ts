@@ -68,7 +68,6 @@ import type {
   OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDelete200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest,
-  OrganisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRequest,
   OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200Response,
   OrganisationsOrgIdWorkspacesWorkspaceIdTopicsTopicIdDelete200Response,
@@ -199,8 +198,6 @@ import {
     OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequestFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequestToJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRequestFromJSON,
-    OrganisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRequestToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseFromJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGet200ResponseToJSON,
     OrganisationsOrgIdWorkspacesWorkspaceIdTopicsPost200ResponseFromJSON,
@@ -588,12 +585,6 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostOperationRe
     orgId: string;
     workspaceId: string;
     organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest: OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRequest;
-}
-
-export interface OrganisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostOperationRequest {
-    orgId: string;
-    workspaceId: string;
-    organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRequest: OrganisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRequest;
 }
 
 export interface OrganisationsOrgIdWorkspacesWorkspaceIdTopicsGetRequest {
@@ -3982,65 +3973,6 @@ export class DefaultApi extends runtime.BaseAPI {
     async organisationsOrgIdWorkspacesWorkspaceIdTestProxyPost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<OrganisationsOrgIdWorkspacesWorkspaceIdTestProxyPost200Response> {
         const response = await this.organisationsOrgIdWorkspacesWorkspaceIdTestProxyPostRaw(requestParameters, initOverrides);
         return await response.value();
-    }
-
-    /**
-     * Tracks token usage for a given request
-     * Track token usage
-     */
-    async organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRaw(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
-        if (requestParameters['orgId'] == null) {
-            throw new runtime.RequiredError(
-                'orgId',
-                'Required parameter "orgId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePost().'
-            );
-        }
-
-        if (requestParameters['workspaceId'] == null) {
-            throw new runtime.RequiredError(
-                'workspaceId',
-                'Required parameter "workspaceId" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePost().'
-            );
-        }
-
-        if (requestParameters['organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRequest'] == null) {
-            throw new runtime.RequiredError(
-                'organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRequest',
-                'Required parameter "organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRequest" was null or undefined when calling organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePost().'
-            );
-        }
-
-        const queryParameters: any = {};
-
-        const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'application/json';
-
-        if (this.configuration && this.configuration.accessToken) {
-            const token = this.configuration.accessToken;
-            const tokenString = await token("bearerAuth", []);
-
-            if (tokenString) {
-                headerParameters["Authorization"] = `Bearer ${tokenString}`;
-            }
-        }
-        const response = await this.request({
-            path: `/organisations/{orgId}/workspaces/{workspaceId}/token-usage`.replace(`{${"orgId"}}`, encodeURIComponent(String(requestParameters['orgId']))).replace(`{${"workspaceId"}}`, encodeURIComponent(String(requestParameters['workspaceId']))),
-            method: 'POST',
-            headers: headerParameters,
-            query: queryParameters,
-            body: OrganisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRequestToJSON(requestParameters['organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRequest']),
-        }, initOverrides);
-
-        return new runtime.VoidApiResponse(response);
-    }
-
-    /**
-     * Tracks token usage for a given request
-     * Track token usage
-     */
-    async organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePost(requestParameters: OrganisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostOperationRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
-        await this.organisationsOrgIdWorkspacesWorkspaceIdTokenUsagePostRaw(requestParameters, initOverrides);
     }
 
     /**

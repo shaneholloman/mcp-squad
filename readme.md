@@ -1,32 +1,27 @@
-Squad MCP Server
-================================
+# Squad MCP Server
 
-A **Model Context Protocol (MCP) server** that connects *Squad* — the AI‑powered product‑discovery and strategy platform — to any MCP‑aware large‑language‑model (LLM) application. It exposes a rich tool‑kit for creating, querying and updating product‑strategy artefacts (opportunities, solutions, outcomes, requirements, knowledge, workspaces and feedback) directly from your favourite AI co‑pilot.
+A **Model Context Protocol (MCP) server** that connects _Squad_ — the AI‑powered product‑discovery and strategy platform — to any MCP‑aware large‑language‑model (LLM) application. It exposes a rich tool‑kit for creating, querying and updating product‑strategy artefacts (opportunities, solutions, outcomes, requirements, knowledge, workspaces and feedback) directly from your favourite AI co‑pilot.
 
 This repository also contains the source code for the `@squadai/tools` NPM package, which provides the client-side tools for interacting with the Squad API.
 
-Why?
-----
+## Why?
 
 With the Squad MCP Server you can research, ideate and plan products in one conversational flow, without ever leaving your editor or chat window.
 
-✨ Tools
---------
+## ✨ Tools
 
-| Tool prefix     | Purpose                                        | Typical actions  |
-|-----------------|------------------------------------------------|------------------|
-| opportunity_*   | Discover and refine product opportunities      | create, list, update |
-| solution_*      | Generate and iterate on solutions              | create, list, update |
-| outcome_*       | Track desired business or user outcomes        | create, list |
-| requirement_*   | Capture detailed requirements                  | create, list |
-| knowledge_*     | Store useful references / research             | create, list |
-| workspace_*     | Manage Squad workspaces                        | get, update |
-| feedback_*      | Send customer or analytics feedback into Squad | create |
+| Tool prefix     | Purpose                                        | Typical actions      |
+| --------------- | ---------------------------------------------- | -------------------- |
+| opportunity\_\* | Discover and refine product opportunities      | create, list, update |
+| solution\_\*    | Generate and iterate on solutions              | create, list, update |
+| outcome\_\*     | Track desired business or user outcomes        | create, list         |
+| knowledge\_\*   | Store useful references / research             | create, list         |
+| workspace\_\*   | Manage Squad workspaces                        | get, update          |
+| feedback\_\*    | Send customer or analytics feedback into Squad | create               |
 
 Each tool conforms to the MCP JSON‑schema format so agents can introspect inputs and outputs automatically.
 
-🚀 Quick start
---------------
+## 🚀 Quick start
 
 ### 1 · Obtain a Squad API key
 
@@ -79,10 +74,9 @@ npm run build           # transpiles to ./dist
 node dist/index.js
 ```
 
-----
+---
 
-📦 NPM Package (@squadai/tools)
------------------------------
+## 📦 NPM Package (@squadai/tools)
 
 This repository also includes an NPM package, `@squadai/tools`, which provides a set of functions for interacting with the Squad API programmatically from your own Node.js applications or scripts.
 
@@ -101,24 +95,23 @@ You can then import and use the tools in your code. You will still need a Squad 
 Example usage (Vercel AI):
 
 ```typescript
-import { generateText, tool } from 'ai';
-import { tools as squadTools } from "@squadai/tools"
+import { generateText, tool } from "ai";
+import { tools as squadTools } from "@squadai/tools";
 
 const result = await generateText({
   model: yourModel,
   tools: squadTools({
     jwt: "JWT",
     orgId: "orgId",
-    workspaceId: "workspaceId"
+    workspaceId: "workspaceId",
   }),
-  prompt: 'What is the weather in San Francisco?',
+  prompt: "What is the weather in San Francisco?",
 });
 ```
 
-⚙️ Integrating with an MCP client
---------------------------------
+## ⚙️ Integrating with an MCP client
 
-Add a *mcpServers* entry to your client’s configuration (e.g. **claude_desktop_config.json** or **Cursor**). Adjust **command** to match the installation method.
+Add a _mcpServers_ entry to your client’s configuration (e.g. **claude_desktop_config.json** or **Cursor**). Adjust **command** to match the installation method.
 
 ### Using the stand‑alone executable
 
@@ -129,9 +122,9 @@ Add a *mcpServers* entry to your client’s configuration (e.g. **claude_desktop
       "command": "C:/path/to/squad-mcp.exe",
       "env": {
         "SQUAD_API_KEY": "YOUR_API_KEY_HERE",
-      }
-    }
-  }
+      },
+    },
+  },
 }
 ```
 
@@ -142,18 +135,12 @@ Add a *mcpServers* entry to your client’s configuration (e.g. **claude_desktop
   "mcpServers": {
     "meet-squad": {
       "command": "docker",
-      "args": [
-        "run",
-        "-i",
-        "--rm",
-        "-e", "SQUAD_API_KEY",
-        "mcp/meet-squad"
-      ],
+      "args": ["run", "-i", "--rm", "-e", "SQUAD_API_KEY", "mcp/meet-squad"],
       "env": {
         "SQUAD_API_KEY": "YOUR_API_KEY_HERE",
-      }
-    }
-  }
+      },
+    },
+  },
 }
 ```
 
@@ -161,22 +148,20 @@ Prefer `"command": "npx"` if you installed via NPX.
 
 Once your client restarts you should see the Squad tools (hammer 🔨 icon) listed and ready for use.
 
-🛠️ Environment variables
-------------------------
+## 🛠️ Environment variables
 
-| Variable         | Required | Default      | Description                                                     |
-|------------------|----------|--------------|-----------------------------------------------------------------|
-| `SQUAD_API_KEY`  | Yes      | –            | Personal access token generated in Squad                        |
-| `SQUAD_ENV`      | No       | `production` | Override the Squad API base URL (`staging`, `development`, …)   |
+| Variable        | Required | Default      | Description                                                   |
+| --------------- | -------- | ------------ | ------------------------------------------------------------- |
+| `SQUAD_API_KEY` | Yes      | –            | Personal access token generated in Squad                      |
+| `SQUAD_ENV`     | No       | `production` | Override the Squad API base URL (`staging`, `development`, …) |
 
-🧑‍💻 Development
-----------------
+## 🧑‍💻 Development
 
 ```bash
 npm install
-npm run format      
+npm run format
 npm run openapi:squad   # re‑generate typed client from openapi/squad.json
-npm run build       
+npm run build
 node dist/index.js
 ```
 

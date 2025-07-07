@@ -35,7 +35,8 @@ const statusEnum = z
 // Schema for creating a solution
 export const CreateSolutionArgsSchema = z.object({
   title: z.string().describe("A short title for the solution"),
-  description: z.string().describe("A description of the solution."),
+  description: z.string().describe("A brief AI-friendly summary of the solution for context and search purposes. Keep this concise."),
+  prd: z.string().describe("The complete Product Requirements Document (PRD) containing the full detailed specification, implementation plan, and requirements for this solution. This is the primary content field."),
   pros: z
     .array(z.string())
     .describe(
@@ -52,7 +53,7 @@ export const CreateSolutionArgsSchema = z.object({
 export const createSolutionTool = {
   name: SolutionTool.CreateSolution,
   description:
-    "Create a new solution. A solution is a proposed approach to address an opportunity. A solution will be a detailed plan to address an opportunity.",
+    "Create a new solution. A solution is a proposed approach to address an opportunity. The 'prd' field should contain the complete detailed specification, while 'description' should be a brief summary for AI context.",
   inputSchema: CreateSolutionArgsSchema,
 };
 
@@ -65,7 +66,7 @@ export const createSolution = async (
 
     const safeBody = CreateSolutionArgsSchema.parse(body);
 
-    const { title, description, pros, cons, status } = safeBody;
+    const { title, description, pros, cons, status, prd } = safeBody;
 
     const solutionPayload: CreateSolutionPayload = {
       title,
@@ -74,6 +75,7 @@ export const createSolution = async (
       cons,
       status: status || CreateSolutionPayloadStatusEnum.New,
       createdBy: "user",
+      prd: prd,
     };
 
     const data = await squadClient({
@@ -157,10 +159,10 @@ export const listSolutions = async (
 export const GetSolutionArgsSchema = z.object({
   solutionId: z.string().describe("The ID of the solution to retrieve"),
   relationships: z
-    .array(z.enum(["opportunities", "requirements", "outcomes", "feedback"]))
+    .array(z.enum(["opportunities", "outcomes", "feedback"]))
     .optional()
     .describe(
-      "Relationships to include in the response. Opportunities are problem statements identified for the organisation. Outcomes are business objectives/goals. Requirements are detailed steps to implement a solution. Feedback is additional information or insights related to the opportunity.",
+      "Relationships to include in the response. Opportunities are problem statements identified for the organisation. Outcomes are business objectives/goals. Feedback is additional information or insights related to the opportunity.",
     )
     .default([]),
 });
@@ -219,7 +221,8 @@ export const getSolution = async (
 export const UpdateSolutionArgsSchema = z.object({
   solutionId: z.string().describe("The ID of the solution to update"),
   title: z.string().optional().describe("Updated title"),
-  description: z.string().optional().describe("Updated description"),
+  description: z.string().optional().describe("Updated brief AI-friendly summary for context and search purposes"),
+  prd: z.string().optional().describe("Updated complete Product Requirements Document (PRD) containing the full detailed specification and implementation plan"),
   pros: z
     .array(z.string())
     .optional()
@@ -246,7 +249,8 @@ export const updateSolution = async (
 
     const safeSolution = UpdateSolutionArgsSchema.parse(body);
 
-    const { solutionId, title, description, pros, cons, status } = safeSolution;
+    const { solutionId, title, description, pros, cons, status, prd } =
+      safeSolution;
 
     // First, get the existing solution to preserve any values we're not updating
     const existingSolution = await squadClient({
@@ -263,6 +267,7 @@ export const updateSolution = async (
       pros: pros || existingSolution.data.pros,
       cons: cons || existingSolution.data.cons,
       status: status || existingSolution.data.status,
+      prd: prd || existingSolution.data.prd,
     };
 
     const solution = await squadClient({
@@ -337,7 +342,7 @@ export const deleteSolution = async (
           text: JSON.stringify({
             data: {
               id: solutionId,
-            }
+            },
           }),
         },
       ],
@@ -371,16 +376,12 @@ export const ManageSolutionRelationshipsArgsSchema = z.object({
     .array(z.string())
     .optional()
     .describe("IDs of opportunities to relate to this solution"),
-  requirementIds: z
-    .array(z.string())
-    .optional()
-    .describe("IDs of requirements to relate to this solution"),
 });
 
 export const manageSolutionRelationshipsTool = {
   name: SolutionTool.ManageSolutionRelationships,
   description:
-    "Add or remove relationships between a solution and other entities (opportunities or requirements).",
+    "Add or remove relationships between a solution and other entities (opportunities).",
   inputSchema: ManageSolutionRelationshipsArgsSchema,
 };
 
@@ -394,10 +395,10 @@ export const manageSolutionRelationships = async (
     const { orgId, workspaceId } = context;
 
     const safeArgs = ManageSolutionRelationshipsArgsSchema.parse(args);
-    const { solutionId, action, opportunityIds, requirementIds } = safeArgs;
+    const { solutionId, action, opportunityIds } = safeArgs;
 
     const relationshipsPayload: SolutionRelationshipsPayload = {
-      requirementIds: requirementIds || [],
+      requirementIds: [],
       opportunityIds: opportunityIds || [],
     };
 
@@ -409,7 +410,9 @@ export const manageSolutionRelationships = async (
       solutionRelationshipsPayload: relationshipsPayload,
     });
 
-    const data = await squadClient({ jwt: context.jwt }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
+    const data = await squadClient({
+      jwt: context.jwt,
+    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
       orgId,
       workspaceId,
       solutionId,

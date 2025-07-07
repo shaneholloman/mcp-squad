@@ -136,10 +136,10 @@ export const listOpportunities = async (
 export const GetOpportunityArgsSchema = z.object({
   opportunityId: z.string().describe("The ID of the opportunity to retrieve"),
   relationships: z
-    .array(z.enum(["solutions", "requirements", "outcomes", "feedback"]))
+    .array(z.enum(["solutions", "outcomes", "feedback"]))
     .optional()
     .describe(
-      "Relationships to include in the response. Outcomes are business objectives/goals. Solutions are proposed approaches to address opportunities. Requirements are detailed steps to implement a solution. Feedback is additional information or insights related to the opportunity.",
+      "Relationships to include in the response. Outcomes are business objectives/goals. Solutions are proposed approaches to address opportunities. Feedback is additional information or insights related to the opportunity.",
     )
     .default([]),
 });
@@ -299,13 +299,11 @@ export const deleteOpportunity = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              data: {
-                id: opportunityId,
-              },
+          text: JSON.stringify({
+            data: {
+              id: opportunityId,
             },
-          ),
+          }),
         },
       ],
     };
@@ -366,13 +364,11 @@ export const generateSolutions = async (
       content: [
         {
           type: "text",
-          text: JSON.stringify(
-            {
-              data: {
-                id: opportunityId,
-              },
+          text: JSON.stringify({
+            data: {
+              id: opportunityId,
             },
-          ),
+          }),
         },
       ],
     };

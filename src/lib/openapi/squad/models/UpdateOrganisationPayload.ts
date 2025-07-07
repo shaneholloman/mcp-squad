@@ -38,24 +38,6 @@ export interface UpdateOrganisationPayload {
      */
     logoUrl?: string | null;
     /**
-     * Account type
-     * @type {string}
-     * @memberof UpdateOrganisationPayload
-     */
-    accountType?: UpdateOrganisationPayloadAccountTypeEnum;
-    /**
-     * The start date of the current billing cycle.
-     * @type {string}
-     * @memberof UpdateOrganisationPayload
-     */
-    billingCycleStartDate?: string;
-    /**
-     * Number of flex credits available at the start of the current billing cycle.
-     * @type {number}
-     * @memberof UpdateOrganisationPayload
-     */
-    billingCycleFlexCreditAllowance?: number;
-    /**
      * Status of the organisation
      * @type {string}
      * @memberof UpdateOrganisationPayload
@@ -63,16 +45,6 @@ export interface UpdateOrganisationPayload {
     status?: UpdateOrganisationPayloadStatusEnum;
 }
 
-
-/**
- * @export
- */
-export const UpdateOrganisationPayloadAccountTypeEnum = {
-    Hobby: 'HOBBY',
-    Professional: 'PROFESSIONAL',
-    Team: 'TEAM'
-} as const;
-export type UpdateOrganisationPayloadAccountTypeEnum = typeof UpdateOrganisationPayloadAccountTypeEnum[keyof typeof UpdateOrganisationPayloadAccountTypeEnum];
 
 /**
  * @export
@@ -104,9 +76,6 @@ export function UpdateOrganisationPayloadFromJSONTyped(json: any, ignoreDiscrimi
         'name': json['name'] == null ? undefined : json['name'],
         'homepageUrl': json['homepageUrl'] == null ? undefined : json['homepageUrl'],
         'logoUrl': json['logoUrl'] == null ? undefined : json['logoUrl'],
-        'accountType': json['accountType'] == null ? undefined : json['accountType'],
-        'billingCycleStartDate': json['billingCycleStartDate'] == null ? undefined : json['billingCycleStartDate'],
-        'billingCycleFlexCreditAllowance': json['billingCycleFlexCreditAllowance'] == null ? undefined : json['billingCycleFlexCreditAllowance'],
         'status': json['status'] == null ? undefined : json['status'],
     };
 }
@@ -125,9 +94,6 @@ export function UpdateOrganisationPayloadToJSONTyped(value?: UpdateOrganisationP
         'name': value['name'],
         'homepageUrl': value['homepageUrl'],
         'logoUrl': value['logoUrl'],
-        'accountType': value['accountType'],
-        'billingCycleStartDate': value['billingCycleStartDate'],
-        'billingCycleFlexCreditAllowance': value['billingCycleFlexCreditAllowance'],
         'status': value['status'],
     };
 }
