@@ -251,6 +251,7 @@ export const updateSolution = async (
 
     const updatePayload: UpdateSolutionPayload = {
       ...safePayload,
+      updateTriggeredBy: "AI",
     };
 
     const solution = await squadClient({
