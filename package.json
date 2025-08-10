@@ -20,7 +20,7 @@
     "format": "eslint . --ignore-path .gitignore",
     "format:fix": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts)\"",
     "build:package": "tsup --config tsup.config.ts",
-    "openapi:squad": "openapi-generator-cli generate -g typescript-fetch -c ./openapi-generator-config.json -i ./openapi/squad.json -o src/lib/openapi/squad && tsx ./scripts/openapi-client-esm-fix.ts",
+    "openapi:squad": "openapi-generator-cli generate -g typescript-fetch -c ./openapi-generator-config.json -i ./openapi/squad.json -o src/lib/openapi/squad && npx tsx ./scripts/openapi-client-esm-fix.ts",
     "bun:build:macos:arm64": "bun build ./src/index.ts --compile --target=bun-darwin-arm64 --outfile ./bin/squad-mcp-macos-arm64",
     "bun:build:macos:64": "bun build ./src/index.ts --compile --target=bun-darwin-x64 --outfile ./bin/squad-mcp-macos-64",
     "bun:build:linux": "bun build ./src/index.ts --compile --target=bun-linux-x64 --outfile ./bin/squad-mcp-linux",
