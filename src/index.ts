@@ -41,8 +41,6 @@ const allTools = [
   ...similaritySearchTools,
 ];
 
-allTools.forEach(tool => {});
-
 // Tool handlers
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   const toolsResponse = {
