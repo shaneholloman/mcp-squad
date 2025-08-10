@@ -247,27 +247,10 @@ export const updateSolution = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const safeSolution = UpdateSolutionArgsSchema.parse(body);
-
-    const { solutionId, title, description, pros, cons, status, prd } =
-      safeSolution;
-
-    // First, get the existing solution to preserve any values we're not updating
-    const existingSolution = await squadClient({
-      jwt: context.jwt,
-    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
-      orgId,
-      workspaceId,
-      solutionId,
-    });
+    const { solutionId, ...safePayload } = UpdateSolutionArgsSchema.parse(body);
 
     const updatePayload: UpdateSolutionPayload = {
-      title: title || existingSolution.data.title,
-      description: description || existingSolution.data.description,
-      pros: pros || existingSolution.data.pros,
-      cons: cons || existingSolution.data.cons,
-      status: status || existingSolution.data.status,
-      prd: prd || existingSolution.data.prd,
+      ...safePayload,
     };
 
     const solution = await squadClient({
