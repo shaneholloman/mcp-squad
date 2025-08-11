@@ -78,9 +78,9 @@ export const createSolution = async (
       prd: prd,
     };
 
-    const data = await squadClient({
-      jwt: context.jwt,
-    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost({
+    const data = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost({
       orgId,
       workspaceId,
       createSolutionPayload: solutionPayload,
@@ -127,9 +127,9 @@ export const listSolutions = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const solutions = await squadClient({
-      jwt: context.jwt,
-    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsGet({
+    const solutions = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsGet({
       orgId,
       workspaceId,
     });
@@ -184,9 +184,9 @@ export const getSolution = async (
     const { solutionId } = safeArgs;
     const { orgId, workspaceId } = context;
 
-    const solution = await squadClient({
-      jwt: context.jwt,
-    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
+    const solution = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
       orgId,
       workspaceId,
       solutionId,
@@ -247,32 +247,16 @@ export const updateSolution = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const safeSolution = UpdateSolutionArgsSchema.parse(body);
-
-    const { solutionId, title, description, pros, cons, status, prd } =
-      safeSolution;
-
-    // First, get the existing solution to preserve any values we're not updating
-    const existingSolution = await squadClient({
-      jwt: context.jwt,
-    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
-      orgId,
-      workspaceId,
-      solutionId,
-    });
+    const { solutionId, ...safePayload } = UpdateSolutionArgsSchema.parse(body);
 
     const updatePayload: UpdateSolutionPayload = {
-      title: title || existingSolution.data.title,
-      description: description || existingSolution.data.description,
-      pros: pros || existingSolution.data.pros,
-      cons: cons || existingSolution.data.cons,
-      status: status || existingSolution.data.status,
-      prd: prd || existingSolution.data.prd,
+      ...safePayload,
+      updateTriggeredBy: "AI",
     };
 
-    const solution = await squadClient({
-      jwt: context.jwt,
-    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPut({
+    const solution = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPut({
       orgId,
       workspaceId,
       solutionId,
@@ -327,9 +311,9 @@ export const deleteSolution = async (
     const safeArgs = DeleteSolutionArgsSchema.parse(args);
     const { solutionId } = safeArgs;
 
-    await squadClient({
-      jwt: context.jwt,
-    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDelete({
+    await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDelete({
       orgId,
       workspaceId,
       solutionId,
@@ -402,7 +386,7 @@ export const manageSolutionRelationships = async (
       opportunityIds: opportunityIds || [],
     };
 
-    await squadClient({ jwt: context.jwt }).manageSolutionRelationships({
+    await squadClient(context.jwt).manageSolutionRelationships({
       orgId,
       workspaceId,
       solutionId,
@@ -410,9 +394,9 @@ export const manageSolutionRelationships = async (
       solutionRelationshipsPayload: relationshipsPayload,
     });
 
-    const data = await squadClient({
-      jwt: context.jwt,
-    }).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
+    const data = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
       orgId,
       workspaceId,
       solutionId,

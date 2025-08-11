@@ -86,31 +86,14 @@ export const updateWorkspace = async (
   try {
     const { orgId } = context;
 
-    const safeBody = UpdateWorkspaceArgsSchema.parse(body);
-
-    const {
-      workspaceId,
-      name,
-      homepageUrl,
-      logoUrl,
-      missionStatement,
-      description,
-    } = safeBody;
-
-    const updatePayload: UpdateWorkspacePayload = {};
-    if (name !== undefined) updatePayload.name = name;
-    if (homepageUrl !== undefined) updatePayload.homepageUrl = homepageUrl;
-    if (logoUrl !== undefined) updatePayload.logoUrl = logoUrl;
-    if (missionStatement !== undefined)
-      updatePayload.missionStatement = missionStatement;
-    if (description !== undefined) updatePayload.description = description;
+    const { workspaceId, ...safePayload } = UpdateWorkspaceArgsSchema.parse(body);
 
     const workspace = await squadClient(
       context.jwt,
     ).organisationsOrgIdWorkspacesWorkspaceIdPut({
       orgId,
       workspaceId,
-      updateWorkspacePayload: updatePayload,
+      updateWorkspacePayload: safePayload,
     });
 
     return {

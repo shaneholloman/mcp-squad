@@ -225,14 +225,7 @@ export const updateOpportunity = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const safeBody = UpdateOpportunityArgsSchema.parse(body);
-
-    const { opportunityId, title, description, status } = safeBody;
-
-    const updatePayload: UpdateOpportunityPayload = {};
-    if (title !== undefined) updatePayload.title = title;
-    if (description !== undefined) updatePayload.description = description;
-    if (status !== undefined) updatePayload.status = status;
+    const { opportunityId, ...safePayload } = UpdateOpportunityArgsSchema.parse(body);
 
     const opportunity = await squadClient(
       context.jwt,
@@ -240,7 +233,7 @@ export const updateOpportunity = async (
       orgId,
       workspaceId,
       opportunityId,
-      updateOpportunityPayload: updatePayload,
+      updateOpportunityPayload: safePayload,
     });
 
     return {

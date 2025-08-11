@@ -49,9 +49,9 @@ export const similaritySearch = async (
 
     const { query, filters } = safeBody;
 
-    const data = await squadClient({
-      jwt: context.jwt,
-    }).organisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPost({
+    const data = await squadClient(
+      context.jwt,
+    ).organisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPost({
       orgId,
       workspaceId,
       organisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequest: {

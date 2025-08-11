@@ -251,42 +251,7 @@ export const updateOutcome = async (
   try {
     const { orgId, workspaceId } = context;
 
-    const safeBody = UpdateOutcomeArgsSchema.parse(body);
-
-    const {
-      outcomeId,
-      title,
-      description,
-      priority,
-      trend,
-      analyticEvents,
-      ownerId,
-    } = safeBody;
-
-    // First, get the existing outcome to preserve any values we're not updating
-    const existingOutcome = await squadClient(
-      context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet({
-      orgId,
-      workspaceId,
-      outcomeId,
-    });
-
-    // Create update payload with required fields and defaults
-    const updatePayload: UpdateOutcomePayload = {
-      title: title || existingOutcome.data.title,
-      description: description || existingOutcome.data.description,
-      priority:
-        priority !== undefined ? priority : existingOutcome.data.priority || 0,
-      trend: trend !== undefined ? trend : existingOutcome.data.trend || 0,
-      analyticEvents:
-        analyticEvents || existingOutcome.data.analyticEvents || [],
-    };
-
-    // Only add ownerId if it's defined in the update or existing outcome
-    if (ownerId !== undefined || existingOutcome.data.ownerId) {
-      updatePayload.ownerId = ownerId || existingOutcome.data.ownerId;
-    }
+    const { outcomeId, ...safePayload } = UpdateOutcomeArgsSchema.parse(body);
 
     const outcome = await squadClient(
       context.jwt,
@@ -294,7 +259,7 @@ export const updateOutcome = async (
       orgId,
       workspaceId,
       outcomeId,
-      updateOutcomePayload: updatePayload,
+      updateOutcomePayload: safePayload,
     });
 
     return {
