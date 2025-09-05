@@ -5,8 +5,14 @@ import {
 } from "../../openapi/squad/index.js";
 
 export const getAPIKey = () => {
+  // Check command-line argument first
+  if (global.SQUAD_API_KEY_OVERRIDE) {
+    return global.SQUAD_API_KEY_OVERRIDE;
+  }
+  
+  // Fall back to environment variable
   if (!process.env.SQUAD_API_KEY) {
-    throw new Error("SQUAD_API_KEY is not set");
+    throw new Error("SQUAD_API_KEY is not set. Please provide it via --api-key argument or SQUAD_API_KEY environment variable");
   }
   return process.env.SQUAD_API_KEY;
 };

@@ -46,8 +46,8 @@ export function squadClient(
   if (typeof optionsOrJwt === "string") {
     options = { jwt: optionsOrJwt };
   } else if (!optionsOrJwt) {
-    // No parameters - use API key
-    options = { apiKey: process.env.SQUAD_API_KEY };
+    // No parameters - use API key from command-line or environment
+    options = { apiKey: global.SQUAD_API_KEY_OVERRIDE || process.env.SQUAD_API_KEY };
   } else {
     options = optionsOrJwt;
   }

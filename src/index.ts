@@ -17,6 +17,32 @@ import {
 import { runSolutionTool, solutionTools } from "./solutions.js";
 import { runWorkspaceTool, workspaceTool } from "./workspace.js";
 
+// Parse command-line arguments
+function parseCommandLineArgs(): { apiKey?: string } {
+  const args = process.argv.slice(2);
+  const result: { apiKey?: string } = {};
+  
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === "--api-key" && i + 1 < args.length) {
+      result.apiKey = args[i + 1];
+      i++; // Skip next arg since we consumed it
+    }
+  }
+  
+  return result;
+}
+
+// Store the API key in a global variable
+declare global {
+  var SQUAD_API_KEY_OVERRIDE: string | undefined;
+}
+
+const cliArgs = parseCommandLineArgs();
+if (cliArgs.apiKey) {
+  global.SQUAD_API_KEY_OVERRIDE = cliArgs.apiKey;
+  console.error("[squad-mcp:server:info] Using API key from command line argument");
+}
+
 // Server setup
 const server = new Server(
   {
