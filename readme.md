@@ -64,7 +64,7 @@ docker run --rm -i \
   mcp/meet-squad
 ```
 
-#### Option C – NPX *(recommended for easy setup)*
+#### Option C – NPX _(recommended for easy setup)_
 
 ```bash
 # Run directly with npx (no installation required)
@@ -128,7 +128,7 @@ Add a _mcpServers_ entry to your client’s configuration (e.g. **claude_desktop
 ```jsonc
 {
   "mcpServers": {
-    "meet-squad": {
+    "@squadai/tools": {
       "command": "C:/path/to/squad-mcp.exe",
       "env": {
         "SQUAD_API_KEY": "YOUR_API_KEY_HERE",
@@ -143,7 +143,7 @@ Add a _mcpServers_ entry to your client’s configuration (e.g. **claude_desktop
 ```jsonc
 {
   "mcpServers": {
-    "meet-squad": {
+    "@squadai/tools": {
       "command": "docker",
       "args": ["run", "-i", "--rm", "-e", "SQUAD_API_KEY", "mcp/meet-squad"],
       "env": {
@@ -163,10 +163,10 @@ Add a _mcpServers_ entry to your client’s configuration (e.g. **claude_desktop
       "command": "npx",
       "args": ["@squadai/tools"],
       "env": {
-        "SQUAD_API_KEY": "YOUR_API_KEY_HERE"
-      }
-    }
-  }
+        "SQUAD_API_KEY": "YOUR_API_KEY_HERE",
+      },
+    },
+  },
 }
 ```
 
