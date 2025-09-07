@@ -64,6 +64,16 @@ docker run --rm -i \
   mcp/meet-squad
 ```
 
+#### Option C – NPX *(recommended for easy setup)*
+
+```bash
+# Run directly with npx (no installation required)
+SQUAD_API_KEY=<your‑key> npx @squadai/tools
+
+# Or pass API key as command argument
+npx @squadai/tools --api-key <your‑key>
+```
+
 #### Option C – From source
 
 ```bash
@@ -144,7 +154,31 @@ Add a _mcpServers_ entry to your client’s configuration (e.g. **claude_desktop
 }
 ```
 
-Prefer `"command": "npx"` if you installed via NPX.
+### Using NPX
+
+```jsonc
+{
+  "mcpServers": {
+    "squad": {
+      "command": "npx",
+      "args": ["@squadai/tools"],
+      "env": {
+        "SQUAD_API_KEY": "YOUR_API_KEY_HERE"
+      }
+    }
+  }
+}
+```
+
+### Claude Code Integration
+
+For [Claude Code](https://claude.ai/code), you can add the Squad MCP server using:
+
+```bash
+claude mcp add squad -e SQUAD_API_KEY=YOUR_API_KEY_HERE -- npx @squadai/tools
+```
+
+This will make Squad tools available in all your Claude Code sessions.
 
 Once your client restarts you should see the Squad tools (hammer 🔨 icon) listed and ready for use.
 
