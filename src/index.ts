@@ -17,19 +17,20 @@ import {
 } from "./similarity-search.js";
 import { runSolutionTool, solutionTools } from "./solutions.js";
 import { runWorkspaceTool, workspaceTool } from "./workspace.js";
+import pkg from "../package.json" with { type: "json" };
 
 // Parse command-line arguments
 function parseCommandLineArgs(): { apiKey?: string } {
   const args = process.argv.slice(2);
   const result: { apiKey?: string } = {};
-  
+
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "--api-key" && i + 1 < args.length) {
       result.apiKey = args[i + 1];
       i++; // Skip next arg since we consumed it
     }
   }
-  
+
   return result;
 }
 
@@ -47,8 +48,8 @@ if (cliArgs.apiKey) {
 // Server setup
 const server = new Server(
   {
-    name: "meet-squad",
-    version: "0.0.1",
+    name: "@squadai/tools",
+    version: pkg.version,
   },
   {
     capabilities: {
