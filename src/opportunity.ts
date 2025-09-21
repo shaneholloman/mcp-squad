@@ -136,7 +136,7 @@ export const listOpportunities = async (
 export const GetOpportunityArgsSchema = z.object({
   opportunityId: z.string().describe("The ID of the opportunity to retrieve"),
   relationships: z
-    .array(z.enum(["solutions", "outcomes", "feedback"]))
+    .array(z.enum(["solutions", "outcomes", "insights"]))
     .optional()
     .describe(
       "Relationships to include in the response. Outcomes are business objectives/goals. Solutions are proposed approaches to address opportunities. Feedback is additional information or insights related to the opportunity.",
@@ -393,16 +393,16 @@ export const ManageOpportunityRelationshipsArgsSchema = z.object({
     .array(z.string())
     .optional()
     .describe("IDs of outcomes to relate to this opportunity"),
-  feedbackIds: z
+  insightIds: z
     .array(z.string())
     .optional()
-    .describe("IDs of feedback items to relate to this opportunity"),
+    .describe("IDs of insight items to relate to this opportunity"),
 });
 
 export const manageOpportunityRelationshipsTool = {
   name: OpportunityTool.ManageOpportunityRelationships,
   description:
-    "Add or remove relationships between an opportunity and other entities (solutions, outcomes, or feedback).",
+    "Add or remove relationships between an opportunity and other entities (solutions, outcomes, or insights).",
   inputSchema: ManageOpportunityRelationshipsArgsSchema,
 };
 
@@ -417,13 +417,13 @@ export const manageOpportunityRelationships = async (
 
     const safeArgs = ManageOpportunityRelationshipsArgsSchema.parse(args);
 
-    const { opportunityId, action, solutionIds, outcomeIds, feedbackIds } =
+    const { opportunityId, action, solutionIds, outcomeIds, insightIds } =
       safeArgs;
 
     const relationshipsPayload: OpportunityRelationshipsPayload = {
       solutionIds: solutionIds || [],
       outcomeIds: outcomeIds || [],
-      feedbackIds: feedbackIds || [],
+      insightIds: insightIds || [],
     };
 
     await squadClient(context.jwt).manageOpportunityRelationships({

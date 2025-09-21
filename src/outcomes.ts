@@ -89,7 +89,7 @@ export const createOutcome = async (
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to create this outcome. Please check that all values are valid. " +
-          e.errors.map(e => e.message).join(", ")
+        e.errors.map(e => e.message).join(", ")
         : "I was unable to create this outcome. Please check that the ID is correct.";
     return {
       content: [
@@ -160,7 +160,7 @@ export const listOutcomes = async (
 export const GetOutcomeArgsSchema = z.object({
   outcomeId: z.string().describe("The ID of the outcome to retrieve"),
   relationships: z
-    .array(z.enum(["opportunities", "solutions", "feedback"]))
+    .array(z.enum(["opportunities", "solutions", "insights"]))
     .optional()
     .describe(
       "Relationships to include in the response. Opportunities are problem statements identified for the organisation. Solutions are proposed approaches to address opportunities. Feedback is additional information or insights related to the opportunity.",
@@ -207,7 +207,7 @@ export const getOutcome = async (
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to retrieve this outcome. Please check that all values are valid. " +
-          e.errors.map(e => e.message).join(", ")
+        e.errors.map(e => e.message).join(", ")
         : "I was unable to retrieve this outcome. Please check that the ID is correct.";
     return {
       content: [
@@ -274,7 +274,7 @@ export const updateOutcome = async (
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to update this outcome. Please check that the ID is correct and all values are valid. " +
-          e.errors.map(e => e.message).join(", ")
+        e.errors.map(e => e.message).join(", ")
         : "I was unable to update this outcome. Please check that the ID is correct and all values are valid.";
     return {
       content: [
@@ -405,7 +405,7 @@ export const manageOutcomeRelationships = async (
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to manage relationships for this outcome. Please check that all IDs are correct. " +
-          e.errors.map(e => e.message).join(", ")
+        e.errors.map(e => e.message).join(", ")
         : "I was unable to manage relationships for this outcome. Please check that all IDs are correct.";
     return {
       content: [

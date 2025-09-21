@@ -17,7 +17,7 @@ const filtersEnum = z
     ])
   )
   .describe(
-    `Filters to apply to the search. Options are: ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.KnowledgeBase} for knowledge documents, ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Insights} for feedback insights, ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Opportunities} for opportunities, ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Solutions} for solutions.`
+    `Filters to apply to the search. Options are: ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.KnowledgeBase} for knowledge documents, ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Insights} for insights, ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Opportunities} for opportunities, ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Solutions} for solutions.`
   );
 
 // Schema for similarity search
@@ -26,7 +26,7 @@ export const SimilaritySearchArgsSchema = z.object({
   filters: filtersEnum.default([
     OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.KnowledgeBase,
     OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Insights,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Opportunities, 
+    OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Opportunities,
     OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Solutions,
   ]),
 });
@@ -72,7 +72,7 @@ export const similaritySearch = async (
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to perform this similarity search. Please check that all values are valid. " +
-          e.errors.map(e => e.message).join(", ")
+        e.errors.map(e => e.message).join(", ")
         : "I was unable to perform this similarity search. Please check that the query and filters are valid.";
     return {
       content: [

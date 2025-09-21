@@ -35,7 +35,7 @@ export interface OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdRelat
    * @type {Array<string>}
    * @memberof OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdRelationshipsActionPostRequest
    */
-  feedbackIds?: Array<string>;
+  insightIds?: Array<string>;
 }
 
 /**
@@ -67,7 +67,7 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdRelati
     opportunityIds:
       json["opportunityIds"] == null ? undefined : json["opportunityIds"],
     outcomeIds: json["outcomeIds"] == null ? undefined : json["outcomeIds"],
-    feedbackIds: json["feedbackIds"] == null ? undefined : json["feedbackIds"],
+    insightIds: json["insightIds"] == null ? undefined : json["insightIds"],
   };
 }
 
@@ -91,6 +91,6 @@ export function OrganisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdRelati
   return {
     opportunityIds: value["opportunityIds"],
     outcomeIds: value["outcomeIds"],
-    feedbackIds: value["feedbackIds"],
+    insightIds: value["insightIds"],
   };
 }
