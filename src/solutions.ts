@@ -98,7 +98,7 @@ export const createSolution = async (
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to create this solution. Please check that all values are valid. " +
-          e.errors.map(e => e.message).join(", ")
+        e.errors.map(e => e.message).join(", ")
         : "I was unable to create this solution. Please check that all values are valid.";
     return {
       content: [
@@ -159,7 +159,7 @@ export const listSolutions = async (
 export const GetSolutionArgsSchema = z.object({
   solutionId: z.string().describe("The ID of the solution to retrieve"),
   relationships: z
-    .array(z.enum(["opportunities", "outcomes", "feedback"]))
+    .array(z.enum(["opportunities", "outcomes", "insights"]))
     .optional()
     .describe(
       "Relationships to include in the response. Opportunities are problem statements identified for the organisation. Outcomes are business objectives/goals. Feedback is additional information or insights related to the opportunity.",
@@ -204,7 +204,7 @@ export const getSolution = async (
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to retrieve this solution. Please check that all values are valid. " +
-          e.errors.map(e => e.message).join(", ")
+        e.errors.map(e => e.message).join(", ")
         : "I was unable to retrieve this solution. Please check that the ID is correct.";
     return {
       content: [
@@ -275,7 +275,7 @@ export const updateSolution = async (
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to update this solution. Please check that all values are valid. " +
-          e.errors.map(e => e.message).join(", ")
+        e.errors.map(e => e.message).join(", ")
         : "I was unable to update this solution. Please check that all values are valid.";
     return {
       content: [
@@ -335,7 +335,7 @@ export const deleteSolution = async (
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to delete this solution. Please check that all values are valid. " +
-          e.errors.map(e => e.message).join(", ")
+        e.errors.map(e => e.message).join(", ")
         : "I was unable to delete this solution. Please check that the ID is correct.";
     return {
       content: [
