@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { FeedbackTool, vercelTool as feedbackTool } from "./feedback.js";
+import { InsightTool, vercelTool as insightTool } from "./insight.js";
 import type { UserContext } from "./helpers/getUser.js";
 import { KnowledgeTool, vercelTool as knowledgeTool } from "./knowledge.js";
 import {
@@ -19,10 +19,10 @@ export const toolsEnum = z.enum([
 	KnowledgeTool.ListKnowledge,
 	KnowledgeTool.GetKnowledge,
 	KnowledgeTool.DeleteKnowledge,
-	FeedbackTool.CreateFeedback,
-	FeedbackTool.ListFeedback,
-	FeedbackTool.GetFeedback,
-	FeedbackTool.DeleteFeedback,
+	InsightTool.CreateInsight,
+	InsightTool.ListInsights,
+	InsightTool.GetInsight,
+	InsightTool.DeleteInsight,
 	OpportunityTool.CreateOpportunity,
 	OpportunityTool.ListOpportunities,
 	OpportunityTool.UpdateOpportunity,
@@ -48,7 +48,7 @@ export const tools = (context: UserContext) => ({
 	...workspaceTool(context),
 	...solutionsTool(context),
 	...opportunitiesTool(context),
-	...feedbackTool(context),
+	...insightTool(context),
 	...outcomesTool(context),
 	...similaritySearchTool(context),
 });

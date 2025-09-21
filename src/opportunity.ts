@@ -393,7 +393,7 @@ export const ManageOpportunityRelationshipsArgsSchema = z.object({
     .array(z.string())
     .optional()
     .describe("IDs of outcomes to relate to this opportunity"),
-  feedbackIds: z
+  insightIds: z
     .array(z.string())
     .optional()
     .describe("IDs of feedback items to relate to this opportunity"),
@@ -417,13 +417,13 @@ export const manageOpportunityRelationships = async (
 
     const safeArgs = ManageOpportunityRelationshipsArgsSchema.parse(args);
 
-    const { opportunityId, action, solutionIds, outcomeIds, feedbackIds } =
+    const { opportunityId, action, solutionIds, outcomeIds, insightIds } =
       safeArgs;
 
     const relationshipsPayload: OpportunityRelationshipsPayload = {
       solutionIds: solutionIds || [],
       outcomeIds: outcomeIds || [],
-      feedbackIds: feedbackIds || [],
+      insightIds: insightIds || [],
     };
 
     await squadClient(context.jwt).manageOpportunityRelationships({

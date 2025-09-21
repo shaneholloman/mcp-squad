@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Squad API",
-    "version": "2.1.0",
+    "version": "2.4.1",
     "description": "API for managing Squad resources"
   },
   "servers": [
@@ -1184,148 +1184,10 @@
         }
       }
     },
-    "/onboard": {
+    "/organisations/{orgId}/workspaces/{workspaceId}/metrics": {
       "post": {
-        "summary": "Create a new organization with workspace and outcomes",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OnboardingPayload"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Organization, workspace, and outcomes created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OnboardingResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request body"
-          },
-          "409": {
-            "description": "Organization name already exists"
-          }
-        }
-      }
-    },
-    "/organisations/{orgId}/onboard": {
-      "put": {
-        "summary": "Update an existing organization, recreate workspace and outcomes",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orgId",
-            "required": true,
-            "description": "Organization ID",
-            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OnboardingUpdatePayload"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Organization updated, workspace and outcomes recreated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OnboardingResponse"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Invalid request body"
-          },
-          "404": {
-            "description": "Organization not found"
-          }
-        }
-      }
-    },
-    "/organisations/{orgId}/workspaces/{workspaceId}/onboarding": {
-      "post": {
-        "summary": "Process business description and knowledge to create workspace details, outcomes, opportunities, and solutions",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orgId",
-            "required": true,
-            "description": "Organization ID",
-            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "path",
-            "name": "workspaceId",
-            "required": true,
-            "description": "Workspace ID",
-            "example": "b7e2d5a9-3c18-4e6f-9a42-f8d1c7b5e3a2",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OnboardingV2Payload"
-              }
-            }
-          }
-        },
-        "responses": {
-          "204": {
-            "description": "Request accepted, processing started"
-          },
-          "400": {
-            "description": "Invalid request body"
-          },
-          "404": {
-            "description": "One or more knowledge entities not found"
-          }
-        }
-      }
-    },
-    "/organisations/{orgId}/workspaces/{workspaceId}/feedback": {
-      "post": {
-        "summary": "Create new feedback",
-        "description": "Creates a new feedback item in the specified workspace",
+        "summary": "Create a new metric",
+        "description": "Creates a new metric.",
         "security": [
           {
             "bearerAuth": []
@@ -1358,94 +1220,27 @@
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "type": {
-                    "type": "string",
-                    "enum": [
-                      "Feedback",
-                      "Bug",
-                      "FeatureRequest"
-                    ],
-                    "description": "Type of feedback",
-                    "example": "Feedback"
-                  },
-                  "source": {
-                    "type": "string",
-                    "description": "Source of the feedback",
-                    "example": "Customer Interview"
-                  },
-                  "title": {
-                    "type": "string",
-                    "description": "Title of the feedback",
-                    "example": "Dashboard UX Improvements"
-                  },
-                  "description": {
-                    "type": "string",
-                    "description": "Description of the feedback",
-                    "example": "The dashboard could use better data visualization"
-                  },
-                  "feedback": {
-                    "type": "string",
-                    "description": "Detailed feedback content",
-                    "example": "I found the dashboard charts difficult to understand at first glance..."
-                  },
-                  "ownerId": {
-                    "type": "string",
-                    "description": "ID of the feedback owner",
-                    "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
-                  },
-                  "organisationId": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "workspaceId": {
-                    "type": "string",
-                    "format": "uuid"
-                  },
-                  "seen": {
-                    "type": "boolean"
-                  }
-                },
-                "required": [
-                  "type",
-                  "source",
-                  "title",
-                  "description",
-                  "feedback",
-                  "organisationId",
-                  "workspaceId"
-                ],
-                "description": "Feedback data from a user"
+                "$ref": "#/components/schemas/CreateMetricPayload"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Feedback created successfully",
+            "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "data": {
-                      "description": "Feedback data",
-                      "allOf": [
-                        {
-                          "$ref": "#/components/schemas/FeedbackWithRelationships"
-                        }
-                      ]
+                      "$ref": "#/components/schemas/Metric"
                     }
                   },
                   "required": [
                     "data"
                   ],
-                  "description": "Response containing a single feedback item"
+                  "description": "Response containing a single  metric"
                 }
               }
             }
@@ -1627,8 +1422,8 @@
         }
       },
       "get": {
-        "summary": "List feedback",
-        "description": "Lists all feedback in the specified workspace",
+        "summary": "List metrics",
+        "description": "Lists metrics for a workspace. Can optionally filter by outcome ID.",
         "security": [
           {
             "bearerAuth": []
@@ -1654,6 +1449,16 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "in": "query",
+            "name": "outcomeId",
+            "required": false,
+            "description": "Optional outcome ID to filter metrics by. If omitted, returns all metrics for the workspace.",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019",
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "responses": {
@@ -1662,7 +1467,89 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FeedbackArrayResponse"
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Metric"
+                      },
+                      "description": "Array of metrics"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing an array of metrics"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INVALID_REQUEST"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "One or more fields are invalid"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of field names that are missing or invalid",
+                          "example": [
+                            "title",
+                            "description"
+                          ]
+                        },
+                        "validationErrors": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "description": "Detailed validation error information for each invalid field",
+                          "example": {
+                            "invalidFields": {
+                              "title": {
+                                "type": "too_small",
+                                "message": "Title must be at least 3 characters long",
+                                "path": [
+                                  "title"
+                                ]
+                              },
+                              "deadline": {
+                                "type": "invalid_date",
+                                "message": "Deadline must be a valid date in the future",
+                                "path": [
+                                  "deadline"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Bad Request - Invalid input parameters or missing required fields"
                 }
               }
             }
@@ -1775,10 +1662,10 @@
         }
       }
     },
-    "/organisations/{orgId}/workspaces/{workspaceId}/feedback/{feedbackId}": {
+    "/organisations/{orgId}/workspaces/{workspaceId}/metrics/{MetricId}": {
       "get": {
-        "summary": "Get feedback by ID",
-        "description": "Retrieves a specific feedback by ID",
+        "summary": "Get a metric by ID",
+        "description": "Retrieves a specific metric by ID.",
         "security": [
           {
             "bearerAuth": []
@@ -1807,16 +1694,13 @@
           },
           {
             "in": "path",
-            "name": "feedbackId",
+            "name": "MetricId",
             "required": true,
-            "description": "Feedback ID",
-            "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4",
+            "description": " Metric ID",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019",
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "$ref": "#/components/parameters/FeedbackRelationshipsParam"
           }
         ],
         "responses": {
@@ -1828,18 +1712,13 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "description": "Feedback data",
-                      "allOf": [
-                        {
-                          "$ref": "#/components/schemas/FeedbackWithRelationships"
-                        }
-                      ]
+                      "$ref": "#/components/schemas/Metric"
                     }
                   },
                   "required": [
                     "data"
                   ],
-                  "description": "Response containing a single feedback item"
+                  "description": "Response containing a single  metric"
                 }
               }
             }
@@ -1915,7 +1794,288 @@
             }
           },
           "404": {
-            "description": "Feedback not found",
+            "description": "Not Found -  metric does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "NOT_FOUND"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "The requested resource was not found"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Not Found - The requested resource does not exist"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a metric",
+        "description": "Updates an existing metric.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "MetricId",
+            "required": true,
+            "description": " Metric ID",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateMetricPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Metric"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing a single  metric"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INVALID_REQUEST"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "One or more fields are invalid"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of field names that are missing or invalid",
+                          "example": [
+                            "title",
+                            "description"
+                          ]
+                        },
+                        "validationErrors": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "description": "Detailed validation error information for each invalid field",
+                          "example": {
+                            "invalidFields": {
+                              "title": {
+                                "type": "too_small",
+                                "message": "Title must be at least 3 characters long",
+                                "path": [
+                                  "title"
+                                ]
+                              },
+                              "deadline": {
+                                "type": "invalid_date",
+                                "message": "Deadline must be a valid date in the future",
+                                "path": [
+                                  "deadline"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Bad Request - Invalid input parameters or missing required fields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found -  metric does not exist",
             "content": {
               "application/json": {
                 "schema": {
@@ -1987,8 +2147,8 @@
         }
       },
       "delete": {
-        "summary": "Delete feedback",
-        "description": "Deletes a specific feedback by ID",
+        "summary": "Delete a metric",
+        "description": "Deletes an existing metric and cleans up associated resources.",
         "security": [
           {
             "bearerAuth": []
@@ -2017,9 +2177,1106 @@
           },
           {
             "in": "path",
-            "name": "feedbackId",
+            "name": "MetricId",
             "required": true,
-            "description": "Feedback ID",
+            "description": " Metric ID",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "success": {
+                          "type": "boolean",
+                          "description": "Success flag",
+                          "example": true
+                        }
+                      },
+                      "required": [
+                        "success"
+                      ],
+                      "description": "Success message data"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing a success message"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found -  metric does not exist",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "NOT_FOUND"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "The requested resource was not found"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Not Found - The requested resource does not exist"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/metrics/{metricId}/relationships/{action}": {
+      "post": {
+        "operationId": "manageMetricRelationships",
+        "summary": "Manage metric relationships",
+        "description": "Add or remove relationships between a metric and other entities (outcomes)",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "metricId",
+            "required": true,
+            "description": "Metric ID",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "action",
+            "required": true,
+            "description": "Action to perform on relationships",
+            "example": "add",
+            "schema": {
+              "$ref": "#/components/schemas/RelationshipAction"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MetricRelationshipsPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Relationships successfully modified"
+          },
+          "400": {
+            "description": "Bad request - invalid input parameters"
+          },
+          "401": {
+            "description": "Unauthorized - invalid or missing authentication"
+          },
+          "404": {
+            "description": "Resource not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/onboard": {
+      "post": {
+        "summary": "Create a new organization with workspace and outcomes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnboardingPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Organization, workspace, and outcomes created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OnboardingResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body"
+          },
+          "409": {
+            "description": "Organization name already exists"
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/onboard": {
+      "put": {
+        "summary": "Update an existing organization, recreate workspace and outcomes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnboardingUpdatePayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Organization updated, workspace and outcomes recreated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OnboardingResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body"
+          },
+          "404": {
+            "description": "Organization not found"
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/onboarding": {
+      "post": {
+        "summary": "Process business description and knowledge to create workspace details, outcomes, opportunities, and solutions",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "b7e2d5a9-3c18-4e6f-9a42-f8d1c7b5e3a2",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OnboardingV2Payload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Request accepted, processing started"
+          },
+          "400": {
+            "description": "Invalid request body"
+          },
+          "404": {
+            "description": "One or more knowledge entities not found"
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/insights": {
+      "post": {
+        "summary": "Create new insight",
+        "description": "Creates a new insight item in the specified workspace",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "Feedback",
+                      "Bug",
+                      "FeatureRequest"
+                    ],
+                    "description": "Type of insight",
+                    "example": "Feedback"
+                  },
+                  "source": {
+                    "type": "string",
+                    "description": "Source of the insight",
+                    "example": "Customer Interview"
+                  },
+                  "title": {
+                    "type": "string",
+                    "description": "Title of the insight",
+                    "example": "Dashboard UX Improvements"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the insight",
+                    "example": "The dashboard could use better data visualization"
+                  },
+                  "feedback": {
+                    "type": "string",
+                    "description": "Detailed feedback content",
+                    "example": "I found the dashboard charts difficult to understand at first glance..."
+                  },
+                  "ownerId": {
+                    "type": "string",
+                    "description": "ID of the insight owner",
+                    "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
+                  },
+                  "organisationId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "workspaceId": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "seen": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "type",
+                  "source",
+                  "title",
+                  "description",
+                  "feedback",
+                  "organisationId",
+                  "workspaceId"
+                ],
+                "description": "Insight data from a user"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Insight created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "description": "Insight data",
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/InsightWithRelationships"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing a single insight item"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INVALID_REQUEST"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "One or more fields are invalid"
+                        },
+                        "fields": {
+                          "type": "array",
+                          "items": {
+                            "type": "string"
+                          },
+                          "description": "List of field names that are missing or invalid",
+                          "example": [
+                            "title",
+                            "description"
+                          ]
+                        },
+                        "validationErrors": {
+                          "type": "object",
+                          "additionalProperties": {},
+                          "description": "Detailed validation error information for each invalid field",
+                          "example": {
+                            "invalidFields": {
+                              "title": {
+                                "type": "too_small",
+                                "message": "Title must be at least 3 characters long",
+                                "path": [
+                                  "title"
+                                ]
+                              },
+                              "deadline": {
+                                "type": "invalid_date",
+                                "message": "Deadline must be a valid date in the future",
+                                "path": [
+                                  "deadline"
+                                ]
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Bad Request - Invalid input parameters or missing required fields"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "List insights",
+        "description": "Lists all insights in the specified workspace",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsightArrayResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/insights/{insightId}": {
+      "get": {
+        "summary": "Get insight by ID",
+        "description": "Retrieves a specific insight by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "insightId",
+            "required": true,
+            "description": "Insight ID",
+            "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/InsightRelationshipsParam"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "description": "Insight data",
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/InsightWithRelationships"
+                        }
+                      ]
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ],
+                  "description": "Response containing a single insight item"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Insight not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "NOT_FOUND"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "The requested resource was not found"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Not Found - The requested resource does not exist"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete insight",
+        "description": "Deletes a specific insight by ID",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "insightId",
+            "required": true,
+            "description": "Insight ID",
             "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4",
             "schema": {
               "type": "string"
@@ -2028,7 +3285,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Feedback deleted successfully",
+            "description": "Insight deleted successfully",
             "content": {
               "application/json": {
                 "schema": {
@@ -2040,7 +3297,7 @@
                         "message": {
                           "type": "string",
                           "description": "Success message",
-                          "example": "Feedback deleted successfully"
+                          "example": "Insight deleted successfully"
                         }
                       },
                       "required": [
@@ -2128,7 +3385,7 @@
             }
           },
           "404": {
-            "description": "Feedback not found",
+            "description": "Insight not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -2158,307 +3415,6 @@
                     "error"
                   ],
                   "description": "Not Found - The requested resource does not exist"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "description": "Error code identifier",
-                          "example": "INTERNAL_SERVER_ERROR"
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "Human-readable error description",
-                          "example": "An unexpected error occurred on the server"
-                        }
-                      },
-                      "required": [
-                        "code",
-                        "description"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "error"
-                  ],
-                  "description": "Internal Server Error - An unexpected error occurred on the server"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/organisations/{orgId}/workspaces/{workspaceId}/mock-feedback": {
-      "post": {
-        "summary": "Generate mock feedback",
-        "description": "Creates mock feedback data for testing and development purposes",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orgId",
-            "required": true,
-            "description": "Organization ID",
-            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "path",
-            "name": "workspaceId",
-            "required": true,
-            "description": "Workspace ID",
-            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Mock feedback created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/MockFeedbackResponse"
-                    }
-                  },
-                  "required": [
-                    "data"
-                  ]
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized - Authentication required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "description": "Error code identifier",
-                          "example": "UNAUTHORISED_ERROR"
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "Human-readable error description",
-                          "example": "User is unauthenticated"
-                        }
-                      },
-                      "required": [
-                        "code",
-                        "description"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "error"
-                  ],
-                  "description": "Unauthorized - Missing or invalid authentication token"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden - Insufficient permissions",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "description": "Error code identifier",
-                          "example": "UNAUTHORISED_ERROR"
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "Human-readable error description",
-                          "example": "User is unauthorised"
-                        }
-                      },
-                      "required": [
-                        "code",
-                        "description"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "error"
-                  ],
-                  "description": "Forbidden - Insufficient permissions to access this resource"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "description": "Error code identifier",
-                          "example": "INTERNAL_SERVER_ERROR"
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "Human-readable error description",
-                          "example": "An unexpected error occurred on the server"
-                        }
-                      },
-                      "required": [
-                        "code",
-                        "description"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "error"
-                  ],
-                  "description": "Internal Server Error - An unexpected error occurred on the server"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/organisations/{orgId}/workspaces/{workspaceId}/feedback/process": {
-      "post": {
-        "summary": "Process Unprocessed Feedback",
-        "description": "Processes unprocessed feedback in the specified workspace",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "orgId",
-            "required": true,
-            "description": "Organization ID",
-            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "in": "path",
-            "name": "workspaceId",
-            "required": true,
-            "description": "Workspace ID",
-            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Unprocessed feedback processed successfully"
-          },
-          "401": {
-            "description": "Unauthorized - Authentication required",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "description": "Error code identifier",
-                          "example": "UNAUTHORISED_ERROR"
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "Human-readable error description",
-                          "example": "User is unauthenticated"
-                        }
-                      },
-                      "required": [
-                        "code",
-                        "description"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "error"
-                  ],
-                  "description": "Unauthorized - Missing or invalid authentication token"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden - Insufficient permissions",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "object",
-                      "properties": {
-                        "code": {
-                          "type": "string",
-                          "description": "Error code identifier",
-                          "example": "UNAUTHORISED_ERROR"
-                        },
-                        "description": {
-                          "type": "string",
-                          "description": "Human-readable error description",
-                          "example": "User is unauthorised"
-                        }
-                      },
-                      "required": [
-                        "code",
-                        "description"
-                      ]
-                    }
-                  },
-                  "required": [
-                    "error"
-                  ],
-                  "description": "Forbidden - Insufficient permissions to access this resource"
                 }
               }
             }
@@ -4115,7 +5071,7 @@
       },
       "get": {
         "summary": "List solutions",
-        "description": "Lists all solutions in the specified workspace",
+        "description": "Lists all solutions in the specified workspace with optional filtering",
         "security": [
           {
             "bearerAuth": []
@@ -4138,6 +5094,26 @@
             "required": true,
             "description": "Workspace ID",
             "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "built",
+            "required": false,
+            "description": "Filter solutions by whether they have been built (modified after creation)",
+            "example": "true",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "description": "Comma-separated list of solution statuses to filter by",
+            "example": "Backlog,New,Planned",
             "schema": {
               "type": "string"
             }
@@ -4491,17 +5467,17 @@
                           },
                           "default": []
                         },
-                        "feedback": {
+                        "insights": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/Feedback"
+                            "$ref": "#/components/schemas/Insight"
                           },
                           "default": []
                         }
                       },
                       "required": [
                         "opportunities",
-                        "feedback"
+                        "insights"
                       ],
                       "description": "Topic data"
                     }
@@ -4651,17 +5627,17 @@
                           },
                           "default": []
                         },
-                        "feedback": {
+                        "insights": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/Feedback"
+                            "$ref": "#/components/schemas/Insight"
                           },
                           "default": []
                         }
                       },
                       "required": [
                         "opportunities",
-                        "feedback"
+                        "insights"
                       ],
                       "description": "Topic data"
                     }
@@ -4757,17 +5733,17 @@
                           },
                           "default": []
                         },
-                        "feedback": {
+                        "insights": {
                           "type": "array",
                           "items": {
-                            "$ref": "#/components/schemas/Feedback"
+                            "$ref": "#/components/schemas/Insight"
                           },
                           "default": []
                         }
                       },
                       "required": [
                         "opportunities",
-                        "feedback"
+                        "insights"
                       ],
                       "description": "Topic data"
                     }
@@ -5973,14 +6949,14 @@
                         }
                       ],
                       "properties": {
-                        "unprocessedFeedbackCount": {
+                        "unprocessedInsightCount": {
                           "type": "number",
-                          "description": "Number of unprocessed feedback items",
+                          "description": "Number of unprocessed insight items",
                           "example": 123
                         }
                       },
                       "required": [
-                        "unprocessedFeedbackCount"
+                        "unprocessedInsightCount"
                       ]
                     }
                   },
@@ -6193,14 +7169,14 @@
                           }
                         ],
                         "properties": {
-                          "unprocessedFeedbackCount": {
+                          "unprocessedInsightCount": {
                             "type": "number",
-                            "description": "Number of unprocessed feedback items",
+                            "description": "Number of unprocessed insight items",
                             "example": 123
                           }
                         },
                         "required": [
-                          "unprocessedFeedbackCount"
+                          "unprocessedInsightCount"
                         ]
                       },
                       "description": "Array of organisations"
@@ -6358,14 +7334,14 @@
                         }
                       ],
                       "properties": {
-                        "unprocessedFeedbackCount": {
+                        "unprocessedInsightCount": {
                           "type": "number",
-                          "description": "Number of unprocessed feedback items",
+                          "description": "Number of unprocessed insight items",
                           "example": 123
                         }
                       },
                       "required": [
-                        "unprocessedFeedbackCount"
+                        "unprocessedInsightCount"
                       ]
                     }
                   },
@@ -6564,14 +7540,14 @@
                         }
                       ],
                       "properties": {
-                        "unprocessedFeedbackCount": {
+                        "unprocessedInsightCount": {
                           "type": "number",
-                          "description": "Number of unprocessed feedback items",
+                          "description": "Number of unprocessed insight items",
                           "example": 123
                         }
                       },
                       "required": [
-                        "unprocessedFeedbackCount"
+                        "unprocessedInsightCount"
                       ]
                     }
                   },
@@ -7019,8 +7995,8 @@
     },
     "/v1/data-ingress": {
       "post": {
-        "summary": "Process feedback for a workspace",
-        "description": "Receives feedback data and processes it for a specific workspace and organization",
+        "summary": "Process insight for a workspace",
+        "description": "Receives insight data and processes it for a specific workspace and organization",
         "security": [
           {
             "apiKeyAuth": []
@@ -7032,7 +8008,7 @@
             "text/plain": {
               "schema": {
                 "type": "string",
-                "description": "Raw feedback content",
+                "description": "Raw insight content",
                 "example": "I found the dashboard confusing to navigate"
               }
             }
@@ -7040,14 +8016,14 @@
         },
         "responses": {
           "201": {
-            "description": "Feedback processed successfully",
+            "description": "Insight processed successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/FeedbackResponse"
+                      "$ref": "#/components/schemas/InsightResponse"
                     }
                   },
                   "required": [
@@ -7068,8 +8044,8 @@
     },
     "/v1/data-ingress/{feedbackSource}": {
       "post": {
-        "summary": "Process feedback for a workspace",
-        "description": "Receives feedback data and processes it for a specific workspace and organization",
+        "summary": "Process insight for a workspace",
+        "description": "Receives insight data and processes it for a specific workspace and organization",
         "security": [
           {
             "apiKeyAuth": []
@@ -7080,7 +8056,7 @@
             "in": "path",
             "name": "feedbackSource",
             "required": true,
-            "description": "The source of the feedback",
+            "description": "The source of the insight",
             "example": "typeform",
             "schema": {
               "type": "string"
@@ -7093,7 +8069,7 @@
             "text/plain": {
               "schema": {
                 "type": "string",
-                "description": "Raw feedback content",
+                "description": "Raw insight content",
                 "example": "I found the dashboard confusing to navigate"
               }
             }
@@ -7101,14 +8077,14 @@
         },
         "responses": {
           "201": {
-            "description": "Feedback processed successfully",
+            "description": "Insight processed successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/FeedbackResponse"
+                      "$ref": "#/components/schemas/InsightResponse"
                     }
                   },
                   "required": [
@@ -7129,8 +8105,8 @@
     },
     "/organisations/{orgId}/workspaces/{workspaceId}/data-ingress": {
       "post": {
-        "summary": "Process feedback for a workspace",
-        "description": "Receives feedback data and processes it for a specific workspace and organization",
+        "summary": "Process insight for a workspace",
+        "description": "Receives insight data and processes it for a specific workspace and organization",
         "security": [
           {
             "bearerAuth": []
@@ -7164,7 +8140,7 @@
             "text/plain": {
               "schema": {
                 "type": "string",
-                "description": "Raw feedback content",
+                "description": "Raw insight content",
                 "example": "I found the dashboard confusing to navigate"
               }
             }
@@ -7172,14 +8148,14 @@
         },
         "responses": {
           "201": {
-            "description": "Feedback processed successfully",
+            "description": "Insight processed successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/FeedbackResponse"
+                      "$ref": "#/components/schemas/InsightResponse"
                     }
                   },
                   "required": [
@@ -7200,8 +8176,8 @@
     },
     "/organisations/{orgId}/workspaces/{workspaceId}/data-ingress/{feedbackSource}": {
       "post": {
-        "summary": "Process feedback for a workspace",
-        "description": "Receives feedback data and processes it for a specific workspace and organization",
+        "summary": "Process insight for a workspace",
+        "description": "Receives insight data and processes it for a specific workspace and organization",
         "security": [
           {
             "bearerAuth": []
@@ -7232,7 +8208,7 @@
             "in": "path",
             "name": "feedbackSource",
             "required": true,
-            "description": "The source of the feedback",
+            "description": "The source of the insight",
             "example": "typeform",
             "schema": {
               "type": "string"
@@ -7245,7 +8221,7 @@
             "text/plain": {
               "schema": {
                 "type": "string",
-                "description": "Raw feedback content",
+                "description": "Raw insight content",
                 "example": "I found the dashboard confusing to navigate"
               }
             }
@@ -7253,14 +8229,14 @@
         },
         "responses": {
           "201": {
-            "description": "Feedback processed successfully",
+            "description": "Insight processed successfully",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "data": {
-                      "$ref": "#/components/schemas/FeedbackResponse"
+                      "$ref": "#/components/schemas/InsightResponse"
                     }
                   },
                   "required": [
@@ -7352,7 +8328,7 @@
     "/organisations/{orgId}/workspaces/{workspaceId}/opportunities/{opportunityId}/generate-solutions": {
       "post": {
         "summary": "Generate solutions for an opportunity",
-        "description": "Asynchronously generates AI-powered solutions based on the feedback associated with an opportunity",
+        "description": "Asynchronously generates AI-powered solutions based on the insight associated with an opportunity",
         "security": [
           {
             "bearerAuth": []
@@ -7409,10 +8385,10 @@
         }
       }
     },
-    "/organisations/{orgId}/workspaces/{workspaceId}/opportunities/{opportunityId}/feedback/mark-all-seen": {
+    "/organisations/{orgId}/workspaces/{workspaceId}/opportunities/{opportunityId}/insights/mark-all-seen": {
       "post": {
-        "summary": "Mark all opportunity feedback as seen",
-        "description": "Marks all feedback items associated with an opportunity as having been seen by the user",
+        "summary": "Mark all opportunity insights as seen",
+        "description": "Marks all insight items associated with an opportunity as having been seen by the user",
         "security": [
           {
             "bearerAuth": []
@@ -7452,7 +8428,7 @@
         ],
         "responses": {
           "204": {
-            "description": "All feedback items successfully marked as seen"
+            "description": "All insight items successfully marked as seen"
           },
           "400": {
             "description": "Bad request - invalid input parameters"
@@ -7473,7 +8449,7 @@
       "post": {
         "operationId": "manageOpportunityRelationships",
         "summary": "Manage opportunity relationships",
-        "description": "Add or remove relationships between an opportunity and other entities (solutions, outcomes, or feedback)",
+        "description": "Add or remove relationships between an opportunity and other entities (solutions, outcomes, or insight)",
         "security": [
           {
             "bearerAuth": []
@@ -7754,7 +8730,7 @@
       "post": {
         "operationId": "manageOutcomeRelationships",
         "summary": "Manage outcome relationships",
-        "description": "Add or remove relationships between an outcome and other entities (opportunities, solutions, or feedback)",
+        "description": "Add or remove relationships between an outcome and other entities (opportunities, metrics, solutions, or insight)",
         "security": [
           {
             "bearerAuth": []
@@ -7835,7 +8811,7 @@
       "post": {
         "operationId": "manageRequirementRelationships",
         "summary": "Manage requirement relationships",
-        "description": "Add or remove relationships between a requirement and other entities (opportunities, solutions, outcomes, or feedback)",
+        "description": "Add or remove relationships between a requirement and other entities (opportunities, solutions, outcomes, or insight)",
         "security": [
           {
             "bearerAuth": []
@@ -7916,7 +8892,7 @@
       "post": {
         "operationId": "manageSolutionRelationships",
         "summary": "Manage solution relationships",
-        "description": "Add or remove relationships between a solution and other entities (opportunities, outcomes, or feedback)",
+        "description": "Add or remove relationships between a solution and other entities (opportunities, outcomes, or insight)",
         "security": [
           {
             "bearerAuth": []
@@ -9676,7 +10652,7 @@
                   "prompt": {
                     "type": "string",
                     "description": "Text prompt to process",
-                    "example": "Analyze customer feedback regarding our mobile app"
+                    "example": "Analyze customer insight regarding our mobile app"
                   },
                   "model": {
                     "type": "string",
@@ -9721,7 +10697,7 @@
                         "result": {
                           "type": "string",
                           "description": "Processed text result",
-                          "example": "Based on the customer feedback analysis..."
+                          "example": "Based on the customer insight analysis..."
                         },
                         "model": {
                           "type": "string",
@@ -9799,6 +10775,11 @@
               "schema": {
                 "type": "object",
                 "properties": {
+                  "source": {
+                    "type": "string",
+                    "description": "Source of the token usage",
+                    "example": "in-app-chat"
+                  },
                   "inputTokens": {
                     "type": "number",
                     "description": "Number of input tokens",
@@ -9898,7 +10879,8 @@
                             "enum": [
                               "o3-mini-2025-01-31",
                               "gpt-4.1-2025-04-14",
-                              "gpt-4.1-mini-2025-04-14"
+                              "gpt-4.1-mini-2025-04-14",
+                              "gpt-5-2025-08-07"
                             ]
                           }
                         },
@@ -9961,6 +10943,7 @@
                   }
                 },
                 "required": [
+                  "source",
                   "inputTokens",
                   "outputTokens",
                   "modelConfig",
@@ -10014,6 +10997,16 @@
             "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "include",
+            "description": "Comma-separated list of additional fields to include. Available options: solution.owner",
+            "schema": {
+              "type": "string",
+              "description": "Comma-separated list of additional fields to include. Available options: solution.owner",
+              "example": "solution.owner"
             }
           }
         ],
@@ -10094,7 +11087,9 @@
                     "description": "List of Pinecone sources to search over",
                     "example": [
                       "knowledge-base",
-                      "opportunities"
+                      "insights",
+                      "opportunities",
+                      "solutions"
                     ]
                   }
                 },
@@ -10302,6 +11297,307 @@
           }
         }
       }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/mock-feedback": {
+      "post": {
+        "summary": "Generate mock feedback",
+        "description": "Creates mock feedback data for testing and development purposes",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mock feedback created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/MockFeedbackResponse"
+                    }
+                  },
+                  "required": [
+                    "data"
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/organisations/{orgId}/workspaces/{workspaceId}/feedback/process": {
+      "post": {
+        "summary": "Process Unprocessed Feedback",
+        "description": "Processes unprocessed feedback in the specified workspace",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "orgId",
+            "required": true,
+            "description": "Organization ID",
+            "example": "a5f3c6e1-9d20-4f7b-8e31-d09a2b63c184",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "workspaceId",
+            "required": true,
+            "description": "Workspace ID",
+            "example": "c0e195d9-b918-4a3a-bd8b-f730361d044f",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Unprocessed feedback processed successfully"
+          },
+          "401": {
+            "description": "Unauthorized - Authentication required",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthenticated"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Unauthorized - Missing or invalid authentication token"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Insufficient permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "UNAUTHORISED_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "User is unauthorised"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Forbidden - Insufficient permissions to access this resource"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "object",
+                      "properties": {
+                        "code": {
+                          "type": "string",
+                          "description": "Error code identifier",
+                          "example": "INTERNAL_SERVER_ERROR"
+                        },
+                        "description": {
+                          "type": "string",
+                          "description": "Human-readable error description",
+                          "example": "An unexpected error occurred on the server"
+                        }
+                      },
+                      "required": [
+                        "code",
+                        "description"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ],
+                  "description": "Internal Server Error - An unexpected error occurred on the server"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -10364,6 +11660,12 @@
             "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
           },
           "opportunityIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metricIds": {
             "type": "array",
             "items": {
               "type": "string"
@@ -10477,10 +11779,17 @@
             },
             "default": []
           },
-          "feedback": {
+          "insights": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Feedback"
+              "$ref": "#/components/schemas/Insight"
+            },
+            "default": []
+          },
+          "metrics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Metric"
             },
             "default": []
           }
@@ -10489,7 +11798,8 @@
           "opportunities",
           "solutions",
           "requirements",
-          "feedback"
+          "insights",
+          "metrics"
         ],
         "description": "Outcome with relationships"
       },
@@ -10660,7 +11970,8 @@
               "Planned",
               "InDevelopment",
               "Complete",
-              "Cancelled"
+              "Cancelled",
+              "Live"
             ],
             "description": "Solution status",
             "example": "Backlog"
@@ -10726,6 +12037,16 @@
             "type": "string",
             "description": "Product Requirements Document content for the solution",
             "example": "Objective: Help users easily create..."
+          },
+          "horizon": {
+            "type": "string",
+            "enum": [
+              "now",
+              "next",
+              "later"
+            ],
+            "description": "Time horizon for the solution",
+            "example": "now"
           }
         },
         "required": [
@@ -10871,14 +12192,14 @@
         ],
         "description": "Requirement data for a product or feature"
       },
-      "Feedback": {
+      "Insight": {
         "type": "object",
         "properties": {
           "id": {
             "type": "string",
             "format": "uuid",
-            "description": "Unique identifier for the feedback",
-            "example": "fb_123"
+            "description": "Unique identifier for the insight",
+            "example": "ins_123"
           },
           "type": {
             "type": "string",
@@ -10887,22 +12208,22 @@
               "Bug",
               "FeatureRequest"
             ],
-            "description": "Type of feedback",
+            "description": "Type of insight",
             "example": "Feedback"
           },
           "source": {
             "type": "string",
-            "description": "Source of the feedback",
+            "description": "Source of the insight",
             "example": "Customer Interview"
           },
           "title": {
             "type": "string",
-            "description": "Title of the feedback",
+            "description": "Title of the insight",
             "example": "Dashboard UX Improvements"
           },
           "description": {
             "type": "string",
-            "description": "Description of the feedback",
+            "description": "Description of the insight",
             "example": "The dashboard could use better data visualization"
           },
           "feedback": {
@@ -10912,17 +12233,17 @@
           },
           "seen": {
             "type": "boolean",
-            "description": "Whether the feedback has been seen",
+            "description": "Whether the insight has been seen",
             "example": false
           },
           "hideContent": {
             "type": "boolean",
-            "description": "Whether the feedback content should be hidden",
+            "description": "Whether the insight content should be hidden",
             "example": false
           },
           "ownerId": {
             "type": "string",
-            "description": "ID of the feedback owner",
+            "description": "ID of the insight owner",
             "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
           },
           "createdAt": {
@@ -10948,7 +12269,162 @@
           "createdAt",
           "updatedAt"
         ],
-        "description": "Feedback data from a user"
+        "description": "Insight data from a user"
+      },
+      "Metric": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Unique identifier for the metric",
+            "example": "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+          },
+          "title": {
+            "type": "string",
+            "description": "Display name for the metric",
+            "example": "Daily Active Users"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the metric",
+            "example": "Number of unique users who performed any action in the last 24 hours"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Unit of measurement for the metric",
+            "example": "users"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "engagement",
+              "conversion",
+              "revenue",
+              "nps",
+              "csat",
+              "ces",
+              "ratio",
+              "custom"
+            ],
+            "description": "Category/type of the metric",
+            "default": "custom"
+          },
+          "targetOperator": {
+            "type": "string",
+            "enum": [
+              "greater_than",
+              "less_than",
+              "equal_to"
+            ],
+            "description": "Comparison operator for the target"
+          },
+          "targetValue": {
+            "type": "number",
+            "description": "Target value to achieve",
+            "example": 100
+          },
+          "targetDirection": {
+            "type": "string",
+            "enum": [
+              "up",
+              "down"
+            ],
+            "default": "up",
+            "description": "Direction of improvement (up = higher is better, down = lower is better)"
+          },
+          "currentValue": {
+            "type": "number",
+            "description": "Current value of the metric",
+            "example": 150
+          },
+          "previousValue": {
+            "type": "number",
+            "description": "Previous value of the metric for comparison",
+            "example": 140
+          },
+          "periodType": {
+            "type": "string",
+            "enum": [
+              "rolling",
+              "calendar"
+            ],
+            "description": "Type of period for metric comparison",
+            "example": "calendar"
+          },
+          "periodValue": {
+            "type": "string",
+            "enum": [
+              "day",
+              "week",
+              "month",
+              "quarter",
+              "year",
+              "7-day",
+              "30-day",
+              "90-day"
+            ],
+            "description": "Specific period value for metric comparison",
+            "example": "month"
+          },
+          "ownerId": {
+            "type": "string",
+            "description": "UserId of the Owner/responsible person for this metric",
+            "example": "user_123456789"
+          },
+          "timeseries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricTimeseriesPoint"
+            },
+            "description": "Historical values for trend analysis"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp of when the metric was created",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp of when the metric was last updated",
+            "example": "2023-01-01T00:00:00.000Z"
+          },
+          "relatedOutcomes": {
+            "type": "array",
+            "items": {},
+            "description": "Related outcomes that use this metric"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "ownerId",
+          "createdAt",
+          "updatedAt"
+        ],
+        "description": "Metric data representing a measurable KPI result"
+      },
+      "MetricTimeseriesPoint": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO datetime string for the data point"
+          },
+          "value": {
+            "type": "number",
+            "description": "Metric value at this point in time",
+            "example": 85
+          }
+        },
+        "required": [
+          "date",
+          "value"
+        ],
+        "description": "A single data point in a metric's time series"
       },
       "UpdateOutcomePayload": {
         "type": "object",
@@ -10994,9 +12470,294 @@
             "items": {
               "type": "string"
             }
+          },
+          "metricIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "description": "Request schema for updating an outcome"
+      },
+      "CreateMetricPayload": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Display name for the metric",
+            "example": "Daily Active Users"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the metric",
+            "example": "Number of unique users who performed any action in the last 24 hours"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Unit of measurement for the metric",
+            "example": "users"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "engagement",
+              "conversion",
+              "revenue",
+              "nps",
+              "csat",
+              "ces",
+              "ratio",
+              "custom"
+            ],
+            "description": "Category/type of the metric",
+            "default": "custom"
+          },
+          "targetOperator": {
+            "type": "string",
+            "enum": [
+              "greater_than",
+              "less_than",
+              "equal_to"
+            ],
+            "description": "Comparison operator for the target"
+          },
+          "targetValue": {
+            "type": "number",
+            "description": "Target value to achieve",
+            "example": 100
+          },
+          "targetDirection": {
+            "type": "string",
+            "enum": [
+              "up",
+              "down"
+            ],
+            "default": "up",
+            "description": "Direction of improvement (up = higher is better, down = lower is better)"
+          },
+          "currentValue": {
+            "type": "number",
+            "description": "Current value of the metric",
+            "example": 150
+          },
+          "previousValue": {
+            "type": "number",
+            "description": "Previous value of the metric for comparison",
+            "example": 140
+          },
+          "periodType": {
+            "type": "string",
+            "enum": [
+              "rolling",
+              "calendar"
+            ],
+            "description": "Type of period for metric comparison",
+            "example": "calendar"
+          },
+          "periodValue": {
+            "type": "string",
+            "enum": [
+              "day",
+              "week",
+              "month",
+              "quarter",
+              "year",
+              "7-day",
+              "30-day",
+              "90-day"
+            ],
+            "description": "Specific period value for metric comparison",
+            "example": "month"
+          },
+          "timeseries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricTimeseriesPoint"
+            },
+            "description": "Historical values for trend analysis"
+          },
+          "relatedOutcomes": {
+            "type": "array",
+            "items": {},
+            "description": "Related outcomes that use this metric"
+          },
+          "id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "string",
+                "enum": [
+                  ""
+                ]
+              }
+            ]
+          },
+          "outcomeIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of outcome IDs to associate with this metric",
+            "example": [
+              "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+            ]
+          },
+          "ownerId": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "ownerId"
+        ],
+        "description": "Request schema for creating a metric"
+      },
+      "UpdateMetricPayload": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Display name for the metric",
+            "example": "Daily Active Users"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed description of the metric",
+            "example": "Number of unique users who performed any action in the last 24 hours"
+          },
+          "unit": {
+            "type": "string",
+            "description": "Unit of measurement for the metric",
+            "example": "users"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "engagement",
+              "conversion",
+              "revenue",
+              "nps",
+              "csat",
+              "ces",
+              "ratio",
+              "custom"
+            ],
+            "description": "Category/type of the metric",
+            "default": "custom"
+          },
+          "targetOperator": {
+            "type": "string",
+            "enum": [
+              "greater_than",
+              "less_than",
+              "equal_to"
+            ],
+            "description": "Comparison operator for the target"
+          },
+          "targetValue": {
+            "type": "number",
+            "description": "Target value to achieve",
+            "example": 100
+          },
+          "targetDirection": {
+            "type": "string",
+            "enum": [
+              "up",
+              "down"
+            ],
+            "default": "up",
+            "description": "Direction of improvement (up = higher is better, down = lower is better)"
+          },
+          "currentValue": {
+            "type": "number",
+            "description": "Current value of the metric",
+            "example": 150
+          },
+          "previousValue": {
+            "type": "number",
+            "description": "Previous value of the metric for comparison",
+            "example": 140
+          },
+          "periodType": {
+            "type": "string",
+            "enum": [
+              "rolling",
+              "calendar"
+            ],
+            "description": "Type of period for metric comparison",
+            "example": "calendar"
+          },
+          "periodValue": {
+            "type": "string",
+            "enum": [
+              "day",
+              "week",
+              "month",
+              "quarter",
+              "year",
+              "7-day",
+              "30-day",
+              "90-day"
+            ],
+            "description": "Specific period value for metric comparison",
+            "example": "month"
+          },
+          "ownerId": {
+            "type": "string",
+            "description": "UserId of the Owner/responsible person for this metric",
+            "example": "user_123456789"
+          },
+          "timeseries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MetricTimeseriesPoint"
+            },
+            "description": "Historical values for trend analysis"
+          },
+          "relatedOutcomes": {
+            "type": "array",
+            "items": {},
+            "description": "Related outcomes that use this metric"
+          },
+          "outcomeIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of outcome IDs to associate with this metric",
+            "example": [
+              "7b9e5d2c-f314-48a9-be56-9843a2f6c019"
+            ]
+          }
+        },
+        "description": "Request schema for updating an  metric"
+      },
+      "RelationshipAction": {
+        "type": "string",
+        "enum": [
+          "add",
+          "remove"
+        ]
+      },
+      "MetricRelationshipsPayload": {
+        "type": "object",
+        "properties": {
+          "outcomeIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of outcome IDs to associate with the metric",
+            "example": [
+              "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
+            ]
+          }
+        },
+        "description": "Request body for managing metric relationships"
       },
       "OnboardingPayload": {
         "type": "object",
@@ -11126,6 +12887,7 @@
               "OnboardingConsiderSolutionGeneration",
               "OnboardingConsiderSolutionsToBuild",
               "OnboardingSelectSolutionsToBuild",
+              "OnboardingMapSolutionsToRoadmap",
               "Active",
               "Inactive"
             ],
@@ -11185,10 +12947,10 @@
         ],
         "description": "Request schema for one-shot onboarding"
       },
-      "FeedbackWithRelationships": {
+      "InsightWithRelationships": {
         "allOf": [
           {
-            "$ref": "#/components/schemas/Feedback"
+            "$ref": "#/components/schemas/Insight"
           }
         ],
         "properties": {
@@ -11227,69 +12989,23 @@
           "requirements",
           "outcomes"
         ],
-        "description": "Feedback with relationships"
+        "description": "Insight with relationships (legacy - use InsightWithRelationships)"
       },
-      "FeedbackArrayResponse": {
+      "InsightArrayResponse": {
         "type": "object",
         "properties": {
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/FeedbackWithRelationships"
+              "$ref": "#/components/schemas/InsightWithRelationships"
             },
-            "description": "Array of feedback items"
+            "description": "Array of insight items"
           }
         },
         "required": [
           "data"
         ],
-        "description": "Response containing an array of feedback items"
-      },
-      "MockFeedbackResponse": {
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "description": {
-              "type": "string",
-              "description": "Description of the feedback",
-              "example": "Pet Stay Properties exceeded our expectations with their exceptional service and spotless accommodations."
-            },
-            "feedback": {
-              "type": "string",
-              "description": "Feedback text",
-              "example": "We recently booked a stay for our furry friend at Pet Stay Properties and were blown away by the level of service and cleanliness. The property was immaculate, and the staff went above and beyond to ensure our pet's comfort. We will definitely be using them again!"
-            },
-            "source": {
-              "type": "string",
-              "description": "Source of the feedback",
-              "example": "generate-example"
-            },
-            "title": {
-              "type": "string",
-              "description": "Title of the feedback",
-              "example": "Excellent Service and Cleanliness"
-            },
-            "type": {
-              "type": "string",
-              "enum": [
-                "Feedback",
-                "Bug",
-                "FeatureRequest"
-              ],
-              "description": "Type of the feedback",
-              "example": "Feedback"
-            }
-          },
-          "required": [
-            "description",
-            "feedback",
-            "source",
-            "title",
-            "type"
-          ]
-        },
-        "description": "Array of mock feedback strings"
+        "description": "Response containing an array of insight items"
       },
       "CreateOpportunityPayload": {
         "type": "object",
@@ -11328,7 +13044,7 @@
               "type": "string"
             }
           },
-          "feedbackIds": {
+          "insightIds": {
             "type": "array",
             "items": {
               "type": "string"
@@ -11426,9 +13142,9 @@
                 "description": "Last update timestamp",
                 "example": "2023-01-01T00:00:00.000Z"
               },
-              "hasUnseenFeedback": {
+              "hasUnseenInsights": {
                 "type": "boolean",
-                "description": "Whether the opportunity has unseen feedback",
+                "description": "Whether the opportunity has unseen insights",
                 "example": false
               },
               "solutions": {
@@ -11445,10 +13161,10 @@
                 },
                 "default": []
               },
-              "feedback": {
+              "insights": {
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/Feedback"
+                  "$ref": "#/components/schemas/Insight"
                 },
                 "default": []
               },
@@ -11478,10 +13194,10 @@
               "hideContent",
               "createdAt",
               "updatedAt",
-              "hasUnseenFeedback",
+              "hasUnseenInsights",
               "solutions",
               "requirements",
-              "feedback",
+              "insights",
               "outcomes",
               "topics"
             ],
@@ -11500,10 +13216,10 @@
           }
         ],
         "properties": {
-          "hasUnseenFeedback": {
+          "hasUnseenInsights": {
             "type": "boolean",
             "default": false,
-            "description": "Whether the opportunity has unseen feedback",
+            "description": "Whether the opportunity has unseen insights",
             "example": false
           },
           "solutions": {
@@ -11520,10 +13236,10 @@
             },
             "default": []
           },
-          "feedback": {
+          "insights": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Feedback"
+              "$ref": "#/components/schemas/Insight"
             },
             "default": []
           },
@@ -11543,10 +13259,10 @@
           }
         },
         "required": [
-          "hasUnseenFeedback",
+          "hasUnseenInsights",
           "solutions",
           "requirements",
-          "feedback",
+          "insights",
           "outcomes",
           "topics"
         ],
@@ -11567,7 +13283,7 @@
           "description": {
             "type": "string",
             "description": "Description of the topic",
-            "example": "General feedback related to UI/UX improvements"
+            "example": "General insight related to UI/UX improvements"
           },
           "createdAt": {
             "type": "string",
@@ -11587,7 +13303,7 @@
           "createdAt",
           "updatedAt"
         ],
-        "description": "Topic data for organizing feedback"
+        "description": "Topic data for organizing insight"
       },
       "OpportunityArrayResponse": {
         "type": "object",
@@ -11659,7 +13375,7 @@
             "description": "ID of the opportunity owner",
             "example": "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
           },
-          "feedbackIds": {
+          "insightIds": {
             "type": "array",
             "items": {
               "type": "string"
@@ -11790,7 +13506,7 @@
               "type": "string"
             }
           },
-          "feedbackIds": {
+          "insightIds": {
             "type": "array",
             "items": {
               "type": "string"
@@ -11829,10 +13545,10 @@
             },
             "default": []
           },
-          "feedback": {
+          "insights": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Feedback"
+              "$ref": "#/components/schemas/Insight"
             },
             "default": []
           },
@@ -11847,7 +13563,7 @@
         "required": [
           "opportunities",
           "solutions",
-          "feedback",
+          "insights",
           "outcomes"
         ],
         "description": "Requirement with relationships"
@@ -11952,7 +13668,7 @@
               "type": "string"
             }
           },
-          "feedbackIds": {
+          "insightIds": {
             "type": "array",
             "items": {
               "type": "string"
@@ -12026,7 +13742,8 @@
               "Planned",
               "InDevelopment",
               "Complete",
-              "Cancelled"
+              "Cancelled",
+              "Live"
             ],
             "description": "Solution status",
             "example": "Backlog"
@@ -12071,6 +13788,16 @@
             "items": {
               "type": "string"
             }
+          },
+          "horizon": {
+            "type": "string",
+            "enum": [
+              "now",
+              "next",
+              "later"
+            ],
+            "description": "Solution horizon",
+            "example": "now"
           }
         },
         "required": [
@@ -12102,10 +13829,10 @@
             },
             "default": []
           },
-          "feedback": {
+          "insights": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Feedback"
+              "$ref": "#/components/schemas/Insight"
             },
             "default": []
           },
@@ -12120,7 +13847,7 @@
         "required": [
           "opportunities",
           "requirements",
-          "feedback",
+          "insights",
           "outcomes"
         ],
         "description": "Solution with relationships"
@@ -12198,7 +13925,8 @@
               "Planned",
               "InDevelopment",
               "Complete",
-              "Cancelled"
+              "Cancelled",
+              "Live"
             ],
             "description": "Solution status",
             "example": "Backlog"
@@ -12236,6 +13964,16 @@
             "description": "Product Requirements Document content for the solution",
             "example": "Objective: Help users easily create..."
           },
+          "horizon": {
+            "type": "string",
+            "enum": [
+              "now",
+              "next",
+              "later"
+            ],
+            "description": "Time horizon for the solution",
+            "example": "now"
+          },
           "opportunityIds": {
             "type": "array",
             "items": {
@@ -12254,7 +13992,7 @@
               "user",
               "AI"
             ],
-            "description": "Who triggered the update",
+            "description": "Who triggered the update. If not provided, defaults to 'user'",
             "example": "user"
           }
         },
@@ -12275,7 +14013,7 @@
           "description": {
             "type": "string",
             "description": "Description of the topic",
-            "example": "General feedback related to UI/UX improvements"
+            "example": "General insight related to UI/UX improvements"
           },
           "opportunityIds": {
             "type": "array",
@@ -12287,12 +14025,12 @@
               "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
             ]
           },
-          "feedbackIds": {
+          "insightIds": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "List of feedback IDs associated with the topic",
+            "description": "List of insight IDs associated with the topic",
             "example": [
               "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
             ]
@@ -12318,10 +14056,10 @@
             },
             "default": []
           },
-          "feedback": {
+          "insights": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Feedback"
+              "$ref": "#/components/schemas/Insight"
             },
             "default": []
           },
@@ -12333,7 +14071,7 @@
         },
         "required": [
           "opportunities",
-          "feedback",
+          "insights",
           "opportunityCount"
         ],
         "description": "Topic data"
@@ -12349,7 +14087,7 @@
           "description": {
             "type": "string",
             "description": "Description of the topic",
-            "example": "General feedback related to UI/UX improvements"
+            "example": "General insight related to UI/UX improvements"
           },
           "opportunityIds": {
             "type": "array",
@@ -12361,12 +14099,12 @@
               "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
             ]
           },
-          "feedbackIds": {
+          "insightIds": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "List of feedback IDs associated with the topic",
+            "description": "List of insight IDs associated with the topic",
             "example": [
               "d4e71c2b-a498-42af-b7f5-69de06a0d7c4"
             ]
@@ -12468,6 +14206,7 @@
               "OnboardingConsiderSolutionGeneration",
               "OnboardingConsiderSolutionsToBuild",
               "OnboardingSelectSolutionsToBuild",
+              "OnboardingMapSolutionsToRoadmap",
               "Active",
               "Inactive"
             ],
@@ -12696,18 +14435,18 @@
         ],
         "description": "User organization and workspace information"
       },
-      "FeedbackResponse": {
+      "InsightResponse": {
         "type": "object",
         "properties": {
-          "feedback": {
+          "insight": {
             "type": "string",
-            "description": "The feedback content",
+            "description": "The insight content",
             "example": "I had trouble with the checkout process on your website"
           },
           "source": {
             "allOf": [
               {
-                "$ref": "#/components/schemas/FeedbackSourceEnum"
+                "$ref": "#/components/schemas/InsightSourceEnum"
               }
             ],
             "example": "SLACK"
@@ -12726,14 +14465,14 @@
           }
         },
         "required": [
-          "feedback",
+          "insight",
           "source",
           "workspaceId",
           "organisationId"
         ],
-        "description": "Response data for processed feedback"
+        "description": "Response data for processed insight"
       },
-      "FeedbackSourceEnum": {
+      "InsightSourceEnum": {
         "type": "string",
         "enum": [
           "TYPEFORM",
@@ -12741,7 +14480,7 @@
           "UNKNOWN",
           "MANUAL"
         ],
-        "description": "The source of the feedback",
+        "description": "The source of the insight",
         "example": "TYPEFORM"
       },
       "CreateFeedbackDocumentPayload": {
@@ -12785,13 +14524,6 @@
         ],
         "description": "Uploaded document information"
       },
-      "RelationshipAction": {
-        "type": "string",
-        "enum": [
-          "add",
-          "remove"
-        ]
-      },
       "OpportunityRelationshipsPayload": {
         "type": "object",
         "properties": {
@@ -12815,12 +14547,12 @@
               "f6e5d4c3-b2a1-4b5a-9c8d-1e0f2a3b4c5d"
             ]
           },
-          "feedbackIds": {
+          "insightIds": {
             "type": "array",
             "items": {
               "type": "string"
             },
-            "description": "Array of feedback IDs to associate with the opportunity",
+            "description": "Array of insight IDs to associate with the opportunity",
             "example": [
               "c5d4e3f2-a1b2-4c5d-8e9f-0a1b2c3d4e5f"
             ]
@@ -12837,6 +14569,16 @@
               "type": "string"
             },
             "description": "Array of opportunity IDs to associate with the outcome",
+            "example": [
+              "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
+            ]
+          },
+          "metricIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of metric IDs to associate with the outcome",
             "example": [
               "a1b2c3d4-e5f6-4a5b-8c9d-0e1f2a3b4c5d"
             ]
@@ -12902,6 +14644,14 @@
             },
             "minItems": 1,
             "description": "List of solution IDs to move"
+          },
+          "triggeredBy": {
+            "type": "string",
+            "enum": [
+              "user",
+              "AI"
+            ],
+            "description": "Who triggered the priority update. If not provided, defaults to 'user'"
           }
         },
         "required": [
@@ -13241,7 +14991,7 @@
                     "nodeId": {
                       "type": "string"
                     },
-                    "feedbackId": {
+                    "insightId": {
                       "type": "string"
                     },
                     "content": {
@@ -13298,6 +15048,52 @@
           }
         },
         "description": "Similarity search response data"
+      },
+      "MockFeedbackResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "description": {
+              "type": "string",
+              "description": "Description of the feedback",
+              "example": "Pet Stay Properties exceeded our expectations with their exceptional service and spotless accommodations."
+            },
+            "feedback": {
+              "type": "string",
+              "description": "Feedback text",
+              "example": "We recently booked a stay for our furry friend at Pet Stay Properties and were blown away by the level of service and cleanliness. The property was immaculate, and the staff went above and beyond to ensure our pet's comfort. We will definitely be using them again!"
+            },
+            "source": {
+              "type": "string",
+              "description": "Source of the feedback",
+              "example": "generate-example"
+            },
+            "title": {
+              "type": "string",
+              "description": "Title of the feedback",
+              "example": "Excellent Service and Cleanliness"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "Feedback",
+                "Bug",
+                "FeatureRequest"
+              ],
+              "description": "Type of the feedback",
+              "example": "Feedback"
+            }
+          },
+          "required": [
+            "description",
+            "feedback",
+            "source",
+            "title",
+            "type"
+          ]
+        },
+        "description": "Array of mock feedback strings"
       }
     },
     "parameters": {
@@ -13306,12 +15102,12 @@
         "name": "relationships",
         "required": false,
         "description": "Comma-separated list of relationships to include in the response",
-        "example": "opportunities,solutions,requirements,feedback",
+        "example": "opportunities,solutions,requirements,insights,metrics",
         "schema": {
           "type": "string"
         }
       },
-      "FeedbackRelationshipsParam": {
+      "InsightRelationshipsParam": {
         "in": "query",
         "name": "relationships",
         "required": false,
@@ -13326,7 +15122,7 @@
         "name": "relationships",
         "required": false,
         "description": "Comma-separated list of relationships to include in the response",
-        "example": "solutions,requirements,outcomes,feedback",
+        "example": "solutions,requirements,outcomes,insights",
         "schema": {
           "type": "string"
         }
@@ -13336,7 +15132,7 @@
         "name": "relationships",
         "required": false,
         "description": "Comma-separated list of relationships to include in the response",
-        "example": "solutions,opportunities,outcomes,feedback",
+        "example": "solutions,opportunities,outcomes,insight",
         "schema": {
           "type": "string"
         }
@@ -13346,7 +15142,7 @@
         "name": "relationships",
         "required": false,
         "description": "Comma-separated list of relationships to include in the response",
-        "example": "opportunities,requirements,outcomes,feedback",
+        "example": "opportunities,requirements,outcomes,insighs",
         "schema": {
           "type": "string"
         }

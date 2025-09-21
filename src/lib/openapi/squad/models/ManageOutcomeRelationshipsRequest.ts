@@ -35,7 +35,7 @@ export interface ManageOutcomeRelationshipsRequest {
    * @type {Array<string>}
    * @memberof ManageOutcomeRelationshipsRequest
    */
-  feedbackIds?: Array<string>;
+  insightIds?: Array<string>;
 }
 
 /**
@@ -64,7 +64,7 @@ export function ManageOutcomeRelationshipsRequestFromJSONTyped(
     opportunityIds:
       json["opportunityIds"] == null ? undefined : json["opportunityIds"],
     solutionIds: json["solutionIds"] == null ? undefined : json["solutionIds"],
-    feedbackIds: json["feedbackIds"] == null ? undefined : json["feedbackIds"],
+    insightIds: json["insightIds"] == null ? undefined : json["insightIds"],
   };
 }
 
@@ -85,6 +85,6 @@ export function ManageOutcomeRelationshipsRequestToJSONTyped(
   return {
     opportunityIds: value["opportunityIds"],
     solutionIds: value["solutionIds"],
-    feedbackIds: value["feedbackIds"],
+    insightIds: value["insightIds"],
   };
 }
