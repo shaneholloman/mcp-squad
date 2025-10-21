@@ -1,7 +1,7 @@
 import { z, ZodError } from "zod";
 import { chatToolHelperSchema, UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
-import { OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum } from "./lib/openapi/squad/models/index.js";
+import { SimilaritySearchRequestFiltersEnum } from "./lib/openapi/squad/models/SimilaritySearchRequest.js";
 
 export enum SimilaritySearchTool {
   SimilaritySearch = "similarity_search",
@@ -10,24 +10,24 @@ export enum SimilaritySearchTool {
 const filtersEnum = z
   .array(
     z.enum([
-      OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.KnowledgeBase,
-      OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Insights,
-      OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Opportunities,
-      OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Solutions,
+      SimilaritySearchRequestFiltersEnum.KnowledgeBase,
+      SimilaritySearchRequestFiltersEnum.Insights,
+      SimilaritySearchRequestFiltersEnum.Opportunities,
+      SimilaritySearchRequestFiltersEnum.Solutions,
     ])
   )
   .describe(
-    `Filters to apply to the search. Options are: ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.KnowledgeBase} for knowledge documents, ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Insights} for insights, ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Opportunities} for opportunities, ${OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Solutions} for solutions.`
+    `Filters to apply to the search. Options are: ${SimilaritySearchRequestFiltersEnum.KnowledgeBase} for knowledge documents, ${SimilaritySearchRequestFiltersEnum.Insights} for insights, ${SimilaritySearchRequestFiltersEnum.Opportunities} for opportunities, ${SimilaritySearchRequestFiltersEnum.Solutions} for solutions.`
   );
 
 // Schema for similarity search
 export const SimilaritySearchArgsSchema = z.object({
   query: z.string().describe("The search query string"),
   filters: filtersEnum.default([
-    OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.KnowledgeBase,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Insights,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Opportunities,
-    OrganisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequestFiltersEnum.Solutions,
+    SimilaritySearchRequestFiltersEnum.KnowledgeBase,
+    SimilaritySearchRequestFiltersEnum.Insights,
+    SimilaritySearchRequestFiltersEnum.Opportunities,
+    SimilaritySearchRequestFiltersEnum.Solutions,
   ]),
 });
 
@@ -51,10 +51,10 @@ export const similaritySearch = async (
 
     const data = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPost({
+    ).similaritySearch({
       orgId,
       workspaceId,
-      organisationsOrgIdWorkspacesWorkspaceIdSimilaritySearchPostRequest: {
+      similaritySearchRequest: {
         query,
         filters,
       },

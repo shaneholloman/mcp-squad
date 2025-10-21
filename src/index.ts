@@ -6,6 +6,7 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import { zodToJsonSchema } from "zod-to-json-schema";
+import { feedbackTools, runFeedbackTool } from "./feedback.js";
 import { insightTools, runInsightTool } from "./insight.js";
 import { getUserContext } from "./helpers/getUser.js";
 import { knowledgeTools, runKnowledgeTool } from "./knowledge.js";
@@ -21,7 +22,7 @@ import { runWorkspaceTool, workspaceTool } from "./workspace.js";
 // Package information embedded for standalone binary
 const pkg = {
   name: "@squadai/tools",
-  version: "1.5.2"
+  version: "1.6.0"
 };
 
 // Parse command-line arguments
@@ -70,6 +71,7 @@ const allTools = [
   ...outcomeTools,
   ...knowledgeTools,
   ...workspaceTool,
+  ...feedbackTools,
   ...insightTools,
   ...similaritySearchTools,
 ];
@@ -99,6 +101,7 @@ server.setRequestHandler(CallToolRequestSchema, async request => {
       runSolutionTool,
       runOpportunityTool,
       runOutcomeTool,
+      runFeedbackTool,
       runInsightTool,
       runSimilaritySearchTool,
     ];
