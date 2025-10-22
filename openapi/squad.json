@@ -8624,7 +8624,6 @@
                         "accountType": {
                           "description": "Account type",
                           "example": "HOBBY",
-                          "default": "HOBBY",
                           "$ref": "#/components/schemas/OrganisationAccountTypeEnum"
                         },
                         "billingCycleStartDate": {
@@ -8939,7 +8938,6 @@
                           "accountType": {
                             "description": "Account type",
                             "example": "HOBBY",
-                            "default": "HOBBY",
                             "$ref": "#/components/schemas/OrganisationAccountTypeEnum"
                           },
                           "billingCycleStartDate": {
@@ -9193,7 +9191,6 @@
                         "accountType": {
                           "description": "Account type",
                           "example": "HOBBY",
-                          "default": "HOBBY",
                           "$ref": "#/components/schemas/OrganisationAccountTypeEnum"
                         },
                         "billingCycleStartDate": {
@@ -9491,7 +9488,6 @@
                         "accountType": {
                           "description": "Account type",
                           "example": "HOBBY",
-                          "default": "HOBBY",
                           "$ref": "#/components/schemas/OrganisationAccountTypeEnum"
                         },
                         "billingCycleStartDate": {
@@ -10671,7 +10667,6 @@
                         "accountType": {
                           "description": "Account type",
                           "example": "HOBBY",
-                          "default": "HOBBY",
                           "$ref": "#/components/schemas/OrganisationAccountTypeEnum"
                         },
                         "billingCycleStartDate": {
@@ -16085,11 +16080,6 @@
               "example": "We recently booked a stay for our furry friend at Pet Stay Properties and were blown away by the level of service and cleanliness. The property was immaculate, and the staff went above and beyond to ensure our pet's comfort. We will definitely be using them again!",
               "type": "string"
             },
-            "source": {
-              "description": "Source of the original feedback",
-              "example": "generate-example",
-              "type": "string"
-            },
             "title": {
               "description": "Title of the insight",
               "example": "Excellent Service and Cleanliness",
@@ -16109,7 +16099,6 @@
           "required": [
             "description",
             "feedback",
-            "source",
             "title",
             "type"
           ],

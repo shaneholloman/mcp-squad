@@ -95,6 +95,7 @@ export const createSolution = async (
       ],
     };
   } catch (e) {
+    console.error("Error creating solution:", e);
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to create this solution. Please check that all values are valid. " +
@@ -201,6 +202,7 @@ export const getSolution = async (
       ],
     };
   } catch (e) {
+    console.error("Error getting solution:", e);
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to retrieve this solution. Please check that all values are valid. " +
@@ -272,6 +274,7 @@ export const updateSolution = async (
       ],
     };
   } catch (e) {
+    console.error("Error getting solution:", e);
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to update this solution. Please check that all values are valid. " +
@@ -332,6 +335,7 @@ export const deleteSolution = async (
       ],
     };
   } catch (e) {
+    console.error("error", e);
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to delete this solution. Please check that all values are valid. " +

@@ -32,12 +32,6 @@ export interface MockInsightsResponseInner {
      */
     feedback: string;
     /**
-     * Source of the original feedback
-     * @type {string}
-     * @memberof MockInsightsResponseInner
-     */
-    source: string;
-    /**
      * Title of the insight
      * @type {string}
      * @memberof MockInsightsResponseInner
@@ -69,7 +63,6 @@ export type MockInsightsResponseInnerTypeEnum = typeof MockInsightsResponseInner
 export function instanceOfMockInsightsResponseInner(value: object): value is MockInsightsResponseInner {
     if (!('description' in value) || value['description'] === undefined) return false;
     if (!('feedback' in value) || value['feedback'] === undefined) return false;
-    if (!('source' in value) || value['source'] === undefined) return false;
     if (!('title' in value) || value['title'] === undefined) return false;
     if (!('type' in value) || value['type'] === undefined) return false;
     return true;
@@ -87,7 +80,6 @@ export function MockInsightsResponseInnerFromJSONTyped(json: any, ignoreDiscrimi
         
         'description': json['description'],
         'feedback': json['feedback'],
-        'source': json['source'],
         'title': json['title'],
         'type': json['type'],
     };
@@ -106,7 +98,6 @@ export function MockInsightsResponseInnerToJSONTyped(value?: MockInsightsRespons
         
         'description': value['description'],
         'feedback': value['feedback'],
-        'source': value['source'],
         'title': value['title'],
         'type': value['type'],
     };

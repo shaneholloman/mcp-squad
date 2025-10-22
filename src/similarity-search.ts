@@ -69,6 +69,7 @@ export const similaritySearch = async (
       ],
     };
   } catch (e) {
+    console.error("error", e);
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to perform this similarity search. Please check that all values are valid. " +

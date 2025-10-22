@@ -67,6 +67,7 @@ export const createOpportunity = async (
       ],
     };
   } catch (e) {
+    console.error("Error getting opportunity:", e);
     return {
       content: [
         {
@@ -121,6 +122,7 @@ export const listOpportunities = async (
       ],
     };
   } catch (e) {
+    console.error("Error getting opportunity:", e);
     return {
       content: [
         {
@@ -182,6 +184,7 @@ export const getOpportunity = async (
       ],
     };
   } catch (e) {
+    console.error("Error getting opportunity:", e);
     return {
       content: [
         {
@@ -245,6 +248,7 @@ export const updateOpportunity = async (
       ],
     };
   } catch (e) {
+    console.error("Error getting opportunity:", e);
     return {
       content: [
         {
@@ -301,6 +305,7 @@ export const deleteOpportunity = async (
       ],
     };
   } catch (e) {
+    console.error("Error getting opportunity:", e);
     return {
       content: [
         {
@@ -364,6 +369,7 @@ export const generateSolutions = async (
       ],
     };
   } catch (e) {
+    console.error("Error getting opportunity:", e);
     return {
       content: [
         {

@@ -67,7 +67,6 @@ export function squadClient(
   }
 
   const basePath = getBasePath();
-  const authMethod = options.jwt ? "JWT" : "API Key";
 
   // Create a new instance every time with JWT, don't cache
   if (options.jwt) {
