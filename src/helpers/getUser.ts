@@ -14,7 +14,7 @@ export const getUserContext = async () => {
     if (context) {
       return context;
     }
-    const user = await squadClient().v1WhoamiGet();
+    const user = await squadClient().whoAmI();
     const orgId = user.data.organisation.id;
     const workspaceId = user.data.workspace.id;
 

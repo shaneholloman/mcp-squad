@@ -72,7 +72,7 @@ export const createOutcome = async (
 
     const res = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesPost({
+    ).createOutcome({
       orgId,
       workspaceId,
       createOutcomePayload: outcomeRequest,
@@ -120,7 +120,7 @@ export const listOutcomes = async (
 
     const outcomes = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesGet({
+    ).listOutcomes({
       orgId,
       workspaceId,
     });
@@ -188,7 +188,7 @@ export const getOutcome = async (
 
     const outcome = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet({
+    ).getOutcome({
       orgId,
       workspaceId,
       outcomeId,
@@ -255,7 +255,7 @@ export const updateOutcome = async (
 
     const outcome = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdPut({
+    ).updateOutcome({
       orgId,
       workspaceId,
       outcomeId,
@@ -311,7 +311,7 @@ export const deleteOutcome = async (
 
     const result = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdDelete({
+    ).deleteOutcome({
       orgId,
       workspaceId,
       outcomeId,
@@ -387,7 +387,7 @@ export const manageOutcomeRelationships = async (
 
     const updatedOutcome = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOutcomesOutcomeIdGet({
+    ).getOutcome({
       orgId,
       workspaceId,
       outcomeId,

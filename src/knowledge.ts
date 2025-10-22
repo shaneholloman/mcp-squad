@@ -36,7 +36,7 @@ export const createKnowledge = async (
 
     const res = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdKnowledgePost({
+    ).createKnowledge({
       orgId,
       workspaceId,
       createKnowledgePayload: {
@@ -78,7 +78,7 @@ export const listKnowledge = async (
 
     const knowledge = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeGet({
+    ).listKnowledge({
       orgId,
       workspaceId,
     });
@@ -135,7 +135,7 @@ export const getKnowledge = async (
 
     const knowledge = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdGet({
+    ).getKnowledge({
       orgId,
       workspaceId,
       knowledgeId,
@@ -181,7 +181,7 @@ export const deleteKnowledge = async (
 
     const result = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdKnowledgeKnowledgeIdDelete({
+    ).deleteKnowledge({
       orgId,
       workspaceId,
       knowledgeId,

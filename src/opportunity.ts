@@ -48,7 +48,7 @@ export const createOpportunity = async (
 
     const res = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesPost({
+    ).createOpportunity({
       orgId,
       workspaceId,
       createOpportunityPayload: {
@@ -96,7 +96,7 @@ export const listOpportunities = async (
 
     const opportunities = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesGet({
+    ).listOpportunities({
       orgId,
       workspaceId,
     });
@@ -166,7 +166,7 @@ export const getOpportunity = async (
 
     const opportunity = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGet({
+    ).getOpportunity({
       orgId,
       workspaceId,
       opportunityId,
@@ -229,7 +229,7 @@ export const updateOpportunity = async (
 
     const opportunity = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdPut({
+    ).updateOpportunity({
       orgId,
       workspaceId,
       opportunityId,
@@ -282,7 +282,7 @@ export const deleteOpportunity = async (
 
     const result = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdDelete({
+    ).deleteOpportunity({
       orgId,
       workspaceId,
       opportunityId,
@@ -345,13 +345,11 @@ export const generateSolutions = async (
 
     await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGenerateSolutionsPost(
-      {
-        orgId,
-        workspaceId,
-        opportunityId,
-      },
-    );
+    ).generateSolutions({
+      orgId,
+      workspaceId,
+      opportunityId,
+    });
 
     return {
       content: [
@@ -436,7 +434,7 @@ export const manageOpportunityRelationships = async (
 
     const updatedOpportunity = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdOpportunitiesOpportunityIdGet({
+    ).getOpportunity({
       orgId,
       workspaceId,
       opportunityId,

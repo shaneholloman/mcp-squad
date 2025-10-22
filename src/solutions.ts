@@ -80,7 +80,7 @@ export const createSolution = async (
 
     const data = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsPost({
+    ).createSolution({
       orgId,
       workspaceId,
       createSolutionPayload: solutionPayload,
@@ -129,7 +129,7 @@ export const listSolutions = async (
 
     const solutions = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsGet({
+    ).listSolutions({
       orgId,
       workspaceId,
     });
@@ -186,7 +186,7 @@ export const getSolution = async (
 
     const solution = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
+    ).getSolution({
       orgId,
       workspaceId,
       solutionId,
@@ -256,7 +256,7 @@ export const updateSolution = async (
 
     const solution = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdPut({
+    ).updateSolution({
       orgId,
       workspaceId,
       solutionId,
@@ -313,7 +313,7 @@ export const deleteSolution = async (
 
     await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdDelete({
+    ).deleteSolution({
       orgId,
       workspaceId,
       solutionId,
@@ -382,7 +382,6 @@ export const manageSolutionRelationships = async (
     const { solutionId, action, opportunityIds } = safeArgs;
 
     const relationshipsPayload: SolutionRelationshipsPayload = {
-      requirementIds: [],
       opportunityIds: opportunityIds || [],
     };
 
@@ -396,7 +395,7 @@ export const manageSolutionRelationships = async (
 
     const data = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdSolutionsSolutionIdGet({
+    ).getSolution({
       orgId,
       workspaceId,
       solutionId,

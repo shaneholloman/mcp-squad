@@ -2,7 +2,7 @@ import { z } from "zod";
 import { chatToolHelperSchema, UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
 import { InsightSourceEnum } from "./lib/openapi/squad/models/InsightSourceEnum.js";
-import { OrganisationsOrgIdWorkspacesWorkspaceIdInsightsPostRequestTypeEnum } from "./lib/openapi/squad/models/OrganisationsOrgIdWorkspacesWorkspaceIdInsightsPostRequest.js";
+import { CreateInsightRequestTypeEnum } from "./lib/openapi/squad/models/CreateInsightRequest.js";
 
 export enum InsightTool {
   CreateInsight = "create_insight",
@@ -15,26 +15,15 @@ export enum InsightTool {
 export const CreateInsightArgsSchema = z.object({
   type: z
     .enum([
-      OrganisationsOrgIdWorkspacesWorkspaceIdInsightsPostRequestTypeEnum.Feedback,
-      OrganisationsOrgIdWorkspacesWorkspaceIdInsightsPostRequestTypeEnum.Bug,
-      OrganisationsOrgIdWorkspacesWorkspaceIdInsightsPostRequestTypeEnum.FeatureRequest,
+      CreateInsightRequestTypeEnum.Feedback,
+      CreateInsightRequestTypeEnum.Bug,
+      CreateInsightRequestTypeEnum.FeatureRequest,
     ])
     .describe(
       "The type of insight: 'Feedback' for customer feedback, 'Bug' for bug reports, or 'FeatureRequest' for feature requests.",
     ),
-  source: z
-    .enum([
-      InsightSourceEnum.Typeform,
-      InsightSourceEnum.Slack,
-      InsightSourceEnum.Manual,
-      InsightSourceEnum.Unknown,
-    ])
-    .describe(
-      "The source of the insight. Use TYPEFORM for Typeform surveys, SLACK for Slack messages, MANUAL for manually entered insights, or UNKNOWN if the source is not specified.",
-    ),
   title: z.string().describe("A brief title summarizing the insight"),
   description: z.string().describe("A short description of the insight"),
-  feedback: z.string().describe("The detailed feedback content or full text of the insight"),
 });
 
 export const createInsightTool = {
@@ -55,15 +44,13 @@ export const createInsight = async (
 
     const res = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdInsightsPost({
+    ).createInsight({
       orgId,
       workspaceId,
-      organisationsOrgIdWorkspacesWorkspaceIdInsightsPostRequest: {
+      createInsightRequest: {
         type: safeBody.type,
-        source: safeBody.source,
         title: safeBody.title,
         description: safeBody.description,
-        feedback: safeBody.feedback,
         organisationId: orgId,
         workspaceId: workspaceId,
       },
@@ -101,7 +88,7 @@ export const listInsights = async (
 
     const insights = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdInsightsGet({
+    ).listInsights({
       orgId,
       workspaceId,
     });
@@ -158,7 +145,7 @@ export const getInsight = async (
 
     const insight = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdInsightsInsightIdGet({
+    ).getInsight({
       orgId,
       workspaceId,
       insightId: safeBody.insightId,
@@ -203,7 +190,7 @@ export const deleteInsight = async (
 
     const result = await squadClient(
       context.jwt,
-    ).organisationsOrgIdWorkspacesWorkspaceIdInsightsInsightIdDelete({
+    ).deleteInsight({
       orgId,
       workspaceId,
       insightId,

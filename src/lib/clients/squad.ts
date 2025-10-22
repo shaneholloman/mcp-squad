@@ -27,20 +27,20 @@ const getBasePath = (): string => {
 
 // Define a namespace for our global variable to avoid TypeScript errors
 declare global {
-  var squadApiKeyInstance: SquadApi.DefaultApi | undefined;
+  var squadApiKeyInstance: SquadApi.SquadApi | undefined;
 }
 
 // Function overload signatures
 export function squadClient(options: {
   apiKey?: string;
   jwt?: string;
-}): SquadApi.DefaultApi;
-export function squadClient(jwt?: string): SquadApi.DefaultApi;
+}): SquadApi.SquadApi;
+export function squadClient(jwt?: string): SquadApi.SquadApi;
 
 // Implementation
 export function squadClient(
   optionsOrJwt?: { apiKey?: string; jwt?: string } | string,
-): SquadApi.DefaultApi {
+): SquadApi.SquadApi {
   // Handle the case where a string (JWT) is passed directly
   let options: { apiKey?: string; jwt?: string };
   if (typeof optionsOrJwt === "string") {
@@ -71,7 +71,7 @@ export function squadClient(
 
   // Create a new instance every time with JWT, don't cache
   if (options.jwt) {
-    const client = new SquadApi.DefaultApi(
+    const client = new SquadApi.SquadApi(
       new SquadApi.Configuration({
         basePath,
         middleware: [withAuth(options.jwt)],
@@ -83,7 +83,7 @@ export function squadClient(
 
   // For API key, we can still use caching
   if (!global.squadApiKeyInstance) {
-    global.squadApiKeyInstance = new SquadApi.DefaultApi(
+    global.squadApiKeyInstance = new SquadApi.SquadApi(
       new SquadApi.Configuration({
         basePath,
         middleware: [withAuth(undefined)], // API key from env
