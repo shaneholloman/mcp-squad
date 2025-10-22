@@ -122,7 +122,7 @@ export const listInsights = async (
 export const GetInsightArgsSchema = z.object({
   insightId: z.string().describe("The ID of the insight entry to retrieve"),
   relationships: z
-    .enum(["opportunities", "solutions", "outcomes"])
+    .array(z.enum(["opportunities", "solutions", "outcomes"]))
     .optional()
     .describe("Show other entities that this insight is related to."),
 });
@@ -143,14 +143,19 @@ export const getInsight = async (
 
     const safeBody = GetInsightArgsSchema.parse(body);
 
-    const insight = await squadClient(
-      context.jwt,
-    ).getInsight({
-      orgId,
-      workspaceId,
-      insightId: safeBody.insightId,
-      relationships: safeBody.relationships,
-    });
+    // Build params conditionally - don't include relationships if not provided
+    const insight = safeBody.relationships && safeBody.relationships.length > 0
+      ? await squadClient(context.jwt).getInsight({
+          orgId,
+          workspaceId,
+          insightId: safeBody.insightId,
+          relationships: safeBody.relationships.join(","),
+        })
+      : await squadClient(context.jwt).getInsight({
+          orgId,
+          workspaceId,
+          insightId: safeBody.insightId,
+        });
 
     return {
       content: [
@@ -162,6 +167,18 @@ export const getInsight = async (
     };
   } catch (e) {
     console.error("error", e);
+    // Try to get response body if available
+    if (e instanceof Error && 'response' in e) {
+      const response = (e as any).response;
+      if (response && typeof response.text === 'function') {
+        try {
+          const errorText = await response.text();
+          console.error("Error response body:", errorText);
+        } catch (textError) {
+          console.error("Could not read error response body");
+        }
+      }
+    }
     throw e;
   }
 };

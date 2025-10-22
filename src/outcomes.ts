@@ -86,6 +86,8 @@ export const createOutcome = async (
       ],
     };
   } catch (e) {
+    console.log("Error creating outcome:", e);
+    console.error("Error creating outcome:", e);
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to create this outcome. Please check that all values are valid. " +
@@ -204,6 +206,8 @@ export const getOutcome = async (
       ],
     };
   } catch (e) {
+    console.log("Error creating outcome:", e);
+    console.error("Error creating outcome:", e);
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to retrieve this outcome. Please check that all values are valid. " +
@@ -271,6 +275,8 @@ export const updateOutcome = async (
       ],
     };
   } catch (e) {
+    console.log("Error creating outcome:", e);
+    console.error("Error creating outcome:", e);
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to update this outcome. Please check that the ID is correct and all values are valid. " +
@@ -402,6 +408,8 @@ export const manageOutcomeRelationships = async (
       ],
     };
   } catch (e) {
+    console.log("Error creating outcome:", e);
+    console.error("Error creating outcome:", e);
     const errorMessage =
       e instanceof ZodError
         ? "I was unable to manage relationships for this outcome. Please check that all IDs are correct. " +

@@ -16,13 +16,20 @@ const getEnv = (): "production" | "staging" | "development" => {
 
 const getBasePath = (): string => {
   const env = getEnv();
+  console.log(`[squadClient] SQUAD_ENV=${process.env.SQUAD_ENV}, resolved to: ${env}`);
   if (env === "production") {
-    return "https://api.meetsquad.ai";
+    const basePath = "https://api.meetsquad.ai";
+    console.log(`[squadClient] Using production base path: ${basePath}`);
+    return basePath;
   }
   if (env === "staging") {
-    return "https://uat.api.meetsquad.ai";
+    const basePath = "https://uat.api.meetsquad.ai";
+    console.log(`[squadClient] Using staging base path: ${basePath}`);
+    return basePath;
   }
-  return "https://dev.api.meetsquad.ai";
+  const basePath = "https://dev.api.meetsquad.ai";
+  console.log(`[squadClient] Using development base path: ${basePath}`);
+  return basePath;
 };
 
 // Define a namespace for our global variable to avoid TypeScript errors
@@ -68,6 +75,8 @@ export function squadClient(
 
   const basePath = getBasePath();
   const authMethod = options.jwt ? "JWT" : "API Key";
+  console.log(`[squadClient] Using ${authMethod} authentication`);
+  console.log(`[squadClient] API Key (first 20 chars): ${options.apiKey?.substring(0, 20)}...`);
 
   // Create a new instance every time with JWT, don't cache
   if (options.jwt) {
