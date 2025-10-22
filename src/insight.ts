@@ -167,18 +167,6 @@ export const getInsight = async (
     };
   } catch (e) {
     console.error("error", e);
-    // Try to get response body if available
-    if (e instanceof Error && 'response' in e) {
-      const response = (e as any).response;
-      if (response && typeof response.text === 'function') {
-        try {
-          const errorText = await response.text();
-          console.error("Error response body:", errorText);
-        } catch (textError) {
-          console.error("Could not read error response body");
-        }
-      }
-    }
     throw e;
   }
 };

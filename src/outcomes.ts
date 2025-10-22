@@ -86,7 +86,6 @@ export const createOutcome = async (
       ],
     };
   } catch (e) {
-    console.log("Error creating outcome:", e);
     console.error("Error creating outcome:", e);
     const errorMessage =
       e instanceof ZodError
@@ -206,7 +205,6 @@ export const getOutcome = async (
       ],
     };
   } catch (e) {
-    console.log("Error creating outcome:", e);
     console.error("Error creating outcome:", e);
     const errorMessage =
       e instanceof ZodError
@@ -275,7 +273,6 @@ export const updateOutcome = async (
       ],
     };
   } catch (e) {
-    console.log("Error creating outcome:", e);
     console.error("Error creating outcome:", e);
     const errorMessage =
       e instanceof ZodError
@@ -408,7 +405,6 @@ export const manageOutcomeRelationships = async (
       ],
     };
   } catch (e) {
-    console.log("Error creating outcome:", e);
     console.error("Error creating outcome:", e);
     const errorMessage =
       e instanceof ZodError
