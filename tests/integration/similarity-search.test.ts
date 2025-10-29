@@ -100,19 +100,17 @@ describe("Similarity Search Integration Tests", () => {
 
     const response = parseToolResponse<{
       data: {
-        data: {
-          opportunities: unknown[];
-          knowledge: unknown[];
-          insights: unknown[];
-          solutions: unknown[];
-          totalResults: number;
-        };
+        opportunities: unknown[];
+        knowledge: unknown[];
+        insights: unknown[];
+        solutions: unknown[];
+        totalResults: number;
       };
     }>(result);
 
     expect(response.data).toBeDefined();
-    expect(response.data.data).toBeDefined();
-    expect(response.data.data.totalResults).toBeGreaterThan(0);
+    expect(response.data).toBeDefined();
+    expect(response.data.totalResults).toBeGreaterThan(0);
   });
 
   it("should search only knowledge-base when filtered", async () => {
@@ -125,16 +123,14 @@ describe("Similarity Search Integration Tests", () => {
 
     const response = parseToolResponse<{
       data: {
-        data: {
-          knowledge: unknown[];
-          totalResults: number;
-        };
+        knowledge: unknown[];
+        totalResults: number;
       };
     }>(result);
 
     expect(response.data).toBeDefined();
-    expect(response.data.data).toBeDefined();
-    expect(Array.isArray(response.data.data.knowledge)).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data.knowledge)).toBe(true);
   });
 
   it("should search only insights when filtered", async () => {
@@ -147,16 +143,14 @@ describe("Similarity Search Integration Tests", () => {
 
     const response = parseToolResponse<{
       data: {
-        data: {
-          insights: unknown[];
-          totalResults: number;
-        };
+        insights: unknown[];
+        totalResults: number;
       };
     }>(result);
 
     expect(response.data).toBeDefined();
-    expect(response.data.data).toBeDefined();
-    expect(Array.isArray(response.data.data.insights)).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data.insights)).toBe(true);
   });
 
   it("should search only opportunities when filtered", async () => {
@@ -169,16 +163,14 @@ describe("Similarity Search Integration Tests", () => {
 
     const response = parseToolResponse<{
       data: {
-        data: {
-          opportunities: unknown[];
-          totalResults: number;
-        };
+        opportunities: unknown[];
+        totalResults: number;
       };
     }>(result);
 
     expect(response.data).toBeDefined();
-    expect(response.data.data).toBeDefined();
-    expect(Array.isArray(response.data.data.opportunities)).toBe(true);
+    expect(response.data).toBeDefined();
+    expect(Array.isArray(response.data.opportunities)).toBe(true);
   });
 
   it("should search with multiple filters", async () => {
@@ -191,16 +183,14 @@ describe("Similarity Search Integration Tests", () => {
 
     const response = parseToolResponse<{
       data: {
-        data: {
-          knowledge: unknown[];
-          opportunities: unknown[];
-          totalResults: number;
-        };
+        knowledge: unknown[];
+        opportunities: unknown[];
+        totalResults: number;
       };
     }>(result);
 
     expect(response.data).toBeDefined();
-    expect(response.data.data).toBeDefined();
-    expect(response.data.data.totalResults).toBeGreaterThan(0);
+    expect(response.data).toBeDefined();
+    expect(response.data.totalResults).toBeGreaterThan(0);
   });
 });

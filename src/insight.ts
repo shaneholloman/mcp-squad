@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { chatToolHelperSchema, UserContext } from "./helpers/getUser.js";
 import { squadClient } from "./lib/clients/squad.js";
-import { InsightSourceEnum } from "./lib/openapi/squad/models/InsightSourceEnum.js";
 import { CreateInsightRequestTypeEnum } from "./lib/openapi/squad/models/CreateInsightRequest.js";
 
 export enum InsightTool {
@@ -146,16 +145,16 @@ export const getInsight = async (
     // Build params conditionally - don't include relationships if not provided
     const insight = safeBody.relationships && safeBody.relationships.length > 0
       ? await squadClient(context.jwt).getInsight({
-          orgId,
-          workspaceId,
-          insightId: safeBody.insightId,
-          relationships: safeBody.relationships.join(","),
-        })
+        orgId,
+        workspaceId,
+        insightId: safeBody.insightId,
+        relationships: safeBody.relationships.join(","),
+      })
       : await squadClient(context.jwt).getInsight({
-          orgId,
-          workspaceId,
-          insightId: safeBody.insightId,
-        });
+        orgId,
+        workspaceId,
+        insightId: safeBody.insightId,
+      });
 
     return {
       content: [
