@@ -159,13 +159,13 @@ const updateWorkspaceChatTool = UpdateWorkspaceArgsSchema.merge(
 export const vercelTool = (context: UserContext) => ({
   [WorkspaceTool.GetWorkspace]: {
     description: getWorkspaceTool.description,
-    parameters: getWorkspaceChatTool,
+    inputSchema: getWorkspaceChatTool,
     execute: async (args: z.infer<typeof getWorkspaceChatTool>) =>
       await getWorkspace(context),
   },
   [WorkspaceTool.UpdateWorkspace]: {
     description: updateWorkspaceTool.description,
-    parameters: updateWorkspaceChatTool,
+    inputSchema: updateWorkspaceChatTool,
     execute: async (args: z.infer<typeof updateWorkspaceChatTool>) =>
       await updateWorkspace(context, args),
   },

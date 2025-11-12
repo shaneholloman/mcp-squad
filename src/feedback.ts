@@ -273,25 +273,25 @@ const deleteFeedbackChatTool = DeleteFeedbackArgsSchema.merge(
 export const vercelTool = (context: UserContext) => ({
   [FeedbackTool.CreateFeedback]: {
     description: createFeedbackTool.description,
-    parameters: createFeedbackChatTool,
+    inputSchema: createFeedbackChatTool,
     execute: async (args: z.infer<typeof createFeedbackChatTool>) =>
       await createFeedback(context, args),
   },
   [FeedbackTool.ListFeedback]: {
     description: listFeedbackTool.description,
-    parameters: listFeedbackChatTool,
+    inputSchema: listFeedbackChatTool,
     execute: async (args: z.infer<typeof listFeedbackChatTool>) =>
       await listFeedback(context),
   },
   [FeedbackTool.GetFeedback]: {
     description: getFeedbackTool.description,
-    parameters: getFeedbackChatTool,
+    inputSchema: getFeedbackChatTool,
     execute: async (args: z.infer<typeof getFeedbackChatTool>) =>
       await getFeedback(context, args),
   },
   [FeedbackTool.DeleteFeedback]: {
     description: deleteFeedbackTool.description,
-    parameters: deleteFeedbackChatTool,
+    inputSchema: deleteFeedbackChatTool,
     execute: async (args: z.infer<typeof deleteFeedbackChatTool>) =>
       await deleteFeedback(context, args),
   },

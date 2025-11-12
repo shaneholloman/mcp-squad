@@ -493,37 +493,37 @@ const manageOutcomeRelationshipsChatTool =
 export const vercelTool = (context: UserContext) => ({
   [OutcomeTool.CreateOutcome]: {
     description: createOutcomeTool.description,
-    parameters: createOutcomeChatTool,
+    inputSchema: createOutcomeChatTool,
     execute: async (args: z.infer<typeof createOutcomeChatTool>) =>
       await createOutcome(context, args),
   },
   [OutcomeTool.ListOutcomes]: {
     description: listOutcomesTool.description,
-    parameters: listOutcomesChatTool,
+    inputSchema: listOutcomesChatTool,
     execute: async (args: z.infer<typeof listOutcomesChatTool>) =>
       await listOutcomes(context),
   },
   [OutcomeTool.GetOutcome]: {
     description: getOutcomeTool.description,
-    parameters: getOutcomeChatTool,
+    inputSchema: getOutcomeChatTool,
     execute: async (args: z.infer<typeof getOutcomeChatTool>) =>
       await getOutcome(context, args),
   },
   [OutcomeTool.UpdateOutcome]: {
     description: updateOutcomeTool.description,
-    parameters: updateOutcomeChatTool,
+    inputSchema: updateOutcomeChatTool,
     execute: async (args: z.infer<typeof updateOutcomeChatTool>) =>
       await updateOutcome(context, args),
   },
   [OutcomeTool.DeleteOutcome]: {
     description: deleteOutcomeTool.description,
-    parameters: deleteOutcomeChatTool,
+    inputSchema: deleteOutcomeChatTool,
     execute: async (args: z.infer<typeof deleteOutcomeChatTool>) =>
       await deleteOutcome(context, args),
   },
   [OutcomeTool.ManageOutcomeRelationships]: {
     description: manageOutcomeRelationshipsTool.description,
-    parameters: manageOutcomeRelationshipsChatTool,
+    inputSchema: manageOutcomeRelationshipsChatTool,
     execute: async (args: z.infer<typeof manageOutcomeRelationshipsChatTool>) =>
       await manageOutcomeRelationships(context, args),
   },
