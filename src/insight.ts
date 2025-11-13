@@ -267,25 +267,25 @@ const deleteInsightChatTool = DeleteInsightArgsSchema.merge(
 export const vercelTool = (context: UserContext) => ({
   [InsightTool.CreateInsight]: {
     description: createInsightTool.description,
-    parameters: createInsightChatTool,
+    inputSchema: createInsightChatTool,
     execute: async (args: z.infer<typeof createInsightChatTool>) =>
       await createInsight(context, args),
   },
   [InsightTool.ListInsights]: {
     description: listInsightsTool.description,
-    parameters: listInsightsChatTool,
+    inputSchema: listInsightsChatTool,
     execute: async (args: z.infer<typeof listInsightsChatTool>) =>
       await listInsights(context),
   },
   [InsightTool.GetInsight]: {
     description: getInsightTool.description,
-    parameters: getInsightChatTool,
+    inputSchema: getInsightChatTool,
     execute: async (args: z.infer<typeof getInsightChatTool>) =>
       await getInsight(context, args),
   },
   [InsightTool.DeleteInsight]: {
     description: deleteInsightTool.description,
-    parameters: deleteInsightChatTool,
+    inputSchema: deleteInsightChatTool,
     execute: async (args: z.infer<typeof deleteInsightChatTool>) =>
       await deleteInsight(context, args),
   },

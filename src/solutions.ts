@@ -490,37 +490,37 @@ const manageSolutionRelationshipsChatTool =
 export const vercelTool = (context: UserContext) => ({
   [SolutionTool.CreateSolution]: {
     description: createSolutionTool.description,
-    parameters: createSolutionChatTool,
+    inputSchema: createSolutionChatTool,
     execute: async (args: z.infer<typeof createSolutionChatTool>) =>
       await createSolution(context, args),
   },
   [SolutionTool.ListSolutions]: {
     description: listSolutionsTool.description,
-    parameters: listSolutionsChatTool,
+    inputSchema: listSolutionsChatTool,
     execute: async (args: z.infer<typeof listSolutionsChatTool>) =>
       await listSolutions(context),
   },
   [SolutionTool.GetSolution]: {
     description: getSolutionTool.description,
-    parameters: getSolutionChatTool,
+    inputSchema: getSolutionChatTool,
     execute: async (args: z.infer<typeof getSolutionChatTool>) =>
       await getSolution(context, args),
   },
   [SolutionTool.UpdateSolution]: {
     description: updateSolutionTool.description,
-    parameters: updateSolutionChatTool,
+    inputSchema: updateSolutionChatTool,
     execute: async (args: z.infer<typeof updateSolutionChatTool>) =>
       await updateSolution(context, args),
   },
   [SolutionTool.DeleteSolution]: {
     description: deleteSolutionTool.description,
-    parameters: deleteSolutionChatTool,
+    inputSchema: deleteSolutionChatTool,
     execute: async (args: z.infer<typeof deleteSolutionChatTool>) =>
       await deleteSolution(context, args),
   },
   [SolutionTool.ManageSolutionRelationships]: {
     description: manageSolutionRelationshipsTool.description,
-    parameters: manageSolutionRelationshipsChatTool,
+    inputSchema: manageSolutionRelationshipsChatTool,
     execute: async (
       args: z.infer<typeof manageSolutionRelationshipsChatTool>,
     ) => await manageSolutionRelationships(context, args),

@@ -253,24 +253,24 @@ export const runKnowledgeTool = (name: string) => {
 export const vercelTool = (context: UserContext) => ({
   [KnowledgeTool.CreateKnowledge]: {
     description: createKnowledgeTool.description,
-    parameters: createKnowledgeChatTool,
+    inputSchema: createKnowledgeChatTool,
     execute: async (args: z.infer<typeof createKnowledgeChatTool>) =>
       await createKnowledge(context, args),
   },
   [KnowledgeTool.ListKnowledge]: {
     description: listKnowledgeTool.description,
-    parameters: listKnowledgeChatTool,
+    inputSchema: listKnowledgeChatTool,
     execute: async () => await listKnowledge(context),
   },
   [KnowledgeTool.GetKnowledge]: {
     description: getKnowledgeTool.description,
-    parameters: getKnowledgeChatTool,
+    inputSchema: getKnowledgeChatTool,
     execute: async (args: z.infer<typeof getKnowledgeChatTool>) =>
       await getKnowledge(context, args),
   },
   [KnowledgeTool.DeleteKnowledge]: {
     description: deleteKnowledgeTool.description,
-    parameters: deleteKnowledgeChatTool,
+    inputSchema: deleteKnowledgeChatTool,
     execute: async (args: z.infer<typeof deleteKnowledgeChatTool>) =>
       await deleteKnowledge(context, args),
   },

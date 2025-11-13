@@ -541,43 +541,43 @@ const manageOpportunityRelationshipsChatTool =
 export const vercelTool = (context: UserContext) => ({
   [OpportunityTool.CreateOpportunity]: {
     description: createOpportunityTool.description,
-    parameters: createOpportunityChatTool,
+    inputSchema: createOpportunityChatTool,
     execute: async (args: z.infer<typeof createOpportunityChatTool>) =>
       await createOpportunity(context, args),
   },
   [OpportunityTool.ListOpportunities]: {
     description: listOpportunitiesTool.description,
-    parameters: listOpportunitiesChatTool,
+    inputSchema: listOpportunitiesChatTool,
     execute: async (args: z.infer<typeof listOpportunitiesChatTool>) =>
       await listOpportunities(context),
   },
   [OpportunityTool.GetOpportunity]: {
     description: getOpportunityTool.description,
-    parameters: getOpportunityChatTool,
+    inputSchema: getOpportunityChatTool,
     execute: async (args: z.infer<typeof getOpportunityChatTool>) =>
       await getOpportunity(context, args),
   },
   [OpportunityTool.UpdateOpportunity]: {
     description: updateOpportunityTool.description,
-    parameters: updateOpportunityChatTool,
+    inputSchema: updateOpportunityChatTool,
     execute: async (args: z.infer<typeof updateOpportunityChatTool>) =>
       await updateOpportunity(context, args),
   },
   [OpportunityTool.DeleteOpportunity]: {
     description: deleteOpportunityTool.description,
-    parameters: deleteOpportunityChatTool,
+    inputSchema: deleteOpportunityChatTool,
     execute: async (args: z.infer<typeof deleteOpportunityChatTool>) =>
       await deleteOpportunity(context, args),
   },
   [OpportunityTool.GenerateSolutions]: {
     description: generateSolutionsTool.description,
-    parameters: generateSolutionsChatTool,
+    inputSchema: generateSolutionsChatTool,
     execute: async (args: z.infer<typeof generateSolutionsChatTool>) =>
       await generateSolutions(context, args),
   },
   [OpportunityTool.ManageOpportunityRelationships]: {
     description: manageOpportunityRelationshipsTool.description,
-    parameters: manageOpportunityRelationshipsChatTool,
+    inputSchema: manageOpportunityRelationshipsChatTool,
     execute: async (
       args: z.infer<typeof manageOpportunityRelationshipsChatTool>,
     ) => await manageOpportunityRelationships(context, args),

@@ -109,7 +109,7 @@ const similaritySearchChatTool = SimilaritySearchArgsSchema.merge(
 export const vercelTool = (context: UserContext) => ({
   [SimilaritySearchTool.SimilaritySearch]: {
     description: similaritySearchTool.description,
-    parameters: similaritySearchChatTool,
+    inputSchema: similaritySearchChatTool,
     execute: async (args: z.infer<typeof similaritySearchChatTool>) =>
       await similaritySearch(context, args),
   },
