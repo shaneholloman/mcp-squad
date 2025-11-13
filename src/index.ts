@@ -19,6 +19,9 @@ import {
 import { runSolutionTool, solutionTools } from "./solutions.js";
 import { runWorkspaceTool, workspaceTool } from "./workspace.js";
 
+// Re-export tools and toolsEnum for library usage
+export { tools, toolsEnum } from "./package.js";
+
 // Package information embedded for standalone binary
 const pkg = {
   name: "@squadai/tools",
