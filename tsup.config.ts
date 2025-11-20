@@ -10,6 +10,9 @@ export default defineConfig({
   clean: true,
   treeshake: true,
   outDir: "dist",
+  banner: {
+    js: "#!/usr/bin/env node",
+  },
   outExtension: () => {
     return {
       js: ".js",
