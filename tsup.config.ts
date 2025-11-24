@@ -16,6 +16,5 @@ export default defineConfig({
     };
   },
   external: ["@modelcontextprotocol/sdk"],
-  noExternal: ["zod"],
   minify: true,
 });
