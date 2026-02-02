@@ -149,9 +149,28 @@ export function registerSolutionTools(server: OAuthServer) {
           orgId,
           workspaceId,
           solutionId: params.solutionId,
+          relationships: params.relationships.join(','),
         });
 
-        return toolSuccess(solution);
+        // Return summaries for relationships to reduce token usage
+        return toolSuccess({
+          ...solution,
+          opportunities: solution.opportunities?.map((o: { id: string; title: string; status: string }) => ({
+            id: o.id,
+            title: o.title,
+            status: o.status,
+          })),
+          outcomes: solution.outcomes?.map((o: { id: string; title: string; priority: number }) => ({
+            id: o.id,
+            title: o.title,
+            priority: o.priority,
+          })),
+          insights: solution.insights?.map((i: { id: string; title: string; type: string }) => ({
+            id: i.id,
+            title: i.title,
+            type: i.type,
+          })),
+        });
       } catch (error) {
         if (error instanceof WorkspaceSelectionRequired) {
           return toolError(formatWorkspaceSelectionError(error));
