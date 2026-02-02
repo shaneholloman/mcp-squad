@@ -129,7 +129,25 @@ export function registerOpportunityTools(server: OAuthServer) {
           relationships: params.relationships.join(','),
         });
 
-        return toolSuccess(opportunity);
+        // Return summaries for relationships to reduce token usage
+        return toolSuccess({
+          ...opportunity,
+          outcomes: opportunity.outcomes?.map((o: { id: string; title: string; priority: number }) => ({
+            id: o.id,
+            title: o.title,
+            priority: o.priority,
+          })),
+          solutions: opportunity.solutions?.map((s: { id: string; title: string; status: string }) => ({
+            id: s.id,
+            title: s.title,
+            status: s.status,
+          })),
+          insights: opportunity.insights?.map((i: { id: string; title: string; type: string }) => ({
+            id: i.id,
+            title: i.title,
+            type: i.type,
+          })),
+        });
       } catch (error) {
         if (error instanceof WorkspaceSelectionRequired) {
           return toolError(formatWorkspaceSelectionError(error));
