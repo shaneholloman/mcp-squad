@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { CreateFeedbackDocumentResponseData } from './CreateFeedbackDocumentResponseData.js';
+import type { CreateFeedbackDocumentResponseData } from "./CreateFeedbackDocumentResponseData.js";
 import {
-    CreateFeedbackDocumentResponseDataFromJSON,
-    CreateFeedbackDocumentResponseDataFromJSONTyped,
-    CreateFeedbackDocumentResponseDataToJSON,
-    CreateFeedbackDocumentResponseDataToJSONTyped,
-} from './CreateFeedbackDocumentResponseData.js';
+  CreateFeedbackDocumentResponseDataFromJSON,
+  CreateFeedbackDocumentResponseDataToJSON,
+} from "./CreateFeedbackDocumentResponseData.js";
 
 /**
  * Uploaded document information
@@ -27,51 +24,60 @@ import {
  * @interface CreateFeedbackDocumentResponse
  */
 export interface CreateFeedbackDocumentResponse {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {CreateFeedbackDocumentResponseData}
-     * @memberof CreateFeedbackDocumentResponse
-     */
-    data: CreateFeedbackDocumentResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {CreateFeedbackDocumentResponseData}
+   * @memberof CreateFeedbackDocumentResponse
+   */
+  data: CreateFeedbackDocumentResponseData;
 }
 
 /**
  * Check if a given object implements the CreateFeedbackDocumentResponse interface.
  */
-export function instanceOfCreateFeedbackDocumentResponse(value: object): value is CreateFeedbackDocumentResponse {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfCreateFeedbackDocumentResponse(
+  value: object,
+): value is CreateFeedbackDocumentResponse {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function CreateFeedbackDocumentResponseFromJSON(json: any): CreateFeedbackDocumentResponse {
-    return CreateFeedbackDocumentResponseFromJSONTyped(json, false);
+export function CreateFeedbackDocumentResponseFromJSON(
+  json: any,
+): CreateFeedbackDocumentResponse {
+  return CreateFeedbackDocumentResponseFromJSONTyped(json, false);
 }
 
-export function CreateFeedbackDocumentResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateFeedbackDocumentResponse {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': CreateFeedbackDocumentResponseDataFromJSON(json['data']),
-    };
+export function CreateFeedbackDocumentResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateFeedbackDocumentResponse {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: CreateFeedbackDocumentResponseDataFromJSON(json["data"]),
+  };
 }
 
-export function CreateFeedbackDocumentResponseToJSON(json: any): CreateFeedbackDocumentResponse {
-    return CreateFeedbackDocumentResponseToJSONTyped(json, false);
+export function CreateFeedbackDocumentResponseToJSON(
+  json: any,
+): CreateFeedbackDocumentResponse {
+  return CreateFeedbackDocumentResponseToJSONTyped(json, false);
 }
 
-export function CreateFeedbackDocumentResponseToJSONTyped(value?: CreateFeedbackDocumentResponse | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateFeedbackDocumentResponseToJSONTyped(
+  value?: CreateFeedbackDocumentResponse | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': CreateFeedbackDocumentResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: CreateFeedbackDocumentResponseDataToJSON(value["data"]),
+  };
 }
-

@@ -12,55 +12,63 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
  * Request schema for creating knowledge from a PDF file
  * @export
  * @interface CreateKnowledgeFromPdfPayload
  */
 export interface CreateKnowledgeFromPdfPayload {
-    /**
-     * The name of the file to create knowledge from
-     * @type {string}
-     * @memberof CreateKnowledgeFromPdfPayload
-     */
-    fileName: string;
+  /**
+   * The name of the file to create knowledge from
+   * @type {string}
+   * @memberof CreateKnowledgeFromPdfPayload
+   */
+  fileName: string;
 }
 
 /**
  * Check if a given object implements the CreateKnowledgeFromPdfPayload interface.
  */
-export function instanceOfCreateKnowledgeFromPdfPayload(value: object): value is CreateKnowledgeFromPdfPayload {
-    if (!('fileName' in value) || value['fileName'] === undefined) return false;
-    return true;
+export function instanceOfCreateKnowledgeFromPdfPayload(
+  value: object,
+): value is CreateKnowledgeFromPdfPayload {
+  if (!("fileName" in value) || value["fileName"] === undefined) return false;
+  return true;
 }
 
-export function CreateKnowledgeFromPdfPayloadFromJSON(json: any): CreateKnowledgeFromPdfPayload {
-    return CreateKnowledgeFromPdfPayloadFromJSONTyped(json, false);
+export function CreateKnowledgeFromPdfPayloadFromJSON(
+  json: any,
+): CreateKnowledgeFromPdfPayload {
+  return CreateKnowledgeFromPdfPayloadFromJSONTyped(json, false);
 }
 
-export function CreateKnowledgeFromPdfPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateKnowledgeFromPdfPayload {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'fileName': json['fileName'],
-    };
+export function CreateKnowledgeFromPdfPayloadFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateKnowledgeFromPdfPayload {
+  if (json == null) {
+    return json;
+  }
+  return {
+    fileName: json["fileName"],
+  };
 }
 
-export function CreateKnowledgeFromPdfPayloadToJSON(json: any): CreateKnowledgeFromPdfPayload {
-    return CreateKnowledgeFromPdfPayloadToJSONTyped(json, false);
+export function CreateKnowledgeFromPdfPayloadToJSON(
+  json: any,
+): CreateKnowledgeFromPdfPayload {
+  return CreateKnowledgeFromPdfPayloadToJSONTyped(json, false);
 }
 
-export function CreateKnowledgeFromPdfPayloadToJSONTyped(value?: CreateKnowledgeFromPdfPayload | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateKnowledgeFromPdfPayloadToJSONTyped(
+  value?: CreateKnowledgeFromPdfPayload | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'fileName': value['fileName'],
-    };
+  return {
+    fileName: value["fileName"],
+  };
 }
-

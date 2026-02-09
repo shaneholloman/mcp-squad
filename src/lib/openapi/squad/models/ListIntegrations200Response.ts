@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { Integration } from './Integration.js';
-import {
-    IntegrationFromJSON,
-    IntegrationFromJSONTyped,
-    IntegrationToJSON,
-    IntegrationToJSONTyped,
-} from './Integration.js';
+import type { Integration } from "./Integration.js";
+import { IntegrationFromJSON, IntegrationToJSON } from "./Integration.js";
 
 /**
  * Response containing an array of integrations
@@ -27,51 +21,60 @@ import {
  * @interface ListIntegrations200Response
  */
 export interface ListIntegrations200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {Array<Integration>}
-     * @memberof ListIntegrations200Response
-     */
-    data: Array<Integration>;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {Array<Integration>}
+   * @memberof ListIntegrations200Response
+   */
+  data: Array<Integration>;
 }
 
 /**
  * Check if a given object implements the ListIntegrations200Response interface.
  */
-export function instanceOfListIntegrations200Response(value: object): value is ListIntegrations200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfListIntegrations200Response(
+  value: object,
+): value is ListIntegrations200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function ListIntegrations200ResponseFromJSON(json: any): ListIntegrations200Response {
-    return ListIntegrations200ResponseFromJSONTyped(json, false);
+export function ListIntegrations200ResponseFromJSON(
+  json: any,
+): ListIntegrations200Response {
+  return ListIntegrations200ResponseFromJSONTyped(json, false);
 }
 
-export function ListIntegrations200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListIntegrations200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': ((json['data'] as Array<any>).map(IntegrationFromJSON)),
-    };
+export function ListIntegrations200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ListIntegrations200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: (json["data"] as Array<any>).map(IntegrationFromJSON),
+  };
 }
 
-export function ListIntegrations200ResponseToJSON(json: any): ListIntegrations200Response {
-    return ListIntegrations200ResponseToJSONTyped(json, false);
+export function ListIntegrations200ResponseToJSON(
+  json: any,
+): ListIntegrations200Response {
+  return ListIntegrations200ResponseToJSONTyped(json, false);
 }
 
-export function ListIntegrations200ResponseToJSONTyped(value?: ListIntegrations200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ListIntegrations200ResponseToJSONTyped(
+  value?: ListIntegrations200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': ((value['data'] as Array<any>).map(IntegrationToJSON)),
-    };
+  return {
+    ...value,
+    data: (value["data"] as Array<any>).map(IntegrationToJSON),
+  };
 }
-

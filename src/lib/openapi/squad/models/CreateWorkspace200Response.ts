@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { Workspace } from './Workspace.js';
-import {
-    WorkspaceFromJSON,
-    WorkspaceFromJSONTyped,
-    WorkspaceToJSON,
-    WorkspaceToJSONTyped,
-} from './Workspace.js';
+import type { Workspace } from "./Workspace.js";
+import { WorkspaceFromJSON, WorkspaceToJSON } from "./Workspace.js";
 
 /**
  * Response containing a single workspace
@@ -27,51 +21,60 @@ import {
  * @interface CreateWorkspace200Response
  */
 export interface CreateWorkspace200Response {
-    [key: string]: any | any;
-    /**
-     * Workspace data
-     * @type {Workspace}
-     * @memberof CreateWorkspace200Response
-     */
-    data: Workspace;
+  [key: string]: any | any;
+  /**
+   * Workspace data
+   * @type {Workspace}
+   * @memberof CreateWorkspace200Response
+   */
+  data: Workspace;
 }
 
 /**
  * Check if a given object implements the CreateWorkspace200Response interface.
  */
-export function instanceOfCreateWorkspace200Response(value: object): value is CreateWorkspace200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfCreateWorkspace200Response(
+  value: object,
+): value is CreateWorkspace200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function CreateWorkspace200ResponseFromJSON(json: any): CreateWorkspace200Response {
-    return CreateWorkspace200ResponseFromJSONTyped(json, false);
+export function CreateWorkspace200ResponseFromJSON(
+  json: any,
+): CreateWorkspace200Response {
+  return CreateWorkspace200ResponseFromJSONTyped(json, false);
 }
 
-export function CreateWorkspace200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateWorkspace200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': WorkspaceFromJSON(json['data']),
-    };
+export function CreateWorkspace200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateWorkspace200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: WorkspaceFromJSON(json["data"]),
+  };
 }
 
-export function CreateWorkspace200ResponseToJSON(json: any): CreateWorkspace200Response {
-    return CreateWorkspace200ResponseToJSONTyped(json, false);
+export function CreateWorkspace200ResponseToJSON(
+  json: any,
+): CreateWorkspace200Response {
+  return CreateWorkspace200ResponseToJSONTyped(json, false);
 }
 
-export function CreateWorkspace200ResponseToJSONTyped(value?: CreateWorkspace200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateWorkspace200ResponseToJSONTyped(
+  value?: CreateWorkspace200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': WorkspaceToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: WorkspaceToJSON(value["data"]),
+  };
 }
-

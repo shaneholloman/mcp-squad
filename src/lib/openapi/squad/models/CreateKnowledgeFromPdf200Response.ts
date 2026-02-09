@@ -12,66 +12,72 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { SingleKnowledgeResponseWithUploadPdf } from './SingleKnowledgeResponseWithUploadPdf.js';
+import type { SingleKnowledgeResponseWithUploadPdf } from "./SingleKnowledgeResponseWithUploadPdf.js";
 import {
-    SingleKnowledgeResponseWithUploadPdfFromJSON,
-    SingleKnowledgeResponseWithUploadPdfFromJSONTyped,
-    SingleKnowledgeResponseWithUploadPdfToJSON,
-    SingleKnowledgeResponseWithUploadPdfToJSONTyped,
-} from './SingleKnowledgeResponseWithUploadPdf.js';
+  SingleKnowledgeResponseWithUploadPdfFromJSON,
+  SingleKnowledgeResponseWithUploadPdfToJSON,
+} from "./SingleKnowledgeResponseWithUploadPdf.js";
 
 /**
- * 
+ *
  * @export
  * @interface CreateKnowledgeFromPdf200Response
  */
 export interface CreateKnowledgeFromPdf200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {SingleKnowledgeResponseWithUploadPdf}
-     * @memberof CreateKnowledgeFromPdf200Response
-     */
-    data: SingleKnowledgeResponseWithUploadPdf;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {SingleKnowledgeResponseWithUploadPdf}
+   * @memberof CreateKnowledgeFromPdf200Response
+   */
+  data: SingleKnowledgeResponseWithUploadPdf;
 }
 
 /**
  * Check if a given object implements the CreateKnowledgeFromPdf200Response interface.
  */
-export function instanceOfCreateKnowledgeFromPdf200Response(value: object): value is CreateKnowledgeFromPdf200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfCreateKnowledgeFromPdf200Response(
+  value: object,
+): value is CreateKnowledgeFromPdf200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function CreateKnowledgeFromPdf200ResponseFromJSON(json: any): CreateKnowledgeFromPdf200Response {
-    return CreateKnowledgeFromPdf200ResponseFromJSONTyped(json, false);
+export function CreateKnowledgeFromPdf200ResponseFromJSON(
+  json: any,
+): CreateKnowledgeFromPdf200Response {
+  return CreateKnowledgeFromPdf200ResponseFromJSONTyped(json, false);
 }
 
-export function CreateKnowledgeFromPdf200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateKnowledgeFromPdf200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': SingleKnowledgeResponseWithUploadPdfFromJSON(json['data']),
-    };
+export function CreateKnowledgeFromPdf200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateKnowledgeFromPdf200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: SingleKnowledgeResponseWithUploadPdfFromJSON(json["data"]),
+  };
 }
 
-export function CreateKnowledgeFromPdf200ResponseToJSON(json: any): CreateKnowledgeFromPdf200Response {
-    return CreateKnowledgeFromPdf200ResponseToJSONTyped(json, false);
+export function CreateKnowledgeFromPdf200ResponseToJSON(
+  json: any,
+): CreateKnowledgeFromPdf200Response {
+  return CreateKnowledgeFromPdf200ResponseToJSONTyped(json, false);
 }
 
-export function CreateKnowledgeFromPdf200ResponseToJSONTyped(value?: CreateKnowledgeFromPdf200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateKnowledgeFromPdf200ResponseToJSONTyped(
+  value?: CreateKnowledgeFromPdf200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': SingleKnowledgeResponseWithUploadPdfToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: SingleKnowledgeResponseWithUploadPdfToJSON(value["data"]),
+  };
 }
-

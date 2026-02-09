@@ -12,43 +12,57 @@
  * Do not edit the class manually.
  */
 
-
 /**
- * 
+ *
  * @export
  */
 export const OrganisationAccountTypeEnum = {
-    Hobby: 'HOBBY',
-    Professional: 'PROFESSIONAL',
-    Team: 'TEAM'
+  Hobby: "HOBBY",
+  Professional: "PROFESSIONAL",
+  Team: "TEAM",
 } as const;
-export type OrganisationAccountTypeEnum = typeof OrganisationAccountTypeEnum[keyof typeof OrganisationAccountTypeEnum];
-
+export type OrganisationAccountTypeEnum =
+  (typeof OrganisationAccountTypeEnum)[keyof typeof OrganisationAccountTypeEnum];
 
 export function instanceOfOrganisationAccountTypeEnum(value: any): boolean {
-    for (const key in OrganisationAccountTypeEnum) {
-        if (Object.prototype.hasOwnProperty.call(OrganisationAccountTypeEnum, key)) {
-            if (OrganisationAccountTypeEnum[key as keyof typeof OrganisationAccountTypeEnum] === value) {
-                return true;
-            }
-        }
+  for (const key in OrganisationAccountTypeEnum) {
+    if (
+      Object.prototype.hasOwnProperty.call(OrganisationAccountTypeEnum, key)
+    ) {
+      if (
+        OrganisationAccountTypeEnum[
+          key as keyof typeof OrganisationAccountTypeEnum
+        ] === value
+      ) {
+        return true;
+      }
     }
-    return false;
+  }
+  return false;
 }
 
-export function OrganisationAccountTypeEnumFromJSON(json: any): OrganisationAccountTypeEnum {
-    return OrganisationAccountTypeEnumFromJSONTyped(json, false);
+export function OrganisationAccountTypeEnumFromJSON(
+  json: any,
+): OrganisationAccountTypeEnum {
+  return OrganisationAccountTypeEnumFromJSONTyped(json, false);
 }
 
-export function OrganisationAccountTypeEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): OrganisationAccountTypeEnum {
-    return json as OrganisationAccountTypeEnum;
+export function OrganisationAccountTypeEnumFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): OrganisationAccountTypeEnum {
+  return json as OrganisationAccountTypeEnum;
 }
 
-export function OrganisationAccountTypeEnumToJSON(value?: OrganisationAccountTypeEnum | null): any {
-    return value as any;
+export function OrganisationAccountTypeEnumToJSON(
+  value?: OrganisationAccountTypeEnum | null,
+): any {
+  return value as any;
 }
 
-export function OrganisationAccountTypeEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): OrganisationAccountTypeEnum {
-    return value as OrganisationAccountTypeEnum;
+export function OrganisationAccountTypeEnumToJSONTyped(
+  value: any,
+  ignoreDiscriminator: boolean,
+): OrganisationAccountTypeEnum {
+  return value as OrganisationAccountTypeEnum;
 }
-

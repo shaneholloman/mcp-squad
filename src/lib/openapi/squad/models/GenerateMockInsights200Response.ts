@@ -12,66 +12,72 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { MockInsightsResponse } from './MockInsightsResponse.js';
+import type { MockInsightsResponse } from "./MockInsightsResponse.js";
 import {
-    MockInsightsResponseFromJSON,
-    MockInsightsResponseFromJSONTyped,
-    MockInsightsResponseToJSON,
-    MockInsightsResponseToJSONTyped,
-} from './MockInsightsResponse.js';
+  MockInsightsResponseFromJSON,
+  MockInsightsResponseToJSON,
+} from "./MockInsightsResponse.js";
 
 /**
- * 
+ *
  * @export
  * @interface GenerateMockInsights200Response
  */
 export interface GenerateMockInsights200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {MockInsightsResponse}
-     * @memberof GenerateMockInsights200Response
-     */
-    data: MockInsightsResponse;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {MockInsightsResponse}
+   * @memberof GenerateMockInsights200Response
+   */
+  data: MockInsightsResponse;
 }
 
 /**
  * Check if a given object implements the GenerateMockInsights200Response interface.
  */
-export function instanceOfGenerateMockInsights200Response(value: object): value is GenerateMockInsights200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfGenerateMockInsights200Response(
+  value: object,
+): value is GenerateMockInsights200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function GenerateMockInsights200ResponseFromJSON(json: any): GenerateMockInsights200Response {
-    return GenerateMockInsights200ResponseFromJSONTyped(json, false);
+export function GenerateMockInsights200ResponseFromJSON(
+  json: any,
+): GenerateMockInsights200Response {
+  return GenerateMockInsights200ResponseFromJSONTyped(json, false);
 }
 
-export function GenerateMockInsights200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GenerateMockInsights200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': MockInsightsResponseFromJSON(json['data']),
-    };
+export function GenerateMockInsights200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): GenerateMockInsights200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: MockInsightsResponseFromJSON(json["data"]),
+  };
 }
 
-export function GenerateMockInsights200ResponseToJSON(json: any): GenerateMockInsights200Response {
-    return GenerateMockInsights200ResponseToJSONTyped(json, false);
+export function GenerateMockInsights200ResponseToJSON(
+  json: any,
+): GenerateMockInsights200Response {
+  return GenerateMockInsights200ResponseToJSONTyped(json, false);
 }
 
-export function GenerateMockInsights200ResponseToJSONTyped(value?: GenerateMockInsights200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function GenerateMockInsights200ResponseToJSONTyped(
+  value?: GenerateMockInsights200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': MockInsightsResponseToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: MockInsightsResponseToJSON(value["data"]),
+  };
 }
-

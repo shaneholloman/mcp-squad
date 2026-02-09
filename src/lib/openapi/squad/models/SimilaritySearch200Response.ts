@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { SimilaritySearchResponse } from './SimilaritySearchResponse.js';
+import type { SimilaritySearchResponse } from "./SimilaritySearchResponse.js";
 import {
-    SimilaritySearchResponseFromJSON,
-    SimilaritySearchResponseFromJSONTyped,
-    SimilaritySearchResponseToJSON,
-    SimilaritySearchResponseToJSONTyped,
-} from './SimilaritySearchResponse.js';
+  SimilaritySearchResponseFromJSON,
+  SimilaritySearchResponseToJSON,
+} from "./SimilaritySearchResponse.js";
 
 /**
  * Response containing a similarity search result
@@ -27,51 +24,60 @@ import {
  * @interface SimilaritySearch200Response
  */
 export interface SimilaritySearch200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {SimilaritySearchResponse}
-     * @memberof SimilaritySearch200Response
-     */
-    data: SimilaritySearchResponse;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {SimilaritySearchResponse}
+   * @memberof SimilaritySearch200Response
+   */
+  data: SimilaritySearchResponse;
 }
 
 /**
  * Check if a given object implements the SimilaritySearch200Response interface.
  */
-export function instanceOfSimilaritySearch200Response(value: object): value is SimilaritySearch200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfSimilaritySearch200Response(
+  value: object,
+): value is SimilaritySearch200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function SimilaritySearch200ResponseFromJSON(json: any): SimilaritySearch200Response {
-    return SimilaritySearch200ResponseFromJSONTyped(json, false);
+export function SimilaritySearch200ResponseFromJSON(
+  json: any,
+): SimilaritySearch200Response {
+  return SimilaritySearch200ResponseFromJSONTyped(json, false);
 }
 
-export function SimilaritySearch200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimilaritySearch200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': SimilaritySearchResponseFromJSON(json['data']),
-    };
+export function SimilaritySearch200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): SimilaritySearch200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: SimilaritySearchResponseFromJSON(json["data"]),
+  };
 }
 
-export function SimilaritySearch200ResponseToJSON(json: any): SimilaritySearch200Response {
-    return SimilaritySearch200ResponseToJSONTyped(json, false);
+export function SimilaritySearch200ResponseToJSON(
+  json: any,
+): SimilaritySearch200Response {
+  return SimilaritySearch200ResponseToJSONTyped(json, false);
 }
 
-export function SimilaritySearch200ResponseToJSONTyped(value?: SimilaritySearch200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function SimilaritySearch200ResponseToJSONTyped(
+  value?: SimilaritySearch200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': SimilaritySearchResponseToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: SimilaritySearchResponseToJSON(value["data"]),
+  };
 }
-

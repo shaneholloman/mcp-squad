@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { DeleteMetric200ResponseData } from './DeleteMetric200ResponseData.js';
+import type { DeleteMetric200ResponseData } from "./DeleteMetric200ResponseData.js";
 import {
-    DeleteMetric200ResponseDataFromJSON,
-    DeleteMetric200ResponseDataFromJSONTyped,
-    DeleteMetric200ResponseDataToJSON,
-    DeleteMetric200ResponseDataToJSONTyped,
-} from './DeleteMetric200ResponseData.js';
+  DeleteMetric200ResponseDataFromJSON,
+  DeleteMetric200ResponseDataToJSON,
+} from "./DeleteMetric200ResponseData.js";
 
 /**
  * Response containing a success message
@@ -27,51 +24,60 @@ import {
  * @interface DeleteMetric200Response
  */
 export interface DeleteMetric200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {DeleteMetric200ResponseData}
-     * @memberof DeleteMetric200Response
-     */
-    data: DeleteMetric200ResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {DeleteMetric200ResponseData}
+   * @memberof DeleteMetric200Response
+   */
+  data: DeleteMetric200ResponseData;
 }
 
 /**
  * Check if a given object implements the DeleteMetric200Response interface.
  */
-export function instanceOfDeleteMetric200Response(value: object): value is DeleteMetric200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfDeleteMetric200Response(
+  value: object,
+): value is DeleteMetric200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function DeleteMetric200ResponseFromJSON(json: any): DeleteMetric200Response {
-    return DeleteMetric200ResponseFromJSONTyped(json, false);
+export function DeleteMetric200ResponseFromJSON(
+  json: any,
+): DeleteMetric200Response {
+  return DeleteMetric200ResponseFromJSONTyped(json, false);
 }
 
-export function DeleteMetric200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteMetric200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': DeleteMetric200ResponseDataFromJSON(json['data']),
-    };
+export function DeleteMetric200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): DeleteMetric200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: DeleteMetric200ResponseDataFromJSON(json["data"]),
+  };
 }
 
-export function DeleteMetric200ResponseToJSON(json: any): DeleteMetric200Response {
-    return DeleteMetric200ResponseToJSONTyped(json, false);
+export function DeleteMetric200ResponseToJSON(
+  json: any,
+): DeleteMetric200Response {
+  return DeleteMetric200ResponseToJSONTyped(json, false);
 }
 
-export function DeleteMetric200ResponseToJSONTyped(value?: DeleteMetric200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function DeleteMetric200ResponseToJSONTyped(
+  value?: DeleteMetric200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': DeleteMetric200ResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: DeleteMetric200ResponseDataToJSON(value["data"]),
+  };
 }
-

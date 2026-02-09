@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { Outcome } from './Outcome.js';
-import {
-    OutcomeFromJSON,
-    OutcomeFromJSONTyped,
-    OutcomeToJSON,
-    OutcomeToJSONTyped,
-} from './Outcome.js';
+import type { Outcome } from "./Outcome.js";
+import { OutcomeFromJSON, OutcomeToJSON } from "./Outcome.js";
 
 /**
  * Response containing an array of outcomes
@@ -27,51 +21,60 @@ import {
  * @interface ListOutcomes200Response
  */
 export interface ListOutcomes200Response {
-    [key: string]: any | any;
-    /**
-     * Array of outcomes
-     * @type {Array<Outcome>}
-     * @memberof ListOutcomes200Response
-     */
-    data: Array<Outcome>;
+  [key: string]: any | any;
+  /**
+   * Array of outcomes
+   * @type {Array<Outcome>}
+   * @memberof ListOutcomes200Response
+   */
+  data: Array<Outcome>;
 }
 
 /**
  * Check if a given object implements the ListOutcomes200Response interface.
  */
-export function instanceOfListOutcomes200Response(value: object): value is ListOutcomes200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfListOutcomes200Response(
+  value: object,
+): value is ListOutcomes200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function ListOutcomes200ResponseFromJSON(json: any): ListOutcomes200Response {
-    return ListOutcomes200ResponseFromJSONTyped(json, false);
+export function ListOutcomes200ResponseFromJSON(
+  json: any,
+): ListOutcomes200Response {
+  return ListOutcomes200ResponseFromJSONTyped(json, false);
 }
 
-export function ListOutcomes200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListOutcomes200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': ((json['data'] as Array<any>).map(OutcomeFromJSON)),
-    };
+export function ListOutcomes200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ListOutcomes200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: (json["data"] as Array<any>).map(OutcomeFromJSON),
+  };
 }
 
-export function ListOutcomes200ResponseToJSON(json: any): ListOutcomes200Response {
-    return ListOutcomes200ResponseToJSONTyped(json, false);
+export function ListOutcomes200ResponseToJSON(
+  json: any,
+): ListOutcomes200Response {
+  return ListOutcomes200ResponseToJSONTyped(json, false);
 }
 
-export function ListOutcomes200ResponseToJSONTyped(value?: ListOutcomes200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ListOutcomes200ResponseToJSONTyped(
+  value?: ListOutcomes200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': ((value['data'] as Array<any>).map(OutcomeToJSON)),
-    };
+  return {
+    ...value,
+    data: (value["data"] as Array<any>).map(OutcomeToJSON),
+  };
 }
-

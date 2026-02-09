@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { DeleteFeedback200ResponseData } from './DeleteFeedback200ResponseData.js';
+import type { DeleteFeedback200ResponseData } from "./DeleteFeedback200ResponseData.js";
 import {
-    DeleteFeedback200ResponseDataFromJSON,
-    DeleteFeedback200ResponseDataFromJSONTyped,
-    DeleteFeedback200ResponseDataToJSON,
-    DeleteFeedback200ResponseDataToJSONTyped,
-} from './DeleteFeedback200ResponseData.js';
+  DeleteFeedback200ResponseDataFromJSON,
+  DeleteFeedback200ResponseDataToJSON,
+} from "./DeleteFeedback200ResponseData.js";
 
 /**
  * Response containing a success message
@@ -27,51 +24,60 @@ import {
  * @interface DeleteFeedback200Response
  */
 export interface DeleteFeedback200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {DeleteFeedback200ResponseData}
-     * @memberof DeleteFeedback200Response
-     */
-    data: DeleteFeedback200ResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {DeleteFeedback200ResponseData}
+   * @memberof DeleteFeedback200Response
+   */
+  data: DeleteFeedback200ResponseData;
 }
 
 /**
  * Check if a given object implements the DeleteFeedback200Response interface.
  */
-export function instanceOfDeleteFeedback200Response(value: object): value is DeleteFeedback200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfDeleteFeedback200Response(
+  value: object,
+): value is DeleteFeedback200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function DeleteFeedback200ResponseFromJSON(json: any): DeleteFeedback200Response {
-    return DeleteFeedback200ResponseFromJSONTyped(json, false);
+export function DeleteFeedback200ResponseFromJSON(
+  json: any,
+): DeleteFeedback200Response {
+  return DeleteFeedback200ResponseFromJSONTyped(json, false);
 }
 
-export function DeleteFeedback200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteFeedback200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': DeleteFeedback200ResponseDataFromJSON(json['data']),
-    };
+export function DeleteFeedback200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): DeleteFeedback200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: DeleteFeedback200ResponseDataFromJSON(json["data"]),
+  };
 }
 
-export function DeleteFeedback200ResponseToJSON(json: any): DeleteFeedback200Response {
-    return DeleteFeedback200ResponseToJSONTyped(json, false);
+export function DeleteFeedback200ResponseToJSON(
+  json: any,
+): DeleteFeedback200Response {
+  return DeleteFeedback200ResponseToJSONTyped(json, false);
 }
 
-export function DeleteFeedback200ResponseToJSONTyped(value?: DeleteFeedback200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function DeleteFeedback200ResponseToJSONTyped(
+  value?: DeleteFeedback200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': DeleteFeedback200ResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: DeleteFeedback200ResponseDataToJSON(value["data"]),
+  };
 }
-

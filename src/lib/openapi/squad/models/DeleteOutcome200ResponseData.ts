@@ -12,58 +12,66 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
  * Success message data
  * @export
  * @interface DeleteOutcome200ResponseData
  */
 export interface DeleteOutcome200ResponseData {
-    [key: string]: any | any;
-    /**
-     * Success message
-     * @type {string}
-     * @memberof DeleteOutcome200ResponseData
-     */
-    message: string;
+  [key: string]: any | any;
+  /**
+   * Success message
+   * @type {string}
+   * @memberof DeleteOutcome200ResponseData
+   */
+  message: string;
 }
 
 /**
  * Check if a given object implements the DeleteOutcome200ResponseData interface.
  */
-export function instanceOfDeleteOutcome200ResponseData(value: object): value is DeleteOutcome200ResponseData {
-    if (!('message' in value) || value['message'] === undefined) return false;
-    return true;
+export function instanceOfDeleteOutcome200ResponseData(
+  value: object,
+): value is DeleteOutcome200ResponseData {
+  if (!("message" in value) || value["message"] === undefined) return false;
+  return true;
 }
 
-export function DeleteOutcome200ResponseDataFromJSON(json: any): DeleteOutcome200ResponseData {
-    return DeleteOutcome200ResponseDataFromJSONTyped(json, false);
+export function DeleteOutcome200ResponseDataFromJSON(
+  json: any,
+): DeleteOutcome200ResponseData {
+  return DeleteOutcome200ResponseDataFromJSONTyped(json, false);
 }
 
-export function DeleteOutcome200ResponseDataFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteOutcome200ResponseData {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'message': json['message'],
-    };
+export function DeleteOutcome200ResponseDataFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): DeleteOutcome200ResponseData {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    message: json["message"],
+  };
 }
 
-export function DeleteOutcome200ResponseDataToJSON(json: any): DeleteOutcome200ResponseData {
-    return DeleteOutcome200ResponseDataToJSONTyped(json, false);
+export function DeleteOutcome200ResponseDataToJSON(
+  json: any,
+): DeleteOutcome200ResponseData {
+  return DeleteOutcome200ResponseDataToJSONTyped(json, false);
 }
 
-export function DeleteOutcome200ResponseDataToJSONTyped(value?: DeleteOutcome200ResponseData | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function DeleteOutcome200ResponseDataToJSONTyped(
+  value?: DeleteOutcome200ResponseData | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'message': value['message'],
-    };
+  return {
+    ...value,
+    message: value["message"],
+  };
 }
-

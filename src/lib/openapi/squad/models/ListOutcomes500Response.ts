@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { ListOutcomes500ResponseError } from './ListOutcomes500ResponseError.js';
+import type { ListOutcomes500ResponseError } from "./ListOutcomes500ResponseError.js";
 import {
-    ListOutcomes500ResponseErrorFromJSON,
-    ListOutcomes500ResponseErrorFromJSONTyped,
-    ListOutcomes500ResponseErrorToJSON,
-    ListOutcomes500ResponseErrorToJSONTyped,
-} from './ListOutcomes500ResponseError.js';
+  ListOutcomes500ResponseErrorFromJSON,
+  ListOutcomes500ResponseErrorToJSON,
+} from "./ListOutcomes500ResponseError.js";
 
 /**
  * Internal Server Error - An unexpected error occurred on the server
@@ -27,51 +24,60 @@ import {
  * @interface ListOutcomes500Response
  */
 export interface ListOutcomes500Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {ListOutcomes500ResponseError}
-     * @memberof ListOutcomes500Response
-     */
-    error: ListOutcomes500ResponseError;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {ListOutcomes500ResponseError}
+   * @memberof ListOutcomes500Response
+   */
+  error: ListOutcomes500ResponseError;
 }
 
 /**
  * Check if a given object implements the ListOutcomes500Response interface.
  */
-export function instanceOfListOutcomes500Response(value: object): value is ListOutcomes500Response {
-    if (!('error' in value) || value['error'] === undefined) return false;
-    return true;
+export function instanceOfListOutcomes500Response(
+  value: object,
+): value is ListOutcomes500Response {
+  if (!("error" in value) || value["error"] === undefined) return false;
+  return true;
 }
 
-export function ListOutcomes500ResponseFromJSON(json: any): ListOutcomes500Response {
-    return ListOutcomes500ResponseFromJSONTyped(json, false);
+export function ListOutcomes500ResponseFromJSON(
+  json: any,
+): ListOutcomes500Response {
+  return ListOutcomes500ResponseFromJSONTyped(json, false);
 }
 
-export function ListOutcomes500ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListOutcomes500Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'error': ListOutcomes500ResponseErrorFromJSON(json['error']),
-    };
+export function ListOutcomes500ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ListOutcomes500Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    error: ListOutcomes500ResponseErrorFromJSON(json["error"]),
+  };
 }
 
-export function ListOutcomes500ResponseToJSON(json: any): ListOutcomes500Response {
-    return ListOutcomes500ResponseToJSONTyped(json, false);
+export function ListOutcomes500ResponseToJSON(
+  json: any,
+): ListOutcomes500Response {
+  return ListOutcomes500ResponseToJSONTyped(json, false);
 }
 
-export function ListOutcomes500ResponseToJSONTyped(value?: ListOutcomes500Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ListOutcomes500ResponseToJSONTyped(
+  value?: ListOutcomes500Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'error': ListOutcomes500ResponseErrorToJSON(value['error']),
-    };
+  return {
+    ...value,
+    error: ListOutcomes500ResponseErrorToJSON(value["error"]),
+  };
 }
-

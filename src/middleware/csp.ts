@@ -1,5 +1,5 @@
-import type { Context, Next } from 'hono';
-import { getPropelAuthUrl, getSquadApiUrl } from '../helpers/config.js';
+import type { Context, Next } from "hono";
+import { getPropelAuthUrl, getSquadApiUrl } from "../helpers/config.js";
 
 /**
  * Build CSP header at startup (environment doesn't change at runtime)
@@ -46,13 +46,13 @@ function buildCspHeader(): string {
     "frame-ancestors 'none'",
 
     // Upgrade insecure requests to HTTPS
-    'upgrade-insecure-requests',
+    "upgrade-insecure-requests",
 
     // Block all mixed content
-    'block-all-mixed-content',
+    "block-all-mixed-content",
   ];
 
-  return cspDirectives.join('; ');
+  return cspDirectives.join("; ");
 }
 
 /**
@@ -65,6 +65,6 @@ const CSP_HEADER = buildCspHeader();
  * Tightly restricts resources to only the domains we fetch from.
  */
 export async function cspMiddleware(c: Context, next: Next) {
-  c.header('Content-Security-Policy', CSP_HEADER);
+  c.header("Content-Security-Policy", CSP_HEADER);
   await next();
 }

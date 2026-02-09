@@ -12,42 +12,50 @@
  * Do not edit the class manually.
  */
 
-
 /**
- * 
+ *
  * @export
  */
 export const RelationshipAction = {
-    Add: 'add',
-    Remove: 'remove'
+  Add: "add",
+  Remove: "remove",
 } as const;
-export type RelationshipAction = typeof RelationshipAction[keyof typeof RelationshipAction];
-
+export type RelationshipAction =
+  (typeof RelationshipAction)[keyof typeof RelationshipAction];
 
 export function instanceOfRelationshipAction(value: any): boolean {
-    for (const key in RelationshipAction) {
-        if (Object.prototype.hasOwnProperty.call(RelationshipAction, key)) {
-            if (RelationshipAction[key as keyof typeof RelationshipAction] === value) {
-                return true;
-            }
-        }
+  for (const key in RelationshipAction) {
+    if (Object.prototype.hasOwnProperty.call(RelationshipAction, key)) {
+      if (
+        RelationshipAction[key as keyof typeof RelationshipAction] === value
+      ) {
+        return true;
+      }
     }
-    return false;
+  }
+  return false;
 }
 
 export function RelationshipActionFromJSON(json: any): RelationshipAction {
-    return RelationshipActionFromJSONTyped(json, false);
+  return RelationshipActionFromJSONTyped(json, false);
 }
 
-export function RelationshipActionFromJSONTyped(json: any, ignoreDiscriminator: boolean): RelationshipAction {
-    return json as RelationshipAction;
+export function RelationshipActionFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): RelationshipAction {
+  return json as RelationshipAction;
 }
 
-export function RelationshipActionToJSON(value?: RelationshipAction | null): any {
-    return value as any;
+export function RelationshipActionToJSON(
+  value?: RelationshipAction | null,
+): any {
+  return value as any;
 }
 
-export function RelationshipActionToJSONTyped(value: any, ignoreDiscriminator: boolean): RelationshipAction {
-    return value as RelationshipAction;
+export function RelationshipActionToJSONTyped(
+  value: any,
+  ignoreDiscriminator: boolean,
+): RelationshipAction {
+  return value as RelationshipAction;
 }
-

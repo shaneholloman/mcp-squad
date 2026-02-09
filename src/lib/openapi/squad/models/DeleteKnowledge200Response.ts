@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { DeleteKnowledge200ResponseData } from './DeleteKnowledge200ResponseData.js';
+import type { DeleteKnowledge200ResponseData } from "./DeleteKnowledge200ResponseData.js";
 import {
-    DeleteKnowledge200ResponseDataFromJSON,
-    DeleteKnowledge200ResponseDataFromJSONTyped,
-    DeleteKnowledge200ResponseDataToJSON,
-    DeleteKnowledge200ResponseDataToJSONTyped,
-} from './DeleteKnowledge200ResponseData.js';
+  DeleteKnowledge200ResponseDataFromJSON,
+  DeleteKnowledge200ResponseDataToJSON,
+} from "./DeleteKnowledge200ResponseData.js";
 
 /**
  * Response containing a success message
@@ -27,51 +24,60 @@ import {
  * @interface DeleteKnowledge200Response
  */
 export interface DeleteKnowledge200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {DeleteKnowledge200ResponseData}
-     * @memberof DeleteKnowledge200Response
-     */
-    data: DeleteKnowledge200ResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {DeleteKnowledge200ResponseData}
+   * @memberof DeleteKnowledge200Response
+   */
+  data: DeleteKnowledge200ResponseData;
 }
 
 /**
  * Check if a given object implements the DeleteKnowledge200Response interface.
  */
-export function instanceOfDeleteKnowledge200Response(value: object): value is DeleteKnowledge200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfDeleteKnowledge200Response(
+  value: object,
+): value is DeleteKnowledge200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function DeleteKnowledge200ResponseFromJSON(json: any): DeleteKnowledge200Response {
-    return DeleteKnowledge200ResponseFromJSONTyped(json, false);
+export function DeleteKnowledge200ResponseFromJSON(
+  json: any,
+): DeleteKnowledge200Response {
+  return DeleteKnowledge200ResponseFromJSONTyped(json, false);
 }
 
-export function DeleteKnowledge200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteKnowledge200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': DeleteKnowledge200ResponseDataFromJSON(json['data']),
-    };
+export function DeleteKnowledge200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): DeleteKnowledge200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: DeleteKnowledge200ResponseDataFromJSON(json["data"]),
+  };
 }
 
-export function DeleteKnowledge200ResponseToJSON(json: any): DeleteKnowledge200Response {
-    return DeleteKnowledge200ResponseToJSONTyped(json, false);
+export function DeleteKnowledge200ResponseToJSON(
+  json: any,
+): DeleteKnowledge200Response {
+  return DeleteKnowledge200ResponseToJSONTyped(json, false);
 }
 
-export function DeleteKnowledge200ResponseToJSONTyped(value?: DeleteKnowledge200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function DeleteKnowledge200ResponseToJSONTyped(
+  value?: DeleteKnowledge200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': DeleteKnowledge200ResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: DeleteKnowledge200ResponseDataToJSON(value["data"]),
+  };
 }
-

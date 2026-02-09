@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { FeedbackWithRelationships } from './FeedbackWithRelationships.js';
+import type { FeedbackWithRelationships } from "./FeedbackWithRelationships.js";
 import {
-    FeedbackWithRelationshipsFromJSON,
-    FeedbackWithRelationshipsFromJSONTyped,
-    FeedbackWithRelationshipsToJSON,
-    FeedbackWithRelationshipsToJSONTyped,
-} from './FeedbackWithRelationships.js';
+  FeedbackWithRelationshipsFromJSON,
+  FeedbackWithRelationshipsToJSON,
+} from "./FeedbackWithRelationships.js";
 
 /**
  * Response containing an array of feedback items
@@ -27,48 +24,55 @@ import {
  * @interface FeedbackArrayResponse
  */
 export interface FeedbackArrayResponse {
-    /**
-     * Array of feedback items
-     * @type {Array<FeedbackWithRelationships>}
-     * @memberof FeedbackArrayResponse
-     */
-    data: Array<FeedbackWithRelationships>;
+  /**
+   * Array of feedback items
+   * @type {Array<FeedbackWithRelationships>}
+   * @memberof FeedbackArrayResponse
+   */
+  data: Array<FeedbackWithRelationships>;
 }
 
 /**
  * Check if a given object implements the FeedbackArrayResponse interface.
  */
-export function instanceOfFeedbackArrayResponse(value: object): value is FeedbackArrayResponse {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfFeedbackArrayResponse(
+  value: object,
+): value is FeedbackArrayResponse {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function FeedbackArrayResponseFromJSON(json: any): FeedbackArrayResponse {
-    return FeedbackArrayResponseFromJSONTyped(json, false);
+export function FeedbackArrayResponseFromJSON(
+  json: any,
+): FeedbackArrayResponse {
+  return FeedbackArrayResponseFromJSONTyped(json, false);
 }
 
-export function FeedbackArrayResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): FeedbackArrayResponse {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'data': ((json['data'] as Array<any>).map(FeedbackWithRelationshipsFromJSON)),
-    };
+export function FeedbackArrayResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): FeedbackArrayResponse {
+  if (json == null) {
+    return json;
+  }
+  return {
+    data: (json["data"] as Array<any>).map(FeedbackWithRelationshipsFromJSON),
+  };
 }
 
 export function FeedbackArrayResponseToJSON(json: any): FeedbackArrayResponse {
-    return FeedbackArrayResponseToJSONTyped(json, false);
+  return FeedbackArrayResponseToJSONTyped(json, false);
 }
 
-export function FeedbackArrayResponseToJSONTyped(value?: FeedbackArrayResponse | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function FeedbackArrayResponseToJSONTyped(
+  value?: FeedbackArrayResponse | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'data': ((value['data'] as Array<any>).map(FeedbackWithRelationshipsToJSON)),
-    };
+  return {
+    data: (value["data"] as Array<any>).map(FeedbackWithRelationshipsToJSON),
+  };
 }
-

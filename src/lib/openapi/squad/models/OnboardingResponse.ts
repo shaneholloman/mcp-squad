@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { OnboardingResponseData } from './OnboardingResponseData.js';
+import type { OnboardingResponseData } from "./OnboardingResponseData.js";
 import {
-    OnboardingResponseDataFromJSON,
-    OnboardingResponseDataFromJSONTyped,
-    OnboardingResponseDataToJSON,
-    OnboardingResponseDataToJSONTyped,
-} from './OnboardingResponseData.js';
+  OnboardingResponseDataFromJSON,
+  OnboardingResponseDataToJSON,
+} from "./OnboardingResponseData.js";
 
 /**
  * Response schema for onboarding
@@ -27,51 +24,56 @@ import {
  * @interface OnboardingResponse
  */
 export interface OnboardingResponse {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {OnboardingResponseData}
-     * @memberof OnboardingResponse
-     */
-    data: OnboardingResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {OnboardingResponseData}
+   * @memberof OnboardingResponse
+   */
+  data: OnboardingResponseData;
 }
 
 /**
  * Check if a given object implements the OnboardingResponse interface.
  */
-export function instanceOfOnboardingResponse(value: object): value is OnboardingResponse {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfOnboardingResponse(
+  value: object,
+): value is OnboardingResponse {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
 export function OnboardingResponseFromJSON(json: any): OnboardingResponse {
-    return OnboardingResponseFromJSONTyped(json, false);
+  return OnboardingResponseFromJSONTyped(json, false);
 }
 
-export function OnboardingResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): OnboardingResponse {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': OnboardingResponseDataFromJSON(json['data']),
-    };
+export function OnboardingResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): OnboardingResponse {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: OnboardingResponseDataFromJSON(json["data"]),
+  };
 }
 
 export function OnboardingResponseToJSON(json: any): OnboardingResponse {
-    return OnboardingResponseToJSONTyped(json, false);
+  return OnboardingResponseToJSONTyped(json, false);
 }
 
-export function OnboardingResponseToJSONTyped(value?: OnboardingResponse | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function OnboardingResponseToJSONTyped(
+  value?: OnboardingResponse | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': OnboardingResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: OnboardingResponseDataToJSON(value["data"]),
+  };
 }
-

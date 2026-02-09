@@ -12,67 +12,76 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
- * 
+ *
  * @export
  * @interface CreateOpportunity429ResponseError
  */
 export interface CreateOpportunity429ResponseError {
-    [key: string]: any | any;
-    /**
-     * Error code identifier
-     * @type {string}
-     * @memberof CreateOpportunity429ResponseError
-     */
-    code: string;
-    /**
-     * Human-readable error description
-     * @type {string}
-     * @memberof CreateOpportunity429ResponseError
-     */
-    description: string;
+  [key: string]: any | any;
+  /**
+   * Error code identifier
+   * @type {string}
+   * @memberof CreateOpportunity429ResponseError
+   */
+  code: string;
+  /**
+   * Human-readable error description
+   * @type {string}
+   * @memberof CreateOpportunity429ResponseError
+   */
+  description: string;
 }
 
 /**
  * Check if a given object implements the CreateOpportunity429ResponseError interface.
  */
-export function instanceOfCreateOpportunity429ResponseError(value: object): value is CreateOpportunity429ResponseError {
-    if (!('code' in value) || value['code'] === undefined) return false;
-    if (!('description' in value) || value['description'] === undefined) return false;
-    return true;
+export function instanceOfCreateOpportunity429ResponseError(
+  value: object,
+): value is CreateOpportunity429ResponseError {
+  if (!("code" in value) || value["code"] === undefined) return false;
+  if (!("description" in value) || value["description"] === undefined)
+    return false;
+  return true;
 }
 
-export function CreateOpportunity429ResponseErrorFromJSON(json: any): CreateOpportunity429ResponseError {
-    return CreateOpportunity429ResponseErrorFromJSONTyped(json, false);
+export function CreateOpportunity429ResponseErrorFromJSON(
+  json: any,
+): CreateOpportunity429ResponseError {
+  return CreateOpportunity429ResponseErrorFromJSONTyped(json, false);
 }
 
-export function CreateOpportunity429ResponseErrorFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateOpportunity429ResponseError {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'code': json['code'],
-        'description': json['description'],
-    };
+export function CreateOpportunity429ResponseErrorFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateOpportunity429ResponseError {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    code: json["code"],
+    description: json["description"],
+  };
 }
 
-export function CreateOpportunity429ResponseErrorToJSON(json: any): CreateOpportunity429ResponseError {
-    return CreateOpportunity429ResponseErrorToJSONTyped(json, false);
+export function CreateOpportunity429ResponseErrorToJSON(
+  json: any,
+): CreateOpportunity429ResponseError {
+  return CreateOpportunity429ResponseErrorToJSONTyped(json, false);
 }
 
-export function CreateOpportunity429ResponseErrorToJSONTyped(value?: CreateOpportunity429ResponseError | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateOpportunity429ResponseErrorToJSONTyped(
+  value?: CreateOpportunity429ResponseError | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'code': value['code'],
-        'description': value['description'],
-    };
+  return {
+    ...value,
+    code: value["code"],
+    description: value["description"],
+  };
 }
-

@@ -12,62 +12,70 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
- * 
+ *
  * @export
  * @interface ProcessTextProxyRequestOptions
  */
 export interface ProcessTextProxyRequestOptions {
-    /**
-     * Temperature parameter for the model
-     * @type {number}
-     * @memberof ProcessTextProxyRequestOptions
-     */
-    temperature?: number;
-    /**
-     * Maximum number of tokens in the response
-     * @type {number}
-     * @memberof ProcessTextProxyRequestOptions
-     */
-    maxTokens?: number;
+  /**
+   * Temperature parameter for the model
+   * @type {number}
+   * @memberof ProcessTextProxyRequestOptions
+   */
+  temperature?: number;
+  /**
+   * Maximum number of tokens in the response
+   * @type {number}
+   * @memberof ProcessTextProxyRequestOptions
+   */
+  maxTokens?: number;
 }
 
 /**
  * Check if a given object implements the ProcessTextProxyRequestOptions interface.
  */
-export function instanceOfProcessTextProxyRequestOptions(value: object): value is ProcessTextProxyRequestOptions {
-    return true;
+export function instanceOfProcessTextProxyRequestOptions(
+  value: object,
+): value is ProcessTextProxyRequestOptions {
+  return true;
 }
 
-export function ProcessTextProxyRequestOptionsFromJSON(json: any): ProcessTextProxyRequestOptions {
-    return ProcessTextProxyRequestOptionsFromJSONTyped(json, false);
+export function ProcessTextProxyRequestOptionsFromJSON(
+  json: any,
+): ProcessTextProxyRequestOptions {
+  return ProcessTextProxyRequestOptionsFromJSONTyped(json, false);
 }
 
-export function ProcessTextProxyRequestOptionsFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProcessTextProxyRequestOptions {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'temperature': json['temperature'] == null ? undefined : json['temperature'],
-        'maxTokens': json['maxTokens'] == null ? undefined : json['maxTokens'],
-    };
+export function ProcessTextProxyRequestOptionsFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ProcessTextProxyRequestOptions {
+  if (json == null) {
+    return json;
+  }
+  return {
+    temperature: json["temperature"] == null ? undefined : json["temperature"],
+    maxTokens: json["maxTokens"] == null ? undefined : json["maxTokens"],
+  };
 }
 
-export function ProcessTextProxyRequestOptionsToJSON(json: any): ProcessTextProxyRequestOptions {
-    return ProcessTextProxyRequestOptionsToJSONTyped(json, false);
+export function ProcessTextProxyRequestOptionsToJSON(
+  json: any,
+): ProcessTextProxyRequestOptions {
+  return ProcessTextProxyRequestOptionsToJSONTyped(json, false);
 }
 
-export function ProcessTextProxyRequestOptionsToJSONTyped(value?: ProcessTextProxyRequestOptions | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ProcessTextProxyRequestOptionsToJSONTyped(
+  value?: ProcessTextProxyRequestOptions | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'temperature': value['temperature'],
-        'maxTokens': value['maxTokens'],
-    };
+  return {
+    temperature: value["temperature"],
+    maxTokens: value["maxTokens"],
+  };
 }
-

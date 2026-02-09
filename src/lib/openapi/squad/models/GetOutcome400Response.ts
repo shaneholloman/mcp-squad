@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { GetOutcome400ResponseError } from './GetOutcome400ResponseError.js';
+import type { GetOutcome400ResponseError } from "./GetOutcome400ResponseError.js";
 import {
-    GetOutcome400ResponseErrorFromJSON,
-    GetOutcome400ResponseErrorFromJSONTyped,
-    GetOutcome400ResponseErrorToJSON,
-    GetOutcome400ResponseErrorToJSONTyped,
-} from './GetOutcome400ResponseError.js';
+  GetOutcome400ResponseErrorFromJSON,
+  GetOutcome400ResponseErrorToJSON,
+} from "./GetOutcome400ResponseError.js";
 
 /**
  * Bad Request - Invalid input parameters or missing required fields
@@ -27,51 +24,58 @@ import {
  * @interface GetOutcome400Response
  */
 export interface GetOutcome400Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {GetOutcome400ResponseError}
-     * @memberof GetOutcome400Response
-     */
-    error: GetOutcome400ResponseError;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {GetOutcome400ResponseError}
+   * @memberof GetOutcome400Response
+   */
+  error: GetOutcome400ResponseError;
 }
 
 /**
  * Check if a given object implements the GetOutcome400Response interface.
  */
-export function instanceOfGetOutcome400Response(value: object): value is GetOutcome400Response {
-    if (!('error' in value) || value['error'] === undefined) return false;
-    return true;
+export function instanceOfGetOutcome400Response(
+  value: object,
+): value is GetOutcome400Response {
+  if (!("error" in value) || value["error"] === undefined) return false;
+  return true;
 }
 
-export function GetOutcome400ResponseFromJSON(json: any): GetOutcome400Response {
-    return GetOutcome400ResponseFromJSONTyped(json, false);
+export function GetOutcome400ResponseFromJSON(
+  json: any,
+): GetOutcome400Response {
+  return GetOutcome400ResponseFromJSONTyped(json, false);
 }
 
-export function GetOutcome400ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetOutcome400Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'error': GetOutcome400ResponseErrorFromJSON(json['error']),
-    };
+export function GetOutcome400ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): GetOutcome400Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    error: GetOutcome400ResponseErrorFromJSON(json["error"]),
+  };
 }
 
 export function GetOutcome400ResponseToJSON(json: any): GetOutcome400Response {
-    return GetOutcome400ResponseToJSONTyped(json, false);
+  return GetOutcome400ResponseToJSONTyped(json, false);
 }
 
-export function GetOutcome400ResponseToJSONTyped(value?: GetOutcome400Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function GetOutcome400ResponseToJSONTyped(
+  value?: GetOutcome400Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'error': GetOutcome400ResponseErrorToJSON(value['error']),
-    };
+  return {
+    ...value,
+    error: GetOutcome400ResponseErrorToJSON(value["error"]),
+  };
 }
-

@@ -12,35 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
- * 
+ *
  * @export
  * @interface CreateMetricPayloadId
  */
-export interface CreateMetricPayloadId {
-}
+export interface CreateMetricPayloadId {}
 
 /**
  * Check if a given object implements the CreateMetricPayloadId interface.
  */
-export function instanceOfCreateMetricPayloadId(value: object): value is CreateMetricPayloadId {
-    return true;
+export function instanceOfCreateMetricPayloadId(
+  value: object,
+): value is CreateMetricPayloadId {
+  return true;
 }
 
-export function CreateMetricPayloadIdFromJSON(json: any): CreateMetricPayloadId {
-    return CreateMetricPayloadIdFromJSONTyped(json, false);
+export function CreateMetricPayloadIdFromJSON(
+  json: any,
+): CreateMetricPayloadId {
+  return CreateMetricPayloadIdFromJSONTyped(json, false);
 }
 
-export function CreateMetricPayloadIdFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateMetricPayloadId {
-    return json;
+export function CreateMetricPayloadIdFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateMetricPayloadId {
+  return json;
 }
 
 export function CreateMetricPayloadIdToJSON(json: any): CreateMetricPayloadId {
-    return CreateMetricPayloadIdToJSONTyped(json, false);
+  return CreateMetricPayloadIdToJSONTyped(json, false);
 }
 
-export function CreateMetricPayloadIdToJSONTyped(value?: CreateMetricPayloadId | null, ignoreDiscriminator: boolean = false): any {
-    return value;
+export function CreateMetricPayloadIdToJSONTyped(
+  value?: CreateMetricPayloadId | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  return value;
 }
-

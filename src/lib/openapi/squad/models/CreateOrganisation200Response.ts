@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { CreateOrganisation200ResponseData } from './CreateOrganisation200ResponseData.js';
+import type { CreateOrganisation200ResponseData } from "./CreateOrganisation200ResponseData.js";
 import {
-    CreateOrganisation200ResponseDataFromJSON,
-    CreateOrganisation200ResponseDataFromJSONTyped,
-    CreateOrganisation200ResponseDataToJSON,
-    CreateOrganisation200ResponseDataToJSONTyped,
-} from './CreateOrganisation200ResponseData.js';
+  CreateOrganisation200ResponseDataFromJSON,
+  CreateOrganisation200ResponseDataToJSON,
+} from "./CreateOrganisation200ResponseData.js";
 
 /**
  * Response containing a single organisation
@@ -27,51 +24,60 @@ import {
  * @interface CreateOrganisation200Response
  */
 export interface CreateOrganisation200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {CreateOrganisation200ResponseData}
-     * @memberof CreateOrganisation200Response
-     */
-    data: CreateOrganisation200ResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {CreateOrganisation200ResponseData}
+   * @memberof CreateOrganisation200Response
+   */
+  data: CreateOrganisation200ResponseData;
 }
 
 /**
  * Check if a given object implements the CreateOrganisation200Response interface.
  */
-export function instanceOfCreateOrganisation200Response(value: object): value is CreateOrganisation200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfCreateOrganisation200Response(
+  value: object,
+): value is CreateOrganisation200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function CreateOrganisation200ResponseFromJSON(json: any): CreateOrganisation200Response {
-    return CreateOrganisation200ResponseFromJSONTyped(json, false);
+export function CreateOrganisation200ResponseFromJSON(
+  json: any,
+): CreateOrganisation200Response {
+  return CreateOrganisation200ResponseFromJSONTyped(json, false);
 }
 
-export function CreateOrganisation200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateOrganisation200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': CreateOrganisation200ResponseDataFromJSON(json['data']),
-    };
+export function CreateOrganisation200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateOrganisation200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: CreateOrganisation200ResponseDataFromJSON(json["data"]),
+  };
 }
 
-export function CreateOrganisation200ResponseToJSON(json: any): CreateOrganisation200Response {
-    return CreateOrganisation200ResponseToJSONTyped(json, false);
+export function CreateOrganisation200ResponseToJSON(
+  json: any,
+): CreateOrganisation200Response {
+  return CreateOrganisation200ResponseToJSONTyped(json, false);
 }
 
-export function CreateOrganisation200ResponseToJSONTyped(value?: CreateOrganisation200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateOrganisation200ResponseToJSONTyped(
+  value?: CreateOrganisation200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': CreateOrganisation200ResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: CreateOrganisation200ResponseDataToJSON(value["data"]),
+  };
 }
-

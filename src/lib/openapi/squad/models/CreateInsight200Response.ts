@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { InsightWithRelationships } from './InsightWithRelationships.js';
+import type { InsightWithRelationships } from "./InsightWithRelationships.js";
 import {
-    InsightWithRelationshipsFromJSON,
-    InsightWithRelationshipsFromJSONTyped,
-    InsightWithRelationshipsToJSON,
-    InsightWithRelationshipsToJSONTyped,
-} from './InsightWithRelationships.js';
+  InsightWithRelationshipsFromJSON,
+  InsightWithRelationshipsToJSON,
+} from "./InsightWithRelationships.js";
 
 /**
  * Response containing a single insight item
@@ -27,51 +24,60 @@ import {
  * @interface CreateInsight200Response
  */
 export interface CreateInsight200Response {
-    [key: string]: any | any;
-    /**
-     * Insight data
-     * @type {InsightWithRelationships}
-     * @memberof CreateInsight200Response
-     */
-    data: InsightWithRelationships;
+  [key: string]: any | any;
+  /**
+   * Insight data
+   * @type {InsightWithRelationships}
+   * @memberof CreateInsight200Response
+   */
+  data: InsightWithRelationships;
 }
 
 /**
  * Check if a given object implements the CreateInsight200Response interface.
  */
-export function instanceOfCreateInsight200Response(value: object): value is CreateInsight200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfCreateInsight200Response(
+  value: object,
+): value is CreateInsight200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function CreateInsight200ResponseFromJSON(json: any): CreateInsight200Response {
-    return CreateInsight200ResponseFromJSONTyped(json, false);
+export function CreateInsight200ResponseFromJSON(
+  json: any,
+): CreateInsight200Response {
+  return CreateInsight200ResponseFromJSONTyped(json, false);
 }
 
-export function CreateInsight200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateInsight200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': InsightWithRelationshipsFromJSON(json['data']),
-    };
+export function CreateInsight200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateInsight200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: InsightWithRelationshipsFromJSON(json["data"]),
+  };
 }
 
-export function CreateInsight200ResponseToJSON(json: any): CreateInsight200Response {
-    return CreateInsight200ResponseToJSONTyped(json, false);
+export function CreateInsight200ResponseToJSON(
+  json: any,
+): CreateInsight200Response {
+  return CreateInsight200ResponseToJSONTyped(json, false);
 }
 
-export function CreateInsight200ResponseToJSONTyped(value?: CreateInsight200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateInsight200ResponseToJSONTyped(
+  value?: CreateInsight200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': InsightWithRelationshipsToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: InsightWithRelationshipsToJSON(value["data"]),
+  };
 }
-

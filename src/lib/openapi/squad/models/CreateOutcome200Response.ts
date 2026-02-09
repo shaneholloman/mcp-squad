@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { OutcomeWithRelationships } from './OutcomeWithRelationships.js';
+import type { OutcomeWithRelationships } from "./OutcomeWithRelationships.js";
 import {
-    OutcomeWithRelationshipsFromJSON,
-    OutcomeWithRelationshipsFromJSONTyped,
-    OutcomeWithRelationshipsToJSON,
-    OutcomeWithRelationshipsToJSONTyped,
-} from './OutcomeWithRelationships.js';
+  OutcomeWithRelationshipsFromJSON,
+  OutcomeWithRelationshipsToJSON,
+} from "./OutcomeWithRelationships.js";
 
 /**
  * Response containing a single outcome
@@ -27,51 +24,60 @@ import {
  * @interface CreateOutcome200Response
  */
 export interface CreateOutcome200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {OutcomeWithRelationships}
-     * @memberof CreateOutcome200Response
-     */
-    data: OutcomeWithRelationships;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {OutcomeWithRelationships}
+   * @memberof CreateOutcome200Response
+   */
+  data: OutcomeWithRelationships;
 }
 
 /**
  * Check if a given object implements the CreateOutcome200Response interface.
  */
-export function instanceOfCreateOutcome200Response(value: object): value is CreateOutcome200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfCreateOutcome200Response(
+  value: object,
+): value is CreateOutcome200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function CreateOutcome200ResponseFromJSON(json: any): CreateOutcome200Response {
-    return CreateOutcome200ResponseFromJSONTyped(json, false);
+export function CreateOutcome200ResponseFromJSON(
+  json: any,
+): CreateOutcome200Response {
+  return CreateOutcome200ResponseFromJSONTyped(json, false);
 }
 
-export function CreateOutcome200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateOutcome200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': OutcomeWithRelationshipsFromJSON(json['data']),
-    };
+export function CreateOutcome200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateOutcome200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: OutcomeWithRelationshipsFromJSON(json["data"]),
+  };
 }
 
-export function CreateOutcome200ResponseToJSON(json: any): CreateOutcome200Response {
-    return CreateOutcome200ResponseToJSONTyped(json, false);
+export function CreateOutcome200ResponseToJSON(
+  json: any,
+): CreateOutcome200Response {
+  return CreateOutcome200ResponseToJSONTyped(json, false);
 }
 
-export function CreateOutcome200ResponseToJSONTyped(value?: CreateOutcome200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateOutcome200ResponseToJSONTyped(
+  value?: CreateOutcome200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': OutcomeWithRelationshipsToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: OutcomeWithRelationshipsToJSON(value["data"]),
+  };
 }
-

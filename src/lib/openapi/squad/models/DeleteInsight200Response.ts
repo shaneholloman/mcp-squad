@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { DeleteInsight200ResponseData } from './DeleteInsight200ResponseData.js';
+import type { DeleteInsight200ResponseData } from "./DeleteInsight200ResponseData.js";
 import {
-    DeleteInsight200ResponseDataFromJSON,
-    DeleteInsight200ResponseDataFromJSONTyped,
-    DeleteInsight200ResponseDataToJSON,
-    DeleteInsight200ResponseDataToJSONTyped,
-} from './DeleteInsight200ResponseData.js';
+  DeleteInsight200ResponseDataFromJSON,
+  DeleteInsight200ResponseDataToJSON,
+} from "./DeleteInsight200ResponseData.js";
 
 /**
  * Response containing a success message
@@ -27,51 +24,60 @@ import {
  * @interface DeleteInsight200Response
  */
 export interface DeleteInsight200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {DeleteInsight200ResponseData}
-     * @memberof DeleteInsight200Response
-     */
-    data: DeleteInsight200ResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {DeleteInsight200ResponseData}
+   * @memberof DeleteInsight200Response
+   */
+  data: DeleteInsight200ResponseData;
 }
 
 /**
  * Check if a given object implements the DeleteInsight200Response interface.
  */
-export function instanceOfDeleteInsight200Response(value: object): value is DeleteInsight200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfDeleteInsight200Response(
+  value: object,
+): value is DeleteInsight200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function DeleteInsight200ResponseFromJSON(json: any): DeleteInsight200Response {
-    return DeleteInsight200ResponseFromJSONTyped(json, false);
+export function DeleteInsight200ResponseFromJSON(
+  json: any,
+): DeleteInsight200Response {
+  return DeleteInsight200ResponseFromJSONTyped(json, false);
 }
 
-export function DeleteInsight200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteInsight200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': DeleteInsight200ResponseDataFromJSON(json['data']),
-    };
+export function DeleteInsight200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): DeleteInsight200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: DeleteInsight200ResponseDataFromJSON(json["data"]),
+  };
 }
 
-export function DeleteInsight200ResponseToJSON(json: any): DeleteInsight200Response {
-    return DeleteInsight200ResponseToJSONTyped(json, false);
+export function DeleteInsight200ResponseToJSON(
+  json: any,
+): DeleteInsight200Response {
+  return DeleteInsight200ResponseToJSONTyped(json, false);
 }
 
-export function DeleteInsight200ResponseToJSONTyped(value?: DeleteInsight200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function DeleteInsight200ResponseToJSONTyped(
+  value?: DeleteInsight200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': DeleteInsight200ResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: DeleteInsight200ResponseDataToJSON(value["data"]),
+  };
 }
-

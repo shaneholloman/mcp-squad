@@ -12,66 +12,72 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { InsightResponse } from './InsightResponse.js';
+import type { InsightResponse } from "./InsightResponse.js";
 import {
-    InsightResponseFromJSON,
-    InsightResponseFromJSONTyped,
-    InsightResponseToJSON,
-    InsightResponseToJSONTyped,
-} from './InsightResponse.js';
+  InsightResponseFromJSON,
+  InsightResponseToJSON,
+} from "./InsightResponse.js";
 
 /**
- * 
+ *
  * @export
  * @interface ProcessDataIngress201Response
  */
 export interface ProcessDataIngress201Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {InsightResponse}
-     * @memberof ProcessDataIngress201Response
-     */
-    data: InsightResponse;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {InsightResponse}
+   * @memberof ProcessDataIngress201Response
+   */
+  data: InsightResponse;
 }
 
 /**
  * Check if a given object implements the ProcessDataIngress201Response interface.
  */
-export function instanceOfProcessDataIngress201Response(value: object): value is ProcessDataIngress201Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfProcessDataIngress201Response(
+  value: object,
+): value is ProcessDataIngress201Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function ProcessDataIngress201ResponseFromJSON(json: any): ProcessDataIngress201Response {
-    return ProcessDataIngress201ResponseFromJSONTyped(json, false);
+export function ProcessDataIngress201ResponseFromJSON(
+  json: any,
+): ProcessDataIngress201Response {
+  return ProcessDataIngress201ResponseFromJSONTyped(json, false);
 }
 
-export function ProcessDataIngress201ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProcessDataIngress201Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': InsightResponseFromJSON(json['data']),
-    };
+export function ProcessDataIngress201ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ProcessDataIngress201Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: InsightResponseFromJSON(json["data"]),
+  };
 }
 
-export function ProcessDataIngress201ResponseToJSON(json: any): ProcessDataIngress201Response {
-    return ProcessDataIngress201ResponseToJSONTyped(json, false);
+export function ProcessDataIngress201ResponseToJSON(
+  json: any,
+): ProcessDataIngress201Response {
+  return ProcessDataIngress201ResponseToJSONTyped(json, false);
 }
 
-export function ProcessDataIngress201ResponseToJSONTyped(value?: ProcessDataIngress201Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ProcessDataIngress201ResponseToJSONTyped(
+  value?: ProcessDataIngress201Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': InsightResponseToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: InsightResponseToJSON(value["data"]),
+  };
 }
-

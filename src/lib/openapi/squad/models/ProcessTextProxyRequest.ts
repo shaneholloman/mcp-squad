@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { ProcessTextProxyRequestOptions } from './ProcessTextProxyRequestOptions.js';
+import type { ProcessTextProxyRequestOptions } from "./ProcessTextProxyRequestOptions.js";
 import {
-    ProcessTextProxyRequestOptionsFromJSON,
-    ProcessTextProxyRequestOptionsFromJSONTyped,
-    ProcessTextProxyRequestOptionsToJSON,
-    ProcessTextProxyRequestOptionsToJSONTyped,
-} from './ProcessTextProxyRequestOptions.js';
+  ProcessTextProxyRequestOptionsFromJSON,
+  ProcessTextProxyRequestOptionsToJSON,
+} from "./ProcessTextProxyRequestOptions.js";
 
 /**
  * Request body for text proxy processing
@@ -27,64 +24,76 @@ import {
  * @interface ProcessTextProxyRequest
  */
 export interface ProcessTextProxyRequest {
-    /**
-     * Text prompt to process
-     * @type {string}
-     * @memberof ProcessTextProxyRequest
-     */
-    prompt: string;
-    /**
-     * AI model to use for processing
-     * @type {string}
-     * @memberof ProcessTextProxyRequest
-     */
-    model?: string;
-    /**
-     * 
-     * @type {ProcessTextProxyRequestOptions}
-     * @memberof ProcessTextProxyRequest
-     */
-    options?: ProcessTextProxyRequestOptions;
+  /**
+   * Text prompt to process
+   * @type {string}
+   * @memberof ProcessTextProxyRequest
+   */
+  prompt: string;
+  /**
+   * AI model to use for processing
+   * @type {string}
+   * @memberof ProcessTextProxyRequest
+   */
+  model?: string;
+  /**
+   *
+   * @type {ProcessTextProxyRequestOptions}
+   * @memberof ProcessTextProxyRequest
+   */
+  options?: ProcessTextProxyRequestOptions;
 }
 
 /**
  * Check if a given object implements the ProcessTextProxyRequest interface.
  */
-export function instanceOfProcessTextProxyRequest(value: object): value is ProcessTextProxyRequest {
-    if (!('prompt' in value) || value['prompt'] === undefined) return false;
-    return true;
+export function instanceOfProcessTextProxyRequest(
+  value: object,
+): value is ProcessTextProxyRequest {
+  if (!("prompt" in value) || value["prompt"] === undefined) return false;
+  return true;
 }
 
-export function ProcessTextProxyRequestFromJSON(json: any): ProcessTextProxyRequest {
-    return ProcessTextProxyRequestFromJSONTyped(json, false);
+export function ProcessTextProxyRequestFromJSON(
+  json: any,
+): ProcessTextProxyRequest {
+  return ProcessTextProxyRequestFromJSONTyped(json, false);
 }
 
-export function ProcessTextProxyRequestFromJSONTyped(json: any, ignoreDiscriminator: boolean): ProcessTextProxyRequest {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'prompt': json['prompt'],
-        'model': json['model'] == null ? undefined : json['model'],
-        'options': json['options'] == null ? undefined : ProcessTextProxyRequestOptionsFromJSON(json['options']),
-    };
+export function ProcessTextProxyRequestFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ProcessTextProxyRequest {
+  if (json == null) {
+    return json;
+  }
+  return {
+    prompt: json["prompt"],
+    model: json["model"] == null ? undefined : json["model"],
+    options:
+      json["options"] == null
+        ? undefined
+        : ProcessTextProxyRequestOptionsFromJSON(json["options"]),
+  };
 }
 
-export function ProcessTextProxyRequestToJSON(json: any): ProcessTextProxyRequest {
-    return ProcessTextProxyRequestToJSONTyped(json, false);
+export function ProcessTextProxyRequestToJSON(
+  json: any,
+): ProcessTextProxyRequest {
+  return ProcessTextProxyRequestToJSONTyped(json, false);
 }
 
-export function ProcessTextProxyRequestToJSONTyped(value?: ProcessTextProxyRequest | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ProcessTextProxyRequestToJSONTyped(
+  value?: ProcessTextProxyRequest | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'prompt': value['prompt'],
-        'model': value['model'],
-        'options': ProcessTextProxyRequestOptionsToJSON(value['options']),
-    };
+  return {
+    prompt: value["prompt"],
+    model: value["model"],
+    options: ProcessTextProxyRequestOptionsToJSON(value["options"]),
+  };
 }
-

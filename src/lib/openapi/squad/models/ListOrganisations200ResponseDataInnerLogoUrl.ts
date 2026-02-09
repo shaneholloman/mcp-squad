@@ -12,35 +12,44 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
  * URL to the organisation's logo
  * @export
  * @interface ListOrganisations200ResponseDataInnerLogoUrl
  */
-export interface ListOrganisations200ResponseDataInnerLogoUrl {
-}
+export interface ListOrganisations200ResponseDataInnerLogoUrl {}
 
 /**
  * Check if a given object implements the ListOrganisations200ResponseDataInnerLogoUrl interface.
  */
-export function instanceOfListOrganisations200ResponseDataInnerLogoUrl(value: object): value is ListOrganisations200ResponseDataInnerLogoUrl {
-    return true;
+export function instanceOfListOrganisations200ResponseDataInnerLogoUrl(
+  value: object,
+): value is ListOrganisations200ResponseDataInnerLogoUrl {
+  return true;
 }
 
-export function ListOrganisations200ResponseDataInnerLogoUrlFromJSON(json: any): ListOrganisations200ResponseDataInnerLogoUrl {
-    return ListOrganisations200ResponseDataInnerLogoUrlFromJSONTyped(json, false);
+export function ListOrganisations200ResponseDataInnerLogoUrlFromJSON(
+  json: any,
+): ListOrganisations200ResponseDataInnerLogoUrl {
+  return ListOrganisations200ResponseDataInnerLogoUrlFromJSONTyped(json, false);
 }
 
-export function ListOrganisations200ResponseDataInnerLogoUrlFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListOrganisations200ResponseDataInnerLogoUrl {
-    return json;
+export function ListOrganisations200ResponseDataInnerLogoUrlFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ListOrganisations200ResponseDataInnerLogoUrl {
+  return json;
 }
 
-export function ListOrganisations200ResponseDataInnerLogoUrlToJSON(json: any): ListOrganisations200ResponseDataInnerLogoUrl {
-    return ListOrganisations200ResponseDataInnerLogoUrlToJSONTyped(json, false);
+export function ListOrganisations200ResponseDataInnerLogoUrlToJSON(
+  json: any,
+): ListOrganisations200ResponseDataInnerLogoUrl {
+  return ListOrganisations200ResponseDataInnerLogoUrlToJSONTyped(json, false);
 }
 
-export function ListOrganisations200ResponseDataInnerLogoUrlToJSONTyped(value?: ListOrganisations200ResponseDataInnerLogoUrl | null, ignoreDiscriminator: boolean = false): any {
-    return value;
+export function ListOrganisations200ResponseDataInnerLogoUrlToJSONTyped(
+  value?: ListOrganisations200ResponseDataInnerLogoUrl | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  return value;
 }
-

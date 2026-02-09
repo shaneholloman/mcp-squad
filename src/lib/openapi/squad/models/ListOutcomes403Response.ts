@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { ListOutcomes403ResponseError } from './ListOutcomes403ResponseError.js';
+import type { ListOutcomes403ResponseError } from "./ListOutcomes403ResponseError.js";
 import {
-    ListOutcomes403ResponseErrorFromJSON,
-    ListOutcomes403ResponseErrorFromJSONTyped,
-    ListOutcomes403ResponseErrorToJSON,
-    ListOutcomes403ResponseErrorToJSONTyped,
-} from './ListOutcomes403ResponseError.js';
+  ListOutcomes403ResponseErrorFromJSON,
+  ListOutcomes403ResponseErrorToJSON,
+} from "./ListOutcomes403ResponseError.js";
 
 /**
  * Forbidden - Insufficient permissions to access this resource
@@ -27,51 +24,60 @@ import {
  * @interface ListOutcomes403Response
  */
 export interface ListOutcomes403Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {ListOutcomes403ResponseError}
-     * @memberof ListOutcomes403Response
-     */
-    error: ListOutcomes403ResponseError;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {ListOutcomes403ResponseError}
+   * @memberof ListOutcomes403Response
+   */
+  error: ListOutcomes403ResponseError;
 }
 
 /**
  * Check if a given object implements the ListOutcomes403Response interface.
  */
-export function instanceOfListOutcomes403Response(value: object): value is ListOutcomes403Response {
-    if (!('error' in value) || value['error'] === undefined) return false;
-    return true;
+export function instanceOfListOutcomes403Response(
+  value: object,
+): value is ListOutcomes403Response {
+  if (!("error" in value) || value["error"] === undefined) return false;
+  return true;
 }
 
-export function ListOutcomes403ResponseFromJSON(json: any): ListOutcomes403Response {
-    return ListOutcomes403ResponseFromJSONTyped(json, false);
+export function ListOutcomes403ResponseFromJSON(
+  json: any,
+): ListOutcomes403Response {
+  return ListOutcomes403ResponseFromJSONTyped(json, false);
 }
 
-export function ListOutcomes403ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListOutcomes403Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'error': ListOutcomes403ResponseErrorFromJSON(json['error']),
-    };
+export function ListOutcomes403ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ListOutcomes403Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    error: ListOutcomes403ResponseErrorFromJSON(json["error"]),
+  };
 }
 
-export function ListOutcomes403ResponseToJSON(json: any): ListOutcomes403Response {
-    return ListOutcomes403ResponseToJSONTyped(json, false);
+export function ListOutcomes403ResponseToJSON(
+  json: any,
+): ListOutcomes403Response {
+  return ListOutcomes403ResponseToJSONTyped(json, false);
 }
 
-export function ListOutcomes403ResponseToJSONTyped(value?: ListOutcomes403Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ListOutcomes403ResponseToJSONTyped(
+  value?: ListOutcomes403Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'error': ListOutcomes403ResponseErrorToJSON(value['error']),
-    };
+  return {
+    ...value,
+    error: ListOutcomes403ResponseErrorToJSON(value["error"]),
+  };
 }
-

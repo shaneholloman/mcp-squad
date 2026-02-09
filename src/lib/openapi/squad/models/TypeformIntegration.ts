@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { TypeformResponseConfig } from './TypeformResponseConfig.js';
+import type { TypeformResponseConfig } from "./TypeformResponseConfig.js";
 import {
-    TypeformResponseConfigFromJSON,
-    TypeformResponseConfigFromJSONTyped,
-    TypeformResponseConfigToJSON,
-    TypeformResponseConfigToJSONTyped,
-} from './TypeformResponseConfig.js';
+  TypeformResponseConfigFromJSON,
+  TypeformResponseConfigToJSON,
+} from "./TypeformResponseConfig.js";
 
 /**
  * Typeform integration record
@@ -27,112 +24,119 @@ import {
  * @interface TypeformIntegration
  */
 export interface TypeformIntegration {
-    /**
-     * 
-     * @type {number}
-     * @memberof TypeformIntegration
-     */
-    id: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof TypeformIntegration
-     */
-    integrationId: TypeformIntegrationIntegrationIdEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof TypeformIntegration
-     */
-    workspaceId: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof TypeformIntegration
-     */
-    organisationId: string;
-    /**
-     * 
-     * @type {TypeformResponseConfig}
-     * @memberof TypeformIntegration
-     */
-    config: TypeformResponseConfig;
-    /**
-     * 
-     * @type {Date}
-     * @memberof TypeformIntegration
-     */
-    createdAt: Date;
-    /**
-     * 
-     * @type {Date}
-     * @memberof TypeformIntegration
-     */
-    updatedAt: Date;
+  /**
+   *
+   * @type {number}
+   * @memberof TypeformIntegration
+   */
+  id: number;
+  /**
+   *
+   * @type {string}
+   * @memberof TypeformIntegration
+   */
+  integrationId: TypeformIntegrationIntegrationIdEnum;
+  /**
+   *
+   * @type {string}
+   * @memberof TypeformIntegration
+   */
+  workspaceId: string;
+  /**
+   *
+   * @type {string}
+   * @memberof TypeformIntegration
+   */
+  organisationId: string;
+  /**
+   *
+   * @type {TypeformResponseConfig}
+   * @memberof TypeformIntegration
+   */
+  config: TypeformResponseConfig;
+  /**
+   *
+   * @type {Date}
+   * @memberof TypeformIntegration
+   */
+  createdAt: Date;
+  /**
+   *
+   * @type {Date}
+   * @memberof TypeformIntegration
+   */
+  updatedAt: Date;
 }
-
 
 /**
  * @export
  */
 export const TypeformIntegrationIntegrationIdEnum = {
-    Typeform: 'TYPEFORM'
+  Typeform: "TYPEFORM",
 } as const;
-export type TypeformIntegrationIntegrationIdEnum = typeof TypeformIntegrationIntegrationIdEnum[keyof typeof TypeformIntegrationIntegrationIdEnum];
-
+export type TypeformIntegrationIntegrationIdEnum =
+  (typeof TypeformIntegrationIntegrationIdEnum)[keyof typeof TypeformIntegrationIntegrationIdEnum];
 
 /**
  * Check if a given object implements the TypeformIntegration interface.
  */
-export function instanceOfTypeformIntegration(value: object): value is TypeformIntegration {
-    if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('integrationId' in value) || value['integrationId'] === undefined) return false;
-    if (!('workspaceId' in value) || value['workspaceId'] === undefined) return false;
-    if (!('organisationId' in value) || value['organisationId'] === undefined) return false;
-    if (!('config' in value) || value['config'] === undefined) return false;
-    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
-    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
-    return true;
+export function instanceOfTypeformIntegration(
+  value: object,
+): value is TypeformIntegration {
+  if (!("id" in value) || value["id"] === undefined) return false;
+  if (!("integrationId" in value) || value["integrationId"] === undefined)
+    return false;
+  if (!("workspaceId" in value) || value["workspaceId"] === undefined)
+    return false;
+  if (!("organisationId" in value) || value["organisationId"] === undefined)
+    return false;
+  if (!("config" in value) || value["config"] === undefined) return false;
+  if (!("createdAt" in value) || value["createdAt"] === undefined) return false;
+  if (!("updatedAt" in value) || value["updatedAt"] === undefined) return false;
+  return true;
 }
 
 export function TypeformIntegrationFromJSON(json: any): TypeformIntegration {
-    return TypeformIntegrationFromJSONTyped(json, false);
+  return TypeformIntegrationFromJSONTyped(json, false);
 }
 
-export function TypeformIntegrationFromJSONTyped(json: any, ignoreDiscriminator: boolean): TypeformIntegration {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'id': json['id'],
-        'integrationId': json['integrationId'],
-        'workspaceId': json['workspaceId'],
-        'organisationId': json['organisationId'],
-        'config': TypeformResponseConfigFromJSON(json['config']),
-        'createdAt': (new Date(json['createdAt'])),
-        'updatedAt': (new Date(json['updatedAt'])),
-    };
+export function TypeformIntegrationFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): TypeformIntegration {
+  if (json == null) {
+    return json;
+  }
+  return {
+    id: json["id"],
+    integrationId: json["integrationId"],
+    workspaceId: json["workspaceId"],
+    organisationId: json["organisationId"],
+    config: TypeformResponseConfigFromJSON(json["config"]),
+    createdAt: new Date(json["createdAt"]),
+    updatedAt: new Date(json["updatedAt"]),
+  };
 }
 
 export function TypeformIntegrationToJSON(json: any): TypeformIntegration {
-    return TypeformIntegrationToJSONTyped(json, false);
+  return TypeformIntegrationToJSONTyped(json, false);
 }
 
-export function TypeformIntegrationToJSONTyped(value?: TypeformIntegration | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function TypeformIntegrationToJSONTyped(
+  value?: TypeformIntegration | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'id': value['id'],
-        'integrationId': value['integrationId'],
-        'workspaceId': value['workspaceId'],
-        'organisationId': value['organisationId'],
-        'config': TypeformResponseConfigToJSON(value['config']),
-        'createdAt': ((value['createdAt']).toISOString()),
-        'updatedAt': ((value['updatedAt']).toISOString()),
-    };
+  return {
+    id: value["id"],
+    integrationId: value["integrationId"],
+    workspaceId: value["workspaceId"],
+    organisationId: value["organisationId"],
+    config: TypeformResponseConfigToJSON(value["config"]),
+    createdAt: value["createdAt"].toISOString(),
+    updatedAt: value["updatedAt"].toISOString(),
+  };
 }
-
