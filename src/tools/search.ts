@@ -4,12 +4,12 @@ import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
 import { SimilaritySearchRequestFiltersEnum } from "../lib/openapi/squad/models/SimilaritySearchRequest.js";
 import {
-  type OAuthServer,
-  WorkspaceSelectionRequired,
   formatWorkspaceSelectionError,
   getUserId,
+  type OAuthServer,
   toolError,
   toolSuccessPretty,
+  WorkspaceSelectionRequired,
 } from "./helpers.js";
 
 /**

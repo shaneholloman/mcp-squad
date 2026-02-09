@@ -2,17 +2,17 @@ import { z } from "zod";
 import { getUserContext } from "../helpers/getUser.js";
 import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
-import {
+import type {
+  CreateOutcomePayload,
   RelationshipAction,
-  type CreateOutcomePayload,
 } from "../lib/openapi/squad/models/index.js";
 import {
   formatWorkspaceSelectionError,
   getUserId,
+  type OAuthServer,
   toolError,
   toolSuccess,
   WorkspaceSelectionRequired,
-  type OAuthServer,
 } from "./helpers.js";
 
 /**

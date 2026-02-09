@@ -17,7 +17,7 @@
  * @export
  * @interface CreateMetricPayloadId
  */
-export interface CreateMetricPayloadId {}
+export type CreateMetricPayloadId = {};
 
 /**
  * Check if a given object implements the CreateMetricPayloadId interface.

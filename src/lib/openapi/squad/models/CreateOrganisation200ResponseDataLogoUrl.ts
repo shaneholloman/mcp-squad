@@ -17,7 +17,7 @@
  * @export
  * @interface CreateOrganisation200ResponseDataLogoUrl
  */
-export interface CreateOrganisation200ResponseDataLogoUrl {}
+export type CreateOrganisation200ResponseDataLogoUrl = {};
 
 /**
  * Check if a given object implements the CreateOrganisation200ResponseDataLogoUrl interface.
