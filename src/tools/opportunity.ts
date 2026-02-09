@@ -3,16 +3,16 @@ import { getUserContext } from "../helpers/getUser.js";
 import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
 import {
-  RelationshipAction,
+  type RelationshipAction,
   UpdateOpportunityPayloadStatusEnum,
 } from "../lib/openapi/squad/models/index.js";
 import {
-  type OAuthServer,
-  WorkspaceSelectionRequired,
   formatWorkspaceSelectionError,
   getUserId,
+  type OAuthServer,
   toolError,
   toolSuccess,
+  WorkspaceSelectionRequired,
 } from "./helpers.js";
 
 /**

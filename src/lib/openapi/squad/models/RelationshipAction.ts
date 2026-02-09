@@ -25,7 +25,7 @@ export type RelationshipAction =
 
 export function instanceOfRelationshipAction(value: any): boolean {
   for (const key in RelationshipAction) {
-    if (Object.prototype.hasOwnProperty.call(RelationshipAction, key)) {
+    if (Object.hasOwn(RelationshipAction, key)) {
       if (
         RelationshipAction[key as keyof typeof RelationshipAction] === value
       ) {

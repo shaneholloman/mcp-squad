@@ -1,4 +1,4 @@
-import {
+import type {
   FetchParams,
   Middleware,
   RequestContext,
@@ -10,7 +10,7 @@ import {
  */
 export function withAuth(token: string): Middleware {
   return {
-    pre: async (ctx: RequestContext): Promise<void | FetchParams> => {
+    pre: async (ctx: RequestContext): Promise<undefined | FetchParams> => {
       if (!ctx.init.headers) ctx.init.headers = {};
 
       ctx.init.headers = {

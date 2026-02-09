@@ -27,7 +27,7 @@ export type InsightSourceEnum =
 
 export function instanceOfInsightSourceEnum(value: any): boolean {
   for (const key in InsightSourceEnum) {
-    if (Object.prototype.hasOwnProperty.call(InsightSourceEnum, key)) {
+    if (Object.hasOwn(InsightSourceEnum, key)) {
       if (InsightSourceEnum[key as keyof typeof InsightSourceEnum] === value) {
         return true;
       }

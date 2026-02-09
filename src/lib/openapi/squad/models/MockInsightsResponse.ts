@@ -19,7 +19,8 @@ import type { MockInsightsResponseInner } from "./MockInsightsResponseInner.js";
  * @export
  * @interface MockInsightsResponse
  */
-export interface MockInsightsResponse extends Array<MockInsightsResponseInner> {}
+export interface MockInsightsResponse
+  extends Array<MockInsightsResponseInner> {}
 
 /**
  * Check if a given object implements the MockInsightsResponse interface.

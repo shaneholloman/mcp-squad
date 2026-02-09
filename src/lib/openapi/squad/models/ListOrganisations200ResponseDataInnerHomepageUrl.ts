@@ -17,7 +17,7 @@
  * @export
  * @interface ListOrganisations200ResponseDataInnerHomepageUrl
  */
-export interface ListOrganisations200ResponseDataInnerHomepageUrl {}
+export type ListOrganisations200ResponseDataInnerHomepageUrl = {};
 
 /**
  * Check if a given object implements the ListOrganisations200ResponseDataInnerHomepageUrl interface.

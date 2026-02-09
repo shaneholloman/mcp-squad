@@ -26,9 +26,7 @@ export type OrganisationAccountTypeEnum =
 
 export function instanceOfOrganisationAccountTypeEnum(value: any): boolean {
   for (const key in OrganisationAccountTypeEnum) {
-    if (
-      Object.prototype.hasOwnProperty.call(OrganisationAccountTypeEnum, key)
-    ) {
+    if (Object.hasOwn(OrganisationAccountTypeEnum, key)) {
       if (
         OrganisationAccountTypeEnum[
           key as keyof typeof OrganisationAccountTypeEnum
