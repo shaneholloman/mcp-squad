@@ -2,6 +2,8 @@
 import { config } from 'dotenv';
 import { MCPServer, oauthCustomProvider } from 'mcp-use/server';
 import { logger } from './lib/logger.js';
+import { getPropelAuthUrl } from './helpers/config.js';
+import { cspMiddleware } from './middleware/csp.js';
 import { registerWorkspaceTools } from './tools/workspace.js';
 import { registerOpportunityTools } from './tools/opportunity.js';
 import { registerSolutionTools } from './tools/solution.js';
@@ -24,22 +26,6 @@ const PORT = parseInt(process.env.PORT || '3232', 10);
 const BASE_URI = process.env.BASE_URI || `http://localhost:${PORT}`;
 const CLIENT_ID = process.env.PROPELAUTH_CLIENT_ID;
 const CLIENT_SECRET = process.env.PROPELAUTH_CLIENT_SECRET;
-
-/**
- * Get PropelAuth URL based on SQUAD_ENV
- */
-export function getPropelAuthUrl(): string {
-  const squadEnv = process.env.SQUAD_ENV || 'production';
-
-  if (squadEnv === 'dev') {
-    return 'https://26904088430.propelauthtest.com';
-  }
-  if (squadEnv === 'staging') {
-    return 'https://auth.app.meetsquad.ai';
-  }
-  return 'https://auth.meetsquad.ai'; // production
-}
-
 const AUTH_URL = getPropelAuthUrl();
 const SCOPES = ['read:workspace', 'write:workspace'];
 
@@ -196,6 +182,9 @@ const server = new MCPServer({
     },
   }),
 });
+
+// Apply Content Security Policy middleware
+server.app.use('*', cspMiddleware);
 
 // OAuth discovery - proxy to PropelAuth (needed to avoid CORS issues)
 server.app.get('/.well-known/oauth-authorization-server', async (c) => {
