@@ -64,7 +64,7 @@ All tools include:
 │  Squad MCP Server                            │
 │  ┌────────────────────────────────────────┐  │
 │  │  OAuth Middleware → Validate Token     │  │
-│  │  Session Store (Redis) → Manage State  │  │
+│  │  Session Store → Manage State          │  │
 │  │  MCP Handler → Execute Tools           │  │
 │  └────────────────────────────────────────┘  │
 └──────────────────────────────────────────────┘
@@ -108,12 +108,9 @@ This repository contains the source code for the Squad MCP remote server.
 - Node.js 18+
 - Yarn
 - PropelAuth account (for OAuth2)
-- Redis instance (optional for local development)
 - Squad API credentials
 
 ### Local Setup
-
-**Option 1: Quick Start (Local Node.js)**
 
 ```bash
 # Clone repository
@@ -126,24 +123,9 @@ yarn install
 # Configure environment
 cp .env.example .env
 # Edit .env with your PropelAuth credentials
-# Note: Redis is optional - omit REDIS_URL to use in-memory sessions
 
 # Start development server with hot reload
 yarn dev
-
-# Server available at http://localhost:3232
-```
-
-**Option 2: Docker Compose (Production-like)**
-
-```bash
-# Configure environment
-cp .env.example .env
-# Edit .env with your PropelAuth credentials
-# Note: REDIS_URL is automatically set by docker-compose
-
-# Start server + Redis
-docker-compose up
 
 # Server available at http://localhost:3232
 ```
@@ -156,11 +138,6 @@ yarn dev                # Start dev server with hot reload
 yarn start              # Start production server
 yarn openapi:squad      # Regenerate API client from OpenAPI spec
 yarn test               # Run test suite
-
-# Docker commands
-docker-compose up       # Start server + Redis
-docker-compose down     # Stop and remove containers
-docker-compose logs -f  # View logs
 ```
 
 ### Testing the Server
@@ -179,21 +156,13 @@ npx @modelcontextprotocol/inspector
 
 ### Running Tests
 
-Tests run against the full HTTP server with Redis (via Docker Compose):
-
 ```bash
 # Setup environment (if not already done)
 cp .env.example .env
 # Edit .env with your PropelAuth credentials and Squad API key
 
-# Run tests (starts/stops Docker Compose automatically)
+# Run tests
 yarn test
-
-# Watch mode for development
-docker-compose up -d
-yarn test:watch
-# ... when done:
-docker-compose down
 ```
 
 **Note:** Tests use `SQUAD_API_KEY` from `.env` for authentication (not OAuth).
@@ -203,18 +172,17 @@ docker-compose down
 ```
 squad-mcp/
 ├── src/
-│   ├── http-server.ts          # Express server + MCP endpoints
+│   ├── server.ts               # MCP server with OAuth
 │   ├── middleware/
-│   │   └── oauth.ts            # PropelAuth OAuth validation
-│   ├── handlers/
-│   │   └── mcp.ts              # MCP protocol handler
+│   │   └── csp.ts              # Content Security Policy
+│   ├── helpers/
+│   │   └── config.ts           # Environment configuration
 │   ├── lib/
-│   │   ├── session-store.ts    # Redis session management
 │   │   └── clients/            # Squad API client
 │   └── tools/                  # Tool implementations
 │       ├── opportunity.ts
 │       ├── solution.ts
-│       ├── outcome.ts
+│       ├── goal.ts
 │       └── ...
 ├── railway.toml                # Railway deployment config
 └── .env.example                # Environment template
@@ -229,7 +197,6 @@ This is a hosted service maintained by Squad. Users connect via OAuth - no self-
 - Single-instance deployment on Railway
 - Follows [MCP specification](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports) for stateful HTTP sessions
 - In-memory transport storage (standard per MCP spec)
-- Redis for session metadata persistence
 
 ## 🤝 Contributing
 
