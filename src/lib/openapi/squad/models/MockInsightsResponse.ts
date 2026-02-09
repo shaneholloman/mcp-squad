@@ -12,43 +12,42 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { MockInsightsResponseInner } from './MockInsightsResponseInner.js';
-import {
-    MockInsightsResponseInnerFromJSON,
-    MockInsightsResponseInnerFromJSONTyped,
-    MockInsightsResponseInnerToJSON,
-    MockInsightsResponseInnerToJSONTyped,
-} from './MockInsightsResponseInner.js';
+import type { MockInsightsResponseInner } from "./MockInsightsResponseInner.js";
 
 /**
  * Array of mock insights
  * @export
  * @interface MockInsightsResponse
  */
-export interface MockInsightsResponse extends Array<MockInsightsResponseInner> {
-}
+export interface MockInsightsResponse extends Array<MockInsightsResponseInner> {}
 
 /**
  * Check if a given object implements the MockInsightsResponse interface.
  */
-export function instanceOfMockInsightsResponse(value: object): value is MockInsightsResponse {
-    return true;
+export function instanceOfMockInsightsResponse(
+  value: object,
+): value is MockInsightsResponse {
+  return true;
 }
 
 export function MockInsightsResponseFromJSON(json: any): MockInsightsResponse {
-    return MockInsightsResponseFromJSONTyped(json, false);
+  return MockInsightsResponseFromJSONTyped(json, false);
 }
 
-export function MockInsightsResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): MockInsightsResponse {
-    return json;
+export function MockInsightsResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): MockInsightsResponse {
+  return json;
 }
 
 export function MockInsightsResponseToJSON(json: any): MockInsightsResponse {
-    return MockInsightsResponseToJSONTyped(json, false);
+  return MockInsightsResponseToJSONTyped(json, false);
 }
 
-export function MockInsightsResponseToJSONTyped(value?: MockInsightsResponse | null, ignoreDiscriminator: boolean = false): any {
-    return value;
+export function MockInsightsResponseToJSONTyped(
+  value?: MockInsightsResponse | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  return value;
 }
-

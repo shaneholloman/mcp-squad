@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { SolutionWithRelationships } from './SolutionWithRelationships.js';
+import type { SolutionWithRelationships } from "./SolutionWithRelationships.js";
 import {
-    SolutionWithRelationshipsFromJSON,
-    SolutionWithRelationshipsFromJSONTyped,
-    SolutionWithRelationshipsToJSON,
-    SolutionWithRelationshipsToJSONTyped,
-} from './SolutionWithRelationships.js';
+  SolutionWithRelationshipsFromJSON,
+  SolutionWithRelationshipsToJSON,
+} from "./SolutionWithRelationships.js";
 
 /**
  * Response containing an array of solutions
@@ -27,51 +24,60 @@ import {
  * @interface ListSolutions200Response
  */
 export interface ListSolutions200Response {
-    [key: string]: any | any;
-    /**
-     * Array of solutions
-     * @type {Array<SolutionWithRelationships>}
-     * @memberof ListSolutions200Response
-     */
-    data: Array<SolutionWithRelationships>;
+  [key: string]: any | any;
+  /**
+   * Array of solutions
+   * @type {Array<SolutionWithRelationships>}
+   * @memberof ListSolutions200Response
+   */
+  data: Array<SolutionWithRelationships>;
 }
 
 /**
  * Check if a given object implements the ListSolutions200Response interface.
  */
-export function instanceOfListSolutions200Response(value: object): value is ListSolutions200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfListSolutions200Response(
+  value: object,
+): value is ListSolutions200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function ListSolutions200ResponseFromJSON(json: any): ListSolutions200Response {
-    return ListSolutions200ResponseFromJSONTyped(json, false);
+export function ListSolutions200ResponseFromJSON(
+  json: any,
+): ListSolutions200Response {
+  return ListSolutions200ResponseFromJSONTyped(json, false);
 }
 
-export function ListSolutions200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListSolutions200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': ((json['data'] as Array<any>).map(SolutionWithRelationshipsFromJSON)),
-    };
+export function ListSolutions200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ListSolutions200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: (json["data"] as Array<any>).map(SolutionWithRelationshipsFromJSON),
+  };
 }
 
-export function ListSolutions200ResponseToJSON(json: any): ListSolutions200Response {
-    return ListSolutions200ResponseToJSONTyped(json, false);
+export function ListSolutions200ResponseToJSON(
+  json: any,
+): ListSolutions200Response {
+  return ListSolutions200ResponseToJSONTyped(json, false);
 }
 
-export function ListSolutions200ResponseToJSONTyped(value?: ListSolutions200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ListSolutions200ResponseToJSONTyped(
+  value?: ListSolutions200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': ((value['data'] as Array<any>).map(SolutionWithRelationshipsToJSON)),
-    };
+  return {
+    ...value,
+    data: (value["data"] as Array<any>).map(SolutionWithRelationshipsToJSON),
+  };
 }
-

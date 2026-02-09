@@ -12,79 +12,92 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { SimilaritySearchResponseSolutionsInnerMetadata } from './SimilaritySearchResponseSolutionsInnerMetadata.js';
+import type { SimilaritySearchResponseSolutionsInnerMetadata } from "./SimilaritySearchResponseSolutionsInnerMetadata.js";
 import {
-    SimilaritySearchResponseSolutionsInnerMetadataFromJSON,
-    SimilaritySearchResponseSolutionsInnerMetadataFromJSONTyped,
-    SimilaritySearchResponseSolutionsInnerMetadataToJSON,
-    SimilaritySearchResponseSolutionsInnerMetadataToJSONTyped,
-} from './SimilaritySearchResponseSolutionsInnerMetadata.js';
+  SimilaritySearchResponseSolutionsInnerMetadataFromJSON,
+  SimilaritySearchResponseSolutionsInnerMetadataToJSON,
+} from "./SimilaritySearchResponseSolutionsInnerMetadata.js";
 
 /**
- * 
+ *
  * @export
  * @interface SimilaritySearchResponseSolutionsInner
  */
 export interface SimilaritySearchResponseSolutionsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof SimilaritySearchResponseSolutionsInner
-     */
-    id: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof SimilaritySearchResponseSolutionsInner
-     */
-    score?: number;
-    /**
-     * 
-     * @type {SimilaritySearchResponseSolutionsInnerMetadata}
-     * @memberof SimilaritySearchResponseSolutionsInner
-     */
-    metadata?: SimilaritySearchResponseSolutionsInnerMetadata;
+  /**
+   *
+   * @type {string}
+   * @memberof SimilaritySearchResponseSolutionsInner
+   */
+  id: string;
+  /**
+   *
+   * @type {number}
+   * @memberof SimilaritySearchResponseSolutionsInner
+   */
+  score?: number;
+  /**
+   *
+   * @type {SimilaritySearchResponseSolutionsInnerMetadata}
+   * @memberof SimilaritySearchResponseSolutionsInner
+   */
+  metadata?: SimilaritySearchResponseSolutionsInnerMetadata;
 }
 
 /**
  * Check if a given object implements the SimilaritySearchResponseSolutionsInner interface.
  */
-export function instanceOfSimilaritySearchResponseSolutionsInner(value: object): value is SimilaritySearchResponseSolutionsInner {
-    if (!('id' in value) || value['id'] === undefined) return false;
-    return true;
+export function instanceOfSimilaritySearchResponseSolutionsInner(
+  value: object,
+): value is SimilaritySearchResponseSolutionsInner {
+  if (!("id" in value) || value["id"] === undefined) return false;
+  return true;
 }
 
-export function SimilaritySearchResponseSolutionsInnerFromJSON(json: any): SimilaritySearchResponseSolutionsInner {
-    return SimilaritySearchResponseSolutionsInnerFromJSONTyped(json, false);
+export function SimilaritySearchResponseSolutionsInnerFromJSON(
+  json: any,
+): SimilaritySearchResponseSolutionsInner {
+  return SimilaritySearchResponseSolutionsInnerFromJSONTyped(json, false);
 }
 
-export function SimilaritySearchResponseSolutionsInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimilaritySearchResponseSolutionsInner {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'id': json['id'],
-        'score': json['score'] == null ? undefined : json['score'],
-        'metadata': json['metadata'] == null ? undefined : SimilaritySearchResponseSolutionsInnerMetadataFromJSON(json['metadata']),
-    };
+export function SimilaritySearchResponseSolutionsInnerFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): SimilaritySearchResponseSolutionsInner {
+  if (json == null) {
+    return json;
+  }
+  return {
+    id: json["id"],
+    score: json["score"] == null ? undefined : json["score"],
+    metadata:
+      json["metadata"] == null
+        ? undefined
+        : SimilaritySearchResponseSolutionsInnerMetadataFromJSON(
+            json["metadata"],
+          ),
+  };
 }
 
-export function SimilaritySearchResponseSolutionsInnerToJSON(json: any): SimilaritySearchResponseSolutionsInner {
-    return SimilaritySearchResponseSolutionsInnerToJSONTyped(json, false);
+export function SimilaritySearchResponseSolutionsInnerToJSON(
+  json: any,
+): SimilaritySearchResponseSolutionsInner {
+  return SimilaritySearchResponseSolutionsInnerToJSONTyped(json, false);
 }
 
-export function SimilaritySearchResponseSolutionsInnerToJSONTyped(value?: SimilaritySearchResponseSolutionsInner | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function SimilaritySearchResponseSolutionsInnerToJSONTyped(
+  value?: SimilaritySearchResponseSolutionsInner | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'id': value['id'],
-        'score': value['score'],
-        'metadata': SimilaritySearchResponseSolutionsInnerMetadataToJSON(value['metadata']),
-    };
+  return {
+    id: value["id"],
+    score: value["score"],
+    metadata: SimilaritySearchResponseSolutionsInnerMetadataToJSON(
+      value["metadata"],
+    ),
+  };
 }
-

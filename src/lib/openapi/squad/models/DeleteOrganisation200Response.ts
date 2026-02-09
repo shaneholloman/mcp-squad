@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { DeleteOrganisation200ResponseData } from './DeleteOrganisation200ResponseData.js';
+import type { DeleteOrganisation200ResponseData } from "./DeleteOrganisation200ResponseData.js";
 import {
-    DeleteOrganisation200ResponseDataFromJSON,
-    DeleteOrganisation200ResponseDataFromJSONTyped,
-    DeleteOrganisation200ResponseDataToJSON,
-    DeleteOrganisation200ResponseDataToJSONTyped,
-} from './DeleteOrganisation200ResponseData.js';
+  DeleteOrganisation200ResponseDataFromJSON,
+  DeleteOrganisation200ResponseDataToJSON,
+} from "./DeleteOrganisation200ResponseData.js";
 
 /**
  * Response containing a success message
@@ -27,51 +24,60 @@ import {
  * @interface DeleteOrganisation200Response
  */
 export interface DeleteOrganisation200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {DeleteOrganisation200ResponseData}
-     * @memberof DeleteOrganisation200Response
-     */
-    data: DeleteOrganisation200ResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {DeleteOrganisation200ResponseData}
+   * @memberof DeleteOrganisation200Response
+   */
+  data: DeleteOrganisation200ResponseData;
 }
 
 /**
  * Check if a given object implements the DeleteOrganisation200Response interface.
  */
-export function instanceOfDeleteOrganisation200Response(value: object): value is DeleteOrganisation200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfDeleteOrganisation200Response(
+  value: object,
+): value is DeleteOrganisation200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function DeleteOrganisation200ResponseFromJSON(json: any): DeleteOrganisation200Response {
-    return DeleteOrganisation200ResponseFromJSONTyped(json, false);
+export function DeleteOrganisation200ResponseFromJSON(
+  json: any,
+): DeleteOrganisation200Response {
+  return DeleteOrganisation200ResponseFromJSONTyped(json, false);
 }
 
-export function DeleteOrganisation200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteOrganisation200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': DeleteOrganisation200ResponseDataFromJSON(json['data']),
-    };
+export function DeleteOrganisation200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): DeleteOrganisation200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: DeleteOrganisation200ResponseDataFromJSON(json["data"]),
+  };
 }
 
-export function DeleteOrganisation200ResponseToJSON(json: any): DeleteOrganisation200Response {
-    return DeleteOrganisation200ResponseToJSONTyped(json, false);
+export function DeleteOrganisation200ResponseToJSON(
+  json: any,
+): DeleteOrganisation200Response {
+  return DeleteOrganisation200ResponseToJSONTyped(json, false);
 }
 
-export function DeleteOrganisation200ResponseToJSONTyped(value?: DeleteOrganisation200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function DeleteOrganisation200ResponseToJSONTyped(
+  value?: DeleteOrganisation200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': DeleteOrganisation200ResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: DeleteOrganisation200ResponseDataToJSON(value["data"]),
+  };
 }
-

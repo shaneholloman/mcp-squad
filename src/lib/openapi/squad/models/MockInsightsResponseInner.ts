@@ -12,94 +12,102 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
- * 
+ *
  * @export
  * @interface MockInsightsResponseInner
  */
 export interface MockInsightsResponseInner {
-    /**
-     * Description of the insight
-     * @type {string}
-     * @memberof MockInsightsResponseInner
-     */
-    description: string;
-    /**
-     * Original feedback text that generated this insight
-     * @type {string}
-     * @memberof MockInsightsResponseInner
-     */
-    feedback: string;
-    /**
-     * Title of the insight
-     * @type {string}
-     * @memberof MockInsightsResponseInner
-     */
-    title: string;
-    /**
-     * Type of the original feedback
-     * @type {string}
-     * @memberof MockInsightsResponseInner
-     */
-    type: MockInsightsResponseInnerTypeEnum;
+  /**
+   * Description of the insight
+   * @type {string}
+   * @memberof MockInsightsResponseInner
+   */
+  description: string;
+  /**
+   * Original feedback text that generated this insight
+   * @type {string}
+   * @memberof MockInsightsResponseInner
+   */
+  feedback: string;
+  /**
+   * Title of the insight
+   * @type {string}
+   * @memberof MockInsightsResponseInner
+   */
+  title: string;
+  /**
+   * Type of the original feedback
+   * @type {string}
+   * @memberof MockInsightsResponseInner
+   */
+  type: MockInsightsResponseInnerTypeEnum;
 }
-
 
 /**
  * @export
  */
 export const MockInsightsResponseInnerTypeEnum = {
-    Feedback: 'Feedback',
-    Bug: 'Bug',
-    FeatureRequest: 'FeatureRequest'
+  Feedback: "Feedback",
+  Bug: "Bug",
+  FeatureRequest: "FeatureRequest",
 } as const;
-export type MockInsightsResponseInnerTypeEnum = typeof MockInsightsResponseInnerTypeEnum[keyof typeof MockInsightsResponseInnerTypeEnum];
-
+export type MockInsightsResponseInnerTypeEnum =
+  (typeof MockInsightsResponseInnerTypeEnum)[keyof typeof MockInsightsResponseInnerTypeEnum];
 
 /**
  * Check if a given object implements the MockInsightsResponseInner interface.
  */
-export function instanceOfMockInsightsResponseInner(value: object): value is MockInsightsResponseInner {
-    if (!('description' in value) || value['description'] === undefined) return false;
-    if (!('feedback' in value) || value['feedback'] === undefined) return false;
-    if (!('title' in value) || value['title'] === undefined) return false;
-    if (!('type' in value) || value['type'] === undefined) return false;
-    return true;
+export function instanceOfMockInsightsResponseInner(
+  value: object,
+): value is MockInsightsResponseInner {
+  if (!("description" in value) || value["description"] === undefined)
+    return false;
+  if (!("feedback" in value) || value["feedback"] === undefined) return false;
+  if (!("title" in value) || value["title"] === undefined) return false;
+  if (!("type" in value) || value["type"] === undefined) return false;
+  return true;
 }
 
-export function MockInsightsResponseInnerFromJSON(json: any): MockInsightsResponseInner {
-    return MockInsightsResponseInnerFromJSONTyped(json, false);
+export function MockInsightsResponseInnerFromJSON(
+  json: any,
+): MockInsightsResponseInner {
+  return MockInsightsResponseInnerFromJSONTyped(json, false);
 }
 
-export function MockInsightsResponseInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): MockInsightsResponseInner {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'description': json['description'],
-        'feedback': json['feedback'],
-        'title': json['title'],
-        'type': json['type'],
-    };
+export function MockInsightsResponseInnerFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): MockInsightsResponseInner {
+  if (json == null) {
+    return json;
+  }
+  return {
+    description: json["description"],
+    feedback: json["feedback"],
+    title: json["title"],
+    type: json["type"],
+  };
 }
 
-export function MockInsightsResponseInnerToJSON(json: any): MockInsightsResponseInner {
-    return MockInsightsResponseInnerToJSONTyped(json, false);
+export function MockInsightsResponseInnerToJSON(
+  json: any,
+): MockInsightsResponseInner {
+  return MockInsightsResponseInnerToJSONTyped(json, false);
 }
 
-export function MockInsightsResponseInnerToJSONTyped(value?: MockInsightsResponseInner | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function MockInsightsResponseInnerToJSONTyped(
+  value?: MockInsightsResponseInner | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'description': value['description'],
-        'feedback': value['feedback'],
-        'title': value['title'],
-        'type': value['type'],
-    };
+  return {
+    description: value["description"],
+    feedback: value["feedback"],
+    title: value["title"],
+    type: value["type"],
+  };
 }
-

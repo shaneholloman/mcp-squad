@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { FeedbackWithRelationships } from './FeedbackWithRelationships.js';
+import type { FeedbackWithRelationships } from "./FeedbackWithRelationships.js";
 import {
-    FeedbackWithRelationshipsFromJSON,
-    FeedbackWithRelationshipsFromJSONTyped,
-    FeedbackWithRelationshipsToJSON,
-    FeedbackWithRelationshipsToJSONTyped,
-} from './FeedbackWithRelationships.js';
+  FeedbackWithRelationshipsFromJSON,
+  FeedbackWithRelationshipsToJSON,
+} from "./FeedbackWithRelationships.js";
 
 /**
  * Response containing a single feedback item
@@ -27,51 +24,60 @@ import {
  * @interface CreateFeedback200Response
  */
 export interface CreateFeedback200Response {
-    [key: string]: any | any;
-    /**
-     * Feedback data
-     * @type {FeedbackWithRelationships}
-     * @memberof CreateFeedback200Response
-     */
-    data: FeedbackWithRelationships;
+  [key: string]: any | any;
+  /**
+   * Feedback data
+   * @type {FeedbackWithRelationships}
+   * @memberof CreateFeedback200Response
+   */
+  data: FeedbackWithRelationships;
 }
 
 /**
  * Check if a given object implements the CreateFeedback200Response interface.
  */
-export function instanceOfCreateFeedback200Response(value: object): value is CreateFeedback200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfCreateFeedback200Response(
+  value: object,
+): value is CreateFeedback200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function CreateFeedback200ResponseFromJSON(json: any): CreateFeedback200Response {
-    return CreateFeedback200ResponseFromJSONTyped(json, false);
+export function CreateFeedback200ResponseFromJSON(
+  json: any,
+): CreateFeedback200Response {
+  return CreateFeedback200ResponseFromJSONTyped(json, false);
 }
 
-export function CreateFeedback200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateFeedback200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': FeedbackWithRelationshipsFromJSON(json['data']),
-    };
+export function CreateFeedback200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateFeedback200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: FeedbackWithRelationshipsFromJSON(json["data"]),
+  };
 }
 
-export function CreateFeedback200ResponseToJSON(json: any): CreateFeedback200Response {
-    return CreateFeedback200ResponseToJSONTyped(json, false);
+export function CreateFeedback200ResponseToJSON(
+  json: any,
+): CreateFeedback200Response {
+  return CreateFeedback200ResponseToJSONTyped(json, false);
 }
 
-export function CreateFeedback200ResponseToJSONTyped(value?: CreateFeedback200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateFeedback200ResponseToJSONTyped(
+  value?: CreateFeedback200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': FeedbackWithRelationshipsToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: FeedbackWithRelationshipsToJSON(value["data"]),
+  };
 }
-

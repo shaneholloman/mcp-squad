@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { ListOutcomes401ResponseError } from './ListOutcomes401ResponseError.js';
+import type { ListOutcomes401ResponseError } from "./ListOutcomes401ResponseError.js";
 import {
-    ListOutcomes401ResponseErrorFromJSON,
-    ListOutcomes401ResponseErrorFromJSONTyped,
-    ListOutcomes401ResponseErrorToJSON,
-    ListOutcomes401ResponseErrorToJSONTyped,
-} from './ListOutcomes401ResponseError.js';
+  ListOutcomes401ResponseErrorFromJSON,
+  ListOutcomes401ResponseErrorToJSON,
+} from "./ListOutcomes401ResponseError.js";
 
 /**
  * Unauthorized - Missing or invalid authentication token
@@ -27,51 +24,60 @@ import {
  * @interface ListOutcomes401Response
  */
 export interface ListOutcomes401Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {ListOutcomes401ResponseError}
-     * @memberof ListOutcomes401Response
-     */
-    error: ListOutcomes401ResponseError;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {ListOutcomes401ResponseError}
+   * @memberof ListOutcomes401Response
+   */
+  error: ListOutcomes401ResponseError;
 }
 
 /**
  * Check if a given object implements the ListOutcomes401Response interface.
  */
-export function instanceOfListOutcomes401Response(value: object): value is ListOutcomes401Response {
-    if (!('error' in value) || value['error'] === undefined) return false;
-    return true;
+export function instanceOfListOutcomes401Response(
+  value: object,
+): value is ListOutcomes401Response {
+  if (!("error" in value) || value["error"] === undefined) return false;
+  return true;
 }
 
-export function ListOutcomes401ResponseFromJSON(json: any): ListOutcomes401Response {
-    return ListOutcomes401ResponseFromJSONTyped(json, false);
+export function ListOutcomes401ResponseFromJSON(
+  json: any,
+): ListOutcomes401Response {
+  return ListOutcomes401ResponseFromJSONTyped(json, false);
 }
 
-export function ListOutcomes401ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListOutcomes401Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'error': ListOutcomes401ResponseErrorFromJSON(json['error']),
-    };
+export function ListOutcomes401ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ListOutcomes401Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    error: ListOutcomes401ResponseErrorFromJSON(json["error"]),
+  };
 }
 
-export function ListOutcomes401ResponseToJSON(json: any): ListOutcomes401Response {
-    return ListOutcomes401ResponseToJSONTyped(json, false);
+export function ListOutcomes401ResponseToJSON(
+  json: any,
+): ListOutcomes401Response {
+  return ListOutcomes401ResponseToJSONTyped(json, false);
 }
 
-export function ListOutcomes401ResponseToJSONTyped(value?: ListOutcomes401Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ListOutcomes401ResponseToJSONTyped(
+  value?: ListOutcomes401Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'error': ListOutcomes401ResponseErrorToJSON(value['error']),
-    };
+  return {
+    ...value,
+    error: ListOutcomes401ResponseErrorToJSON(value["error"]),
+  };
 }
-

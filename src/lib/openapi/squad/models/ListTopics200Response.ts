@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { TopicWithRelationships } from './TopicWithRelationships.js';
+import type { TopicWithRelationships } from "./TopicWithRelationships.js";
 import {
-    TopicWithRelationshipsFromJSON,
-    TopicWithRelationshipsFromJSONTyped,
-    TopicWithRelationshipsToJSON,
-    TopicWithRelationshipsToJSONTyped,
-} from './TopicWithRelationships.js';
+  TopicWithRelationshipsFromJSON,
+  TopicWithRelationshipsToJSON,
+} from "./TopicWithRelationships.js";
 
 /**
  * Response containing an array of topics
@@ -27,51 +24,58 @@ import {
  * @interface ListTopics200Response
  */
 export interface ListTopics200Response {
-    [key: string]: any | any;
-    /**
-     * Array of topics
-     * @type {Array<TopicWithRelationships>}
-     * @memberof ListTopics200Response
-     */
-    data: Array<TopicWithRelationships>;
+  [key: string]: any | any;
+  /**
+   * Array of topics
+   * @type {Array<TopicWithRelationships>}
+   * @memberof ListTopics200Response
+   */
+  data: Array<TopicWithRelationships>;
 }
 
 /**
  * Check if a given object implements the ListTopics200Response interface.
  */
-export function instanceOfListTopics200Response(value: object): value is ListTopics200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfListTopics200Response(
+  value: object,
+): value is ListTopics200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function ListTopics200ResponseFromJSON(json: any): ListTopics200Response {
-    return ListTopics200ResponseFromJSONTyped(json, false);
+export function ListTopics200ResponseFromJSON(
+  json: any,
+): ListTopics200Response {
+  return ListTopics200ResponseFromJSONTyped(json, false);
 }
 
-export function ListTopics200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListTopics200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': ((json['data'] as Array<any>).map(TopicWithRelationshipsFromJSON)),
-    };
+export function ListTopics200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ListTopics200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: (json["data"] as Array<any>).map(TopicWithRelationshipsFromJSON),
+  };
 }
 
 export function ListTopics200ResponseToJSON(json: any): ListTopics200Response {
-    return ListTopics200ResponseToJSONTyped(json, false);
+  return ListTopics200ResponseToJSONTyped(json, false);
 }
 
-export function ListTopics200ResponseToJSONTyped(value?: ListTopics200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ListTopics200ResponseToJSONTyped(
+  value?: ListTopics200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': ((value['data'] as Array<any>).map(TopicWithRelationshipsToJSON)),
-    };
+  return {
+    ...value,
+    data: (value["data"] as Array<any>).map(TopicWithRelationshipsToJSON),
+  };
 }
-

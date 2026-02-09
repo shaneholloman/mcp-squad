@@ -12,64 +12,72 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
- * 
+ *
  * @export
  * @interface WhoAmIResponseDataOrganisation
  */
 export interface WhoAmIResponseDataOrganisation {
-    /**
-     * Organization ID
-     * @type {string}
-     * @memberof WhoAmIResponseDataOrganisation
-     */
-    id: string;
-    /**
-     * Organization name
-     * @type {string}
-     * @memberof WhoAmIResponseDataOrganisation
-     */
-    name: string;
+  /**
+   * Organization ID
+   * @type {string}
+   * @memberof WhoAmIResponseDataOrganisation
+   */
+  id: string;
+  /**
+   * Organization name
+   * @type {string}
+   * @memberof WhoAmIResponseDataOrganisation
+   */
+  name: string;
 }
 
 /**
  * Check if a given object implements the WhoAmIResponseDataOrganisation interface.
  */
-export function instanceOfWhoAmIResponseDataOrganisation(value: object): value is WhoAmIResponseDataOrganisation {
-    if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('name' in value) || value['name'] === undefined) return false;
-    return true;
+export function instanceOfWhoAmIResponseDataOrganisation(
+  value: object,
+): value is WhoAmIResponseDataOrganisation {
+  if (!("id" in value) || value["id"] === undefined) return false;
+  if (!("name" in value) || value["name"] === undefined) return false;
+  return true;
 }
 
-export function WhoAmIResponseDataOrganisationFromJSON(json: any): WhoAmIResponseDataOrganisation {
-    return WhoAmIResponseDataOrganisationFromJSONTyped(json, false);
+export function WhoAmIResponseDataOrganisationFromJSON(
+  json: any,
+): WhoAmIResponseDataOrganisation {
+  return WhoAmIResponseDataOrganisationFromJSONTyped(json, false);
 }
 
-export function WhoAmIResponseDataOrganisationFromJSONTyped(json: any, ignoreDiscriminator: boolean): WhoAmIResponseDataOrganisation {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'id': json['id'],
-        'name': json['name'],
-    };
+export function WhoAmIResponseDataOrganisationFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): WhoAmIResponseDataOrganisation {
+  if (json == null) {
+    return json;
+  }
+  return {
+    id: json["id"],
+    name: json["name"],
+  };
 }
 
-export function WhoAmIResponseDataOrganisationToJSON(json: any): WhoAmIResponseDataOrganisation {
-    return WhoAmIResponseDataOrganisationToJSONTyped(json, false);
+export function WhoAmIResponseDataOrganisationToJSON(
+  json: any,
+): WhoAmIResponseDataOrganisation {
+  return WhoAmIResponseDataOrganisationToJSONTyped(json, false);
 }
 
-export function WhoAmIResponseDataOrganisationToJSONTyped(value?: WhoAmIResponseDataOrganisation | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function WhoAmIResponseDataOrganisationToJSONTyped(
+  value?: WhoAmIResponseDataOrganisation | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'id': value['id'],
-        'name': value['name'],
-    };
+  return {
+    id: value["id"],
+    name: value["name"],
+  };
 }
-

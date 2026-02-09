@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { GetOutcome404ResponseError } from './GetOutcome404ResponseError.js';
+import type { GetOutcome404ResponseError } from "./GetOutcome404ResponseError.js";
 import {
-    GetOutcome404ResponseErrorFromJSON,
-    GetOutcome404ResponseErrorFromJSONTyped,
-    GetOutcome404ResponseErrorToJSON,
-    GetOutcome404ResponseErrorToJSONTyped,
-} from './GetOutcome404ResponseError.js';
+  GetOutcome404ResponseErrorFromJSON,
+  GetOutcome404ResponseErrorToJSON,
+} from "./GetOutcome404ResponseError.js";
 
 /**
  * Not Found - The requested resource does not exist
@@ -27,51 +24,58 @@ import {
  * @interface GetOutcome404Response
  */
 export interface GetOutcome404Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {GetOutcome404ResponseError}
-     * @memberof GetOutcome404Response
-     */
-    error: GetOutcome404ResponseError;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {GetOutcome404ResponseError}
+   * @memberof GetOutcome404Response
+   */
+  error: GetOutcome404ResponseError;
 }
 
 /**
  * Check if a given object implements the GetOutcome404Response interface.
  */
-export function instanceOfGetOutcome404Response(value: object): value is GetOutcome404Response {
-    if (!('error' in value) || value['error'] === undefined) return false;
-    return true;
+export function instanceOfGetOutcome404Response(
+  value: object,
+): value is GetOutcome404Response {
+  if (!("error" in value) || value["error"] === undefined) return false;
+  return true;
 }
 
-export function GetOutcome404ResponseFromJSON(json: any): GetOutcome404Response {
-    return GetOutcome404ResponseFromJSONTyped(json, false);
+export function GetOutcome404ResponseFromJSON(
+  json: any,
+): GetOutcome404Response {
+  return GetOutcome404ResponseFromJSONTyped(json, false);
 }
 
-export function GetOutcome404ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): GetOutcome404Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'error': GetOutcome404ResponseErrorFromJSON(json['error']),
-    };
+export function GetOutcome404ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): GetOutcome404Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    error: GetOutcome404ResponseErrorFromJSON(json["error"]),
+  };
 }
 
 export function GetOutcome404ResponseToJSON(json: any): GetOutcome404Response {
-    return GetOutcome404ResponseToJSONTyped(json, false);
+  return GetOutcome404ResponseToJSONTyped(json, false);
 }
 
-export function GetOutcome404ResponseToJSONTyped(value?: GetOutcome404Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function GetOutcome404ResponseToJSONTyped(
+  value?: GetOutcome404Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'error': GetOutcome404ResponseErrorToJSON(value['error']),
-    };
+  return {
+    ...value,
+    error: GetOutcome404ResponseErrorToJSON(value["error"]),
+  };
 }
-

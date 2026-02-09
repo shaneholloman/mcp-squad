@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { SolutionWithRelationships } from './SolutionWithRelationships.js';
+import type { SolutionWithRelationships } from "./SolutionWithRelationships.js";
 import {
-    SolutionWithRelationshipsFromJSON,
-    SolutionWithRelationshipsFromJSONTyped,
-    SolutionWithRelationshipsToJSON,
-    SolutionWithRelationshipsToJSONTyped,
-} from './SolutionWithRelationships.js';
+  SolutionWithRelationshipsFromJSON,
+  SolutionWithRelationshipsToJSON,
+} from "./SolutionWithRelationships.js";
 
 /**
  * Response containing a single solution
@@ -27,51 +24,60 @@ import {
  * @interface CreateSolution200Response
  */
 export interface CreateSolution200Response {
-    [key: string]: any | any;
-    /**
-     * Solution data
-     * @type {SolutionWithRelationships}
-     * @memberof CreateSolution200Response
-     */
-    data: SolutionWithRelationships;
+  [key: string]: any | any;
+  /**
+   * Solution data
+   * @type {SolutionWithRelationships}
+   * @memberof CreateSolution200Response
+   */
+  data: SolutionWithRelationships;
 }
 
 /**
  * Check if a given object implements the CreateSolution200Response interface.
  */
-export function instanceOfCreateSolution200Response(value: object): value is CreateSolution200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfCreateSolution200Response(
+  value: object,
+): value is CreateSolution200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function CreateSolution200ResponseFromJSON(json: any): CreateSolution200Response {
-    return CreateSolution200ResponseFromJSONTyped(json, false);
+export function CreateSolution200ResponseFromJSON(
+  json: any,
+): CreateSolution200Response {
+  return CreateSolution200ResponseFromJSONTyped(json, false);
 }
 
-export function CreateSolution200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateSolution200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': SolutionWithRelationshipsFromJSON(json['data']),
-    };
+export function CreateSolution200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateSolution200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: SolutionWithRelationshipsFromJSON(json["data"]),
+  };
 }
 
-export function CreateSolution200ResponseToJSON(json: any): CreateSolution200Response {
-    return CreateSolution200ResponseToJSONTyped(json, false);
+export function CreateSolution200ResponseToJSON(
+  json: any,
+): CreateSolution200Response {
+  return CreateSolution200ResponseToJSONTyped(json, false);
 }
 
-export function CreateSolution200ResponseToJSONTyped(value?: CreateSolution200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateSolution200ResponseToJSONTyped(
+  value?: CreateSolution200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': SolutionWithRelationshipsToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: SolutionWithRelationshipsToJSON(value["data"]),
+  };
 }
-

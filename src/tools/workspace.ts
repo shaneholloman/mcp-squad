@@ -1,14 +1,21 @@
-import { z } from 'zod';
-import { squadClient } from '../lib/clients/squad.js';
-import { logger } from '../lib/logger.js';
+import { z } from "zod";
 import {
   getUserContext,
-  listUserOrganisations,
-  listOrgWorkspaces,
-  setWorkspaceSelection,
   getWorkspaceSelection,
-} from '../helpers/getUser.js';
-import { type OAuthServer, getUserId, toolError, toolSuccess, WorkspaceSelectionRequired, formatWorkspaceSelectionError } from './helpers.js';
+  listOrgWorkspaces,
+  listUserOrganisations,
+  setWorkspaceSelection,
+} from "../helpers/getUser.js";
+import { squadClient } from "../lib/clients/squad.js";
+import { logger } from "../lib/logger.js";
+import {
+  type OAuthServer,
+  WorkspaceSelectionRequired,
+  formatWorkspaceSelectionError,
+  getUserId,
+  toolError,
+  toolSuccess,
+} from "./helpers.js";
 
 /**
  * Register workspace tools with the MCP server
@@ -17,8 +24,9 @@ export function registerWorkspaceTools(server: OAuthServer) {
   // List available workspaces
   server.tool(
     {
-      name: 'list_workspaces',
-      description: 'List all organisations and workspaces available to the current user. Use this to see what workspaces you can switch to.',
+      name: "list_workspaces",
+      description:
+        "List all organisations and workspaces available to the current user. Use this to see what workspaces you can switch to.",
       schema: z.object({}),
       annotations: {
         readOnlyHint: true,
@@ -47,21 +55,23 @@ export function registerWorkspaceTools(server: OAuthServer) {
           available: result,
         });
       } catch (error) {
-        logger.debug({ err: error, tool: 'list_workspaces' }, 'Tool error');
-        const message = error instanceof Error ? error.message : 'Unknown error';
+        logger.debug({ err: error, tool: "list_workspaces" }, "Tool error");
+        const message =
+          error instanceof Error ? error.message : "Unknown error";
         return toolError(`Unable to list workspaces: ${message}`);
       }
-    }
+    },
   );
 
   // Select workspace
   server.tool(
     {
-      name: 'select_workspace',
-      description: 'Select which organisation and workspace to use for subsequent operations. Required when user has access to multiple orgs/workspaces.',
+      name: "select_workspace",
+      description:
+        "Select which organisation and workspace to use for subsequent operations. Required when user has access to multiple orgs/workspaces.",
       schema: z.object({
-        orgId: z.string().describe('The ID of the organisation to select'),
-        workspaceId: z.string().describe('The ID of the workspace to select'),
+        orgId: z.string().describe("The ID of the organisation to select"),
+        workspaceId: z.string().describe("The ID of the workspace to select"),
       }),
     },
     async (params, ctx) => {
@@ -74,13 +84,17 @@ export function registerWorkspaceTools(server: OAuthServer) {
         const orgs = await listUserOrganisations(token);
         const org = orgs.find(o => o.id === orgId);
         if (!org) {
-          return toolError(`Organisation ${orgId} not found or you don't have access to it.`);
+          return toolError(
+            `Organisation ${orgId} not found or you don't have access to it.`,
+          );
         }
 
         const workspaces = await listOrgWorkspaces(token, orgId);
         const workspace = workspaces.find(w => w.id === workspaceId);
         if (!workspace) {
-          return toolError(`Workspace ${workspaceId} not found in organisation ${org.name}.`);
+          return toolError(
+            `Workspace ${workspaceId} not found in organisation ${org.name}.`,
+          );
         }
 
         // Store the selection
@@ -92,18 +106,20 @@ export function registerWorkspaceTools(server: OAuthServer) {
           workspace: { id: workspaceId, name: workspace.name },
         });
       } catch (error) {
-        logger.debug({ err: error, tool: 'select_workspace' }, 'Tool error');
-        const message = error instanceof Error ? error.message : 'Unknown error';
+        logger.debug({ err: error, tool: "select_workspace" }, "Tool error");
+        const message =
+          error instanceof Error ? error.message : "Unknown error";
         return toolError(`Unable to select workspace: ${message}`);
       }
-    }
+    },
   );
 
   // Get Workspace
   server.tool(
     {
-      name: 'get_workspace',
-      description: 'Get details of the current workspace. Workspaces contain the project name, detailed description, and mission statement.',
+      name: "get_workspace",
+      description:
+        "Get details of the current workspace. Workspaces contain the project name, detailed description, and mission statement.",
       schema: z.object({}),
       annotations: {
         readOnlyHint: true,
@@ -125,24 +141,38 @@ export function registerWorkspaceTools(server: OAuthServer) {
         if (error instanceof WorkspaceSelectionRequired) {
           return toolError(formatWorkspaceSelectionError(error));
         }
-        logger.debug({ err: error, tool: 'get_workspace' }, 'Tool error');
-        const message = error instanceof Error ? error.message : 'Unknown error';
+        logger.debug({ err: error, tool: "get_workspace" }, "Tool error");
+        const message =
+          error instanceof Error ? error.message : "Unknown error";
         return toolError(`Unable to retrieve workspace: ${message}`);
       }
-    }
+    },
   );
 
   // Update Workspace
   server.tool(
     {
-      name: 'update_workspace',
-      description: 'Update the current workspace\'s details such as name, description, mission statement.',
+      name: "update_workspace",
+      description:
+        "Update the current workspace's details such as name, description, mission statement.",
       schema: z.object({
-        name: z.string().optional().describe('Updated name for the workspace'),
-        homepageUrl: z.string().optional().describe('Updated URL to the workspace\'s homepage'),
-        logoUrl: z.string().optional().describe('Updated URL to the workspace\'s logo'),
-        missionStatement: z.string().optional().describe('Updated mission statement for the workspace'),
-        description: z.string().optional().describe('Updated detailed description of the workspace'),
+        name: z.string().optional().describe("Updated name for the workspace"),
+        homepageUrl: z
+          .string()
+          .optional()
+          .describe("Updated URL to the workspace's homepage"),
+        logoUrl: z
+          .string()
+          .optional()
+          .describe("Updated URL to the workspace's logo"),
+        missionStatement: z
+          .string()
+          .optional()
+          .describe("Updated mission statement for the workspace"),
+        description: z
+          .string()
+          .optional()
+          .describe("Updated detailed description of the workspace"),
       }),
       annotations: {
         destructiveHint: true,
@@ -165,10 +195,11 @@ export function registerWorkspaceTools(server: OAuthServer) {
         if (error instanceof WorkspaceSelectionRequired) {
           return toolError(formatWorkspaceSelectionError(error));
         }
-        logger.debug({ err: error, tool: 'update_workspace' }, 'Tool error');
-        const message = error instanceof Error ? error.message : 'Unknown error';
+        logger.debug({ err: error, tool: "update_workspace" }, "Tool error");
+        const message =
+          error instanceof Error ? error.message : "Unknown error";
         return toolError(`Unable to update workspace: ${message}`);
       }
-    }
+    },
   );
 }

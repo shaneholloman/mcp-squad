@@ -12,64 +12,73 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
  * Request schema for creating an integration
  * @export
  * @interface CreateIntegrationPayload
  */
 export interface CreateIntegrationPayload {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateIntegrationPayload
-     */
-    integrationId: string;
-    /**
-     * 
-     * @type {object}
-     * @memberof CreateIntegrationPayload
-     */
-    config: object;
+  /**
+   *
+   * @type {string}
+   * @memberof CreateIntegrationPayload
+   */
+  integrationId: string;
+  /**
+   *
+   * @type {object}
+   * @memberof CreateIntegrationPayload
+   */
+  config: object;
 }
 
 /**
  * Check if a given object implements the CreateIntegrationPayload interface.
  */
-export function instanceOfCreateIntegrationPayload(value: object): value is CreateIntegrationPayload {
-    if (!('integrationId' in value) || value['integrationId'] === undefined) return false;
-    if (!('config' in value) || value['config'] === undefined) return false;
-    return true;
+export function instanceOfCreateIntegrationPayload(
+  value: object,
+): value is CreateIntegrationPayload {
+  if (!("integrationId" in value) || value["integrationId"] === undefined)
+    return false;
+  if (!("config" in value) || value["config"] === undefined) return false;
+  return true;
 }
 
-export function CreateIntegrationPayloadFromJSON(json: any): CreateIntegrationPayload {
-    return CreateIntegrationPayloadFromJSONTyped(json, false);
+export function CreateIntegrationPayloadFromJSON(
+  json: any,
+): CreateIntegrationPayload {
+  return CreateIntegrationPayloadFromJSONTyped(json, false);
 }
 
-export function CreateIntegrationPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateIntegrationPayload {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'integrationId': json['integrationId'],
-        'config': json['config'],
-    };
+export function CreateIntegrationPayloadFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateIntegrationPayload {
+  if (json == null) {
+    return json;
+  }
+  return {
+    integrationId: json["integrationId"],
+    config: json["config"],
+  };
 }
 
-export function CreateIntegrationPayloadToJSON(json: any): CreateIntegrationPayload {
-    return CreateIntegrationPayloadToJSONTyped(json, false);
+export function CreateIntegrationPayloadToJSON(
+  json: any,
+): CreateIntegrationPayload {
+  return CreateIntegrationPayloadToJSONTyped(json, false);
 }
 
-export function CreateIntegrationPayloadToJSONTyped(value?: CreateIntegrationPayload | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateIntegrationPayloadToJSONTyped(
+  value?: CreateIntegrationPayload | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'integrationId': value['integrationId'],
-        'config': value['config'],
-    };
+  return {
+    integrationId: value["integrationId"],
+    config: value["config"],
+  };
 }
-

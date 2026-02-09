@@ -12,35 +12,44 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
  * URL to the organisation's logo
  * @export
  * @interface CreateOrganisation200ResponseDataLogoUrl
  */
-export interface CreateOrganisation200ResponseDataLogoUrl {
-}
+export interface CreateOrganisation200ResponseDataLogoUrl {}
 
 /**
  * Check if a given object implements the CreateOrganisation200ResponseDataLogoUrl interface.
  */
-export function instanceOfCreateOrganisation200ResponseDataLogoUrl(value: object): value is CreateOrganisation200ResponseDataLogoUrl {
-    return true;
+export function instanceOfCreateOrganisation200ResponseDataLogoUrl(
+  value: object,
+): value is CreateOrganisation200ResponseDataLogoUrl {
+  return true;
 }
 
-export function CreateOrganisation200ResponseDataLogoUrlFromJSON(json: any): CreateOrganisation200ResponseDataLogoUrl {
-    return CreateOrganisation200ResponseDataLogoUrlFromJSONTyped(json, false);
+export function CreateOrganisation200ResponseDataLogoUrlFromJSON(
+  json: any,
+): CreateOrganisation200ResponseDataLogoUrl {
+  return CreateOrganisation200ResponseDataLogoUrlFromJSONTyped(json, false);
 }
 
-export function CreateOrganisation200ResponseDataLogoUrlFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateOrganisation200ResponseDataLogoUrl {
-    return json;
+export function CreateOrganisation200ResponseDataLogoUrlFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateOrganisation200ResponseDataLogoUrl {
+  return json;
 }
 
-export function CreateOrganisation200ResponseDataLogoUrlToJSON(json: any): CreateOrganisation200ResponseDataLogoUrl {
-    return CreateOrganisation200ResponseDataLogoUrlToJSONTyped(json, false);
+export function CreateOrganisation200ResponseDataLogoUrlToJSON(
+  json: any,
+): CreateOrganisation200ResponseDataLogoUrl {
+  return CreateOrganisation200ResponseDataLogoUrlToJSONTyped(json, false);
 }
 
-export function CreateOrganisation200ResponseDataLogoUrlToJSONTyped(value?: CreateOrganisation200ResponseDataLogoUrl | null, ignoreDiscriminator: boolean = false): any {
-    return value;
+export function CreateOrganisation200ResponseDataLogoUrlToJSONTyped(
+  value?: CreateOrganisation200ResponseDataLogoUrl | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  return value;
 }
-

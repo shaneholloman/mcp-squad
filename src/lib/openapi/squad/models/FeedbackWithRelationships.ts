@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { Insight } from './Insight.js';
-import {
-    InsightFromJSON,
-    InsightFromJSONTyped,
-    InsightToJSON,
-    InsightToJSONTyped,
-} from './Insight.js';
+import type { Insight } from "./Insight.js";
+import { InsightFromJSON, InsightToJSON } from "./Insight.js";
 
 /**
  * Raw feedback with generated insights
@@ -27,154 +21,168 @@ import {
  * @interface FeedbackWithRelationships
  */
 export interface FeedbackWithRelationships {
-    /**
-     * Unique identifier for the feedback
-     * @type {string}
-     * @memberof FeedbackWithRelationships
-     */
-    id: string;
-    /**
-     * Original raw feedback content
-     * @type {string}
-     * @memberof FeedbackWithRelationships
-     */
-    content: string;
-    /**
-     * Source of the feedback
-     * @type {string}
-     * @memberof FeedbackWithRelationships
-     */
-    source: string;
-    /**
-     * ID of the user who submitted this feedback
-     * @type {string}
-     * @memberof FeedbackWithRelationships
-     */
-    submittedBy?: string;
-    /**
-     * Whether this feedback has been processed into insights
-     * @type {boolean}
-     * @memberof FeedbackWithRelationships
-     */
-    processed: boolean;
-    /**
-     * Sentiment score from -1 (negative) to 1 (positive)
-     * @type {number}
-     * @memberof FeedbackWithRelationships
-     */
-    sentimentScore?: number;
-    /**
-     * Sentiment classification category
-     * @type {string}
-     * @memberof FeedbackWithRelationships
-     */
-    sentimentCategory?: FeedbackWithRelationshipsSentimentCategoryEnum;
-    /**
-     * Confidence in sentiment analysis (0-1)
-     * @type {number}
-     * @memberof FeedbackWithRelationships
-     */
-    sentimentConfidence?: number;
-    /**
-     * Creation timestamp
-     * @type {string}
-     * @memberof FeedbackWithRelationships
-     */
-    createdAt: string;
-    /**
-     * Unix epoch timestamp for efficient Neo4j queries
-     * @type {number}
-     * @memberof FeedbackWithRelationships
-     */
-    createdAtEpoch?: number;
-    /**
-     * Last update timestamp
-     * @type {string}
-     * @memberof FeedbackWithRelationships
-     */
-    updatedAt: string;
-    /**
-     * 
-     * @type {Array<Insight>}
-     * @memberof FeedbackWithRelationships
-     */
-    insights: Array<Insight>;
+  /**
+   * Unique identifier for the feedback
+   * @type {string}
+   * @memberof FeedbackWithRelationships
+   */
+  id: string;
+  /**
+   * Original raw feedback content
+   * @type {string}
+   * @memberof FeedbackWithRelationships
+   */
+  content: string;
+  /**
+   * Source of the feedback
+   * @type {string}
+   * @memberof FeedbackWithRelationships
+   */
+  source: string;
+  /**
+   * ID of the user who submitted this feedback
+   * @type {string}
+   * @memberof FeedbackWithRelationships
+   */
+  submittedBy?: string;
+  /**
+   * Whether this feedback has been processed into insights
+   * @type {boolean}
+   * @memberof FeedbackWithRelationships
+   */
+  processed: boolean;
+  /**
+   * Sentiment score from -1 (negative) to 1 (positive)
+   * @type {number}
+   * @memberof FeedbackWithRelationships
+   */
+  sentimentScore?: number;
+  /**
+   * Sentiment classification category
+   * @type {string}
+   * @memberof FeedbackWithRelationships
+   */
+  sentimentCategory?: FeedbackWithRelationshipsSentimentCategoryEnum;
+  /**
+   * Confidence in sentiment analysis (0-1)
+   * @type {number}
+   * @memberof FeedbackWithRelationships
+   */
+  sentimentConfidence?: number;
+  /**
+   * Creation timestamp
+   * @type {string}
+   * @memberof FeedbackWithRelationships
+   */
+  createdAt: string;
+  /**
+   * Unix epoch timestamp for efficient Neo4j queries
+   * @type {number}
+   * @memberof FeedbackWithRelationships
+   */
+  createdAtEpoch?: number;
+  /**
+   * Last update timestamp
+   * @type {string}
+   * @memberof FeedbackWithRelationships
+   */
+  updatedAt: string;
+  /**
+   *
+   * @type {Array<Insight>}
+   * @memberof FeedbackWithRelationships
+   */
+  insights: Array<Insight>;
 }
-
 
 /**
  * @export
  */
 export const FeedbackWithRelationshipsSentimentCategoryEnum = {
-    Positive: 'Positive',
-    Neutral: 'Neutral',
-    Negative: 'Negative'
+  Positive: "Positive",
+  Neutral: "Neutral",
+  Negative: "Negative",
 } as const;
-export type FeedbackWithRelationshipsSentimentCategoryEnum = typeof FeedbackWithRelationshipsSentimentCategoryEnum[keyof typeof FeedbackWithRelationshipsSentimentCategoryEnum];
-
+export type FeedbackWithRelationshipsSentimentCategoryEnum =
+  (typeof FeedbackWithRelationshipsSentimentCategoryEnum)[keyof typeof FeedbackWithRelationshipsSentimentCategoryEnum];
 
 /**
  * Check if a given object implements the FeedbackWithRelationships interface.
  */
-export function instanceOfFeedbackWithRelationships(value: object): value is FeedbackWithRelationships {
-    if (!('id' in value) || value['id'] === undefined) return false;
-    if (!('content' in value) || value['content'] === undefined) return false;
-    if (!('source' in value) || value['source'] === undefined) return false;
-    if (!('processed' in value) || value['processed'] === undefined) return false;
-    if (!('createdAt' in value) || value['createdAt'] === undefined) return false;
-    if (!('updatedAt' in value) || value['updatedAt'] === undefined) return false;
-    if (!('insights' in value) || value['insights'] === undefined) return false;
-    return true;
+export function instanceOfFeedbackWithRelationships(
+  value: object,
+): value is FeedbackWithRelationships {
+  if (!("id" in value) || value["id"] === undefined) return false;
+  if (!("content" in value) || value["content"] === undefined) return false;
+  if (!("source" in value) || value["source"] === undefined) return false;
+  if (!("processed" in value) || value["processed"] === undefined) return false;
+  if (!("createdAt" in value) || value["createdAt"] === undefined) return false;
+  if (!("updatedAt" in value) || value["updatedAt"] === undefined) return false;
+  if (!("insights" in value) || value["insights"] === undefined) return false;
+  return true;
 }
 
-export function FeedbackWithRelationshipsFromJSON(json: any): FeedbackWithRelationships {
-    return FeedbackWithRelationshipsFromJSONTyped(json, false);
+export function FeedbackWithRelationshipsFromJSON(
+  json: any,
+): FeedbackWithRelationships {
+  return FeedbackWithRelationshipsFromJSONTyped(json, false);
 }
 
-export function FeedbackWithRelationshipsFromJSONTyped(json: any, ignoreDiscriminator: boolean): FeedbackWithRelationships {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'id': json['id'],
-        'content': json['content'],
-        'source': json['source'],
-        'submittedBy': json['submittedBy'] == null ? undefined : json['submittedBy'],
-        'processed': json['processed'],
-        'sentimentScore': json['sentimentScore'] == null ? undefined : json['sentimentScore'],
-        'sentimentCategory': json['sentimentCategory'] == null ? undefined : json['sentimentCategory'],
-        'sentimentConfidence': json['sentimentConfidence'] == null ? undefined : json['sentimentConfidence'],
-        'createdAt': json['createdAt'],
-        'createdAtEpoch': json['createdAtEpoch'] == null ? undefined : json['createdAtEpoch'],
-        'updatedAt': json['updatedAt'],
-        'insights': ((json['insights'] as Array<any>).map(InsightFromJSON)),
-    };
+export function FeedbackWithRelationshipsFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): FeedbackWithRelationships {
+  if (json == null) {
+    return json;
+  }
+  return {
+    id: json["id"],
+    content: json["content"],
+    source: json["source"],
+    submittedBy: json["submittedBy"] == null ? undefined : json["submittedBy"],
+    processed: json["processed"],
+    sentimentScore:
+      json["sentimentScore"] == null ? undefined : json["sentimentScore"],
+    sentimentCategory:
+      json["sentimentCategory"] == null ? undefined : json["sentimentCategory"],
+    sentimentConfidence:
+      json["sentimentConfidence"] == null
+        ? undefined
+        : json["sentimentConfidence"],
+    createdAt: json["createdAt"],
+    createdAtEpoch:
+      json["createdAtEpoch"] == null ? undefined : json["createdAtEpoch"],
+    updatedAt: json["updatedAt"],
+    insights: (json["insights"] as Array<any>).map(InsightFromJSON),
+  };
 }
 
-export function FeedbackWithRelationshipsToJSON(json: any): FeedbackWithRelationships {
-    return FeedbackWithRelationshipsToJSONTyped(json, false);
+export function FeedbackWithRelationshipsToJSON(
+  json: any,
+): FeedbackWithRelationships {
+  return FeedbackWithRelationshipsToJSONTyped(json, false);
 }
 
-export function FeedbackWithRelationshipsToJSONTyped(value?: FeedbackWithRelationships | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function FeedbackWithRelationshipsToJSONTyped(
+  value?: FeedbackWithRelationships | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'id': value['id'],
-        'content': value['content'],
-        'source': value['source'],
-        'submittedBy': value['submittedBy'],
-        'processed': value['processed'],
-        'sentimentScore': value['sentimentScore'],
-        'sentimentCategory': value['sentimentCategory'],
-        'sentimentConfidence': value['sentimentConfidence'],
-        'createdAt': value['createdAt'],
-        'createdAtEpoch': value['createdAtEpoch'],
-        'updatedAt': value['updatedAt'],
-        'insights': ((value['insights'] as Array<any>).map(InsightToJSON)),
-    };
+  return {
+    id: value["id"],
+    content: value["content"],
+    source: value["source"],
+    submittedBy: value["submittedBy"],
+    processed: value["processed"],
+    sentimentScore: value["sentimentScore"],
+    sentimentCategory: value["sentimentCategory"],
+    sentimentConfidence: value["sentimentConfidence"],
+    createdAt: value["createdAt"],
+    createdAtEpoch: value["createdAtEpoch"],
+    updatedAt: value["updatedAt"],
+    insights: (value["insights"] as Array<any>).map(InsightToJSON),
+  };
 }
-

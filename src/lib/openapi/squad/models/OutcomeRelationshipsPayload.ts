@@ -12,62 +12,71 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
  * Request body for managing outcome relationships
  * @export
  * @interface OutcomeRelationshipsPayload
  */
 export interface OutcomeRelationshipsPayload {
-    /**
-     * Array of opportunity IDs to associate with the outcome
-     * @type {Array<string>}
-     * @memberof OutcomeRelationshipsPayload
-     */
-    opportunityIds?: Array<string>;
-    /**
-     * Array of metric IDs to associate with the outcome
-     * @type {Array<string>}
-     * @memberof OutcomeRelationshipsPayload
-     */
-    metricIds?: Array<string>;
+  /**
+   * Array of opportunity IDs to associate with the outcome
+   * @type {Array<string>}
+   * @memberof OutcomeRelationshipsPayload
+   */
+  opportunityIds?: Array<string>;
+  /**
+   * Array of metric IDs to associate with the outcome
+   * @type {Array<string>}
+   * @memberof OutcomeRelationshipsPayload
+   */
+  metricIds?: Array<string>;
 }
 
 /**
  * Check if a given object implements the OutcomeRelationshipsPayload interface.
  */
-export function instanceOfOutcomeRelationshipsPayload(value: object): value is OutcomeRelationshipsPayload {
-    return true;
+export function instanceOfOutcomeRelationshipsPayload(
+  value: object,
+): value is OutcomeRelationshipsPayload {
+  return true;
 }
 
-export function OutcomeRelationshipsPayloadFromJSON(json: any): OutcomeRelationshipsPayload {
-    return OutcomeRelationshipsPayloadFromJSONTyped(json, false);
+export function OutcomeRelationshipsPayloadFromJSON(
+  json: any,
+): OutcomeRelationshipsPayload {
+  return OutcomeRelationshipsPayloadFromJSONTyped(json, false);
 }
 
-export function OutcomeRelationshipsPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): OutcomeRelationshipsPayload {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'opportunityIds': json['opportunityIds'] == null ? undefined : json['opportunityIds'],
-        'metricIds': json['metricIds'] == null ? undefined : json['metricIds'],
-    };
+export function OutcomeRelationshipsPayloadFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): OutcomeRelationshipsPayload {
+  if (json == null) {
+    return json;
+  }
+  return {
+    opportunityIds:
+      json["opportunityIds"] == null ? undefined : json["opportunityIds"],
+    metricIds: json["metricIds"] == null ? undefined : json["metricIds"],
+  };
 }
 
-export function OutcomeRelationshipsPayloadToJSON(json: any): OutcomeRelationshipsPayload {
-    return OutcomeRelationshipsPayloadToJSONTyped(json, false);
+export function OutcomeRelationshipsPayloadToJSON(
+  json: any,
+): OutcomeRelationshipsPayload {
+  return OutcomeRelationshipsPayloadToJSONTyped(json, false);
 }
 
-export function OutcomeRelationshipsPayloadToJSONTyped(value?: OutcomeRelationshipsPayload | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function OutcomeRelationshipsPayloadToJSONTyped(
+  value?: OutcomeRelationshipsPayload | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'opportunityIds': value['opportunityIds'],
-        'metricIds': value['metricIds'],
-    };
+  return {
+    opportunityIds: value["opportunityIds"],
+    metricIds: value["metricIds"],
+  };
 }
-

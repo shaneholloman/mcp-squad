@@ -54,7 +54,10 @@ function evictOldestEntries(): void {
     workspaceSelections.delete(entries[i][0]);
   }
 
-  logger.debug({ evicted: evictCount }, 'Evicted oldest workspace selections from cache');
+  logger.debug(
+    { evicted: evictCount },
+    "Evicted oldest workspace selections from cache",
+  );
 }
 
 /**
@@ -77,7 +80,10 @@ function removeExpiredEntries(): void {
   }
 
   if (expiredKeys.length > 0) {
-    logger.debug({ expired: expiredKeys.length }, 'Removed expired workspace selections from cache');
+    logger.debug(
+      { expired: expiredKeys.length },
+      "Removed expired workspace selections from cache",
+    );
   }
 }
 
@@ -87,7 +93,11 @@ setInterval(removeExpiredEntries, 60 * 60 * 1000);
 /**
  * Store workspace selection for a user
  */
-export function setWorkspaceSelection(userId: string, orgId: string, workspaceId: string): void {
+export function setWorkspaceSelection(
+  userId: string,
+  orgId: string,
+  workspaceId: string,
+): void {
   evictOldestEntries();
   workspaceSelections.set(userId, {
     orgId,
@@ -99,7 +109,9 @@ export function setWorkspaceSelection(userId: string, orgId: string, workspaceId
 /**
  * Get stored workspace selection for a user
  */
-export function getWorkspaceSelection(userId: string): { orgId: string; workspaceId: string } | undefined {
+export function getWorkspaceSelection(
+  userId: string,
+): { orgId: string; workspaceId: string } | undefined {
   const entry = workspaceSelections.get(userId);
   if (!entry) {
     return undefined;
@@ -126,7 +138,9 @@ export function clearWorkspaceSelection(userId: string): void {
 /**
  * List all organisations accessible to the user
  */
-export async function listUserOrganisations(accessToken: string): Promise<OrgInfo[]> {
+export async function listUserOrganisations(
+  accessToken: string,
+): Promise<OrgInfo[]> {
   try {
     const client = squadClient({ token: accessToken });
     const response = await client.listOrganisations();
@@ -135,7 +149,7 @@ export async function listUserOrganisations(accessToken: string): Promise<OrgInf
       name: org.name,
     }));
   } catch (error) {
-    logger.error({ err: error }, 'Failed to list organisations');
+    logger.error({ err: error }, "Failed to list organisations");
     throw error;
   }
 }
@@ -143,7 +157,10 @@ export async function listUserOrganisations(accessToken: string): Promise<OrgInf
 /**
  * List all workspaces in an organisation
  */
-export async function listOrgWorkspaces(accessToken: string, orgId: string): Promise<WorkspaceInfo[]> {
+export async function listOrgWorkspaces(
+  accessToken: string,
+  orgId: string,
+): Promise<WorkspaceInfo[]> {
   try {
     const client = squadClient({ token: accessToken });
     const response = await client.listWorkspaces({ orgId });
@@ -152,7 +169,7 @@ export async function listOrgWorkspaces(accessToken: string, orgId: string): Pro
       name: ws.name,
     }));
   } catch (error) {
-    logger.error({ err: error, orgId }, 'Failed to list workspaces');
+    logger.error({ err: error, orgId }, "Failed to list workspaces");
     throw error;
   }
 }
@@ -167,7 +184,7 @@ export async function listOrgWorkspaces(accessToken: string, orgId: string): Pro
  */
 export const getUserContext = async (
   accessToken: string,
-  userId: string
+  userId: string,
 ): Promise<UserContext> => {
   // Check if user has a stored workspace selection
   const storedSelection = getWorkspaceSelection(userId);
@@ -183,13 +200,15 @@ export const getUserContext = async (
   const orgs = await listUserOrganisations(accessToken);
 
   if (orgs.length === 0) {
-    throw new Error('No organisations found for this user. Please create an organisation first.');
+    throw new Error(
+      "No organisations found for this user. Please create an organisation first.",
+    );
   }
 
   if (orgs.length > 1) {
     throw new WorkspaceSelectionRequired(
-      'Multiple organisations found. Please use the select_workspace tool to choose one.',
-      orgs
+      "Multiple organisations found. Please use the select_workspace tool to choose one.",
+      orgs,
     );
   }
 
@@ -198,14 +217,16 @@ export const getUserContext = async (
   const workspaces = await listOrgWorkspaces(accessToken, orgId);
 
   if (workspaces.length === 0) {
-    throw new Error(`No workspaces found in organisation "${orgs[0].name}". Please create a workspace first.`);
+    throw new Error(
+      `No workspaces found in organisation "${orgs[0].name}". Please create a workspace first.`,
+    );
   }
 
   if (workspaces.length > 1) {
     throw new WorkspaceSelectionRequired(
-      'Multiple workspaces found. Please use the select_workspace tool to choose one.',
+      "Multiple workspaces found. Please use the select_workspace tool to choose one.",
       orgs,
-      workspaces
+      workspaces,
     );
   }
 
@@ -225,7 +246,7 @@ export class WorkspaceSelectionRequired extends Error {
 
   constructor(message: string, orgs: OrgInfo[], workspaces?: WorkspaceInfo[]) {
     super(message);
-    this.name = 'WorkspaceSelectionRequired';
+    this.name = "WorkspaceSelectionRequired";
     this.orgs = orgs;
     this.workspaces = workspaces;
   }

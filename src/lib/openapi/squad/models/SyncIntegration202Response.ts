@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { SyncIntegration202ResponseData } from './SyncIntegration202ResponseData.js';
+import type { SyncIntegration202ResponseData } from "./SyncIntegration202ResponseData.js";
 import {
-    SyncIntegration202ResponseDataFromJSON,
-    SyncIntegration202ResponseDataFromJSONTyped,
-    SyncIntegration202ResponseDataToJSON,
-    SyncIntegration202ResponseDataToJSONTyped,
-} from './SyncIntegration202ResponseData.js';
+  SyncIntegration202ResponseDataFromJSON,
+  SyncIntegration202ResponseDataToJSON,
+} from "./SyncIntegration202ResponseData.js";
 
 /**
  * Response from sync initiation
@@ -27,51 +24,60 @@ import {
  * @interface SyncIntegration202Response
  */
 export interface SyncIntegration202Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {SyncIntegration202ResponseData}
-     * @memberof SyncIntegration202Response
-     */
-    data: SyncIntegration202ResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {SyncIntegration202ResponseData}
+   * @memberof SyncIntegration202Response
+   */
+  data: SyncIntegration202ResponseData;
 }
 
 /**
  * Check if a given object implements the SyncIntegration202Response interface.
  */
-export function instanceOfSyncIntegration202Response(value: object): value is SyncIntegration202Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfSyncIntegration202Response(
+  value: object,
+): value is SyncIntegration202Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function SyncIntegration202ResponseFromJSON(json: any): SyncIntegration202Response {
-    return SyncIntegration202ResponseFromJSONTyped(json, false);
+export function SyncIntegration202ResponseFromJSON(
+  json: any,
+): SyncIntegration202Response {
+  return SyncIntegration202ResponseFromJSONTyped(json, false);
 }
 
-export function SyncIntegration202ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): SyncIntegration202Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': SyncIntegration202ResponseDataFromJSON(json['data']),
-    };
+export function SyncIntegration202ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): SyncIntegration202Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: SyncIntegration202ResponseDataFromJSON(json["data"]),
+  };
 }
 
-export function SyncIntegration202ResponseToJSON(json: any): SyncIntegration202Response {
-    return SyncIntegration202ResponseToJSONTyped(json, false);
+export function SyncIntegration202ResponseToJSON(
+  json: any,
+): SyncIntegration202Response {
+  return SyncIntegration202ResponseToJSONTyped(json, false);
 }
 
-export function SyncIntegration202ResponseToJSONTyped(value?: SyncIntegration202Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function SyncIntegration202ResponseToJSONTyped(
+  value?: SyncIntegration202Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': SyncIntegration202ResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: SyncIntegration202ResponseDataToJSON(value["data"]),
+  };
 }
-

@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { InsightSourceEnum } from './InsightSourceEnum.js';
+import type { InsightSourceEnum } from "./InsightSourceEnum.js";
 import {
-    InsightSourceEnumFromJSON,
-    InsightSourceEnumFromJSONTyped,
-    InsightSourceEnumToJSON,
-    InsightSourceEnumToJSONTyped,
-} from './InsightSourceEnum.js';
+  InsightSourceEnumFromJSON,
+  InsightSourceEnumToJSON,
+} from "./InsightSourceEnum.js";
 
 /**
  * Response data for processed insight
@@ -27,77 +24,82 @@ import {
  * @interface InsightResponse
  */
 export interface InsightResponse {
-    /**
-     * The insight content
-     * @type {string}
-     * @memberof InsightResponse
-     */
-    insight: string;
-    /**
-     * The source of the insight
-     * @type {InsightSourceEnum}
-     * @memberof InsightResponse
-     */
-    source: InsightSourceEnum;
-    /**
-     * ID of the workspace
-     * @type {string}
-     * @memberof InsightResponse
-     */
-    workspaceId: string;
-    /**
-     * ID of the organization
-     * @type {string}
-     * @memberof InsightResponse
-     */
-    organisationId: string;
+  /**
+   * The insight content
+   * @type {string}
+   * @memberof InsightResponse
+   */
+  insight: string;
+  /**
+   * The source of the insight
+   * @type {InsightSourceEnum}
+   * @memberof InsightResponse
+   */
+  source: InsightSourceEnum;
+  /**
+   * ID of the workspace
+   * @type {string}
+   * @memberof InsightResponse
+   */
+  workspaceId: string;
+  /**
+   * ID of the organization
+   * @type {string}
+   * @memberof InsightResponse
+   */
+  organisationId: string;
 }
-
-
 
 /**
  * Check if a given object implements the InsightResponse interface.
  */
-export function instanceOfInsightResponse(value: object): value is InsightResponse {
-    if (!('insight' in value) || value['insight'] === undefined) return false;
-    if (!('source' in value) || value['source'] === undefined) return false;
-    if (!('workspaceId' in value) || value['workspaceId'] === undefined) return false;
-    if (!('organisationId' in value) || value['organisationId'] === undefined) return false;
-    return true;
+export function instanceOfInsightResponse(
+  value: object,
+): value is InsightResponse {
+  if (!("insight" in value) || value["insight"] === undefined) return false;
+  if (!("source" in value) || value["source"] === undefined) return false;
+  if (!("workspaceId" in value) || value["workspaceId"] === undefined)
+    return false;
+  if (!("organisationId" in value) || value["organisationId"] === undefined)
+    return false;
+  return true;
 }
 
 export function InsightResponseFromJSON(json: any): InsightResponse {
-    return InsightResponseFromJSONTyped(json, false);
+  return InsightResponseFromJSONTyped(json, false);
 }
 
-export function InsightResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): InsightResponse {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'insight': json['insight'],
-        'source': InsightSourceEnumFromJSON(json['source']),
-        'workspaceId': json['workspaceId'],
-        'organisationId': json['organisationId'],
-    };
+export function InsightResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): InsightResponse {
+  if (json == null) {
+    return json;
+  }
+  return {
+    insight: json["insight"],
+    source: InsightSourceEnumFromJSON(json["source"]),
+    workspaceId: json["workspaceId"],
+    organisationId: json["organisationId"],
+  };
 }
 
 export function InsightResponseToJSON(json: any): InsightResponse {
-    return InsightResponseToJSONTyped(json, false);
+  return InsightResponseToJSONTyped(json, false);
 }
 
-export function InsightResponseToJSONTyped(value?: InsightResponse | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function InsightResponseToJSONTyped(
+  value?: InsightResponse | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'insight': value['insight'],
-        'source': InsightSourceEnumToJSON(value['source']),
-        'workspaceId': value['workspaceId'],
-        'organisationId': value['organisationId'],
-    };
+  return {
+    insight: value["insight"],
+    source: InsightSourceEnumToJSON(value["source"]),
+    workspaceId: value["workspaceId"],
+    organisationId: value["organisationId"],
+  };
 }
-

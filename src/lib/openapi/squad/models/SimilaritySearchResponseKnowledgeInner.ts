@@ -12,79 +12,92 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { SimilaritySearchResponseKnowledgeInnerMetadata } from './SimilaritySearchResponseKnowledgeInnerMetadata.js';
+import type { SimilaritySearchResponseKnowledgeInnerMetadata } from "./SimilaritySearchResponseKnowledgeInnerMetadata.js";
 import {
-    SimilaritySearchResponseKnowledgeInnerMetadataFromJSON,
-    SimilaritySearchResponseKnowledgeInnerMetadataFromJSONTyped,
-    SimilaritySearchResponseKnowledgeInnerMetadataToJSON,
-    SimilaritySearchResponseKnowledgeInnerMetadataToJSONTyped,
-} from './SimilaritySearchResponseKnowledgeInnerMetadata.js';
+  SimilaritySearchResponseKnowledgeInnerMetadataFromJSON,
+  SimilaritySearchResponseKnowledgeInnerMetadataToJSON,
+} from "./SimilaritySearchResponseKnowledgeInnerMetadata.js";
 
 /**
- * 
+ *
  * @export
  * @interface SimilaritySearchResponseKnowledgeInner
  */
 export interface SimilaritySearchResponseKnowledgeInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof SimilaritySearchResponseKnowledgeInner
-     */
-    id: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof SimilaritySearchResponseKnowledgeInner
-     */
-    score?: number;
-    /**
-     * 
-     * @type {SimilaritySearchResponseKnowledgeInnerMetadata}
-     * @memberof SimilaritySearchResponseKnowledgeInner
-     */
-    metadata?: SimilaritySearchResponseKnowledgeInnerMetadata;
+  /**
+   *
+   * @type {string}
+   * @memberof SimilaritySearchResponseKnowledgeInner
+   */
+  id: string;
+  /**
+   *
+   * @type {number}
+   * @memberof SimilaritySearchResponseKnowledgeInner
+   */
+  score?: number;
+  /**
+   *
+   * @type {SimilaritySearchResponseKnowledgeInnerMetadata}
+   * @memberof SimilaritySearchResponseKnowledgeInner
+   */
+  metadata?: SimilaritySearchResponseKnowledgeInnerMetadata;
 }
 
 /**
  * Check if a given object implements the SimilaritySearchResponseKnowledgeInner interface.
  */
-export function instanceOfSimilaritySearchResponseKnowledgeInner(value: object): value is SimilaritySearchResponseKnowledgeInner {
-    if (!('id' in value) || value['id'] === undefined) return false;
-    return true;
+export function instanceOfSimilaritySearchResponseKnowledgeInner(
+  value: object,
+): value is SimilaritySearchResponseKnowledgeInner {
+  if (!("id" in value) || value["id"] === undefined) return false;
+  return true;
 }
 
-export function SimilaritySearchResponseKnowledgeInnerFromJSON(json: any): SimilaritySearchResponseKnowledgeInner {
-    return SimilaritySearchResponseKnowledgeInnerFromJSONTyped(json, false);
+export function SimilaritySearchResponseKnowledgeInnerFromJSON(
+  json: any,
+): SimilaritySearchResponseKnowledgeInner {
+  return SimilaritySearchResponseKnowledgeInnerFromJSONTyped(json, false);
 }
 
-export function SimilaritySearchResponseKnowledgeInnerFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimilaritySearchResponseKnowledgeInner {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'id': json['id'],
-        'score': json['score'] == null ? undefined : json['score'],
-        'metadata': json['metadata'] == null ? undefined : SimilaritySearchResponseKnowledgeInnerMetadataFromJSON(json['metadata']),
-    };
+export function SimilaritySearchResponseKnowledgeInnerFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): SimilaritySearchResponseKnowledgeInner {
+  if (json == null) {
+    return json;
+  }
+  return {
+    id: json["id"],
+    score: json["score"] == null ? undefined : json["score"],
+    metadata:
+      json["metadata"] == null
+        ? undefined
+        : SimilaritySearchResponseKnowledgeInnerMetadataFromJSON(
+            json["metadata"],
+          ),
+  };
 }
 
-export function SimilaritySearchResponseKnowledgeInnerToJSON(json: any): SimilaritySearchResponseKnowledgeInner {
-    return SimilaritySearchResponseKnowledgeInnerToJSONTyped(json, false);
+export function SimilaritySearchResponseKnowledgeInnerToJSON(
+  json: any,
+): SimilaritySearchResponseKnowledgeInner {
+  return SimilaritySearchResponseKnowledgeInnerToJSONTyped(json, false);
 }
 
-export function SimilaritySearchResponseKnowledgeInnerToJSONTyped(value?: SimilaritySearchResponseKnowledgeInner | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function SimilaritySearchResponseKnowledgeInnerToJSONTyped(
+  value?: SimilaritySearchResponseKnowledgeInner | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'id': value['id'],
-        'score': value['score'],
-        'metadata': SimilaritySearchResponseKnowledgeInnerMetadataToJSON(value['metadata']),
-    };
+  return {
+    id: value["id"],
+    score: value["score"],
+    metadata: SimilaritySearchResponseKnowledgeInnerMetadataToJSON(
+      value["metadata"],
+    ),
+  };
 }
-

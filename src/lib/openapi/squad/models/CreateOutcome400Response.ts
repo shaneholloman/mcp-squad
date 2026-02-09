@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { CreateOutcome400ResponseError } from './CreateOutcome400ResponseError.js';
+import type { CreateOutcome400ResponseError } from "./CreateOutcome400ResponseError.js";
 import {
-    CreateOutcome400ResponseErrorFromJSON,
-    CreateOutcome400ResponseErrorFromJSONTyped,
-    CreateOutcome400ResponseErrorToJSON,
-    CreateOutcome400ResponseErrorToJSONTyped,
-} from './CreateOutcome400ResponseError.js';
+  CreateOutcome400ResponseErrorFromJSON,
+  CreateOutcome400ResponseErrorToJSON,
+} from "./CreateOutcome400ResponseError.js";
 
 /**
  * Bad Request - Invalid input parameters or missing required fields
@@ -27,51 +24,60 @@ import {
  * @interface CreateOutcome400Response
  */
 export interface CreateOutcome400Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {CreateOutcome400ResponseError}
-     * @memberof CreateOutcome400Response
-     */
-    error: CreateOutcome400ResponseError;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {CreateOutcome400ResponseError}
+   * @memberof CreateOutcome400Response
+   */
+  error: CreateOutcome400ResponseError;
 }
 
 /**
  * Check if a given object implements the CreateOutcome400Response interface.
  */
-export function instanceOfCreateOutcome400Response(value: object): value is CreateOutcome400Response {
-    if (!('error' in value) || value['error'] === undefined) return false;
-    return true;
+export function instanceOfCreateOutcome400Response(
+  value: object,
+): value is CreateOutcome400Response {
+  if (!("error" in value) || value["error"] === undefined) return false;
+  return true;
 }
 
-export function CreateOutcome400ResponseFromJSON(json: any): CreateOutcome400Response {
-    return CreateOutcome400ResponseFromJSONTyped(json, false);
+export function CreateOutcome400ResponseFromJSON(
+  json: any,
+): CreateOutcome400Response {
+  return CreateOutcome400ResponseFromJSONTyped(json, false);
 }
 
-export function CreateOutcome400ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateOutcome400Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'error': CreateOutcome400ResponseErrorFromJSON(json['error']),
-    };
+export function CreateOutcome400ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateOutcome400Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    error: CreateOutcome400ResponseErrorFromJSON(json["error"]),
+  };
 }
 
-export function CreateOutcome400ResponseToJSON(json: any): CreateOutcome400Response {
-    return CreateOutcome400ResponseToJSONTyped(json, false);
+export function CreateOutcome400ResponseToJSON(
+  json: any,
+): CreateOutcome400Response {
+  return CreateOutcome400ResponseToJSONTyped(json, false);
 }
 
-export function CreateOutcome400ResponseToJSONTyped(value?: CreateOutcome400Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateOutcome400ResponseToJSONTyped(
+  value?: CreateOutcome400Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'error': CreateOutcome400ResponseErrorToJSON(value['error']),
-    };
+  return {
+    ...value,
+    error: CreateOutcome400ResponseErrorToJSON(value["error"]),
+  };
 }
-

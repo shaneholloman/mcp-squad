@@ -12,55 +12,63 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
  * Request schema for creating knowledge from a URL
  * @export
  * @interface CreateKnowledgeFromUrlPayload
  */
 export interface CreateKnowledgeFromUrlPayload {
-    /**
-     * The URL the user wishes to create knowledge from
-     * @type {string}
-     * @memberof CreateKnowledgeFromUrlPayload
-     */
-    url: string;
+  /**
+   * The URL the user wishes to create knowledge from
+   * @type {string}
+   * @memberof CreateKnowledgeFromUrlPayload
+   */
+  url: string;
 }
 
 /**
  * Check if a given object implements the CreateKnowledgeFromUrlPayload interface.
  */
-export function instanceOfCreateKnowledgeFromUrlPayload(value: object): value is CreateKnowledgeFromUrlPayload {
-    if (!('url' in value) || value['url'] === undefined) return false;
-    return true;
+export function instanceOfCreateKnowledgeFromUrlPayload(
+  value: object,
+): value is CreateKnowledgeFromUrlPayload {
+  if (!("url" in value) || value["url"] === undefined) return false;
+  return true;
 }
 
-export function CreateKnowledgeFromUrlPayloadFromJSON(json: any): CreateKnowledgeFromUrlPayload {
-    return CreateKnowledgeFromUrlPayloadFromJSONTyped(json, false);
+export function CreateKnowledgeFromUrlPayloadFromJSON(
+  json: any,
+): CreateKnowledgeFromUrlPayload {
+  return CreateKnowledgeFromUrlPayloadFromJSONTyped(json, false);
 }
 
-export function CreateKnowledgeFromUrlPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateKnowledgeFromUrlPayload {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'url': json['url'],
-    };
+export function CreateKnowledgeFromUrlPayloadFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateKnowledgeFromUrlPayload {
+  if (json == null) {
+    return json;
+  }
+  return {
+    url: json["url"],
+  };
 }
 
-export function CreateKnowledgeFromUrlPayloadToJSON(json: any): CreateKnowledgeFromUrlPayload {
-    return CreateKnowledgeFromUrlPayloadToJSONTyped(json, false);
+export function CreateKnowledgeFromUrlPayloadToJSON(
+  json: any,
+): CreateKnowledgeFromUrlPayload {
+  return CreateKnowledgeFromUrlPayloadToJSONTyped(json, false);
 }
 
-export function CreateKnowledgeFromUrlPayloadToJSONTyped(value?: CreateKnowledgeFromUrlPayload | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateKnowledgeFromUrlPayloadToJSONTyped(
+  value?: CreateKnowledgeFromUrlPayload | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'url': value['url'],
-    };
+  return {
+    url: value["url"],
+  };
 }
-

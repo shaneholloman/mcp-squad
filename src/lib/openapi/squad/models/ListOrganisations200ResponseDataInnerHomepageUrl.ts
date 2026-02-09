@@ -12,35 +12,50 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
  * URL to the organisation's homepage
  * @export
  * @interface ListOrganisations200ResponseDataInnerHomepageUrl
  */
-export interface ListOrganisations200ResponseDataInnerHomepageUrl {
-}
+export interface ListOrganisations200ResponseDataInnerHomepageUrl {}
 
 /**
  * Check if a given object implements the ListOrganisations200ResponseDataInnerHomepageUrl interface.
  */
-export function instanceOfListOrganisations200ResponseDataInnerHomepageUrl(value: object): value is ListOrganisations200ResponseDataInnerHomepageUrl {
-    return true;
+export function instanceOfListOrganisations200ResponseDataInnerHomepageUrl(
+  value: object,
+): value is ListOrganisations200ResponseDataInnerHomepageUrl {
+  return true;
 }
 
-export function ListOrganisations200ResponseDataInnerHomepageUrlFromJSON(json: any): ListOrganisations200ResponseDataInnerHomepageUrl {
-    return ListOrganisations200ResponseDataInnerHomepageUrlFromJSONTyped(json, false);
+export function ListOrganisations200ResponseDataInnerHomepageUrlFromJSON(
+  json: any,
+): ListOrganisations200ResponseDataInnerHomepageUrl {
+  return ListOrganisations200ResponseDataInnerHomepageUrlFromJSONTyped(
+    json,
+    false,
+  );
 }
 
-export function ListOrganisations200ResponseDataInnerHomepageUrlFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListOrganisations200ResponseDataInnerHomepageUrl {
-    return json;
+export function ListOrganisations200ResponseDataInnerHomepageUrlFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ListOrganisations200ResponseDataInnerHomepageUrl {
+  return json;
 }
 
-export function ListOrganisations200ResponseDataInnerHomepageUrlToJSON(json: any): ListOrganisations200ResponseDataInnerHomepageUrl {
-    return ListOrganisations200ResponseDataInnerHomepageUrlToJSONTyped(json, false);
+export function ListOrganisations200ResponseDataInnerHomepageUrlToJSON(
+  json: any,
+): ListOrganisations200ResponseDataInnerHomepageUrl {
+  return ListOrganisations200ResponseDataInnerHomepageUrlToJSONTyped(
+    json,
+    false,
+  );
 }
 
-export function ListOrganisations200ResponseDataInnerHomepageUrlToJSONTyped(value?: ListOrganisations200ResponseDataInnerHomepageUrl | null, ignoreDiscriminator: boolean = false): any {
-    return value;
+export function ListOrganisations200ResponseDataInnerHomepageUrlToJSONTyped(
+  value?: ListOrganisations200ResponseDataInnerHomepageUrl | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  return value;
 }
-

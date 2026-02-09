@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { OpportunityResponseData } from './OpportunityResponseData.js';
+import type { OpportunityResponseData } from "./OpportunityResponseData.js";
 import {
-    OpportunityResponseDataFromJSON,
-    OpportunityResponseDataFromJSONTyped,
-    OpportunityResponseDataToJSON,
-    OpportunityResponseDataToJSONTyped,
-} from './OpportunityResponseData.js';
+  OpportunityResponseDataFromJSON,
+  OpportunityResponseDataToJSON,
+} from "./OpportunityResponseData.js";
 
 /**
  * Response containing a single opportunity
@@ -27,51 +24,56 @@ import {
  * @interface OpportunityResponse
  */
 export interface OpportunityResponse {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {OpportunityResponseData}
-     * @memberof OpportunityResponse
-     */
-    data: OpportunityResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {OpportunityResponseData}
+   * @memberof OpportunityResponse
+   */
+  data: OpportunityResponseData;
 }
 
 /**
  * Check if a given object implements the OpportunityResponse interface.
  */
-export function instanceOfOpportunityResponse(value: object): value is OpportunityResponse {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfOpportunityResponse(
+  value: object,
+): value is OpportunityResponse {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
 export function OpportunityResponseFromJSON(json: any): OpportunityResponse {
-    return OpportunityResponseFromJSONTyped(json, false);
+  return OpportunityResponseFromJSONTyped(json, false);
 }
 
-export function OpportunityResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): OpportunityResponse {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': OpportunityResponseDataFromJSON(json['data']),
-    };
+export function OpportunityResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): OpportunityResponse {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: OpportunityResponseDataFromJSON(json["data"]),
+  };
 }
 
 export function OpportunityResponseToJSON(json: any): OpportunityResponse {
-    return OpportunityResponseToJSONTyped(json, false);
+  return OpportunityResponseToJSONTyped(json, false);
 }
 
-export function OpportunityResponseToJSONTyped(value?: OpportunityResponse | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function OpportunityResponseToJSONTyped(
+  value?: OpportunityResponse | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': OpportunityResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: OpportunityResponseDataToJSON(value["data"]),
+  };
 }
-

@@ -1,5 +1,5 @@
-import type { McpServerInstance } from 'mcp-use/server';
-import { WorkspaceSelectionRequired } from '../helpers/getUser.js';
+import type { McpServerInstance } from "mcp-use/server";
+import { WorkspaceSelectionRequired } from "../helpers/getUser.js";
 
 /**
  * Type alias for the server with OAuth enabled
@@ -9,18 +9,18 @@ export type OAuthServer = McpServerInstance<true>;
 /**
  * Auth info from mcp-use OAuth context
  */
-export interface AuthInfo {
+export type AuthInfo = {
   accessToken: string;
   payload: Record<string, unknown>;
-}
+};
 
 /**
  * Get user ID from auth context
  */
 export function getUserId(auth: AuthInfo): string {
   const sub = auth.payload?.sub;
-  if (typeof sub !== 'string') {
-    throw new Error('User ID (sub) not found in auth token');
+  if (typeof sub !== "string") {
+    throw new Error("User ID (sub) not found in auth token");
   }
   return sub;
 }
@@ -28,9 +28,12 @@ export function getUserId(auth: AuthInfo): string {
 /**
  * Standard error response format for tool errors
  */
-export function toolError(message: string): { content: { type: 'text'; text: string }[]; isError: true } {
+export function toolError(message: string): {
+  content: { type: "text"; text: string }[];
+  isError: true;
+} {
   return {
-    content: [{ type: 'text', text: `Error: ${message}` }],
+    content: [{ type: "text", text: `Error: ${message}` }],
     isError: true,
   };
 }
@@ -38,29 +41,35 @@ export function toolError(message: string): { content: { type: 'text'; text: str
 /**
  * Standard success response format for tool results
  */
-export function toolSuccess(data: unknown): { content: { type: 'text'; text: string }[] } {
+export function toolSuccess(data: unknown): {
+  content: { type: "text"; text: string }[];
+} {
   return {
-    content: [{ type: 'text', text: JSON.stringify(data) }],
+    content: [{ type: "text", text: JSON.stringify(data) }],
   };
 }
 
 /**
  * Standard success response with pretty-printed JSON
  */
-export function toolSuccessPretty(data: unknown): { content: { type: 'text'; text: string }[] } {
+export function toolSuccessPretty(data: unknown): {
+  content: { type: "text"; text: string }[];
+} {
   return {
-    content: [{ type: 'text', text: JSON.stringify(data, null, 2) }],
+    content: [{ type: "text", text: JSON.stringify(data, null, 2) }],
   };
 }
 
 /**
  * Format WorkspaceSelectionRequired error with available orgs/workspaces
  */
-export function formatWorkspaceSelectionError(error: WorkspaceSelectionRequired): string {
+export function formatWorkspaceSelectionError(
+  error: WorkspaceSelectionRequired,
+): string {
   let message = error.message;
-  message += `\n\nAvailable organisations:\n${error.orgs.map(o => `- ${o.name} (${o.id})`).join('\n')}`;
+  message += `\n\nAvailable organisations:\n${error.orgs.map(o => `- ${o.name} (${o.id})`).join("\n")}`;
   if (error.workspaces) {
-    message += `\n\nAvailable workspaces:\n${error.workspaces.map(w => `- ${w.name} (${w.id})`).join('\n')}`;
+    message += `\n\nAvailable workspaces:\n${error.workspaces.map(w => `- ${w.name} (${w.id})`).join("\n")}`;
   }
   return message;
 }

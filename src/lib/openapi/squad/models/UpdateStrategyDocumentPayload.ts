@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { UpdateStrategyDocumentPayloadData } from './UpdateStrategyDocumentPayloadData.js';
+import type { UpdateStrategyDocumentPayloadData } from "./UpdateStrategyDocumentPayloadData.js";
 import {
-    UpdateStrategyDocumentPayloadDataFromJSON,
-    UpdateStrategyDocumentPayloadDataFromJSONTyped,
-    UpdateStrategyDocumentPayloadDataToJSON,
-    UpdateStrategyDocumentPayloadDataToJSONTyped,
-} from './UpdateStrategyDocumentPayloadData.js';
+  UpdateStrategyDocumentPayloadDataFromJSON,
+  UpdateStrategyDocumentPayloadDataToJSON,
+} from "./UpdateStrategyDocumentPayloadData.js";
 
 /**
  * Request schema for updating a strategy document
@@ -27,51 +24,60 @@ import {
  * @interface UpdateStrategyDocumentPayload
  */
 export interface UpdateStrategyDocumentPayload {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {UpdateStrategyDocumentPayloadData}
-     * @memberof UpdateStrategyDocumentPayload
-     */
-    data: UpdateStrategyDocumentPayloadData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {UpdateStrategyDocumentPayloadData}
+   * @memberof UpdateStrategyDocumentPayload
+   */
+  data: UpdateStrategyDocumentPayloadData;
 }
 
 /**
  * Check if a given object implements the UpdateStrategyDocumentPayload interface.
  */
-export function instanceOfUpdateStrategyDocumentPayload(value: object): value is UpdateStrategyDocumentPayload {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfUpdateStrategyDocumentPayload(
+  value: object,
+): value is UpdateStrategyDocumentPayload {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function UpdateStrategyDocumentPayloadFromJSON(json: any): UpdateStrategyDocumentPayload {
-    return UpdateStrategyDocumentPayloadFromJSONTyped(json, false);
+export function UpdateStrategyDocumentPayloadFromJSON(
+  json: any,
+): UpdateStrategyDocumentPayload {
+  return UpdateStrategyDocumentPayloadFromJSONTyped(json, false);
 }
 
-export function UpdateStrategyDocumentPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateStrategyDocumentPayload {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': UpdateStrategyDocumentPayloadDataFromJSON(json['data']),
-    };
+export function UpdateStrategyDocumentPayloadFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): UpdateStrategyDocumentPayload {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: UpdateStrategyDocumentPayloadDataFromJSON(json["data"]),
+  };
 }
 
-export function UpdateStrategyDocumentPayloadToJSON(json: any): UpdateStrategyDocumentPayload {
-    return UpdateStrategyDocumentPayloadToJSONTyped(json, false);
+export function UpdateStrategyDocumentPayloadToJSON(
+  json: any,
+): UpdateStrategyDocumentPayload {
+  return UpdateStrategyDocumentPayloadToJSONTyped(json, false);
 }
 
-export function UpdateStrategyDocumentPayloadToJSONTyped(value?: UpdateStrategyDocumentPayload | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function UpdateStrategyDocumentPayloadToJSONTyped(
+  value?: UpdateStrategyDocumentPayload | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': UpdateStrategyDocumentPayloadDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: UpdateStrategyDocumentPayloadDataToJSON(value["data"]),
+  };
 }
-

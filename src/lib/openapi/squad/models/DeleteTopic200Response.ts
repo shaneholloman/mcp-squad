@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { DeleteTopic200ResponseData } from './DeleteTopic200ResponseData.js';
+import type { DeleteTopic200ResponseData } from "./DeleteTopic200ResponseData.js";
 import {
-    DeleteTopic200ResponseDataFromJSON,
-    DeleteTopic200ResponseDataFromJSONTyped,
-    DeleteTopic200ResponseDataToJSON,
-    DeleteTopic200ResponseDataToJSONTyped,
-} from './DeleteTopic200ResponseData.js';
+  DeleteTopic200ResponseDataFromJSON,
+  DeleteTopic200ResponseDataToJSON,
+} from "./DeleteTopic200ResponseData.js";
 
 /**
  * Response containing a success message
@@ -27,51 +24,60 @@ import {
  * @interface DeleteTopic200Response
  */
 export interface DeleteTopic200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {DeleteTopic200ResponseData}
-     * @memberof DeleteTopic200Response
-     */
-    data: DeleteTopic200ResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {DeleteTopic200ResponseData}
+   * @memberof DeleteTopic200Response
+   */
+  data: DeleteTopic200ResponseData;
 }
 
 /**
  * Check if a given object implements the DeleteTopic200Response interface.
  */
-export function instanceOfDeleteTopic200Response(value: object): value is DeleteTopic200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfDeleteTopic200Response(
+  value: object,
+): value is DeleteTopic200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function DeleteTopic200ResponseFromJSON(json: any): DeleteTopic200Response {
-    return DeleteTopic200ResponseFromJSONTyped(json, false);
+export function DeleteTopic200ResponseFromJSON(
+  json: any,
+): DeleteTopic200Response {
+  return DeleteTopic200ResponseFromJSONTyped(json, false);
 }
 
-export function DeleteTopic200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteTopic200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': DeleteTopic200ResponseDataFromJSON(json['data']),
-    };
+export function DeleteTopic200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): DeleteTopic200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: DeleteTopic200ResponseDataFromJSON(json["data"]),
+  };
 }
 
-export function DeleteTopic200ResponseToJSON(json: any): DeleteTopic200Response {
-    return DeleteTopic200ResponseToJSONTyped(json, false);
+export function DeleteTopic200ResponseToJSON(
+  json: any,
+): DeleteTopic200Response {
+  return DeleteTopic200ResponseToJSONTyped(json, false);
 }
 
-export function DeleteTopic200ResponseToJSONTyped(value?: DeleteTopic200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function DeleteTopic200ResponseToJSONTyped(
+  value?: DeleteTopic200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': DeleteTopic200ResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: DeleteTopic200ResponseDataToJSON(value["data"]),
+  };
 }
-

@@ -12,35 +12,44 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
 /**
  * URL to the organisation's homepage
  * @export
  * @interface CreateOrganisation200ResponseDataHomepageUrl
  */
-export interface CreateOrganisation200ResponseDataHomepageUrl {
-}
+export interface CreateOrganisation200ResponseDataHomepageUrl {}
 
 /**
  * Check if a given object implements the CreateOrganisation200ResponseDataHomepageUrl interface.
  */
-export function instanceOfCreateOrganisation200ResponseDataHomepageUrl(value: object): value is CreateOrganisation200ResponseDataHomepageUrl {
-    return true;
+export function instanceOfCreateOrganisation200ResponseDataHomepageUrl(
+  value: object,
+): value is CreateOrganisation200ResponseDataHomepageUrl {
+  return true;
 }
 
-export function CreateOrganisation200ResponseDataHomepageUrlFromJSON(json: any): CreateOrganisation200ResponseDataHomepageUrl {
-    return CreateOrganisation200ResponseDataHomepageUrlFromJSONTyped(json, false);
+export function CreateOrganisation200ResponseDataHomepageUrlFromJSON(
+  json: any,
+): CreateOrganisation200ResponseDataHomepageUrl {
+  return CreateOrganisation200ResponseDataHomepageUrlFromJSONTyped(json, false);
 }
 
-export function CreateOrganisation200ResponseDataHomepageUrlFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateOrganisation200ResponseDataHomepageUrl {
-    return json;
+export function CreateOrganisation200ResponseDataHomepageUrlFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateOrganisation200ResponseDataHomepageUrl {
+  return json;
 }
 
-export function CreateOrganisation200ResponseDataHomepageUrlToJSON(json: any): CreateOrganisation200ResponseDataHomepageUrl {
-    return CreateOrganisation200ResponseDataHomepageUrlToJSONTyped(json, false);
+export function CreateOrganisation200ResponseDataHomepageUrlToJSON(
+  json: any,
+): CreateOrganisation200ResponseDataHomepageUrl {
+  return CreateOrganisation200ResponseDataHomepageUrlToJSONTyped(json, false);
 }
 
-export function CreateOrganisation200ResponseDataHomepageUrlToJSONTyped(value?: CreateOrganisation200ResponseDataHomepageUrl | null, ignoreDiscriminator: boolean = false): any {
-    return value;
+export function CreateOrganisation200ResponseDataHomepageUrlToJSONTyped(
+  value?: CreateOrganisation200ResponseDataHomepageUrl | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  return value;
 }
-

@@ -12,44 +12,48 @@
  * Do not edit the class manually.
  */
 
-
 /**
  * The source of the insight
  * @export
  */
 export const InsightSourceEnum = {
-    Typeform: 'TYPEFORM',
-    Slack: 'SLACK',
-    Unknown: 'UNKNOWN',
-    Manual: 'MANUAL'
+  Typeform: "TYPEFORM",
+  Slack: "SLACK",
+  Unknown: "UNKNOWN",
+  Manual: "MANUAL",
 } as const;
-export type InsightSourceEnum = typeof InsightSourceEnum[keyof typeof InsightSourceEnum];
-
+export type InsightSourceEnum =
+  (typeof InsightSourceEnum)[keyof typeof InsightSourceEnum];
 
 export function instanceOfInsightSourceEnum(value: any): boolean {
-    for (const key in InsightSourceEnum) {
-        if (Object.prototype.hasOwnProperty.call(InsightSourceEnum, key)) {
-            if (InsightSourceEnum[key as keyof typeof InsightSourceEnum] === value) {
-                return true;
-            }
-        }
+  for (const key in InsightSourceEnum) {
+    if (Object.prototype.hasOwnProperty.call(InsightSourceEnum, key)) {
+      if (InsightSourceEnum[key as keyof typeof InsightSourceEnum] === value) {
+        return true;
+      }
     }
-    return false;
+  }
+  return false;
 }
 
 export function InsightSourceEnumFromJSON(json: any): InsightSourceEnum {
-    return InsightSourceEnumFromJSONTyped(json, false);
+  return InsightSourceEnumFromJSONTyped(json, false);
 }
 
-export function InsightSourceEnumFromJSONTyped(json: any, ignoreDiscriminator: boolean): InsightSourceEnum {
-    return json as InsightSourceEnum;
+export function InsightSourceEnumFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): InsightSourceEnum {
+  return json as InsightSourceEnum;
 }
 
 export function InsightSourceEnumToJSON(value?: InsightSourceEnum | null): any {
-    return value as any;
+  return value as any;
 }
 
-export function InsightSourceEnumToJSONTyped(value: any, ignoreDiscriminator: boolean): InsightSourceEnum {
-    return value as InsightSourceEnum;
+export function InsightSourceEnumToJSONTyped(
+  value: any,
+  ignoreDiscriminator: boolean,
+): InsightSourceEnum {
+  return value as InsightSourceEnum;
 }
-

@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { OrganisationAccountTypeEnum } from './OrganisationAccountTypeEnum.js';
+import type { OrganisationAccountTypeEnum } from "./OrganisationAccountTypeEnum.js";
 import {
-    OrganisationAccountTypeEnumFromJSON,
-    OrganisationAccountTypeEnumFromJSONTyped,
-    OrganisationAccountTypeEnumToJSON,
-    OrganisationAccountTypeEnumToJSONTyped,
-} from './OrganisationAccountTypeEnum.js';
+  OrganisationAccountTypeEnumFromJSON,
+  OrganisationAccountTypeEnumToJSON,
+} from "./OrganisationAccountTypeEnum.js";
 
 /**
  * Request schema for updating an organisation
@@ -27,106 +24,123 @@ import {
  * @interface UpdateOrganisationPayload
  */
 export interface UpdateOrganisationPayload {
-    /**
-     * Name of the organisation
-     * @type {string}
-     * @memberof UpdateOrganisationPayload
-     */
-    name?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateOrganisationPayload
-     */
-    homepageUrl?: string | null;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateOrganisationPayload
-     */
-    logoUrl?: string | null;
-    /**
-     * 
-     * @type {OrganisationAccountTypeEnum}
-     * @memberof UpdateOrganisationPayload
-     */
-    accountType?: OrganisationAccountTypeEnum;
-    /**
-     * The start date of the current billing cycle.
-     * @type {string}
-     * @memberof UpdateOrganisationPayload
-     */
-    billingCycleStartDate?: string;
-    /**
-     * Number of flex credits available at the start of the current billing cycle.
-     * @type {number}
-     * @memberof UpdateOrganisationPayload
-     */
-    billingCycleFlexCreditAllowance?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof UpdateOrganisationPayload
-     */
-    status?: UpdateOrganisationPayloadStatusEnum;
+  /**
+   * Name of the organisation
+   * @type {string}
+   * @memberof UpdateOrganisationPayload
+   */
+  name?: string;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateOrganisationPayload
+   */
+  homepageUrl?: string | null;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateOrganisationPayload
+   */
+  logoUrl?: string | null;
+  /**
+   *
+   * @type {OrganisationAccountTypeEnum}
+   * @memberof UpdateOrganisationPayload
+   */
+  accountType?: OrganisationAccountTypeEnum;
+  /**
+   * The start date of the current billing cycle.
+   * @type {string}
+   * @memberof UpdateOrganisationPayload
+   */
+  billingCycleStartDate?: string;
+  /**
+   * Number of flex credits available at the start of the current billing cycle.
+   * @type {number}
+   * @memberof UpdateOrganisationPayload
+   */
+  billingCycleFlexCreditAllowance?: number;
+  /**
+   *
+   * @type {string}
+   * @memberof UpdateOrganisationPayload
+   */
+  status?: UpdateOrganisationPayloadStatusEnum;
 }
-
 
 /**
  * @export
  */
 export const UpdateOrganisationPayloadStatusEnum = {
-    Active: 'ACTIVE',
-    Archived: 'ARCHIVED'
+  Active: "ACTIVE",
+  Archived: "ARCHIVED",
 } as const;
-export type UpdateOrganisationPayloadStatusEnum = typeof UpdateOrganisationPayloadStatusEnum[keyof typeof UpdateOrganisationPayloadStatusEnum];
-
+export type UpdateOrganisationPayloadStatusEnum =
+  (typeof UpdateOrganisationPayloadStatusEnum)[keyof typeof UpdateOrganisationPayloadStatusEnum];
 
 /**
  * Check if a given object implements the UpdateOrganisationPayload interface.
  */
-export function instanceOfUpdateOrganisationPayload(value: object): value is UpdateOrganisationPayload {
-    return true;
+export function instanceOfUpdateOrganisationPayload(
+  value: object,
+): value is UpdateOrganisationPayload {
+  return true;
 }
 
-export function UpdateOrganisationPayloadFromJSON(json: any): UpdateOrganisationPayload {
-    return UpdateOrganisationPayloadFromJSONTyped(json, false);
+export function UpdateOrganisationPayloadFromJSON(
+  json: any,
+): UpdateOrganisationPayload {
+  return UpdateOrganisationPayloadFromJSONTyped(json, false);
 }
 
-export function UpdateOrganisationPayloadFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateOrganisationPayload {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-        'name': json['name'] == null ? undefined : json['name'],
-        'homepageUrl': json['homepageUrl'] == null ? undefined : json['homepageUrl'],
-        'logoUrl': json['logoUrl'] == null ? undefined : json['logoUrl'],
-        'accountType': json['accountType'] == null ? undefined : OrganisationAccountTypeEnumFromJSON(json['accountType']),
-        'billingCycleStartDate': json['billingCycleStartDate'] == null ? undefined : json['billingCycleStartDate'],
-        'billingCycleFlexCreditAllowance': json['billingCycleFlexCreditAllowance'] == null ? undefined : json['billingCycleFlexCreditAllowance'],
-        'status': json['status'] == null ? undefined : json['status'],
-    };
+export function UpdateOrganisationPayloadFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): UpdateOrganisationPayload {
+  if (json == null) {
+    return json;
+  }
+  return {
+    name: json["name"] == null ? undefined : json["name"],
+    homepageUrl: json["homepageUrl"] == null ? undefined : json["homepageUrl"],
+    logoUrl: json["logoUrl"] == null ? undefined : json["logoUrl"],
+    accountType:
+      json["accountType"] == null
+        ? undefined
+        : OrganisationAccountTypeEnumFromJSON(json["accountType"]),
+    billingCycleStartDate:
+      json["billingCycleStartDate"] == null
+        ? undefined
+        : json["billingCycleStartDate"],
+    billingCycleFlexCreditAllowance:
+      json["billingCycleFlexCreditAllowance"] == null
+        ? undefined
+        : json["billingCycleFlexCreditAllowance"],
+    status: json["status"] == null ? undefined : json["status"],
+  };
 }
 
-export function UpdateOrganisationPayloadToJSON(json: any): UpdateOrganisationPayload {
-    return UpdateOrganisationPayloadToJSONTyped(json, false);
+export function UpdateOrganisationPayloadToJSON(
+  json: any,
+): UpdateOrganisationPayload {
+  return UpdateOrganisationPayloadToJSONTyped(json, false);
 }
 
-export function UpdateOrganisationPayloadToJSONTyped(value?: UpdateOrganisationPayload | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function UpdateOrganisationPayloadToJSONTyped(
+  value?: UpdateOrganisationPayload | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-        'name': value['name'],
-        'homepageUrl': value['homepageUrl'],
-        'logoUrl': value['logoUrl'],
-        'accountType': OrganisationAccountTypeEnumToJSON(value['accountType']),
-        'billingCycleStartDate': value['billingCycleStartDate'],
-        'billingCycleFlexCreditAllowance': value['billingCycleFlexCreditAllowance'],
-        'status': value['status'],
-    };
+  return {
+    name: value["name"],
+    homepageUrl: value["homepageUrl"],
+    logoUrl: value["logoUrl"],
+    accountType: OrganisationAccountTypeEnumToJSON(value["accountType"]),
+    billingCycleStartDate: value["billingCycleStartDate"],
+    billingCycleFlexCreditAllowance: value["billingCycleFlexCreditAllowance"],
+    status: value["status"],
+  };
 }
-

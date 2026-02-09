@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { Metric } from './Metric.js';
-import {
-    MetricFromJSON,
-    MetricFromJSONTyped,
-    MetricToJSON,
-    MetricToJSONTyped,
-} from './Metric.js';
+import type { Metric } from "./Metric.js";
+import { MetricFromJSON, MetricToJSON } from "./Metric.js";
 
 /**
  * Response containing an array of metrics
@@ -27,51 +21,60 @@ import {
  * @interface ListMetrics200Response
  */
 export interface ListMetrics200Response {
-    [key: string]: any | any;
-    /**
-     * Array of metrics
-     * @type {Array<Metric>}
-     * @memberof ListMetrics200Response
-     */
-    data: Array<Metric>;
+  [key: string]: any | any;
+  /**
+   * Array of metrics
+   * @type {Array<Metric>}
+   * @memberof ListMetrics200Response
+   */
+  data: Array<Metric>;
 }
 
 /**
  * Check if a given object implements the ListMetrics200Response interface.
  */
-export function instanceOfListMetrics200Response(value: object): value is ListMetrics200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfListMetrics200Response(
+  value: object,
+): value is ListMetrics200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function ListMetrics200ResponseFromJSON(json: any): ListMetrics200Response {
-    return ListMetrics200ResponseFromJSONTyped(json, false);
+export function ListMetrics200ResponseFromJSON(
+  json: any,
+): ListMetrics200Response {
+  return ListMetrics200ResponseFromJSONTyped(json, false);
 }
 
-export function ListMetrics200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): ListMetrics200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': ((json['data'] as Array<any>).map(MetricFromJSON)),
-    };
+export function ListMetrics200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): ListMetrics200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: (json["data"] as Array<any>).map(MetricFromJSON),
+  };
 }
 
-export function ListMetrics200ResponseToJSON(json: any): ListMetrics200Response {
-    return ListMetrics200ResponseToJSONTyped(json, false);
+export function ListMetrics200ResponseToJSON(
+  json: any,
+): ListMetrics200Response {
+  return ListMetrics200ResponseToJSONTyped(json, false);
 }
 
-export function ListMetrics200ResponseToJSONTyped(value?: ListMetrics200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function ListMetrics200ResponseToJSONTyped(
+  value?: ListMetrics200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': ((value['data'] as Array<any>).map(MetricToJSON)),
-    };
+  return {
+    ...value,
+    data: (value["data"] as Array<any>).map(MetricToJSON),
+  };
 }
-

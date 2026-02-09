@@ -12,14 +12,8 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { Metric } from './Metric.js';
-import {
-    MetricFromJSON,
-    MetricFromJSONTyped,
-    MetricToJSON,
-    MetricToJSONTyped,
-} from './Metric.js';
+import type { Metric } from "./Metric.js";
+import { MetricFromJSON, MetricToJSON } from "./Metric.js";
 
 /**
  * Response containing a single  metric
@@ -27,51 +21,60 @@ import {
  * @interface CreateMetric200Response
  */
 export interface CreateMetric200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {Metric}
-     * @memberof CreateMetric200Response
-     */
-    data: Metric;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {Metric}
+   * @memberof CreateMetric200Response
+   */
+  data: Metric;
 }
 
 /**
  * Check if a given object implements the CreateMetric200Response interface.
  */
-export function instanceOfCreateMetric200Response(value: object): value is CreateMetric200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfCreateMetric200Response(
+  value: object,
+): value is CreateMetric200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function CreateMetric200ResponseFromJSON(json: any): CreateMetric200Response {
-    return CreateMetric200ResponseFromJSONTyped(json, false);
+export function CreateMetric200ResponseFromJSON(
+  json: any,
+): CreateMetric200Response {
+  return CreateMetric200ResponseFromJSONTyped(json, false);
 }
 
-export function CreateMetric200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateMetric200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': MetricFromJSON(json['data']),
-    };
+export function CreateMetric200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): CreateMetric200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: MetricFromJSON(json["data"]),
+  };
 }
 
-export function CreateMetric200ResponseToJSON(json: any): CreateMetric200Response {
-    return CreateMetric200ResponseToJSONTyped(json, false);
+export function CreateMetric200ResponseToJSON(
+  json: any,
+): CreateMetric200Response {
+  return CreateMetric200ResponseToJSONTyped(json, false);
 }
 
-export function CreateMetric200ResponseToJSONTyped(value?: CreateMetric200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function CreateMetric200ResponseToJSONTyped(
+  value?: CreateMetric200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': MetricToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: MetricToJSON(value["data"]),
+  };
 }
-

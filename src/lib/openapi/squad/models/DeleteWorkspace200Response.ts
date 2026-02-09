@@ -12,14 +12,11 @@
  * Do not edit the class manually.
  */
 
-import { mapValues } from '../runtime.js';
-import type { DeleteWorkspace200ResponseData } from './DeleteWorkspace200ResponseData.js';
+import type { DeleteWorkspace200ResponseData } from "./DeleteWorkspace200ResponseData.js";
 import {
-    DeleteWorkspace200ResponseDataFromJSON,
-    DeleteWorkspace200ResponseDataFromJSONTyped,
-    DeleteWorkspace200ResponseDataToJSON,
-    DeleteWorkspace200ResponseDataToJSONTyped,
-} from './DeleteWorkspace200ResponseData.js';
+  DeleteWorkspace200ResponseDataFromJSON,
+  DeleteWorkspace200ResponseDataToJSON,
+} from "./DeleteWorkspace200ResponseData.js";
 
 /**
  * Response containing a success message
@@ -27,51 +24,60 @@ import {
  * @interface DeleteWorkspace200Response
  */
 export interface DeleteWorkspace200Response {
-    [key: string]: any | any;
-    /**
-     * 
-     * @type {DeleteWorkspace200ResponseData}
-     * @memberof DeleteWorkspace200Response
-     */
-    data: DeleteWorkspace200ResponseData;
+  [key: string]: any | any;
+  /**
+   *
+   * @type {DeleteWorkspace200ResponseData}
+   * @memberof DeleteWorkspace200Response
+   */
+  data: DeleteWorkspace200ResponseData;
 }
 
 /**
  * Check if a given object implements the DeleteWorkspace200Response interface.
  */
-export function instanceOfDeleteWorkspace200Response(value: object): value is DeleteWorkspace200Response {
-    if (!('data' in value) || value['data'] === undefined) return false;
-    return true;
+export function instanceOfDeleteWorkspace200Response(
+  value: object,
+): value is DeleteWorkspace200Response {
+  if (!("data" in value) || value["data"] === undefined) return false;
+  return true;
 }
 
-export function DeleteWorkspace200ResponseFromJSON(json: any): DeleteWorkspace200Response {
-    return DeleteWorkspace200ResponseFromJSONTyped(json, false);
+export function DeleteWorkspace200ResponseFromJSON(
+  json: any,
+): DeleteWorkspace200Response {
+  return DeleteWorkspace200ResponseFromJSONTyped(json, false);
 }
 
-export function DeleteWorkspace200ResponseFromJSONTyped(json: any, ignoreDiscriminator: boolean): DeleteWorkspace200Response {
-    if (json == null) {
-        return json;
-    }
-    return {
-        
-            ...json,
-        'data': DeleteWorkspace200ResponseDataFromJSON(json['data']),
-    };
+export function DeleteWorkspace200ResponseFromJSONTyped(
+  json: any,
+  ignoreDiscriminator: boolean,
+): DeleteWorkspace200Response {
+  if (json == null) {
+    return json;
+  }
+  return {
+    ...json,
+    data: DeleteWorkspace200ResponseDataFromJSON(json["data"]),
+  };
 }
 
-export function DeleteWorkspace200ResponseToJSON(json: any): DeleteWorkspace200Response {
-    return DeleteWorkspace200ResponseToJSONTyped(json, false);
+export function DeleteWorkspace200ResponseToJSON(
+  json: any,
+): DeleteWorkspace200Response {
+  return DeleteWorkspace200ResponseToJSONTyped(json, false);
 }
 
-export function DeleteWorkspace200ResponseToJSONTyped(value?: DeleteWorkspace200Response | null, ignoreDiscriminator: boolean = false): any {
-    if (value == null) {
-        return value;
-    }
+export function DeleteWorkspace200ResponseToJSONTyped(
+  value?: DeleteWorkspace200Response | null,
+  ignoreDiscriminator: boolean = false,
+): any {
+  if (value == null) {
+    return value;
+  }
 
-    return {
-        
-            ...value,
-        'data': DeleteWorkspace200ResponseDataToJSON(value['data']),
-    };
+  return {
+    ...value,
+    data: DeleteWorkspace200ResponseDataToJSON(value["data"]),
+  };
 }
-
