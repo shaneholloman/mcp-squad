@@ -15,6 +15,9 @@ build/
 !.env.example
 !.env.test.example
 
+# Direnv
+.direnv/
+
 # IDE and editor files
 .idea/
 .vscode/
