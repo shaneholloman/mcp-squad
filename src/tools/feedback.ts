@@ -20,6 +20,7 @@ export function registerFeedbackTools(server: OAuthServer) {
   server.tool(
     {
       name: "create_feedback",
+      title: "Create Feedback",
       description:
         "Create a new feedback entry. Feedback represents raw, unprocessed feedback from users that can later be analyzed and converted into insights.",
       schema: z.object({
@@ -100,6 +101,7 @@ export function registerFeedbackTools(server: OAuthServer) {
   server.tool(
     {
       name: "list_feedback",
+      title: "List Feedback",
       description:
         "List all feedback entries in the workspace. Feedback entries are raw customer feedback that can be processed into insights.",
       schema: z.object({}),
@@ -151,6 +153,7 @@ export function registerFeedbackTools(server: OAuthServer) {
   server.tool(
     {
       name: "get_feedback",
+      title: "Get Feedback Details",
       description:
         "Get details of a specific feedback entry by ID. Feedback entries are raw customer feedback.",
       schema: z.object({
@@ -199,6 +202,7 @@ export function registerFeedbackTools(server: OAuthServer) {
   server.tool(
     {
       name: "delete_feedback",
+      title: "Delete Feedback",
       description: "Delete a feedback entry by ID.",
       schema: z.object({
         feedbackId: z

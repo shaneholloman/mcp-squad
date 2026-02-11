@@ -37,6 +37,7 @@ export function registerSolutionTools(server: OAuthServer) {
   server.tool(
     {
       name: "create_solution",
+      title: "Create Solution",
       description:
         "Create a new solution. A solution is a proposed approach to address an opportunity. The 'prd' field should contain the complete detailed specification, while 'description' should be a brief summary for AI context.",
       schema: z.object({
@@ -112,6 +113,7 @@ export function registerSolutionTools(server: OAuthServer) {
   server.tool(
     {
       name: "list_solutions",
+      title: "List Solutions",
       description:
         "List all solutions in the workspace. Solutions are proposed approaches to address opportunities.",
       schema: z.object({}),
@@ -162,6 +164,7 @@ export function registerSolutionTools(server: OAuthServer) {
   server.tool(
     {
       name: "get_solution",
+      title: "Get Solution Details",
       description: "Get details of a specific solution by ID.",
       schema: z.object({
         solutionId: z.string().describe("The ID of the solution to retrieve"),
@@ -234,6 +237,7 @@ export function registerSolutionTools(server: OAuthServer) {
   server.tool(
     {
       name: "update_solution",
+      title: "Update Solution",
       description:
         "Update an existing solution's details such as title, description, pros, cons, or status.",
       schema: z.object({
@@ -307,6 +311,7 @@ export function registerSolutionTools(server: OAuthServer) {
   server.tool(
     {
       name: "delete_solution",
+      title: "Delete Solution",
       description: "Delete a solution by ID.",
       schema: z.object({
         solutionId: z.string().describe("The ID of the solution to delete"),
@@ -347,6 +352,7 @@ export function registerSolutionTools(server: OAuthServer) {
   server.tool(
     {
       name: "manage_solution_relationships",
+      title: "Manage Solution Relationships",
       description:
         "Add or remove relationships between a solution and other entities (opportunities).",
       schema: z.object({

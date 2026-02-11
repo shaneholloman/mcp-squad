@@ -20,6 +20,7 @@ export function registerInsightTools(server: OAuthServer) {
   server.tool(
     {
       name: "create_insight",
+      title: "Create Insight",
       description:
         "Create a new insight entry. An insight is customer-generated feedback about your product, often from reviews, surveys, or questionnaires.",
       schema: z.object({
@@ -82,6 +83,7 @@ export function registerInsightTools(server: OAuthServer) {
   server.tool(
     {
       name: "list_insights",
+      title: "List Insights",
       description:
         "List all insights for the workspace. These insights are gathered from various sources, created by customers, and help understand how to improve the business.",
       schema: z.object({}),
@@ -132,6 +134,7 @@ export function registerInsightTools(server: OAuthServer) {
   server.tool(
     {
       name: "get_insight",
+      title: "Get Insight Details",
       description:
         "Get details of a specific insight entry by ID. Insight entries are text documents that can be used as references or information sources.",
       schema: z.object({
@@ -212,6 +215,7 @@ export function registerInsightTools(server: OAuthServer) {
   server.tool(
     {
       name: "delete_insight",
+      title: "Delete Insight",
       description: "Delete an insight entry by ID.",
       schema: z.object({
         insightId: z.string().describe("The ID of the insight entry to delete"),

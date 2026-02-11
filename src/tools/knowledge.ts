@@ -19,6 +19,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
   server.tool(
     {
       name: "create_knowledge",
+      title: "Create Knowledge Document",
       description:
         "Create a new knowledge entry. Knowledge entries are text documents that can be used as references or information sources.",
       schema: z.object({
@@ -75,6 +76,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
   server.tool(
     {
       name: "list_knowledge",
+      title: "List Knowledge Documents",
       description:
         "List all knowledge entries in the workspace. Knowledge entries are text documents that can be used as references or information sources. List only shows the available items and a short description for the actual knowledge use the get by id call.",
       schema: z.object({}),
@@ -128,6 +130,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
   server.tool(
     {
       name: "get_knowledge",
+      title: "Get Knowledge Document",
       description:
         "Get details of a specific knowledge entry by ID. Knowledge entries are text documents that can be used as references or information sources.",
       schema: z.object({
@@ -174,6 +177,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
   server.tool(
     {
       name: "delete_knowledge",
+      title: "Delete Knowledge Document",
       description: "Delete a knowledge entry by ID.",
       schema: z.object({
         knowledgeId: z
