@@ -20,6 +20,7 @@ export function registerSearchTools(server: OAuthServer) {
   server.tool(
     {
       name: "similarity_search",
+      title: "Similarity Search",
       description:
         "Perform a semantic similarity search across the workspace. This searches through knowledge documents, feedback insights, opportunities, and solutions to find content similar to your query. Each result will contain a nodeId or an id. These can be used to retrieve the full content of the entity using the get_knowledge_document, get_insight, get_opportunity, or get_solution tools.",
       schema: z.object({

@@ -25,6 +25,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
   server.tool(
     {
       name: "list_workspaces",
+      title: "List Workspaces",
       description:
         "List all organisations and workspaces available to the current user. Use this to see what workspaces you can switch to.",
       schema: z.object({}),
@@ -68,6 +69,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
   server.tool(
     {
       name: "select_workspace",
+      title: "Select Workspace",
       description:
         "Select which organisation and workspace to use for subsequent operations. Required when user has access to multiple orgs/workspaces.",
       schema: z.object({
@@ -119,6 +121,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
   server.tool(
     {
       name: "get_workspace",
+      title: "Get Workspace Details",
       description:
         "Get details of the current workspace. Workspaces contain the project name, detailed description, and mission statement.",
       schema: z.object({}),
@@ -155,6 +158,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
   server.tool(
     {
       name: "update_workspace",
+      title: "Update Workspace",
       description:
         "Update the current workspace's details such as name, description, mission statement.",
       schema: z.object({

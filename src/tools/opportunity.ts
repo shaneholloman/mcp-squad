@@ -23,6 +23,7 @@ export function registerOpportunityTools(server: OAuthServer) {
   server.tool(
     {
       name: "create_opportunity",
+      title: "Create Opportunity",
       description:
         "Create a new opportunity. An opportunity is a detailed problem statement identified for the organisation. It doesn't have any solutionising and simply captures an opportunity for the organisation.",
       schema: z.object({
@@ -77,6 +78,7 @@ export function registerOpportunityTools(server: OAuthServer) {
   server.tool(
     {
       name: "list_opportunities",
+      title: "List Opportunities",
       description:
         "List all opportunities in the workspace. Opportunities are problem statements identified for the organisation.",
       schema: z.object({}),
@@ -127,6 +129,7 @@ export function registerOpportunityTools(server: OAuthServer) {
   server.tool(
     {
       name: "get_opportunity",
+      title: "Get Opportunity Details",
       description:
         "Get details of a specific opportunity by ID. Opportunities are problem statements identified for the organisation.",
       schema: z.object({
@@ -202,6 +205,7 @@ export function registerOpportunityTools(server: OAuthServer) {
   server.tool(
     {
       name: "update_opportunity",
+      title: "Update Opportunity",
       description:
         "Update an existing opportunity's details such as title, description, or status.",
       schema: z.object({
@@ -265,6 +269,7 @@ export function registerOpportunityTools(server: OAuthServer) {
   server.tool(
     {
       name: "delete_opportunity",
+      title: "Delete Opportunity",
       description: "Delete an opportunity by ID.",
       schema: z.object({
         opportunityId: z
@@ -307,6 +312,7 @@ export function registerOpportunityTools(server: OAuthServer) {
   server.tool(
     {
       name: "generate_solutions",
+      title: "Generate Solutions",
       description:
         "Start the process of generating solutions for an opportunity. This will use Squad AI to generate new potential solutions for a given opportunity.",
       schema: z.object({
@@ -354,6 +360,7 @@ export function registerOpportunityTools(server: OAuthServer) {
   server.tool(
     {
       name: "manage_opportunity_relationships",
+      title: "Manage Opportunity Relationships",
       description:
         "Add or remove relationships between an opportunity and other entities (solutions, outcomes, or insights).",
       schema: z.object({

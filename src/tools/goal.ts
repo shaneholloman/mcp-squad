@@ -24,6 +24,7 @@ export function registerGoalTools(server: OAuthServer) {
   server.tool(
     {
       name: "create_goal",
+      title: "Create Goal",
       description:
         "Create a new goal. A goal is a business objective that the organization aims to achieve.",
       schema: z.object({
@@ -96,6 +97,7 @@ export function registerGoalTools(server: OAuthServer) {
   server.tool(
     {
       name: "list_goals",
+      title: "List Goals",
       description:
         "List all goals in the workspace. Goals are business objectives that the organization aims to achieve.",
       schema: z.object({}),
@@ -146,6 +148,7 @@ export function registerGoalTools(server: OAuthServer) {
   server.tool(
     {
       name: "get_goal",
+      title: "Get Goal Details",
       description:
         "Get details of a specific goal by ID. Goals are business objectives that the organization aims to achieve.",
       schema: z.object({
@@ -219,6 +222,7 @@ export function registerGoalTools(server: OAuthServer) {
   server.tool(
     {
       name: "update_goal",
+      title: "Update Goal",
       description: "Update an existing goal's details.",
       schema: z.object({
         goalId: z.string().describe("The ID of the goal to update"),
@@ -278,6 +282,7 @@ export function registerGoalTools(server: OAuthServer) {
   server.tool(
     {
       name: "delete_goal",
+      title: "Delete Goal",
       description: "Delete a goal by ID.",
       schema: z.object({
         goalId: z.string().describe("The ID of the goal to delete"),
@@ -318,6 +323,7 @@ export function registerGoalTools(server: OAuthServer) {
   server.tool(
     {
       name: "manage_goal_relationships",
+      title: "Manage Goal Relationships",
       description:
         "Add or remove relationships between a goal and opportunities for the business.",
       schema: z.object({
