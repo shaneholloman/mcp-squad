@@ -28,6 +28,19 @@ On first use, you'll be prompted to authenticate via OAuth in your browser.
 
 Connect using `https://mcp.meetsquad.ai/mcp` - OAuth configuration is automatically discovered via the server's `.well-known/oauth-authorization-server` endpoint.
 
+## 📖 Usage Examples
+
+See **[USAGE_EXAMPLES.md](./USAGE_EXAMPLES.md)** for detailed real-world examples including:
+
+- **Discover opportunities** - "What opportunities are in my workspace?"
+- **Explore solutions** - "Show me solutions for [opportunity] with pros/cons"
+- **Strategic alignment** - "How do my solutions map to business goals?" (OST view)
+- **Generate ideas** - "Generate solution ideas for [opportunity]"
+- **Search everything** - "Find all content related to compliance"
+- **Create opportunities** - "Create a new opportunity for [customer pain point]"
+
+Each example shows the actual user prompt, which tools get called behind the scenes, and the expected output based on real Squad data.
+
 ## ✨ Available Tools
 
 The Squad MCP server provides 30+ tools across 6 categories:
@@ -198,6 +211,18 @@ This is a hosted service maintained by Squad. Users connect via OAuth - no self-
 - Follows [MCP specification](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports) for stateful HTTP sessions
 - In-memory transport storage (standard per MCP spec)
 
+## 💬 Support
+
+Need help with the Squad MCP server?
+
+- **Email:** support@meetsquad.ai
+- **Documentation:**
+  - [Squad MCP Guide](https://docs.meetsquad.ai/guides/squad-mcp) - Complete setup and integration guide
+  - [USAGE_EXAMPLES.md](./USAGE_EXAMPLES.md) - Real-world usage examples
+- **Issues:** [GitHub Issues](https://github.com/the-basilisk-ai/squad-mcp/issues) - Bug reports and feature requests
+- **Privacy Policy:** [meetsquad.ai/privacy-policy](https://meetsquad.ai/privacy-policy)
+- **Squad Platform:** [meetsquad.ai](https://meetsquad.ai) - Learn about Opportunity Solution Trees
+
 ## 🤝 Contributing
 
 Contributions welcome! Please ensure:
@@ -213,6 +238,7 @@ MIT
 
 ## 🔗 Links
 
+- [Squad MCP Documentation](https://docs.meetsquad.ai/guides/squad-mcp) - Complete setup and integration guide
 - [Squad Platform](https://meetsquad.ai)
 - [MCP Specification](https://modelcontextprotocol.io)
 - [Claude Desktop](https://claude.ai/download)
