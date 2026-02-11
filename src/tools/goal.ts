@@ -48,6 +48,7 @@ export function registerGoalTools(server: OAuthServer) {
         ownerId: z.string().optional().describe("ID of the goal owner"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -100,6 +101,7 @@ export function registerGoalTools(server: OAuthServer) {
       schema: z.object({}),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (_params, ctx) => {
@@ -158,6 +160,7 @@ export function registerGoalTools(server: OAuthServer) {
       }),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (params, ctx) => {
@@ -234,6 +237,7 @@ export function registerGoalTools(server: OAuthServer) {
         ownerId: z.string().optional().describe("Updated ID of the goal owner"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -279,6 +283,7 @@ export function registerGoalTools(server: OAuthServer) {
         goalId: z.string().describe("The ID of the goal to delete"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -328,6 +333,7 @@ export function registerGoalTools(server: OAuthServer) {
           .describe("IDs of opportunities to relate to this goal"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },

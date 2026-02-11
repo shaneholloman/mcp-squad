@@ -55,6 +55,7 @@ export function registerFeedbackTools(server: OAuthServer) {
           .describe("Confidence in sentiment analysis (0-1)"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -104,6 +105,7 @@ export function registerFeedbackTools(server: OAuthServer) {
       schema: z.object({}),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (_params, ctx) => {
@@ -162,6 +164,7 @@ export function registerFeedbackTools(server: OAuthServer) {
       }),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (params, ctx) => {
@@ -203,6 +206,7 @@ export function registerFeedbackTools(server: OAuthServer) {
           .describe("The ID of the feedback entry to delete"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },

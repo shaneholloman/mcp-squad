@@ -29,6 +29,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
         content: z.string().describe("The full content of the knowledge"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -79,6 +80,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
       schema: z.object({}),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (_params, ctx) => {
@@ -135,6 +137,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
       }),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (params, ctx) => {
@@ -178,6 +181,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
           .describe("The ID of the knowledge entry to delete"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },

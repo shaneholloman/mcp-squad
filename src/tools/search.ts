@@ -45,6 +45,7 @@ export function registerSearchTools(server: OAuthServer) {
       }),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (params, ctx) => {
