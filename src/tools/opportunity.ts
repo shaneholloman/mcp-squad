@@ -34,6 +34,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           ),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -81,6 +82,7 @@ export function registerOpportunityTools(server: OAuthServer) {
       schema: z.object({}),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (_params, ctx) => {
@@ -141,6 +143,7 @@ export function registerOpportunityTools(server: OAuthServer) {
       }),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (params, ctx) => {
@@ -220,6 +223,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           ),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -268,6 +272,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           .describe("The ID of the opportunity to delete"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -314,6 +319,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           .describe("Optional prompt to guide solution generation"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -371,6 +377,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           .describe("IDs of insight items to relate to this opportunity"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },

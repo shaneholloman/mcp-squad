@@ -64,6 +64,7 @@ export function registerSolutionTools(server: OAuthServer) {
         status: statusEnum,
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -116,6 +117,7 @@ export function registerSolutionTools(server: OAuthServer) {
       schema: z.object({}),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (_params, ctx) => {
@@ -173,6 +175,7 @@ export function registerSolutionTools(server: OAuthServer) {
       }),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (params, ctx) => {
@@ -259,6 +262,7 @@ export function registerSolutionTools(server: OAuthServer) {
         status: statusEnum,
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -308,6 +312,7 @@ export function registerSolutionTools(server: OAuthServer) {
         solutionId: z.string().describe("The ID of the solution to delete"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -357,6 +362,7 @@ export function registerSolutionTools(server: OAuthServer) {
           .describe("IDs of opportunities to relate to this solution"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },

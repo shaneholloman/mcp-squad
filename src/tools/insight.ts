@@ -36,6 +36,7 @@ export function registerInsightTools(server: OAuthServer) {
         description: z.string().describe("A short description of the insight"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
@@ -86,6 +87,7 @@ export function registerInsightTools(server: OAuthServer) {
       schema: z.object({}),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (_params, ctx) => {
@@ -143,6 +145,7 @@ export function registerInsightTools(server: OAuthServer) {
       }),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (params, ctx) => {
@@ -214,6 +217,7 @@ export function registerInsightTools(server: OAuthServer) {
         insightId: z.string().describe("The ID of the insight entry to delete"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },

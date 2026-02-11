@@ -30,6 +30,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
       schema: z.object({}),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (_params, ctx) => {
@@ -123,6 +124,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
       schema: z.object({}),
       annotations: {
         readOnlyHint: true,
+        destructiveHint: false,
       },
     },
     async (_params, ctx) => {
@@ -175,6 +177,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
           .describe("Updated detailed description of the workspace"),
       }),
       annotations: {
+        readOnlyHint: false,
         destructiveHint: true,
       },
     },
