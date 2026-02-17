@@ -4,6 +4,7 @@ import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
 import {
   CreateSolutionPayloadStatusEnum,
+  PrioritiseSolutionsRequestTriggeredByEnum,
   type RelationshipAction,
 } from "../lib/openapi/squad/models/index.js";
 import {
@@ -116,13 +117,26 @@ export function registerSolutionTools(server: OAuthServer) {
       title: "List Solutions",
       description:
         "List all solutions in the workspace. Solutions are proposed approaches to address opportunities.",
-      schema: z.object({}),
+      schema: z.object({
+        filter: z
+          .enum(["roadmap", "recommended"])
+          .optional()
+          .describe(
+            "Filter solutions: 'roadmap' returns built solutions (user-created or edited), 'recommended' returns AI-generated suggestions not yet acted on. Omit to return all.",
+          ),
+        horizon: z
+          .enum(["now", "next", "later"])
+          .optional()
+          .describe(
+            "Filter by time horizon: 'now' for current work, 'next' for upcoming, 'later' for future.",
+          ),
+      }),
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
       },
     },
-    async (_params, ctx) => {
+    async (params, ctx) => {
       try {
         const userContext = await getUserContext(
           ctx.auth.accessToken,
@@ -130,9 +144,18 @@ export function registerSolutionTools(server: OAuthServer) {
         );
         const { orgId, workspaceId } = userContext;
 
+        const built =
+          params.filter === "roadmap"
+            ? "true"
+            : params.filter === "recommended"
+              ? "false"
+              : undefined;
+
         const solutions = await squadClient(userContext).listSolutions({
           orgId,
           workspaceId,
+          built: built as "true" | "false" | undefined,
+          horizon: params.horizon as "now" | "next" | "later" | undefined,
         });
 
         if (solutions.data.length === 0) {
@@ -142,10 +165,13 @@ export function registerSolutionTools(server: OAuthServer) {
         // Return summaries to reduce token usage - use get_solution for full details
         return toolSuccess({
           count: solutions.data.length,
-          items: solutions.data.map(s => ({
+          items: solutions.data.map((s, i) => ({
             id: s.id,
             title: s.title,
             status: s.status,
+            ...(params.filter === "roadmap"
+              ? { priority: i + 1, horizon: s.horizon }
+              : {}),
           })),
         });
       } catch (error) {
@@ -405,6 +431,66 @@ export function registerSolutionTools(server: OAuthServer) {
         const message =
           error instanceof Error ? error.message : "Unknown error";
         return toolError(`Unable to manage solution relationships: ${message}`);
+      }
+    },
+  );
+
+  // Prioritise Solutions
+  server.tool(
+    {
+      name: "prioritise_solutions",
+      title: "Prioritise Solutions",
+      description:
+        "Reorder the priority of solutions by moving them before a specified solution. This changes the display order of solutions in the workspace.",
+      schema: z.object({
+        solutionIds: z
+          .array(z.string())
+          .describe("List of solution IDs to move"),
+        beforeId: z
+          .string()
+          .nullable()
+          .describe(
+            "ID of the solution before which to place the solutions, or null to place at the end",
+          ),
+      }),
+      annotations: {
+        readOnlyHint: false,
+        destructiveHint: false,
+      },
+    },
+    async (params, ctx) => {
+      try {
+        const userContext = await getUserContext(
+          ctx.auth.accessToken,
+          getUserId(ctx.auth),
+        );
+        const { orgId, workspaceId } = userContext;
+
+        await squadClient(userContext).prioritiseSolutions({
+          orgId,
+          workspaceId,
+          prioritiseSolutionsRequest: {
+            solutionIds: params.solutionIds,
+            beforeId: params.beforeId,
+            triggeredBy: PrioritiseSolutionsRequestTriggeredByEnum.Ai,
+          },
+        });
+
+        return toolSuccess({
+          solutionIds: params.solutionIds,
+          message: "Solutions prioritised successfully",
+        });
+      } catch (error) {
+        if (error instanceof WorkspaceSelectionRequired) {
+          return toolError(formatWorkspaceSelectionError(error));
+        }
+        logger.debug(
+          { err: error, tool: "prioritise_solutions" },
+          "Tool error",
+        );
+        const message =
+          error instanceof Error ? error.message : "Unknown error";
+        return toolError(`Unable to prioritise solutions: ${message}`);
       }
     },
   );
