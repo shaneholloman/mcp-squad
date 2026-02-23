@@ -1,9 +1,9 @@
 [build]
 builder = "RAILPACK"
-buildCommand = "yarn build"
+buildCommand = "MCP_URL= yarn build"
 
 [deploy]
-startCommand = "node dist/server.js"
+startCommand = "yarn start"
 healthcheckPath = "/health"
 healthcheckTimeout = 30
 restartPolicyType = "ON_FAILURE"
