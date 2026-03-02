@@ -36,43 +36,6 @@ type IntrospectionResult = {
   token_type?: string;
 };
 
-const INTROSPECTION_CACHE_TTL_MS = 60 * 1000;
-const INTROSPECTION_CACHE_MAX_SIZE = 1000;
-
-type CachedIntrospection = {
-  result: IntrospectionResult;
-  cachedAt: number;
-};
-
-const introspectionCache = new Map<string, CachedIntrospection>();
-
-function getCachedIntrospection(
-  token: string,
-): IntrospectionResult | undefined {
-  const cached = introspectionCache.get(token);
-  if (!cached) return undefined;
-
-  if (Date.now() - cached.cachedAt > INTROSPECTION_CACHE_TTL_MS) {
-    introspectionCache.delete(token);
-    return undefined;
-  }
-
-  return cached.result;
-}
-
-function cacheIntrospection(token: string, result: IntrospectionResult): void {
-  if (introspectionCache.size >= INTROSPECTION_CACHE_MAX_SIZE) {
-    const entries = Array.from(introspectionCache.entries());
-    entries.sort((a, b) => a[1].cachedAt - b[1].cachedAt);
-    const evictCount = Math.ceil(INTROSPECTION_CACHE_MAX_SIZE * 0.1);
-    for (let i = 0; i < evictCount && i < entries.length; i++) {
-      introspectionCache.delete(entries[i][0]);
-    }
-  }
-
-  introspectionCache.set(token, { result, cachedAt: Date.now() });
-}
-
 function isValidIntrospectionResult(
   data: unknown,
 ): data is IntrospectionResult {
@@ -81,9 +44,6 @@ function isValidIntrospectionResult(
 }
 
 async function introspectToken(token: string): Promise<IntrospectionResult> {
-  const cached = getCachedIntrospection(token);
-  if (cached) return cached;
-
   const response = await fetch(`${AUTH_URL}/oauth/2.1/introspect`, {
     method: "POST",
     headers: {
@@ -105,10 +65,6 @@ async function introspectToken(token: string): Promise<IntrospectionResult> {
     throw new Error(
       'Invalid introspection response: missing or invalid "active" field',
     );
-  }
-
-  if (data.active) {
-    cacheIntrospection(token, data);
   }
 
   return data;
