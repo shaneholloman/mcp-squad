@@ -1,5 +1,11 @@
+import { createClient } from "redis";
 import { config } from "dotenv";
-import { MCPServer, oauthCustomProvider } from "mcp-use/server";
+import {
+  MCPServer,
+  oauthCustomProvider,
+  RedisSessionStore,
+  RedisStreamManager,
+} from "mcp-use/server";
 import { getPropelAuthUrl } from "./src/helpers/config.js";
 import { logger } from "./src/lib/logger.js";
 import { registerFeedbackTools } from "./src/tools/feedback.js";
@@ -70,12 +76,37 @@ async function introspectToken(token: string): Promise<IntrospectionResult> {
   return data;
 }
 
+const redisUrl = process.env.REDIS_URL;
+
+let sessionStore: RedisSessionStore | undefined;
+let streamManager: RedisStreamManager | undefined;
+
+if (redisUrl) {
+  const redis = createClient({ url: redisUrl });
+  const pubSubRedis = redis.duplicate();
+
+  await redis.connect();
+  await pubSubRedis.connect();
+
+  sessionStore = new RedisSessionStore({ client: redis, defaultTTL: 3600 });
+  streamManager = new RedisStreamManager({
+    client: redis,
+    pubSubClient: pubSubRedis,
+  });
+
+  logger.info("Redis session store connected");
+} else {
+  logger.warn("REDIS_URL not set, using in-memory sessions (not deploy-safe)");
+}
+
 const server = new MCPServer({
   name: "squad-mcp",
   version: "3.0.0",
   description:
     "Squad AI MCP Server - Product discovery and opportunity management tools",
   baseUrl: process.env.MCP_URL || BASE_URI,
+  sessionStore,
+  streamManager,
   oauth: oauthCustomProvider({
     issuer: AUTH_URL,
     jwksUrl: `${AUTH_URL}/.well-known/jwks.json`,
