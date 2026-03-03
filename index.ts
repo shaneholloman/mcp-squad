@@ -1,4 +1,3 @@
-import { createClient } from "redis";
 import { config } from "dotenv";
 import {
   MCPServer,
@@ -6,6 +5,7 @@ import {
   RedisSessionStore,
   RedisStreamManager,
 } from "mcp-use/server";
+import { createClient } from "redis";
 import { getPropelAuthUrl } from "./src/helpers/config.js";
 import { logger } from "./src/lib/logger.js";
 import { registerFeedbackTools } from "./src/tools/feedback.js";
@@ -182,9 +182,9 @@ registerInsightTools(server);
 registerSearchTools(server);
 registerViewTools(server);
 
-if (!CLIENT_ID || !CLIENT_SECRET) {
+if (!CLIENT_ID || !CLIENT_SECRET || !process.env.PROPELAUTH_API_KEY) {
   logger.fatal(
-    "Missing required environment variables: PROPELAUTH_CLIENT_ID and PROPELAUTH_CLIENT_SECRET",
+    "Missing required environment variables: PROPELAUTH_CLIENT_ID, PROPELAUTH_CLIENT_SECRET, and PROPELAUTH_API_KEY",
   );
   process.exit(1);
 }
