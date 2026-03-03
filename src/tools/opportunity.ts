@@ -25,14 +25,16 @@ export function registerOpportunityTools(server: OAuthServer) {
       title: "Create Opportunity",
       description:
         "Create a new opportunity. An opportunity is a detailed problem statement identified for the organisation. It doesn't have any solutionising and simply captures an opportunity for the organisation.",
-      schema: z.object({
-        title: z.string().describe("A short title"),
-        description: z
-          .string()
-          .describe(
-            "A short description of the opportunity, detailing the problem statement and opportunity for the business",
-          ),
-      }),
+      schema: z
+        .object({
+          title: z.string().describe("A short title"),
+          description: z
+            .string()
+            .describe(
+              "A short description of the opportunity, detailing the problem statement and opportunity for the business",
+            ),
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
@@ -204,24 +206,26 @@ export function registerOpportunityTools(server: OAuthServer) {
       title: "Update Opportunity",
       description:
         "Update an existing opportunity's details such as title, description, or status.",
-      schema: z.object({
-        opportunityId: z
-          .string()
-          .describe("The ID of the opportunity to update"),
-        title: z.string().optional().describe("Updated title"),
-        description: z.string().optional().describe("Updated description"),
-        status: z
-          .enum([
-            UpdateOpportunityPayloadStatusEnum.New,
-            UpdateOpportunityPayloadStatusEnum.Solved,
-            UpdateOpportunityPayloadStatusEnum.Planned,
-            UpdateOpportunityPayloadStatusEnum.InProgress,
-          ])
-          .optional()
-          .describe(
-            `Updated status: ${UpdateOpportunityPayloadStatusEnum.New} hasn't been developed, ${UpdateOpportunityPayloadStatusEnum.InProgress} means we're currently building out solutions and implementing them. ${UpdateOpportunityPayloadStatusEnum.Planned} means we've finished developing the solutions and are ready to implement them. ${UpdateOpportunityPayloadStatusEnum.Solved} means we've completed the implementation and the opportunity is considered addressed.`,
-          ),
-      }),
+      schema: z
+        .object({
+          opportunityId: z
+            .string()
+            .describe("The ID of the opportunity to update"),
+          title: z.string().optional().describe("Updated title"),
+          description: z.string().optional().describe("Updated description"),
+          status: z
+            .enum([
+              UpdateOpportunityPayloadStatusEnum.New,
+              UpdateOpportunityPayloadStatusEnum.Solved,
+              UpdateOpportunityPayloadStatusEnum.Planned,
+              UpdateOpportunityPayloadStatusEnum.InProgress,
+            ])
+            .optional()
+            .describe(
+              `Updated status: ${UpdateOpportunityPayloadStatusEnum.New} hasn't been developed, ${UpdateOpportunityPayloadStatusEnum.InProgress} means we're currently building out solutions and implementing them. ${UpdateOpportunityPayloadStatusEnum.Planned} means we've finished developing the solutions and are ready to implement them. ${UpdateOpportunityPayloadStatusEnum.Solved} means we've completed the implementation and the opportunity is considered addressed.`,
+            ),
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
