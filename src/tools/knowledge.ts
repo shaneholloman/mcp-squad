@@ -3,6 +3,7 @@ import { getUserContext } from "../helpers/getUser.js";
 import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
 import {
+  formatApiError,
   formatWorkspaceSelectionError,
   getUserId,
   type OAuthServer,
@@ -22,16 +23,19 @@ export function registerKnowledgeTools(server: OAuthServer) {
       title: "Create Knowledge Document",
       description:
         "Create a new knowledge entry. Knowledge entries are text documents that can be used as references or information sources.",
-      schema: z.object({
-        title: z.string().describe("A short title for the knowledge"),
-        description: z
-          .string()
-          .describe("A short summary of the knowledge content"),
-        content: z.string().describe("The full content of the knowledge"),
-      }),
+      schema: z
+        .object({
+          title: z.string().describe("A short title for the knowledge"),
+          description: z
+            .string()
+            .describe("A short summary of the knowledge content"),
+          content: z.string().describe("The full content of the knowledge"),
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -65,8 +69,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
           { err: error, tool: "create_knowledge_document" },
           "Tool error",
         );
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to create knowledge: ${message}`);
       }
     },
@@ -83,6 +86,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (_params, ctx) => {
@@ -119,8 +123,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
           { err: error, tool: "list_knowledge_documents" },
           "Tool error",
         );
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to list knowledge: ${message}`);
       }
     },
@@ -141,6 +144,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -166,8 +170,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
           { err: error, tool: "get_knowledge_document" },
           "Tool error",
         );
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to get knowledge: ${message}`);
       }
     },
@@ -187,6 +190,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -212,8 +216,7 @@ export function registerKnowledgeTools(server: OAuthServer) {
           { err: error, tool: "delete_knowledge_document" },
           "Tool error",
         );
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to delete knowledge: ${message}`);
       }
     },

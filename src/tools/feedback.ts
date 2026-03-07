@@ -4,6 +4,7 @@ import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
 import { CreateFeedbackRequestSentimentCategoryEnum } from "../lib/openapi/squad/models/CreateFeedbackRequest.js";
 import {
+  formatApiError,
   formatWorkspaceSelectionError,
   getUserId,
   type OAuthServer,
@@ -23,41 +24,44 @@ export function registerFeedbackTools(server: OAuthServer) {
       title: "Create Feedback",
       description:
         "Create a new feedback entry. Feedback represents raw, unprocessed feedback from users that can later be analyzed and converted into insights.",
-      schema: z.object({
-        content: z
-          .string()
-          .describe("The original raw feedback content from the user"),
-        source: z
-          .string()
-          .describe(
-            "The source of the feedback (e.g., 'Typeform', 'Slack', 'Manual', 'Email', etc.)",
-          ),
-        sentimentScore: z
-          .number()
-          .min(-1)
-          .max(1)
-          .optional()
-          .describe("Sentiment score from -1 (negative) to 1 (positive)"),
-        sentimentCategory: z
-          .enum([
-            CreateFeedbackRequestSentimentCategoryEnum.Positive,
-            CreateFeedbackRequestSentimentCategoryEnum.Neutral,
-            CreateFeedbackRequestSentimentCategoryEnum.Negative,
-          ])
-          .optional()
-          .describe(
-            "Sentiment classification category: 'Positive', 'Neutral', or 'Negative'",
-          ),
-        sentimentConfidence: z
-          .number()
-          .min(0)
-          .max(1)
-          .optional()
-          .describe("Confidence in sentiment analysis (0-1)"),
-      }),
+      schema: z
+        .object({
+          content: z
+            .string()
+            .describe("The original raw feedback content from the user"),
+          source: z
+            .string()
+            .describe(
+              "The source of the feedback (e.g., 'Typeform', 'Slack', 'Manual', 'Email', etc.)",
+            ),
+          sentimentScore: z
+            .number()
+            .min(-1)
+            .max(1)
+            .optional()
+            .describe("Sentiment score from -1 (negative) to 1 (positive)"),
+          sentimentCategory: z
+            .enum([
+              CreateFeedbackRequestSentimentCategoryEnum.Positive,
+              CreateFeedbackRequestSentimentCategoryEnum.Neutral,
+              CreateFeedbackRequestSentimentCategoryEnum.Negative,
+            ])
+            .optional()
+            .describe(
+              "Sentiment classification category: 'Positive', 'Neutral', or 'Negative'",
+            ),
+          sentimentConfidence: z
+            .number()
+            .min(0)
+            .max(1)
+            .optional()
+            .describe("Confidence in sentiment analysis (0-1)"),
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -90,8 +94,7 @@ export function registerFeedbackTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "create_feedback" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to create feedback: ${message}`);
       }
     },
@@ -108,6 +111,7 @@ export function registerFeedbackTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (_params, ctx) => {
@@ -142,8 +146,7 @@ export function registerFeedbackTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "list_feedback" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to list feedback: ${message}`);
       }
     },
@@ -168,6 +171,7 @@ export function registerFeedbackTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -191,8 +195,7 @@ export function registerFeedbackTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "get_feedback" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to get feedback: ${message}`);
       }
     },
@@ -212,6 +215,7 @@ export function registerFeedbackTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -234,8 +238,7 @@ export function registerFeedbackTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "delete_feedback" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to delete feedback: ${message}`);
       }
     },

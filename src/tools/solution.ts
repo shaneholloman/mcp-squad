@@ -5,9 +5,9 @@ import { logger } from "../lib/logger.js";
 import {
   CreateSolutionPayloadStatusEnum,
   PrioritiseSolutionsRequestTriggeredByEnum,
-  type RelationshipAction,
 } from "../lib/openapi/squad/models/index.js";
 import {
+  formatApiError,
   formatWorkspaceSelectionError,
   getUserId,
   type OAuthServer,
@@ -41,33 +41,36 @@ export function registerSolutionTools(server: OAuthServer) {
       title: "Create Solution",
       description:
         "Create a new solution. A solution is a proposed approach to address an opportunity. The 'prd' field should contain the complete detailed specification, while 'description' should be a brief summary for AI context.",
-      schema: z.object({
-        title: z.string().describe("A short title for the solution"),
-        description: z
-          .string()
-          .describe(
-            "A brief AI-friendly summary of the solution for context and search purposes. Keep this concise.",
-          ),
-        prd: z
-          .string()
-          .describe(
-            "The complete Product Requirements Document (PRD) containing the full detailed specification, implementation plan, and requirements for this solution. This is the primary content field.",
-          ),
-        pros: z
-          .array(z.string())
-          .describe(
-            "List of pros/benefits of this solution. This is a sentence or two max.",
-          ),
-        cons: z
-          .array(z.string())
-          .describe(
-            "List of cons/drawbacks of this solution. This is a sentence or two max.",
-          ),
-        status: statusEnum,
-      }),
+      schema: z
+        .object({
+          title: z.string().describe("A short title for the solution"),
+          description: z
+            .string()
+            .describe(
+              "A brief AI-friendly summary of the solution for context and search purposes. Keep this concise.",
+            ),
+          prd: z
+            .string()
+            .describe(
+              "The complete Product Requirements Document (PRD) containing the full detailed specification, implementation plan, and requirements for this solution. This is the primary content field.",
+            ),
+          pros: z
+            .array(z.string())
+            .describe(
+              "List of pros/benefits of this solution. This is a sentence or two max.",
+            ),
+          cons: z
+            .array(z.string())
+            .describe(
+              "List of cons/drawbacks of this solution. This is a sentence or two max.",
+            ),
+          status: statusEnum,
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -103,8 +106,7 @@ export function registerSolutionTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "create_solution" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to create solution: ${message}`);
       }
     },
@@ -134,6 +136,7 @@ export function registerSolutionTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -154,8 +157,8 @@ export function registerSolutionTools(server: OAuthServer) {
         const solutions = await squadClient(userContext).listSolutions({
           orgId,
           workspaceId,
-          built: built as "true" | "false" | undefined,
-          horizon: params.horizon as "now" | "next" | "later" | undefined,
+          built,
+          horizon: params.horizon,
         });
 
         if (solutions.data.length === 0) {
@@ -179,8 +182,7 @@ export function registerSolutionTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "list_solutions" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to list solutions: ${message}`);
       }
     },
@@ -205,6 +207,7 @@ export function registerSolutionTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -225,35 +228,28 @@ export function registerSolutionTools(server: OAuthServer) {
         // Return summaries for relationships to reduce token usage
         return toolSuccess({
           ...solution,
-          opportunities: solution.opportunities?.map(
-            (o: { id: string; title: string; status: string }) => ({
-              id: o.id,
-              title: o.title,
-              status: o.status,
-            }),
-          ),
-          outcomes: solution.outcomes?.map(
-            (o: { id: string; title: string; priority: number }) => ({
-              id: o.id,
-              title: o.title,
-              priority: o.priority,
-            }),
-          ),
-          insights: solution.insights?.map(
-            (i: { id: string; title: string; type: string }) => ({
-              id: i.id,
-              title: i.title,
-              type: i.type,
-            }),
-          ),
+          opportunities: solution.opportunities?.map(o => ({
+            id: o.id,
+            title: o.title,
+            status: o.status,
+          })),
+          outcomes: solution.outcomes?.map(o => ({
+            id: o.id,
+            title: o.title,
+            priority: o.priority,
+          })),
+          insights: solution.insights?.map(i => ({
+            id: i.id,
+            title: i.title,
+            type: i.type,
+          })),
         });
       } catch (error) {
         if (error instanceof WorkspaceSelectionRequired) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "get_solution" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to get solution: ${message}`);
       }
     },
@@ -265,35 +261,38 @@ export function registerSolutionTools(server: OAuthServer) {
       name: "update_solution",
       title: "Update Solution",
       description:
-        "Update an existing solution's details such as title, description, pros, cons, or status.",
-      schema: z.object({
-        solutionId: z.string().describe("The ID of the solution to update"),
-        title: z.string().optional().describe("Updated title"),
-        description: z
-          .string()
-          .optional()
-          .describe(
-            "Updated brief AI-friendly summary for context and search purposes",
-          ),
-        prd: z
-          .string()
-          .optional()
-          .describe(
-            "Updated complete Product Requirements Document (PRD) containing the full detailed specification and implementation plan",
-          ),
-        pros: z
-          .array(z.string())
-          .optional()
-          .describe("Updated list of pros/benefits"),
-        cons: z
-          .array(z.string())
-          .optional()
-          .describe("Updated list of cons/drawbacks"),
-        status: statusEnum,
-      }),
+        "Update an existing solution's details such as title, description, pros, cons, or status. Does NOT support changing priority — use prioritise_solutions to reorder.",
+      schema: z
+        .object({
+          solutionId: z.string().describe("The ID of the solution to update"),
+          title: z.string().optional().describe("Updated title"),
+          description: z
+            .string()
+            .optional()
+            .describe(
+              "Updated brief AI-friendly summary for context and search purposes",
+            ),
+          prd: z
+            .string()
+            .optional()
+            .describe(
+              "Updated complete Product Requirements Document (PRD) containing the full detailed specification and implementation plan",
+            ),
+          pros: z
+            .array(z.string())
+            .optional()
+            .describe("Updated list of pros/benefits"),
+          cons: z
+            .array(z.string())
+            .optional()
+            .describe("Updated list of cons/drawbacks"),
+          status: statusEnum,
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -326,8 +325,7 @@ export function registerSolutionTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "update_solution" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to update solution: ${message}`);
       }
     },
@@ -345,6 +343,7 @@ export function registerSolutionTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -367,8 +366,7 @@ export function registerSolutionTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "delete_solution" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to delete solution: ${message}`);
       }
     },
@@ -396,6 +394,7 @@ export function registerSolutionTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -410,7 +409,7 @@ export function registerSolutionTools(server: OAuthServer) {
           orgId,
           workspaceId,
           solutionId: params.solutionId,
-          action: params.action as RelationshipAction,
+          action: params.action,
           solutionRelationshipsPayload: {
             opportunityIds: params.opportunityIds || [],
           },
@@ -428,8 +427,7 @@ export function registerSolutionTools(server: OAuthServer) {
           { err: error, tool: "manage_solution_relationships" },
           "Tool error",
         );
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to manage solution relationships: ${message}`);
       }
     },
@@ -441,7 +439,7 @@ export function registerSolutionTools(server: OAuthServer) {
       name: "prioritise_solutions",
       title: "Prioritise Solutions",
       description:
-        "Reorder the priority of solutions by moving them before a specified solution. This changes the display order of solutions in the workspace.",
+        "Reorder the priority of solutions by moving them before a specified solution. This is the only way to change solution priority/ordering in the workspace.",
       schema: z.object({
         solutionIds: z
           .array(z.string())
@@ -456,6 +454,7 @@ export function registerSolutionTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -488,8 +487,7 @@ export function registerSolutionTools(server: OAuthServer) {
           { err: error, tool: "prioritise_solutions" },
           "Tool error",
         );
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to prioritise solutions: ${message}`);
       }
     },

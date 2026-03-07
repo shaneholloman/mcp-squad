@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/react-vite";
 import "../resources/view-strategy-context/styles.css";
+import "../resources/view-roadmap/styles.css";
 
 const preview: Preview = {
   parameters: {
@@ -14,7 +15,7 @@ const preview: Preview = {
   },
   decorators: [
     Story => (
-      <div style={{ maxWidth: 420, width: "100%" }}>
+      <div style={{ maxWidth: 420, minWidth: 320, width: "100%" }}>
         <Story />
       </div>
     ),

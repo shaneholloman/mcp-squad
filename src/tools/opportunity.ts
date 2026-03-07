@@ -2,11 +2,9 @@ import { z } from "zod";
 import { getUserContext } from "../helpers/getUser.js";
 import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
+import { UpdateOpportunityPayloadStatusEnum } from "../lib/openapi/squad/models/index.js";
 import {
-  type RelationshipAction,
-  UpdateOpportunityPayloadStatusEnum,
-} from "../lib/openapi/squad/models/index.js";
-import {
+  formatApiError,
   formatWorkspaceSelectionError,
   getUserId,
   type OAuthServer,
@@ -26,17 +24,20 @@ export function registerOpportunityTools(server: OAuthServer) {
       title: "Create Opportunity",
       description:
         "Create a new opportunity. An opportunity is a detailed problem statement identified for the organisation. It doesn't have any solutionising and simply captures an opportunity for the organisation.",
-      schema: z.object({
-        title: z.string().describe("A short title"),
-        description: z
-          .string()
-          .describe(
-            "A short description of the opportunity, detailing the problem statement and opportunity for the business",
-          ),
-      }),
+      schema: z
+        .object({
+          title: z.string().describe("A short title"),
+          description: z
+            .string()
+            .describe(
+              "A short description of the opportunity, detailing the problem statement and opportunity for the business",
+            ),
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -67,8 +68,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "create_opportunity" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to create opportunity: ${message}`);
       }
     },
@@ -85,6 +85,7 @@ export function registerOpportunityTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (_params, ctx) => {
@@ -118,8 +119,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "list_opportunities" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to list opportunities: ${message}`);
       }
     },
@@ -147,6 +147,7 @@ export function registerOpportunityTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -167,35 +168,28 @@ export function registerOpportunityTools(server: OAuthServer) {
         // Return summaries for relationships to reduce token usage
         return toolSuccess({
           ...opportunity,
-          outcomes: opportunity.outcomes?.map(
-            (o: { id: string; title: string; priority: number }) => ({
-              id: o.id,
-              title: o.title,
-              priority: o.priority,
-            }),
-          ),
-          solutions: opportunity.solutions?.map(
-            (s: { id: string; title: string; status: string }) => ({
-              id: s.id,
-              title: s.title,
-              status: s.status,
-            }),
-          ),
-          insights: opportunity.insights?.map(
-            (i: { id: string; title: string; type: string }) => ({
-              id: i.id,
-              title: i.title,
-              type: i.type,
-            }),
-          ),
+          outcomes: opportunity.outcomes?.map(o => ({
+            id: o.id,
+            title: o.title,
+            priority: o.priority,
+          })),
+          solutions: opportunity.solutions?.map(s => ({
+            id: s.id,
+            title: s.title,
+            status: s.status,
+          })),
+          insights: opportunity.insights?.map(i => ({
+            id: i.id,
+            title: i.title,
+            type: i.type,
+          })),
         });
       } catch (error) {
         if (error instanceof WorkspaceSelectionRequired) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "get_opportunity" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to get opportunity: ${message}`);
       }
     },
@@ -208,27 +202,30 @@ export function registerOpportunityTools(server: OAuthServer) {
       title: "Update Opportunity",
       description:
         "Update an existing opportunity's details such as title, description, or status.",
-      schema: z.object({
-        opportunityId: z
-          .string()
-          .describe("The ID of the opportunity to update"),
-        title: z.string().optional().describe("Updated title"),
-        description: z.string().optional().describe("Updated description"),
-        status: z
-          .enum([
-            UpdateOpportunityPayloadStatusEnum.New,
-            UpdateOpportunityPayloadStatusEnum.Solved,
-            UpdateOpportunityPayloadStatusEnum.Planned,
-            UpdateOpportunityPayloadStatusEnum.InProgress,
-          ])
-          .optional()
-          .describe(
-            `Updated status: ${UpdateOpportunityPayloadStatusEnum.New} hasn't been developed, ${UpdateOpportunityPayloadStatusEnum.InProgress} means we're currently building out solutions and implementing them. ${UpdateOpportunityPayloadStatusEnum.Planned} means we've finished developing the solutions and are ready to implement them. ${UpdateOpportunityPayloadStatusEnum.Solved} means we've completed the implementation and the opportunity is considered addressed.`,
-          ),
-      }),
+      schema: z
+        .object({
+          opportunityId: z
+            .string()
+            .describe("The ID of the opportunity to update"),
+          title: z.string().optional().describe("Updated title"),
+          description: z.string().optional().describe("Updated description"),
+          status: z
+            .enum([
+              UpdateOpportunityPayloadStatusEnum.New,
+              UpdateOpportunityPayloadStatusEnum.Solved,
+              UpdateOpportunityPayloadStatusEnum.Planned,
+              UpdateOpportunityPayloadStatusEnum.InProgress,
+            ])
+            .optional()
+            .describe(
+              `Updated status: ${UpdateOpportunityPayloadStatusEnum.New} hasn't been developed, ${UpdateOpportunityPayloadStatusEnum.InProgress} means we're currently building out solutions and implementing them. ${UpdateOpportunityPayloadStatusEnum.Planned} means we've finished developing the solutions and are ready to implement them. ${UpdateOpportunityPayloadStatusEnum.Solved} means we've completed the implementation and the opportunity is considered addressed.`,
+            ),
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -258,8 +255,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "update_opportunity" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to update opportunity: ${message}`);
       }
     },
@@ -279,6 +275,7 @@ export function registerOpportunityTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -301,8 +298,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "delete_opportunity" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to delete opportunity: ${message}`);
       }
     },
@@ -327,6 +323,7 @@ export function registerOpportunityTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -349,8 +346,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "generate_solutions" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to generate solutions: ${message}`);
       }
     },
@@ -386,6 +382,7 @@ export function registerOpportunityTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -400,7 +397,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           orgId,
           workspaceId,
           opportunityId: params.opportunityId,
-          action: params.action as RelationshipAction,
+          action: params.action,
           opportunityRelationshipsPayload: {
             solutionIds: params.solutionIds || [],
             outcomeIds: params.outcomeIds || [],
@@ -420,8 +417,7 @@ export function registerOpportunityTools(server: OAuthServer) {
           { err: error, tool: "manage_opportunity_relationships" },
           "Tool error",
         );
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(
           `Unable to manage opportunity relationships: ${message}`,
         );

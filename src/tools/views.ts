@@ -4,7 +4,9 @@ import { getSquadAppUrl } from "../helpers/config.js";
 import { getUserContext } from "../helpers/getUser.js";
 import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
+import { CreateSolutionPayloadStatusEnum } from "../lib/openapi/squad/models/index.js";
 import {
+  formatApiError,
   formatWorkspaceSelectionError,
   getUserId,
   type OAuthServer,
@@ -244,13 +246,11 @@ async function buildOpportunityContext(
       ? {
           type: "solution",
           count: solutions.length,
-          items: solutions
-            .slice(0, 4)
-            .map((s: { id: string; title: string; status: string }) => ({
-              id: s.id,
-              title: s.title,
-              status: s.status,
-            })),
+          items: solutions.slice(0, 4).map(s => ({
+            id: s.id,
+            title: s.title,
+            status: s.status,
+          })),
         }
       : undefined;
 
@@ -295,13 +295,11 @@ async function buildGoalContext(
       ? {
           type: "opportunity",
           count: opportunities.length,
-          items: opportunities
-            .slice(0, 4)
-            .map((o: { id: string; title: string; status: string }) => ({
-              id: o.id,
-              title: o.title,
-              status: o.status,
-            })),
+          items: opportunities.slice(0, 4).map(o => ({
+            id: o.id,
+            title: o.title,
+            status: o.status,
+          })),
         }
       : undefined;
 
@@ -336,7 +334,7 @@ async function buildWorkspaceContext(
       ? {
           type: "goal",
           count: goals.length,
-          items: goals.slice(0, 4).map((g: { id: string; title: string }) => ({
+          items: goals.slice(0, 4).map(g => ({
             id: g.id,
             title: g.title,
           })),
@@ -506,87 +504,168 @@ async function buildFeedbackContext(
   return { ancestors, focused };
 }
 
-const TYPE_PLURALS: Record<string, string> = {
-  goal: "Goals",
-  opportunity: "Opportunities",
-  solution: "Solutions",
-  insight: "Insights",
-  feedback: "Feedback",
+/** Short summary for the model when a widget is rendered. */
+function summarizeContext(data: EntityContextData): string {
+  const chain = [...data.ancestors, data.focused]
+    .map(n => `${n.type}: ${n.title}`)
+    .join(" → ");
+  const parts = [chain];
+  if (data.focused.status) parts.push(`Status: ${data.focused.status}`);
+  if (data.children)
+    parts.push(`${data.children.count} ${data.children.type}(s)`);
+  return parts.join(". ");
+}
+
+/** Short summary for the model when a widget is rendered. */
+function summarizeRoadmap(data: RoadmapData): string {
+  const horizons = data.columns
+    .map(c => `${c.horizon}: ${c.solutions.length}`)
+    .join(", ");
+  const goals = data.goals.map(g => g.title).join(", ");
+  return `Roadmap: ${data.totalSolutions} solutions (${horizons}). Goals: ${goals}`;
+}
+
+/* ─── Roadmap data types ─────────────────────────────────────────────── */
+
+type RoadmapGoalSummary = {
+  id: string;
+  title: string;
+  priority: number;
 };
 
-const STATUS_LABELS: Record<string, string> = {
-  New: "New",
-  InProgress: "In Progress",
-  InDevelopment: "In Development",
-  Planned: "Planned",
-  Complete: "Complete",
-  Solved: "Solved",
-  Live: "Live",
-  Done: "Done",
-  Parked: "Parked",
-  Cancelled: "Cancelled",
-  Backlog: "Backlog",
-  FeatureRequest: "Feature Request",
-  Bug: "Bug",
-  Feedback: "Feedback",
+type RoadmapSolution = {
+  id: string;
+  title: string;
+  status: string;
+  horizon?: string;
+  goalId?: string;
 };
+
+type RoadmapHorizonColumn = {
+  horizon: "now" | "next" | "later";
+  solutions: Array<{
+    id: string;
+    title: string;
+    status: string;
+    goalId?: string;
+  }>;
+};
+
+type RoadmapData = {
+  goals: RoadmapGoalSummary[];
+  columns: RoadmapHorizonColumn[];
+  totalSolutions: number;
+  appBaseUrl?: string;
+};
+
+const RESOLVED_STATUSES = new Set(["Complete", "Cancelled"]);
+const HORIZON_ORDER = ["now", "next", "later"] as const;
 
 /**
- * Format entity context data as human-readable text for non-UI MCP clients.
+ * Fetch goals + roadmap solutions and assemble the roadmap view data.
  */
-function formatHierarchyText(data: EntityContextData): string {
-  const lines: string[] = [];
-  const indent = "  ";
+async function buildRoadmapData(
+  client: ReturnType<typeof squadClient>,
+  orgId: string,
+  workspaceId: string,
+  opts: {
+    goalId?: string;
+    statusFilter?: string[];
+    showResolved?: boolean;
+  },
+): Promise<RoadmapData> {
+  const [goalsResp, solutionsResp] = await Promise.all([
+    client.listGoals({ orgId, workspaceId }),
+    client.listSolutions({
+      orgId,
+      workspaceId,
+      built: "true",
+      relationships: "outcomes",
+    }),
+  ]);
 
-  for (const ancestor of data.ancestors) {
-    const label =
-      ancestor.type.charAt(0).toUpperCase() + ancestor.type.slice(1);
-    const parts: string[] = [];
-    if (ancestor.status)
-      parts.push(STATUS_LABELS[ancestor.status] || ancestor.status);
-    if (ancestor.type === "goal" && ancestor.priority)
-      parts.push(`Importance: ${ancestor.priority}/5`);
-    const suffix = parts.length > 0 ? ` (${parts.join(", ")})` : "";
-    lines.push(`${label}: ${ancestor.title}${suffix}`);
+  // Build goal lookup
+  const goalLookup = new Map<
+    string,
+    { id: string; title: string; priority: number }
+  >();
+  for (const g of goalsResp.data) {
+    goalLookup.set(g.id, {
+      id: g.id,
+      title: g.title,
+      priority: g.priority ?? 0,
+    });
   }
 
-  const focusedLabel =
-    data.focused.type.charAt(0).toUpperCase() + data.focused.type.slice(1);
-  const focusedParts: string[] = [];
-  if (data.focused.status)
-    focusedParts.push(
-      STATUS_LABELS[data.focused.status] || data.focused.status,
-    );
-  if (data.focused.type === "goal" && data.focused.priority)
-    focusedParts.push(`Importance: ${data.focused.priority}/5`);
-  const focusedSuffix =
-    focusedParts.length > 0 ? ` (${focusedParts.join(", ")})` : "";
-  lines.push(`→ ${focusedLabel}: ${data.focused.title}${focusedSuffix}`);
+  // Map solutions with goalId from outcomes
+  let solutions: RoadmapSolution[] = solutionsResp.data.map(
+    (s: {
+      id: string;
+      title: string;
+      status: string;
+      horizon?: string;
+      outcomes?: Array<{ id: string }>;
+    }) => ({
+      id: s.id,
+      title: s.title,
+      status: s.status,
+      horizon: s.horizon,
+      goalId: s.outcomes?.[0]?.id,
+    }),
+  );
 
-  if (data.focused.description) {
-    lines.push(`${indent}${data.focused.description}`);
+  // Apply filters
+  if (opts.goalId) {
+    solutions = solutions.filter(s => s.goalId === opts.goalId);
+  }
+  if (opts.statusFilter && opts.statusFilter.length > 0) {
+    const allowed = new Set(opts.statusFilter);
+    solutions = solutions.filter(s => allowed.has(s.status));
+  }
+  if (!opts.showResolved) {
+    solutions = solutions.filter(s => !RESOLVED_STATUSES.has(s.status));
   }
 
-  if (data.children) {
-    const label =
-      data.children.count !== 1
-        ? (TYPE_PLURALS[data.children.type] ?? `${data.children.type}s`)
-        : data.children.type.charAt(0).toUpperCase() +
-          data.children.type.slice(1);
-    lines.push(`${indent}${data.children.count} ${label}`);
+  // Group by horizon, omit empty
+  const groups = new Map<string, RoadmapSolution[]>();
+  for (const s of solutions) {
+    const h = s.horizon || "later";
+    let bucket = groups.get(h);
+    if (!bucket) {
+      bucket = [];
+      groups.set(h, bucket);
+    }
+    bucket.push(s);
   }
 
-  if (data.appBaseUrl && data.focused.type !== "workspace") {
-    const section =
-      data.focused.type === "insight" || data.focused.type === "feedback"
-        ? "insights"
-        : "strategy";
-    const url = `${data.appBaseUrl}/${section}?p=${data.focused.type}&i=${data.focused.id}`;
-    lines.push(`\nView in Squad: ${url}`);
-  }
+  const columns: RoadmapHorizonColumn[] = HORIZON_ORDER.filter(h =>
+    groups.has(h),
+  ).map(h => ({
+    horizon: h,
+    solutions: (groups.get(h) ?? []).map(s => ({
+      id: s.id,
+      title: s.title,
+      status: s.status,
+      goalId: s.goalId,
+    })),
+  }));
 
-  return lines.join("\n");
+  // All goals sorted by priority desc
+  const goals: RoadmapGoalSummary[] = [...goalLookup.values()].sort(
+    (a, b) => b.priority - a.priority,
+  );
+
+  return { goals, columns, totalSolutions: solutions.length };
 }
+
+const solutionStatusEnum = z.enum([
+  CreateSolutionPayloadStatusEnum.New,
+  CreateSolutionPayloadStatusEnum.InDevelopment,
+  CreateSolutionPayloadStatusEnum.Planned,
+  CreateSolutionPayloadStatusEnum.Complete,
+  CreateSolutionPayloadStatusEnum.Cancelled,
+  CreateSolutionPayloadStatusEnum.Backlog,
+]);
 
 /**
  * Register view tools with the MCP server
@@ -623,11 +702,12 @@ export function registerViewTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
       widget: {
         name: "view-strategy-context",
-        invoking: "Loading entity context...",
-        invoked: "Entity context ready",
+        invoking: "Loading strategy context...",
+        invoked: "Strategy context ready",
       },
     },
     async (params, ctx) => {
@@ -715,8 +795,8 @@ export function registerViewTools(server: OAuthServer) {
         // - Dual-protocol _meta (MCP Apps + ChatGPT Apps SDK)
         // - structuredContent for ChatGPT (window.openai.toolOutput)
         return widget({
-          props: data as unknown as Record<string, unknown>,
-          output: text(formatHierarchyText(data)),
+          props: data,
+          output: text(summarizeContext(data)),
         });
       } catch (error) {
         if (error instanceof WorkspaceSelectionRequired) {
@@ -726,9 +806,74 @@ export function registerViewTools(server: OAuthServer) {
           { err: error, tool: "view_strategy_context" },
           "Tool error",
         );
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to view entity in context: ${message}`);
+      }
+    },
+  );
+
+  server.tool(
+    {
+      name: "view_roadmap",
+      title: "View Roadmap",
+      description:
+        "Show the product roadmap — solutions organized by time horizon (Now/Next/Later) with goal context. " +
+        "Use this when the user asks about the roadmap, what's planned, what's coming next, priorities, " +
+        "or wants to see an overview of solutions being built.",
+      schema: z.object({
+        goalId: z
+          .string()
+          .optional()
+          .describe("Filter to solutions linked to this goal"),
+        statusFilter: z
+          .array(solutionStatusEnum)
+          .optional()
+          .describe("Filter by solution statuses"),
+        showResolved: z
+          .boolean()
+          .optional()
+          .default(false)
+          .describe("Include completed/cancelled solutions"),
+      }),
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        openWorldHint: false,
+      },
+      widget: {
+        name: "view-roadmap",
+        invoking: "Loading roadmap...",
+        invoked: "Roadmap ready",
+      },
+    },
+    async (params, ctx) => {
+      try {
+        const userContext = await getUserContext(
+          ctx.auth.accessToken,
+          getUserId(ctx.auth),
+        );
+        const { orgId, workspaceId } = userContext;
+        const client = squadClient(userContext);
+
+        const data = await buildRoadmapData(client, orgId, workspaceId, {
+          goalId: params.goalId,
+          statusFilter: params.statusFilter,
+          showResolved: params.showResolved,
+        });
+
+        data.appBaseUrl = `${getSquadAppUrl()}/${orgId}/${workspaceId}`;
+
+        return widget({
+          props: data,
+          output: text(summarizeRoadmap(data)),
+        });
+      } catch (error) {
+        if (error instanceof WorkspaceSelectionRequired) {
+          return toolError(formatWorkspaceSelectionError(error));
+        }
+        logger.debug({ err: error, tool: "view_roadmap" }, "Tool error");
+        const message = await formatApiError(error);
+        return toolError(`Unable to view roadmap: ${message}`);
       }
     },
   );

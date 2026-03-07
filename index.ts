@@ -1,5 +1,11 @@
 import { config } from "dotenv";
-import { MCPServer, oauthCustomProvider } from "mcp-use/server";
+import {
+  MCPServer,
+  oauthCustomProvider,
+  RedisSessionStore,
+  RedisStreamManager,
+} from "mcp-use/server";
+import { createClient } from "redis";
 import { getPropelAuthUrl } from "./src/helpers/config.js";
 import { logger } from "./src/lib/logger.js";
 import { registerFeedbackTools } from "./src/tools/feedback.js";
@@ -36,43 +42,6 @@ type IntrospectionResult = {
   token_type?: string;
 };
 
-const INTROSPECTION_CACHE_TTL_MS = 60 * 1000;
-const INTROSPECTION_CACHE_MAX_SIZE = 1000;
-
-type CachedIntrospection = {
-  result: IntrospectionResult;
-  cachedAt: number;
-};
-
-const introspectionCache = new Map<string, CachedIntrospection>();
-
-function getCachedIntrospection(
-  token: string,
-): IntrospectionResult | undefined {
-  const cached = introspectionCache.get(token);
-  if (!cached) return undefined;
-
-  if (Date.now() - cached.cachedAt > INTROSPECTION_CACHE_TTL_MS) {
-    introspectionCache.delete(token);
-    return undefined;
-  }
-
-  return cached.result;
-}
-
-function cacheIntrospection(token: string, result: IntrospectionResult): void {
-  if (introspectionCache.size >= INTROSPECTION_CACHE_MAX_SIZE) {
-    const entries = Array.from(introspectionCache.entries());
-    entries.sort((a, b) => a[1].cachedAt - b[1].cachedAt);
-    const evictCount = Math.ceil(INTROSPECTION_CACHE_MAX_SIZE * 0.1);
-    for (let i = 0; i < evictCount && i < entries.length; i++) {
-      introspectionCache.delete(entries[i][0]);
-    }
-  }
-
-  introspectionCache.set(token, { result, cachedAt: Date.now() });
-}
-
 function isValidIntrospectionResult(
   data: unknown,
 ): data is IntrospectionResult {
@@ -81,9 +50,6 @@ function isValidIntrospectionResult(
 }
 
 async function introspectToken(token: string): Promise<IntrospectionResult> {
-  const cached = getCachedIntrospection(token);
-  if (cached) return cached;
-
   const response = await fetch(`${AUTH_URL}/oauth/2.1/introspect`, {
     method: "POST",
     headers: {
@@ -107,11 +73,30 @@ async function introspectToken(token: string): Promise<IntrospectionResult> {
     );
   }
 
-  if (data.active) {
-    cacheIntrospection(token, data);
-  }
-
   return data;
+}
+
+const redisUrl = process.env.REDIS_URL;
+
+let sessionStore: RedisSessionStore | undefined;
+let streamManager: RedisStreamManager | undefined;
+
+if (redisUrl) {
+  const redis = createClient({ url: redisUrl });
+  const pubSubRedis = redis.duplicate();
+
+  await redis.connect();
+  await pubSubRedis.connect();
+
+  sessionStore = new RedisSessionStore({ client: redis, defaultTTL: 3600 });
+  streamManager = new RedisStreamManager({
+    client: redis,
+    pubSubClient: pubSubRedis,
+  });
+
+  logger.info("Redis session store connected");
+} else {
+  logger.warn("REDIS_URL not set, using in-memory sessions (not deploy-safe)");
 }
 
 const server = new MCPServer({
@@ -120,10 +105,14 @@ const server = new MCPServer({
   description:
     "Squad AI MCP Server - Product discovery and opportunity management tools",
   baseUrl: process.env.MCP_URL || BASE_URI,
+  sessionStore,
+  streamManager,
   oauth: oauthCustomProvider({
     issuer: AUTH_URL,
     jwksUrl: `${AUTH_URL}/.well-known/jwks.json`,
-    authEndpoint: `${AUTH_URL}/oauth/2.1/authorize`,
+    // Proxy authorize through our server to strip the RFC 8707 `resource`
+    // parameter that PropelAuth doesn't support.
+    authEndpoint: `${process.env.MCP_URL || BASE_URI}/oauth/authorize`,
     tokenEndpoint: `${AUTH_URL}/oauth/2.1/token`,
     scopesSupported: SCOPES,
     grantTypesSupported: ["authorization_code", "refresh_token"],
@@ -152,58 +141,53 @@ const server = new MCPServer({
   }),
 });
 
-// OAuth discovery proxies – registered before listen() to take precedence over mcp-use's built-in handlers.
-// PropelAuth only serves metadata at /.well-known/oauth-authorization-server/oauth/2.1 (returns 404
-// at the standard path), so we proxy it and rewrite endpoints to point through our server.
-const SERVER_BASE = process.env.MCP_URL || BASE_URI;
+// Health check (used by Railway for deployment readiness)
+server.app.get("/health", c => c.json({ status: "ok", version: "3.0.0" }));
 
-server.app.get("/.well-known/oauth-authorization-server", async c => {
-  try {
-    const response = await fetch(
-      `${AUTH_URL}/.well-known/oauth-authorization-server/oauth/2.1`,
-    );
-    if (!response.ok) {
-      return c.json({ error: "Failed to fetch OAuth metadata" }, 502);
+// Proxy the authorize endpoint to PropelAuth, forwarding all parameters including
+// the RFC 8707 `resource` parameter that PropelAuth requires.
+server.app.get("/oauth/authorize", c => {
+  const url = new URL(`${AUTH_URL}/oauth/2.1/authorize`);
+  for (const [key, value] of Object.entries(c.req.query())) {
+    if (value !== undefined) {
+      url.searchParams.set(key, value);
     }
-    const metadata = await response.json();
-    // Rewrite issuer to our server so clients discover our proxied endpoints
-    metadata.issuer = SERVER_BASE;
-    metadata.authorization_endpoint = `${SERVER_BASE}/authorize`;
-    metadata.token_endpoint = `${SERVER_BASE}/token`;
-    return c.json(metadata);
-  } catch {
-    return c.json({ error: "Service unavailable" }, 503);
   }
+  return c.redirect(url.toString(), 302);
 });
 
-// Protected resource metadata – point authorization_servers to our server (not PropelAuth directly)
-// so clients discover our /.well-known/oauth-authorization-server proxy
+// PropelAuth serves OAuth metadata at a non-standard path (/oauth/2.1 suffix).
+// Proxy it at the standard path so MCP clients can discover registration_endpoint.
+const mcpUrl = process.env.MCP_URL || BASE_URI;
+server.app.get("/.well-known/oauth-authorization-server", async c => {
+  const response = await fetch(
+    `${AUTH_URL}/.well-known/oauth-authorization-server/oauth/2.1`,
+  );
+  if (!response.ok) {
+    return c.json({ error: "Failed to fetch auth server metadata" }, 502);
+  }
+  const metadata = await response.json();
+  // Rewrite authorization_endpoint so clients that discover via metadata
+  // also go through our proxy (which strips the `resource` param).
+  metadata.authorization_endpoint = `${mcpUrl}/oauth/authorize`;
+  return c.json(metadata);
+});
+
+// Protected resource metadata must point authorization_servers to our server
+// so clients discover our proxied /.well-known/oauth-authorization-server.
 for (const path of [
   "/.well-known/oauth-protected-resource",
   "/.well-known/oauth-protected-resource/mcp",
+  "/mcp/.well-known/oauth-protected-resource",
 ]) {
   server.app.get(path, c =>
     c.json({
-      resource: path.endsWith("/mcp") ? `${SERVER_BASE}/mcp` : SERVER_BASE,
-      authorization_servers: [SERVER_BASE],
-      bearer_methods_supported: ["header"],
+      resource: `${mcpUrl}/mcp`,
+      authorization_servers: [mcpUrl],
       scopes_supported: SCOPES,
     }),
   );
 }
-
-// Authorize proxy – mcp-use's built-in /authorize doesn't forward the `resource` parameter
-// that PropelAuth requires (RFC 8707). Pass all query params through.
-server.app.get("/authorize", c => {
-  const authUrl = new URL(`${AUTH_URL}/oauth/2.1/authorize`);
-  for (const [key, value] of Object.entries(c.req.query())) {
-    authUrl.searchParams.set(key, value);
-  }
-  return c.redirect(authUrl.toString(), 302);
-});
-
-// Health check (used by Railway for deployment readiness)
-server.app.get("/health", c => c.json({ status: "ok", version: "3.0.0" }));
 
 // Register tools
 registerWorkspaceTools(server);
@@ -216,9 +200,9 @@ registerInsightTools(server);
 registerSearchTools(server);
 registerViewTools(server);
 
-if (!CLIENT_ID || !CLIENT_SECRET) {
+if (!CLIENT_ID || !CLIENT_SECRET || !process.env.PROPELAUTH_API_KEY) {
   logger.fatal(
-    "Missing required environment variables: PROPELAUTH_CLIENT_ID and PROPELAUTH_CLIENT_SECRET",
+    "Missing required environment variables: PROPELAUTH_CLIENT_ID, PROPELAUTH_CLIENT_SECRET, and PROPELAUTH_API_KEY",
   );
   process.exit(1);
 }

@@ -43,16 +43,19 @@ Each example shows the actual user prompt, which tools get called behind the sce
 
 ## ✨ Available Tools
 
-The Squad MCP server provides 30+ tools across 6 categories:
+The Squad MCP server provides 30+ tools across 9 categories:
 
-| Category          | Tools                                                                                                     | Purpose                                    |
-| ----------------- | --------------------------------------------------------------------------------------------------------- | ------------------------------------------ |
-| **Opportunities** | `list_opportunities`, `get_opportunity`, `create_opportunity`, `update_opportunity`, `delete_opportunity` | Discover and refine product opportunities  |
-| **Solutions**     | `list_solutions`, `get_solution`, `create_solution`, `update_solution`, `generate_solutions`              | Generate and iterate on solution ideas     |
-| **Outcomes**      | `list_outcomes`, `get_outcome`, `create_outcome`, `update_outcome`                                        | Define and track desired business outcomes |
-| **Knowledge**     | `list_knowledge`, `get_knowledge`, `create_knowledge`, `delete_knowledge`                                 | Store research, references, and insights   |
-| **Feedback**      | `list_feedback`, `get_feedback`, `create_feedback`, `delete_feedback`                                     | Manage customer and stakeholder feedback   |
-| **Workspace**     | `get_workspace`, `update_workspace`                                                                       | Configure workspace settings               |
+| Category          | Tools                                                                                                                                             | Purpose                                      |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| **Opportunities** | `list_opportunities`, `get_opportunity`, `create_opportunity`, `update_opportunity`, `delete_opportunity`, `generate_solutions`, `manage_opportunity_relationships` | Discover and refine product opportunities |
+| **Solutions**     | `list_solutions`, `get_solution`, `create_solution`, `update_solution`, `delete_solution`, `manage_solution_relationships`, `prioritise_solutions` | Generate and iterate on solution ideas       |
+| **Goals**         | `list_goals`, `get_goal`, `create_goal`, `update_goal`, `delete_goal`, `manage_goal_relationships`                                                | Define and track business objectives         |
+| **Knowledge**     | `list_knowledge`, `get_knowledge`, `create_knowledge`, `delete_knowledge`                                                                         | Store research, references, and insights     |
+| **Feedback**      | `list_feedback`, `get_feedback`, `create_feedback`, `delete_feedback`                                                                             | Manage customer and stakeholder feedback     |
+| **Insights**      | `list_insights`, `get_insight`, `create_insight`, `delete_insight`                                                                                | Track customer insights and feature requests |
+| **Workspace**     | `list_workspaces`, `select_workspace`, `get_workspace`, `update_workspace`                                                                        | Configure workspace settings                 |
+| **Search**        | `similarity_search`                                                                                                                               | Semantic search across all entities          |
+| **Views**         | `view_strategy_context`, `view_roadmap`                                                                                                           | Rich visual strategy and roadmap widgets     |
 
 ### Tool Capabilities
 
@@ -77,12 +80,13 @@ All tools include:
 │  Squad MCP Server                            │
 │  ┌────────────────────────────────────────┐  │
 │  │  OAuth Middleware → Validate Token     │  │
+│  │  JWT Minting → Service Credentials    │  │
 │  │  Session Store → Manage State          │  │
 │  │  MCP Handler → Execute Tools           │  │
 │  └────────────────────────────────────────┘  │
 └──────────────────────────────────────────────┘
        │
-       │ Squad API Calls
+       │ Squad API Calls (minted JWT)
        ▼
 ┌──────────────┐
 │  Squad API   │
@@ -118,8 +122,9 @@ This repository contains the source code for the Squad MCP remote server.
 
 ### Prerequisites
 
-- Node.js 18+
+- Node.js 22.22+
 - Yarn
+- Nix (optional, for reproducible dev environment via `flake.nix`)
 - PropelAuth account (for OAuth2)
 - Squad API credentials
 
@@ -149,8 +154,11 @@ yarn dev
 yarn build              # Compile TypeScript
 yarn dev                # Start dev server with hot reload
 yarn start              # Start production server
+yarn test               # Run unit tests (vitest)
+yarn format             # Lint with biome
+yarn format:fix         # Auto-fix lint issues
 yarn openapi:squad      # Regenerate API client from OpenAPI spec
-yarn test               # Run test suite
+yarn storybook          # Run Storybook for widget development
 ```
 
 ### Testing the Server
@@ -167,36 +175,37 @@ npx @modelcontextprotocol/inspector
 # Then connect to http://localhost:3232/mcp
 ```
 
-### Running Tests
-
-```bash
-# Setup environment (if not already done)
-cp .env.example .env
-# Edit .env with your PropelAuth credentials and Squad API key
-
-# Run tests
-yarn test
-```
-
-**Note:** Tests use `SQUAD_API_KEY` from `.env` for authentication (not OAuth).
-
 ### Project Structure
 
 ```
 squad-mcp/
+├── index.ts                    # MCP server entry point with OAuth
+├── server.json                 # MCP registry metadata
 ├── src/
-│   ├── server.ts               # MCP server with OAuth
-│   ├── middleware/
-│   │   └── csp.ts              # Content Security Policy
+│   ├── client.ts               # MCP client export
 │   ├── helpers/
-│   │   └── config.ts           # Environment configuration
+│   │   ├── config.ts           # Environment configuration
+│   │   ├── getUser.ts          # OAuth context + workspace selection
+│   │   └── mintToken.ts        # JWT minting + per-user cache
 │   ├── lib/
-│   │   └── clients/            # Squad API client
+│   │   ├── logger.ts           # Structured logging
+│   │   └── clients/
+│   │       ├── squad.ts        # Squad API client factory
+│   │       └── middleware/     # Bearer token middleware
 │   └── tools/                  # Tool implementations
 │       ├── opportunity.ts
 │       ├── solution.ts
 │       ├── goal.ts
-│       └── ...
+│       ├── knowledge.ts
+│       ├── feedback.ts
+│       ├── insight.ts
+│       ├── workspace.ts
+│       ├── search.ts
+│       ├── views.ts
+│       └── helpers.ts
+├── resources/                  # React widget components
+│   ├── view-strategy-context/
+│   └── view-roadmap/
 ├── railway.toml                # Railway deployment config
 └── .env.example                # Environment template
 ```
@@ -225,12 +234,12 @@ Need help with the Squad MCP server?
 
 ## 🤝 Contributing
 
-Contributions welcome! Please ensure:
+Contributions welcome! Pre-commit hooks run biome lint and vitest automatically. Please ensure:
 
-- TypeScript builds without errors (`yarn build`)
+- `yarn format` passes (biome lint)
+- `yarn build` compiles without errors
+- `yarn test` passes
 - All tools include safety annotations
-- OAuth context properly propagated
-- Tests pass (when test suite is implemented)
 
 ## 📄 License
 

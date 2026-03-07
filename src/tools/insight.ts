@@ -4,6 +4,7 @@ import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
 import { CreateInsightRequestTypeEnum } from "../lib/openapi/squad/models/CreateInsightRequest.js";
 import {
+  formatApiError,
   formatWorkspaceSelectionError,
   getUserId,
   type OAuthServer,
@@ -23,22 +24,27 @@ export function registerInsightTools(server: OAuthServer) {
       title: "Create Insight",
       description:
         "Create a new insight entry. An insight is customer-generated feedback about your product, often from reviews, surveys, or questionnaires.",
-      schema: z.object({
-        type: z
-          .enum([
-            CreateInsightRequestTypeEnum.Feedback,
-            CreateInsightRequestTypeEnum.Bug,
-            CreateInsightRequestTypeEnum.FeatureRequest,
-          ])
-          .describe(
-            "The type of insight: 'Feedback' for customer feedback, 'Bug' for bug reports, or 'FeatureRequest' for feature requests.",
-          ),
-        title: z.string().describe("A brief title summarizing the insight"),
-        description: z.string().describe("A short description of the insight"),
-      }),
+      schema: z
+        .object({
+          type: z
+            .enum([
+              CreateInsightRequestTypeEnum.Feedback,
+              CreateInsightRequestTypeEnum.Bug,
+              CreateInsightRequestTypeEnum.FeatureRequest,
+            ])
+            .describe(
+              "The type of insight: 'Feedback' for customer feedback, 'Bug' for bug reports, or 'FeatureRequest' for feature requests.",
+            ),
+          title: z.string().describe("A brief title summarizing the insight"),
+          description: z
+            .string()
+            .describe("A short description of the insight"),
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -72,8 +78,7 @@ export function registerInsightTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "create_insight" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to create insight: ${message}`);
       }
     },
@@ -90,6 +95,7 @@ export function registerInsightTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (_params, ctx) => {
@@ -123,8 +129,7 @@ export function registerInsightTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "list_insights" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to list insights: ${message}`);
       }
     },
@@ -149,6 +154,7 @@ export function registerInsightTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -177,35 +183,28 @@ export function registerInsightTools(server: OAuthServer) {
         // Return summaries for relationships to reduce token usage
         return toolSuccess({
           ...insight,
-          opportunities: insight.opportunities?.map(
-            (o: { id: string; title: string; status: string }) => ({
-              id: o.id,
-              title: o.title,
-              status: o.status,
-            }),
-          ),
-          solutions: insight.solutions?.map(
-            (s: { id: string; title: string; status: string }) => ({
-              id: s.id,
-              title: s.title,
-              status: s.status,
-            }),
-          ),
-          outcomes: insight.outcomes?.map(
-            (o: { id: string; title: string; priority: number }) => ({
-              id: o.id,
-              title: o.title,
-              priority: o.priority,
-            }),
-          ),
+          opportunities: insight.opportunities?.map(o => ({
+            id: o.id,
+            title: o.title,
+            status: o.status,
+          })),
+          solutions: insight.solutions?.map(s => ({
+            id: s.id,
+            title: s.title,
+            status: s.status,
+          })),
+          outcomes: insight.outcomes?.map(o => ({
+            id: o.id,
+            title: o.title,
+            priority: o.priority,
+          })),
         });
       } catch (error) {
         if (error instanceof WorkspaceSelectionRequired) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "get_insight" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to get insight: ${message}`);
       }
     },
@@ -223,6 +222,7 @@ export function registerInsightTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -245,8 +245,7 @@ export function registerInsightTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "delete_insight" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to delete insight: ${message}`);
       }
     },

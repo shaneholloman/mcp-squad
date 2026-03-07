@@ -2,11 +2,9 @@ import { z } from "zod";
 import { getUserContext } from "../helpers/getUser.js";
 import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
-import type {
-  CreateOutcomePayload,
-  RelationshipAction,
-} from "../lib/openapi/squad/models/index.js";
+import type { CreateOutcomePayload } from "../lib/openapi/squad/models/index.js";
 import {
+  formatApiError,
   formatWorkspaceSelectionError,
   getUserId,
   type OAuthServer,
@@ -27,32 +25,37 @@ export function registerGoalTools(server: OAuthServer) {
       title: "Create Goal",
       description:
         "Create a new goal. A goal is a business objective that the organization aims to achieve.",
-      schema: z.object({
-        title: z.string().describe("A short title for the goal"),
-        description: z.string().describe("A detailed description of the goal"),
-        priority: z
-          .number()
-          .optional()
-          .describe(
-            "Importance level of the goal (1–5, higher = more important)",
-          ),
-        trend: z
-          .number()
-          .optional()
-          .describe("Trend indicator for the goal (numeric)"),
-        analyticEvents: z
-          .array(z.string())
-          .optional()
-          .describe("List of analytic events associated with the goal"),
-        hideContent: z
-          .boolean()
-          .optional()
-          .describe("Whether the goal content should be hidden"),
-        ownerId: z.string().optional().describe("ID of the goal owner"),
-      }),
+      schema: z
+        .object({
+          title: z.string().describe("A short title for the goal"),
+          description: z
+            .string()
+            .describe("A detailed description of the goal"),
+          priority: z
+            .number()
+            .optional()
+            .describe(
+              "Importance level of the goal (1–5, higher = more important)",
+            ),
+          trend: z
+            .number()
+            .optional()
+            .describe("Trend indicator for the goal (numeric)"),
+          analyticEvents: z
+            .array(z.string())
+            .optional()
+            .describe("List of analytic events associated with the goal"),
+          hideContent: z
+            .boolean()
+            .optional()
+            .describe("Whether the goal content should be hidden"),
+          ownerId: z.string().optional().describe("ID of the goal owner"),
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -88,8 +91,7 @@ export function registerGoalTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "create_goal" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to create goal: ${message}`);
       }
     },
@@ -106,6 +108,7 @@ export function registerGoalTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (_params, ctx) => {
@@ -139,8 +142,7 @@ export function registerGoalTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "list_goals" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to list goals: ${message}`);
       }
     },
@@ -166,6 +168,7 @@ export function registerGoalTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -188,35 +191,28 @@ export function registerGoalTools(server: OAuthServer) {
         return toolSuccess({
           ...rest,
           importance: priority,
-          opportunities: outcome.opportunities?.map(
-            (o: { id: string; title: string; status: string }) => ({
-              id: o.id,
-              title: o.title,
-              status: o.status,
-            }),
-          ),
-          solutions: outcome.solutions?.map(
-            (s: { id: string; title: string; status: string }) => ({
-              id: s.id,
-              title: s.title,
-              status: s.status,
-            }),
-          ),
-          insights: outcome.insights?.map(
-            (i: { id: string; title: string; type: string }) => ({
-              id: i.id,
-              title: i.title,
-              type: i.type,
-            }),
-          ),
+          opportunities: outcome.opportunities?.map(o => ({
+            id: o.id,
+            title: o.title,
+            status: o.status,
+          })),
+          solutions: outcome.solutions?.map(s => ({
+            id: s.id,
+            title: s.title,
+            status: s.status,
+          })),
+          insights: outcome.insights?.map(i => ({
+            id: i.id,
+            title: i.title,
+            type: i.type,
+          })),
         });
       } catch (error) {
         if (error instanceof WorkspaceSelectionRequired) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "get_goal" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to get goal: ${message}`);
       }
     },
@@ -228,28 +224,36 @@ export function registerGoalTools(server: OAuthServer) {
       name: "update_goal",
       title: "Update Goal",
       description: "Update an existing goal's details.",
-      schema: z.object({
-        goalId: z.string().describe("The ID of the goal to update"),
-        title: z.string().optional().describe("Updated title"),
-        description: z.string().optional().describe("Updated description"),
-        priority: z
-          .number()
-          .optional()
-          .describe("Updated importance level (1–5, higher = more important)"),
-        trend: z.number().optional().describe("Updated trend indicator"),
-        analyticEvents: z
-          .array(z.string())
-          .optional()
-          .describe("Updated list of analytic events"),
-        hideContent: z
-          .boolean()
-          .optional()
-          .describe("Whether the goal content should be hidden"),
-        ownerId: z.string().optional().describe("Updated ID of the goal owner"),
-      }),
+      schema: z
+        .object({
+          goalId: z.string().describe("The ID of the goal to update"),
+          title: z.string().optional().describe("Updated title"),
+          description: z.string().optional().describe("Updated description"),
+          priority: z
+            .number()
+            .optional()
+            .describe(
+              "Updated importance level (1–5, higher = more important)",
+            ),
+          trend: z.number().optional().describe("Updated trend indicator"),
+          analyticEvents: z
+            .array(z.string())
+            .optional()
+            .describe("Updated list of analytic events"),
+          hideContent: z
+            .boolean()
+            .optional()
+            .describe("Whether the goal content should be hidden"),
+          ownerId: z
+            .string()
+            .optional()
+            .describe("Updated ID of the goal owner"),
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -278,8 +282,7 @@ export function registerGoalTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "update_goal" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to update goal: ${message}`);
       }
     },
@@ -297,6 +300,7 @@ export function registerGoalTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -319,8 +323,7 @@ export function registerGoalTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "delete_goal" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to delete goal: ${message}`);
       }
     },
@@ -348,6 +351,7 @@ export function registerGoalTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -362,7 +366,7 @@ export function registerGoalTools(server: OAuthServer) {
           orgId,
           workspaceId,
           outcomeId: params.goalId,
-          action: params.action as RelationshipAction,
+          action: params.action,
           outcomeRelationshipsPayload: {
             opportunityIds: params.opportunityIds || [],
           },
@@ -380,8 +384,7 @@ export function registerGoalTools(server: OAuthServer) {
           { err: error, tool: "manage_goal_relationships" },
           "Tool error",
         );
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to manage goal relationships: ${message}`);
       }
     },

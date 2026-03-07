@@ -6,9 +6,11 @@ import {
   listUserOrganisations,
   setWorkspaceSelection,
 } from "../helpers/getUser.js";
+import { getServiceToken } from "../helpers/mintToken.js";
 import { squadClient } from "../lib/clients/squad.js";
 import { logger } from "../lib/logger.js";
 import {
+  formatApiError,
   formatWorkspaceSelectionError,
   getUserId,
   type OAuthServer,
@@ -32,12 +34,13 @@ export function registerWorkspaceTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (_params, ctx) => {
       try {
         const userId = getUserId(ctx.auth);
-        const token = ctx.auth.accessToken;
+        const token = await getServiceToken(userId);
 
         const orgs = await listUserOrganisations(token);
         const result: Array<{
@@ -58,8 +61,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
         });
       } catch (error) {
         logger.debug({ err: error, tool: "list_workspaces" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to list workspaces: ${message}`);
       }
     },
@@ -76,11 +78,16 @@ export function registerWorkspaceTools(server: OAuthServer) {
         orgId: z.string().describe("The ID of the organisation to select"),
         workspaceId: z.string().describe("The ID of the workspace to select"),
       }),
+      annotations: {
+        readOnlyHint: false,
+        destructiveHint: false,
+        openWorldHint: false,
+      },
     },
     async (params, ctx) => {
       try {
         const userId = getUserId(ctx.auth);
-        const token = ctx.auth.accessToken;
+        const token = await getServiceToken(userId);
         const { orgId, workspaceId } = params;
 
         // Verify the user has access to this org/workspace
@@ -110,8 +117,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
         });
       } catch (error) {
         logger.debug({ err: error, tool: "select_workspace" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to select workspace: ${message}`);
       }
     },
@@ -128,6 +134,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
       annotations: {
         readOnlyHint: true,
         destructiveHint: false,
+        openWorldHint: false,
       },
     },
     async (_params, ctx) => {
@@ -147,8 +154,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "get_workspace" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to retrieve workspace: ${message}`);
       }
     },
@@ -161,28 +167,34 @@ export function registerWorkspaceTools(server: OAuthServer) {
       title: "Update Workspace",
       description:
         "Update the current workspace's details such as name, description, mission statement.",
-      schema: z.object({
-        name: z.string().optional().describe("Updated name for the workspace"),
-        homepageUrl: z
-          .string()
-          .optional()
-          .describe("Updated URL to the workspace's homepage"),
-        logoUrl: z
-          .string()
-          .optional()
-          .describe("Updated URL to the workspace's logo"),
-        missionStatement: z
-          .string()
-          .optional()
-          .describe("Updated mission statement for the workspace"),
-        description: z
-          .string()
-          .optional()
-          .describe("Updated detailed description of the workspace"),
-      }),
+      schema: z
+        .object({
+          name: z
+            .string()
+            .optional()
+            .describe("Updated name for the workspace"),
+          homepageUrl: z
+            .string()
+            .optional()
+            .describe("Updated URL to the workspace's homepage"),
+          logoUrl: z
+            .string()
+            .optional()
+            .describe("Updated URL to the workspace's logo"),
+          missionStatement: z
+            .string()
+            .optional()
+            .describe("Updated mission statement for the workspace"),
+          description: z
+            .string()
+            .optional()
+            .describe("Updated detailed description of the workspace"),
+        })
+        .strict(),
       annotations: {
         readOnlyHint: false,
         destructiveHint: true,
+        openWorldHint: false,
       },
     },
     async (params, ctx) => {
@@ -203,8 +215,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
           return toolError(formatWorkspaceSelectionError(error));
         }
         logger.debug({ err: error, tool: "update_workspace" }, "Tool error");
-        const message =
-          error instanceof Error ? error.message : "Unknown error";
+        const message = await formatApiError(error);
         return toolError(`Unable to update workspace: ${message}`);
       }
     },
