@@ -43,7 +43,7 @@ export function registerInsightTools(server: OAuthServer) {
         .strict(),
       annotations: {
         readOnlyHint: false,
-        destructiveHint: true,
+        destructiveHint: false,
         openWorldHint: false,
       },
     },
