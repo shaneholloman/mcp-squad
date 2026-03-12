@@ -69,7 +69,7 @@ export function registerSolutionTools(server: OAuthServer) {
         .strict(),
       annotations: {
         readOnlyHint: false,
-        destructiveHint: true,
+        destructiveHint: false,
         openWorldHint: false,
       },
     },
@@ -349,7 +349,7 @@ export function registerSolutionTools(server: OAuthServer) {
         .strict(),
       annotations: {
         readOnlyHint: false,
-        destructiveHint: true,
+        destructiveHint: false,
         openWorldHint: false,
       },
     },

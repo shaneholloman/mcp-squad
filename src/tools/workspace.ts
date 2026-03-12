@@ -193,7 +193,7 @@ export function registerWorkspaceTools(server: OAuthServer) {
         .strict(),
       annotations: {
         readOnlyHint: false,
-        destructiveHint: true,
+        destructiveHint: false,
         openWorldHint: false,
       },
     },

@@ -54,7 +54,7 @@ export function registerGoalTools(server: OAuthServer) {
         .strict(),
       annotations: {
         readOnlyHint: false,
-        destructiveHint: true,
+        destructiveHint: false,
         openWorldHint: false,
       },
     },
@@ -252,7 +252,7 @@ export function registerGoalTools(server: OAuthServer) {
         .strict(),
       annotations: {
         readOnlyHint: false,
-        destructiveHint: true,
+        destructiveHint: false,
         openWorldHint: false,
       },
     },

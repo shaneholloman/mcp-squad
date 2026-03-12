@@ -36,7 +36,7 @@ export function registerOpportunityTools(server: OAuthServer) {
         .strict(),
       annotations: {
         readOnlyHint: false,
-        destructiveHint: true,
+        destructiveHint: false,
         openWorldHint: false,
       },
     },
@@ -224,7 +224,7 @@ export function registerOpportunityTools(server: OAuthServer) {
         .strict(),
       annotations: {
         readOnlyHint: false,
-        destructiveHint: true,
+        destructiveHint: false,
         openWorldHint: false,
       },
     },
@@ -322,7 +322,7 @@ export function registerOpportunityTools(server: OAuthServer) {
       }),
       annotations: {
         readOnlyHint: false,
-        destructiveHint: true,
+        destructiveHint: false,
         openWorldHint: false,
       },
     },
