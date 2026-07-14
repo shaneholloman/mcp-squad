@@ -11,11 +11,15 @@ import { initKv } from "./src/helpers/kv.js";
 import { introspectToken } from "./src/helpers/oauth.js";
 import { connectRedis } from "./src/helpers/redis.js";
 import { logger } from "./src/lib/logger.js";
+import { initTelemetry, shutdownTelemetry } from "./src/lib/telemetry.js";
+import { registerPrompts } from "./src/prompts/index.js";
+import { registerResources } from "./src/resources/index.js";
 import { registerActionReadTools } from "./src/tools/actions-read.js";
 import { registerActionWriteTools } from "./src/tools/actions-write.js";
 import { registerEvidenceTools } from "./src/tools/evidence.js";
 import { registerEntityTools } from "./src/tools/get-entity.js";
 import { registerIngestTools } from "./src/tools/ingest.js";
+import { registerIntegrationTools } from "./src/tools/integrations.js";
 import { registerKnowledgeTools } from "./src/tools/knowledge.js";
 import { registerResearchWriteTools } from "./src/tools/research-write.js";
 import { registerSearchTools } from "./src/tools/search.js";
@@ -125,14 +129,22 @@ registerEntityTools(server);
 registerEvidenceTools(server);
 registerActionReadTools(server);
 registerStrategyReadTools(server);
+registerIntegrationTools(server);
 registerIngestTools(server);
 registerActionWriteTools(server);
 registerStrategyWriteTools(server);
 registerResearchWriteTools(server);
 registerKnowledgeTools(server);
+registerPrompts(server);
+registerResources(server);
 
 // mcp-use build imports this file for type generation — skip env validation during build
 if (!process.argv.includes("build")) {
+  initTelemetry();
+  process.on("SIGTERM", () => {
+    shutdownTelemetry().finally(() => process.exit(0));
+  });
+
   const required = [
     "PROPELAUTH_CLIENT_ID",
     "PROPELAUTH_CLIENT_SECRET",
