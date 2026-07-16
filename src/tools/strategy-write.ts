@@ -11,6 +11,7 @@ import {
   UpdateInsightMetaDocument,
 } from "../gql/graphql.js";
 import { formatDisplayId } from "../helpers/display-id.js";
+import { INSIGHT_CATEGORIES, INSIGHT_STATUSES } from "../helpers/enums.js";
 import type { UserContext } from "../helpers/getUser.js";
 import { appLink, entityResponse } from "../helpers/responses.js";
 import { execute } from "../lib/squad-api-client.js";
@@ -135,8 +136,16 @@ export function registerStrategyWriteTools(server: OAuthServer) {
       "Curate an insight: set category or status, and link/unlink the goal it supports. Insight titles and descriptions are pipeline-generated and not editable.",
     schema: z.object({
       insightId: z.string().describe("IN-N display ID or UUID"),
-      category: z.string().optional(),
-      status: z.string().optional(),
+      category: z
+        .enum(INSIGHT_CATEGORIES)
+        .optional()
+        .describe(
+          "Insight category: pain_point, feature_request, positive_signal, trend, or risk",
+        ),
+      status: z
+        .enum(INSIGHT_STATUSES)
+        .optional()
+        .describe("Insight status: active, stale, archived, or resolved"),
       linkGoalId: z
         .string()
         .optional()

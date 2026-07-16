@@ -10,6 +10,8 @@ const SignalInput = z.object({
     .string()
     .min(1)
     .describe("The feedback verbatim or a faithful summary"),
+  // Free-form by design: the ingest API accepts any string (default "api")
+  // and stores it as a varchar, so keep this unconstrained.
   source: z
     .string()
     .optional()
