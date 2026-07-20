@@ -7,17 +7,24 @@ import {
   runWithContext,
 } from "mcp-use/server";
 import { getPropelAuthUrl } from "./src/helpers/config.js";
+import { initKv } from "./src/helpers/kv.js";
 import { introspectToken } from "./src/helpers/oauth.js";
 import { connectRedis } from "./src/helpers/redis.js";
 import { logger } from "./src/lib/logger.js";
-import { registerFeedbackTools } from "./src/tools/feedback.js";
-import { registerGoalTools } from "./src/tools/goal.js";
-import { registerInsightTools } from "./src/tools/insight.js";
+import { initTelemetry, shutdownTelemetry } from "./src/lib/telemetry.js";
+import { registerPrompts } from "./src/prompts/index.js";
+import { registerResources } from "./src/resources/index.js";
+import { registerActionReadTools } from "./src/tools/actions-read.js";
+import { registerActionWriteTools } from "./src/tools/actions-write.js";
+import { registerEvidenceTools } from "./src/tools/evidence.js";
+import { registerEntityTools } from "./src/tools/get-entity.js";
+import { registerIngestTools } from "./src/tools/ingest.js";
+import { registerIntegrationTools } from "./src/tools/integrations.js";
 import { registerKnowledgeTools } from "./src/tools/knowledge.js";
-import { registerOpportunityTools } from "./src/tools/opportunity.js";
+import { registerResearchWriteTools } from "./src/tools/research-write.js";
 import { registerSearchTools } from "./src/tools/search.js";
-import { registerSolutionTools } from "./src/tools/solution.js";
-import { registerViewTools } from "./src/tools/views.js";
+import { registerStrategyReadTools } from "./src/tools/strategy-read.js";
+import { registerStrategyWriteTools } from "./src/tools/strategy-write.js";
 import { registerWorkspaceTools } from "./src/tools/workspace.js";
 
 config();
@@ -32,18 +39,20 @@ let sessionStore: RedisSessionStore | undefined;
 let streamManager: RedisStreamManager | undefined;
 if (process.env.REDIS_URL && !process.argv.includes("build")) {
   ({ sessionStore, streamManager } = await connectRedis());
+  await initKv(process.env.REDIS_URL);
 } else if (!process.env.REDIS_URL) {
   logger.warn(
     {},
     "REDIS_URL not set, using in-memory sessions (not deploy-safe)",
   );
+  await initKv(undefined);
 }
 
 const server = new MCPServer({
   name: "squad-mcp",
-  version: "3.0.0",
+  version: "4.0.0",
   description:
-    "Squad AI MCP Server - Product discovery and opportunity management tools",
+    "Squad AI MCP Server - product feedback intelligence: signals, insights, actions, goals, and decision briefs",
   baseUrl: process.env.MCP_URL || BASE_URI,
   sessionStore,
   streamManager,
@@ -88,7 +97,7 @@ server.app.use("/mcp/*", async (c, next) => {
 });
 
 // Health check (used by Railway for deployment readiness)
-server.app.get("/health", c => c.json({ status: "ok", version: "3.0.0" }));
+server.app.get("/health", c => c.json({ status: "ok", version: "4.0.0" }));
 
 // OpenAI Apps Challenge verification
 server.app.get("/.well-known/openai-apps-challenge", c =>
@@ -113,19 +122,29 @@ for (const path of [
   );
 }
 
-// Register tools
+// Register tools (the full v4 surface lands milestone by milestone)
 registerWorkspaceTools(server);
-registerOpportunityTools(server);
-registerSolutionTools(server);
-registerGoalTools(server);
-registerKnowledgeTools(server);
-registerFeedbackTools(server);
-registerInsightTools(server);
 registerSearchTools(server);
-registerViewTools(server);
+registerEntityTools(server);
+registerEvidenceTools(server);
+registerActionReadTools(server);
+registerStrategyReadTools(server);
+registerIntegrationTools(server);
+registerIngestTools(server);
+registerActionWriteTools(server);
+registerStrategyWriteTools(server);
+registerResearchWriteTools(server);
+registerKnowledgeTools(server);
+registerPrompts(server);
+registerResources(server);
 
 // mcp-use build imports this file for type generation — skip env validation during build
 if (!process.argv.includes("build")) {
+  initTelemetry();
+  process.on("SIGTERM", () => {
+    shutdownTelemetry().finally(() => process.exit(0));
+  });
+
   const required = [
     "PROPELAUTH_CLIENT_ID",
     "PROPELAUTH_CLIENT_SECRET",
