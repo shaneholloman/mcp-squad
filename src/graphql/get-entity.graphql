@@ -136,12 +136,6 @@ query GetGoal($id: String!) {
       title
       combinedScore
     }
-    researchQuestions {
-      id
-      displayId
-      question
-      sufficiencyStatus
-    }
   }
 }
 
@@ -155,8 +149,8 @@ query GetDocumentMeta($id: String!) {
     tags
     updatedAt
     directoryId
-    onePagerStatus
-    onePagerType
+    briefStatus
+    briefType
     sourceAction {
       id
       displayId
@@ -174,13 +168,13 @@ query GetDocumentMarkdown($documentId: String!) {
   documentMarkdownExport(documentId: $documentId)
 }
 
-query GetOnePager($displayId: String!) {
-  onePager(displayId: $displayId) {
+query GetBrief($displayId: String!) {
+  brief(displayId: $displayId) {
     id
     displayId
     title
-    onePagerStatus
-    onePagerType
+    briefStatus
+    briefType
     decisionRecommendation
     failureReason
     updatedAt

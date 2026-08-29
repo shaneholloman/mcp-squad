@@ -9,9 +9,8 @@ export type EntityType =
   | "insight"
   | "action"
   | "goal"
-  | "one_pager"
+  | "brief"
   | "document"
-  | "research_question"
   | "cluster";
 
 const PREFIX_TO_TYPE: Record<string, EntityType> = {
@@ -19,9 +18,8 @@ const PREFIX_TO_TYPE: Record<string, EntityType> = {
   IN: "insight",
   AC: "action",
   GL: "goal",
-  OP: "one_pager",
+  BR: "brief",
   DC: "document",
-  RQ: "research_question",
   CL: "cluster",
 };
 
@@ -42,8 +40,8 @@ export class InvalidEntityIdError extends Error {
   constructor(input: string) {
     super(
       `"${input}" is not a valid entity ID. Pass a UUID or a display ID such as ` +
-        `SI-1 (signal), IN-1 (insight), AC-1 (action), GL-1 (goal), OP-1 (decision brief), ` +
-        `DC-1 (document), RQ-1 (research question) or CL-1 (cluster).`,
+        `SI-1 (signal), IN-1 (insight), AC-1 (action), GL-1 (goal), BR-1 (brief), ` +
+        `DC-1 (document) or CL-1 (cluster).`,
     );
     this.name = "InvalidEntityIdError";
   }
@@ -63,11 +61,12 @@ export function parseEntityRef(input: string): EntityRef {
     if (!type) {
       throw new InvalidEntityIdError(trimmed);
     }
+    const displayId = Number.parseInt(match[2], 10);
     return {
       kind: "display",
       type,
-      displayId: Number.parseInt(match[2], 10),
-      formatted: `${prefix}-${match[2]}`,
+      displayId,
+      formatted: formatDisplayId(type, displayId),
     };
   }
 

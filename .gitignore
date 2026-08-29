@@ -1,11 +1,9 @@
 # Dependencies
 node_modules/
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+pnpm-debug.log*
 
 # Build output
-dist/
 build/
 storybook-static/
 *.tsbuildinfo
@@ -29,6 +27,7 @@ storybook-static/
 # Claude Code settings
 .claude/settings.local.json
 .mcp-use/
+mcp-env.d.ts
 
 # Logs
 logs/

@@ -1,0 +1,34 @@
+# Wait 3 days before resolving a newly published version, so a compromised
+# fresh release can't be pulled in before it's caught (most npm supply-chain
+# compromises are detected and yanked within ~48h, so 3 days covers the bulk of
+# that window while minimising delay to security patches). Only affects
+# resolving new versions; frozen-lockfile installs are unaffected.
+minimumReleaseAge: 4320
+
+# Reject transitive dependencies resolved from non-registry (git/tarball/etc.)
+# sources, and block updates that would downgrade these security settings.
+# Require pnpm >=10.26 / >=10.21 respectively — older pnpm silently ignores them.
+blockExoticSubdeps: true
+trustPolicy: no-downgrade
+
+# Once this file exists, pnpm ignores the `pnpm` field in package.json, so
+# dependency overrides live here.
+overrides:
+  "@modelcontextprotocol/sdk": "^1.29.0"
+  "body-parser": "^2.3.0"
+  "qs": "^6.14.2"
+  "hono": "^4.12.34"
+  "@hono/node-server": "^2.0.10"
+  "fast-uri": ">=3.1.5 <4"
+  "minimatch": "^10.2.3"
+  "ajv": "^8.18.0"
+  "picomatch": "^4.0.4"
+  "express-rate-limit": "^8.2.2"
+  "brace-expansion": ">=5.0.9 <6"
+  "router>path-to-regexp": "^8.4.0"
+  "ip-address": ">=10.3.1 <11"
+  "esbuild": "^0.28.1"
+  "shell-quote": "^1.10.0"
+  "js-yaml": "^4.3.1"
+  "nanoid": "^3.3.18"
+  "postcss": "^8.5.23"

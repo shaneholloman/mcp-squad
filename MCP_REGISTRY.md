@@ -6,15 +6,40 @@ This server is listed on the [MCP Registry](https://registry.modelcontextprotoco
 
 The `server.json` file contains metadata published to the registry. It is not used at runtime.
 
+release-please rewrites this file on every release (it re-serialises the whole
+document to bump `version`), which formats arrays differently to Biome. Biome
+therefore skips it — see the `!server.json` exclusion in `biome.json`.
+
+## Publishing
+
+Publishing is automatic. Merging a release-please PR tags a release, and
+`.github/workflows/publish-registry.yml` publishes `server.json` to the registry
+from that tag. `server.json`'s version is bumped by release-please alongside
+`package.json`, so it always matches the release — never edit it by hand.
+
+Auth uses the `MCP_REGISTRY_PRIVATE_KEY` repo secret: the raw 32-byte Ed25519
+seed of the meetsquad.ai signing key, hex-encoded. To (re)set it from 1Password:
+
+```bash
+op item get "MCP Registry - meetsquad.ai signing key" \
+  --fields private_key --format json --reveal | jq -r .value \
+  | openssl pkey -outform DER | tail -c 32 | xxd -p -c 64 \
+  | gh secret set MCP_REGISTRY_PRIVATE_KEY -R the-basilisk-ai/squad-mcp
+```
+
 ## Publishing manually
 
-1. Install the CLI: `brew install mcp-publisher`
-2. Retrieve the signing key from 1Password: `op document get "MCP Registry - meetsquad.ai signing key" --out-file key.pem`
-3. Authenticate:
-    ```bash
-    PRIVATE_KEY="$(openssl pkey -in key.pem -noout -text | grep -A3 "priv:" | tail -n +2 | tr -d ' :\n')"
-    mcp-publisher login dns --domain "meetsquad.ai" --private-key "${PRIVATE_KEY}"
-    rm key.pem
-    ```
-4. Update the version in `server.json`
-5. Publish: `mcp-publisher publish`
+Only needed if the workflow is broken:
+
+```bash
+mcp-publisher() { go run github.com/modelcontextprotocol/registry/cmd/publisher@v1.8.0 "$@"; }
+
+PRIVATE_KEY="$(op item get "MCP Registry - meetsquad.ai signing key" \
+  --fields private_key --format json --reveal | jq -r .value \
+  | openssl pkey -outform DER | tail -c 32 | xxd -p -c 64)"
+mcp-publisher login dns --domain "meetsquad.ai" --private-key "${PRIVATE_KEY}"
+
+mcp-publisher validate && mcp-publisher publish
+```
+
+Needs Go and jq, or `brew install mcp-publisher`. Run `mcp-publisher logout` when you're done.
