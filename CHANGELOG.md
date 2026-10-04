@@ -1,5 +1,19 @@
 # Changelog
 
+## [4.2.0](https://github.com/the-basilisk-ai/squad-mcp/compare/v4.1.5...v4.2.0) (2026-09-22)
+
+
+### Features
+
+* serve a SEP-2127 server card and AI catalog ([#184](https://github.com/the-basilisk-ai/squad-mcp/issues/184)) ([e5cb6b6](https://github.com/the-basilisk-ai/squad-mcp/commit/e5cb6b6a854a567cf63593993916253731f54339))
+
+## [4.1.5](https://github.com/the-basilisk-ai/squad-mcp/compare/v4.1.4...v4.1.5) (2026-09-14)
+
+
+### Bug Fixes
+
+* **deps:** remediate Dependabot security advisories ([#179](https://github.com/the-basilisk-ai/squad-mcp/issues/179)) ([80fb76f](https://github.com/the-basilisk-ai/squad-mcp/commit/80fb76f7f73dfe10f08ae59be6ece6cd89711c2a))
+
 ## [4.1.4](https://github.com/the-basilisk-ai/squad-mcp/compare/v4.1.3...v4.1.4) (2026-09-02)
 
 
